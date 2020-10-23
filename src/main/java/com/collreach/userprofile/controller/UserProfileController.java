@@ -11,4 +11,10 @@ public class UserProfileController {
     public String hello(){
         return "Hello...";
     }
+
+    @RequestMapping("/server")
+    public String server(){
+        return "Server Responded...";
+    }
+
 }
