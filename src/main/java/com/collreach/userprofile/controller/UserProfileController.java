@@ -53,15 +53,4 @@ public class UserProfileController {
             return ResponseEntity.ok().body("Invalid credentials.");
         }
     }
-
-    @RequestMapping("/hello")
-    public String hello() {
-        return "Hello...";
-    }
-
-    @RequestMapping("/server")
-    public String server(){
-        return "Server Responded...";
-    }
-
 }
