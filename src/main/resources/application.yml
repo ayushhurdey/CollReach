@@ -6,6 +6,6 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:3306/codeganak
+    url: jdbc:mysql://localhost:3306/collreach_userLogin
     username: root
     password: Sensitive@1
