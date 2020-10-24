@@ -3,10 +3,13 @@ package com.collreach.userprofile.controller;
 import com.collreach.userprofile.model.bo.User;
 import com.collreach.userprofile.model.repositories.UserRepository;
 import com.collreach.userprofile.model.request.UserAddRequest;
+import com.collreach.userprofile.model.request.UserLoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @Controller
@@ -25,9 +28,14 @@ public class UserProfileController {
         return ResponseEntity.ok().body("User Added Successfully");
     }
 
+    @PostMapping(path="/login")
+    public ResponseEntity<Optional<User>> checkLogin(@RequestBody UserLoginRequest userLoginRequest){
+        int id = userLoginRequest.getId();
+        return ResponseEntity.ok().body(userRepository.findById(id));
+    }
+
     @RequestMapping("/hello")
     public String hello() {
-
         return "Hello...";
     }
 

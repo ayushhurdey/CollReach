@@ -1,16 +1,24 @@
 package com.collreach.userprofile.model.request;
 
 public class UserLoginRequest {
-    private String userName;
+    int id;
+    private String username;
     private String password;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public String getPassword() {
