@@ -20,18 +20,38 @@ public class UserProfileController {
     private UserRepository userRepository;
 
     @PostMapping(path="/")
-    public ResponseEntity<String> addNewUser(@RequestBody UserAddRequest userAddRequest){
-        User user = new User();
-        user.setUserName(userAddRequest.getUserName());
-        user.setPassword(userAddRequest.getPassword());
-        userRepository.save(user);
-        return ResponseEntity.ok().body("User Added Successfully");
+    public ResponseEntity<String> addNewUser(@RequestBody UserAddRequest userAddRequest) throws Exception{
+        try {
+            User user = new User();
+            user.setId(userAddRequest.getId());
+            user.setUserName(userAddRequest.getUserName());
+            user.setPassword(userAddRequest.getPassword());
+            int id = userAddRequest.getId();
+            Optional <User> optional = userRepository.findById(id);
+            if (optional.isPresent()) {
+                return ResponseEntity.ok().body("User Already Exists.");
+            } else {
+                userRepository.save(user);
+                return ResponseEntity.ok().body("User Added Successfully");
+            }
+        }
+        catch(Exception e){
+            return ResponseEntity.ok().body("User Already exists.");
+        }
     }
 
     @PostMapping(path="/login")
-    public ResponseEntity<Optional<User>> checkLogin(@RequestBody UserLoginRequest userLoginRequest){
+    public ResponseEntity<String> checkLogin(@RequestBody UserLoginRequest userLoginRequest){
         int id = userLoginRequest.getId();
-        return ResponseEntity.ok().body(userRepository.findById(id));
+        Optional <User> optional = userRepository.findById(id);
+
+        if (optional.isPresent()) {
+            System.out.println(optional.get());
+            return ResponseEntity.ok().body("Login successful.");
+        } else {
+            System.out.printf("No employee found with id %d%n", id);
+            return ResponseEntity.ok().body("Invalid credentials.");
+        }
     }
 
     @RequestMapping("/hello")
