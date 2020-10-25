@@ -47,9 +47,9 @@ public class UserProfileController {
 
         if (optional.isPresent()) {
             System.out.println(optional.get());
-            return ResponseEntity.ok().body("Login successful.");
+            return ResponseEntity.ok().body("Login successful." + optional);
         } else {
-            System.out.printf("No employee found with id %d%n", id);
+            //System.out.printf("No employee found with id %d%n", id);
             return ResponseEntity.ok().body("Invalid credentials.");
         }
     }
