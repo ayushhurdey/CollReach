@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     @RequestMapping("/hello")
-    public String hello() { return "Hello..."; }
+    public String hello() { return "Hey!! you got it."; }
 
     @RequestMapping("/server")
     public String server(){
-        return "Server Responded...";
+        return "Server@AyushChoudhary listening..";
     }
 }
