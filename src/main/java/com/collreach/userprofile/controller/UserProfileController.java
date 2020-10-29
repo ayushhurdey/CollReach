@@ -19,15 +19,15 @@ public class UserProfileController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(path="/")
+    @PostMapping(path="/signup")
     public ResponseEntity<String> addNewUser(@RequestBody UserAddRequest userAddRequest) throws Exception{
         try {
             User user = new User();
             user.setId(userAddRequest.getId());
             user.setUserName(userAddRequest.getUserName());
             user.setPassword(userAddRequest.getPassword());
-            int id = userAddRequest.getId();
-            Optional <User> optional = userRepository.findById(id);
+            String username = userAddRequest.getUserName();
+            Optional <User> optional = userRepository.findById(username);
             if (optional.isPresent()) {
                 return ResponseEntity.ok().body("User Already Exists.");
             } else {
@@ -42,12 +42,12 @@ public class UserProfileController {
 
     @PostMapping(path="/login")
     public ResponseEntity<String> checkLogin(@RequestBody UserLoginRequest userLoginRequest){
-        int id = userLoginRequest.getId();
-        Optional <User> optional = userRepository.findById(id);
+        String username = userLoginRequest.getUserName();
+        Optional <User> optional = userRepository.findById(username);
 
         if (optional.isPresent()) {
             System.out.println(optional.get());
-            return ResponseEntity.ok().body("Login successful." + optional);
+            return ResponseEntity.ok().body("Login successful.");
         } else {
             //System.out.printf("No employee found with id %d%n", id);
             return ResponseEntity.ok().body("Invalid credentials.");
