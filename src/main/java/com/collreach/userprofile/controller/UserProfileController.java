@@ -43,10 +43,17 @@ public class UserProfileController {
     @PostMapping(path="/login")
     public ResponseEntity<String> checkLogin(@RequestBody UserLoginRequest userLoginRequest){
         String username = userLoginRequest.getUserName();
+        String password = userLoginRequest.getPassword();
+        int id = userLoginRequest.getId();
         Optional <User> optional = userRepository.findById(username);
 
-        if (optional.isPresent()) {
-            System.out.println(optional.get());
+        if (optional.isPresent() &&
+                optional.get().getId() == id &&
+                optional.get().getPassword().equals(password) &&
+                optional.get().getUserName().equals(username)) {
+            System.out.println(optional.get().getId());
+            System.out.println(optional.get().getUserName());
+            System.out.println(optional.get().getPassword());
             return ResponseEntity.ok().body("Login successful.");
         } else {
             //System.out.printf("No employee found with id %d%n", id);
