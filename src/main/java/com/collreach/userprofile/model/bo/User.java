@@ -1,20 +1,19 @@
 package com.collreach.userprofile.model.bo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
     @Id
-    private int id;              // unique id
+    @Column(nullable = false, unique = true)
     private String userName;
+
+    @Column(nullable = false, unique = true)
+    private int id;                                      // unique id
+    @Column(nullable = false)
     private String password;
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public void setId(int id) {
         this.id = id;

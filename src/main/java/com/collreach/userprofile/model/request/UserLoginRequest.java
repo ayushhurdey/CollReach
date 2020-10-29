@@ -1,7 +1,7 @@
 package com.collreach.userprofile.model.request;
 
 public class UserLoginRequest {
-    int id;
+    private int id;
     private String userName;
     private String password;
 

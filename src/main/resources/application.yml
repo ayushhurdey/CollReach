@@ -9,3 +9,8 @@ spring:
     url: jdbc:mysql://localhost:3306/collreach_userLogin
     username: root
     password: Sensitive@1
+  security:
+    user:
+      name: ayush
+      password: pass
+      roles: manager
