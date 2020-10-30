@@ -26,6 +26,12 @@ public class UserProfileController {
             user.setId(userAddRequest.getId());
             user.setUserName(userAddRequest.getUserName());
             user.setPassword(userAddRequest.getPassword());
+            user.setEmail(userAddRequest.getEmail());
+            user.setName(userAddRequest.getName());
+            user.setBranch(userAddRequest.getBranch());
+            user.setCourse(userAddRequest.getCourse());
+            user.setYearOfStudy(userAddRequest.getYearOfStudy());
+
             String username = userAddRequest.getUserName();
             Optional <User> optional = userRepository.findById(username);
             if (optional.isPresent()) {
@@ -36,7 +42,7 @@ public class UserProfileController {
             }
         }
         catch(Exception e){
-            return ResponseEntity.ok().body("User Already exists.");
+            return ResponseEntity.ok().body("Invalid Entries. Try Something else.");
         }
     }
 
