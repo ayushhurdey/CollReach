@@ -29,6 +29,9 @@ public class User {
     @Column(nullable = false)
     private String course;
 
+    @OneToOne(mappedBy = "user")
+    private UserExtras userExtras;
+
     public int getId() { return id; }
 
     public void setId(int id) {
