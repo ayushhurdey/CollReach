@@ -21,9 +21,6 @@ public class UserPersonalInfo {
     @Column(name = "phone_no", unique = true)
     private String phoneNo;
 
-   /* @Column(name = "course_id", nullable = false)
-    private int courseId;*/
-
     @OneToOne
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     private CourseInfo courseInfo;
@@ -67,15 +64,7 @@ public class UserPersonalInfo {
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
-/*
-    public int getCourseId() {
-        return courseId;
-    }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
-    }
-*/
     public CourseInfo getCourseInfo() {
         return courseInfo;
     }
