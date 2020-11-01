@@ -9,10 +9,10 @@ public class UserAddRequest {
     private int yearOfStudy;
     private String branch;
     private String course;
+    private String otherEmail;
+    private String phoneNo;
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public void setId(int id) {
         this.id = id;
@@ -53,4 +53,12 @@ public class UserAddRequest {
     public String getCourse() { return course; }
 
     public void setCourse(String course) { this.course = course; }
+
+    public String getOtherEmail() { return otherEmail; }
+
+    public void setOtherEmail(String otherEmail) { this.otherEmail = otherEmail; }
+
+    public String getPhoneNo() { return phoneNo; }
+
+    public void setPhoneNo(String phoneNo) { this.phoneNo = phoneNo; }
 }

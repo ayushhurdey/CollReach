@@ -1,15 +1,13 @@
 package com.collreach.userprofile.controller;
 
-import com.collreach.userprofile.model.bo.User;
-import com.collreach.userprofile.model.repositories.UserRepository;
-import com.collreach.userprofile.model.request.UserAddRequest;
+import com.collreach.userprofile.model.bo.UserLogin;
+import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
+import com.collreach.userprofile.model.repositories.UserLoginRepository;
 import com.collreach.userprofile.model.request.UserLoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 
 @Controller
@@ -17,12 +15,17 @@ import java.util.Optional;
 public class UserProfileController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserLoginRepository userLoginRepository;
 
+    @Autowired
+    private UserPersonalInfoRepository userExtrasRepository;
+
+    /*
     @PostMapping(path="/signup")
     public ResponseEntity<String> addNewUser(@RequestBody UserAddRequest userAddRequest) throws Exception{
         try {
-            User user = new User();
+            UserLogin user = new UserLogin();
+            UserPersonalInfo userExtras = new UserPersonalInfo();
             user.setId(userAddRequest.getId());
             user.setUserName(userAddRequest.getUserName());
             user.setPassword(userAddRequest.getPassword());
@@ -31,27 +34,39 @@ public class UserProfileController {
             user.setBranch(userAddRequest.getBranch());
             user.setCourse(userAddRequest.getCourse());
             user.setYearOfStudy(userAddRequest.getYearOfStudy());
+            userExtras.setOtherEmail(userAddRequest.getOtherEmail());
+            userExtras.setPhoneNo(userAddRequest.getPhoneNo());
+            userExtras.setUser(user);
 
             String username = userAddRequest.getUserName();
-            Optional <User> optional = userRepository.findById(username);
+            String otherEmail = userAddRequest.getOtherEmail();
+            System.out.println("Email additional : " + otherEmail);
+            String phoneNo = userAddRequest.getPhoneNo();
+            System.out.println("Phone additional : " + phoneNo);
+            Optional <UserLogin> optional = userRepository.findById(username);
             if (optional.isPresent()) {
                 return ResponseEntity.ok().body("User Already Exists.");
             } else {
                 userRepository.save(user);
+                if(!(otherEmail.equals("")) || !(phoneNo.equals("")) || !(phoneNo == null) || !(otherEmail == null))
+                    userExtrasRepository.save(userExtras);
                 return ResponseEntity.ok().body("User Added Successfully");
             }
         }
         catch(Exception e){
             return ResponseEntity.ok().body("Invalid Entries. Try Something else.");
         }
-    }
 
+
+    }
+*/
+/*
     @PostMapping(path="/login")
     public ResponseEntity<String> checkLogin(@RequestBody UserLoginRequest userLoginRequest){
         String username = userLoginRequest.getUserName();
         String password = userLoginRequest.getPassword();
         int id = userLoginRequest.getId();
-        Optional <User> optional = userRepository.findById(username);
+        Optional <UserLogin> optional = userRepository.findById(username);
 
         if (optional.isPresent() &&
                 optional.get().getId() == id &&
@@ -65,5 +80,12 @@ public class UserProfileController {
             //System.out.printf("No employee found with id %d%n", id);
             return ResponseEntity.ok().body("Invalid credentials.");
         }
+    }
+ */
+
+    @PostMapping(path = "/login")
+    public ResponseEntity<UserLogin> login(@RequestBody UserLoginRequest userLoginRequest){
+        UserLogin user =  userLoginRepository.findById(userLoginRequest.getUserName()).get();
+        return ResponseEntity.ok().body(user);
     }
 }
