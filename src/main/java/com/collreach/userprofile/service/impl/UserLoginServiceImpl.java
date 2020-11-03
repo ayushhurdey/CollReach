@@ -8,7 +8,9 @@ import com.collreach.userprofile.model.response.UserLoginResponse;
 import com.collreach.userprofile.service.UserLoginService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserLoginServiceImpl implements UserLoginService {
 
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );

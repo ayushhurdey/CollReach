@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/user")
 public class UserProfileController {
 
-   @Autowired
+    @Autowired
     UserProfileService userProfileService;
 
     @PostMapping(path = "/signup")

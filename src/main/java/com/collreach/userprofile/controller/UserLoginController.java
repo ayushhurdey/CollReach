@@ -21,11 +21,16 @@ public class UserLoginController {
     @Autowired
     UserLoginService userLoginService;
 
-    @Autowired
-    private UserPersonalInfoRepository userExtrasRepository;
-
     //@Autowired
-    private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
+    //private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
+
+    @PostMapping(path = "/login")
+    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest){
+        UserLoginResponse userLoginResponse = userLoginService.login(userLoginRequest);
+        if(userLoginResponse == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(userLoginResponse);
+    }
 
     /*
     @PostMapping(path="/signup")
@@ -90,11 +95,4 @@ public class UserLoginController {
     }
  */
 
-    @PostMapping(path = "/login")
-    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest){
-        UserLoginResponse userLoginResponse = userLoginService.login(userLoginRequest);
-        if(userLoginResponse == null)
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.ok().body(userLoginResponse);
-    }
 }
