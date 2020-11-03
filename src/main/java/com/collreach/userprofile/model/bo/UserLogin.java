@@ -3,22 +3,17 @@ package com.collreach.userprofile.model.bo;
 import javax.persistence.*;
 
 @Entity
-public class User {
+public class UserLogin {
     @Id
-    @Column(nullable = false, unique = true)
+    @Column(name = "user_name")
     private String userName;
-
-    @Column(nullable = false, unique = true)
-    private int id;                                      // unique id
 
     @Column(nullable = false)
     private String password;
 
-    public int getId() { return id; }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private UserPersonalInfo userPersonalInfo;
 
     public String getUserName() {
         return userName;
@@ -34,5 +29,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserPersonalInfo getUserPersonalInfo() {
+        return userPersonalInfo;
+    }
+
+    public void setUserPersonalInfo(UserPersonalInfo userPersonalInfo) {
+        this.userPersonalInfo = userPersonalInfo;
     }
 }

@@ -1,63 +1,33 @@
 package com.collreach.userprofile.controller;
 
-import com.collreach.userprofile.model.bo.User;
-import com.collreach.userprofile.model.repositories.UserRepository;
-import com.collreach.userprofile.model.request.UserAddRequest;
-import com.collreach.userprofile.model.request.UserLoginRequest;
+import com.collreach.userprofile.mappers.UserProfileMapper;
+import com.collreach.userprofile.model.bo.CourseInfo;
+import com.collreach.userprofile.model.bo.UserLogin;
+import com.collreach.userprofile.model.bo.UserPersonalInfo;
+import com.collreach.userprofile.model.repositories.UserLoginRepository;
+import com.collreach.userprofile.model.request.UserSignupRequest;
+import com.collreach.userprofile.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(path="/user")
+@RequestMapping(path = "/user")
 public class UserProfileController {
 
     @Autowired
-    private UserRepository userRepository;
+    UserProfileService userProfileService;
 
-    @PostMapping(path="/signup")
-    public ResponseEntity<String> addNewUser(@RequestBody UserAddRequest userAddRequest) throws Exception{
-        try {
-            User user = new User();
-            user.setId(userAddRequest.getId());
-            user.setUserName(userAddRequest.getUserName());
-            user.setPassword(userAddRequest.getPassword());
-            String username = userAddRequest.getUserName();
-            Optional <User> optional = userRepository.findById(username);
-            if (optional.isPresent()) {
-                return ResponseEntity.ok().body("User Already Exists.");
-            } else {
-                userRepository.save(user);
-                return ResponseEntity.ok().body("User Added Successfully");
-            }
-        }
-        catch(Exception e){
-            return ResponseEntity.ok().body("User Already exists.");
-        }
-    }
-
-    @PostMapping(path="/login")
-    public ResponseEntity<String> checkLogin(@RequestBody UserLoginRequest userLoginRequest){
-        String username = userLoginRequest.getUserName();
-        String password = userLoginRequest.getPassword();
-        int id = userLoginRequest.getId();
-        Optional <User> optional = userRepository.findById(username);
-
-        if (optional.isPresent() &&
-                optional.get().getId() == id &&
-                optional.get().getPassword().equals(password) &&
-                optional.get().getUserName().equals(username)) {
-            System.out.println(optional.get().getId());
-            System.out.println(optional.get().getUserName());
-            System.out.println(optional.get().getPassword());
-            return ResponseEntity.ok().body("Login successful.");
-        } else {
-            //System.out.printf("No employee found with id %d%n", id);
-            return ResponseEntity.ok().body("Invalid credentials.");
+    @PostMapping(path = "/signup")
+    public ResponseEntity<String> signup(@RequestBody UserSignupRequest userSignupRequest){
+        try{
+            String userSignupResponse = userProfileService.signup(userSignupRequest);
+            return ResponseEntity.ok().body(userSignupResponse);
+        }catch(Exception e){
+            return ResponseEntity.ok().body("Some Error Occurred. " + e);
         }
     }
 }
