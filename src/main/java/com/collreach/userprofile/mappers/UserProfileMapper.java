@@ -3,6 +3,9 @@ package com.collreach.userprofile.mappers;
 import com.collreach.userprofile.model.bo.CourseInfo;
 import com.collreach.userprofile.model.bo.UserLogin;
 import com.collreach.userprofile.model.bo.UserPersonalInfo;
+import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
+import com.collreach.userprofile.model.request.UserLoginRequest;
+import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.response.CourseInfoResponse;
 import com.collreach.userprofile.model.response.UserLoginResponse;
 import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
@@ -12,11 +15,14 @@ import org.mapstruct.Mappings;
 
 @Mapper
 public interface UserProfileMapper {
-    @Mappings({
-            @Mapping(target="userPersonalInfoResponse", source = "userPersonalInfo")})
+    @Mappings({@Mapping(target="userPersonalInfoResponse", source = "userPersonalInfo")})
     public UserLoginResponse userLoginToUserLoginResponse(UserLogin userLogin);
-    @Mappings({
-            @Mapping(target="courseInfoResponse", source = "courseInfo")})
+
+    @Mappings({@Mapping(target="courseInfoResponse", source = "courseInfo")})
     public UserPersonalInfoResponse userPersonalInfoToUserPersonalInfoResponse(UserPersonalInfo userPersonalInfo);
+
     public CourseInfoResponse courseInfoToCourseInfoResponse(CourseInfo courseInfo);
+
+    //@Mappings({@Mapping(target="userLoginRequest", source = "userSignupRequest")})
+    public UserLoginRequest userInfoUpdateRequestToUserLoginRequest(UserInfoUpdateRequest userInfoUpdateRequest);
 }
