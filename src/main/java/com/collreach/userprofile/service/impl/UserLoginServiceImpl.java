@@ -20,7 +20,16 @@ public class UserLoginServiceImpl implements UserLoginService {
 
     @Override
     public UserLoginResponse login(UserLoginRequest userLoginRequest) {
+        String username;
+        String password;
         UserLogin user = userLoginRepository.findById(userLoginRequest.getUserName()).orElse(null);
-        return userProfileMapper.userLoginToUserLoginResponse(user);
+        if(user != null){
+            username = user.getUserName();
+            password = user.getPassword();
+            if(username.equals(userLoginRequest.getUserName()) && password.equals(userLoginRequest.getPassword())){
+                return userProfileMapper.userLoginToUserLoginResponse(user);
+            }
+        }
+        return userProfileMapper.userLoginToUserLoginResponse(null);
     }
 }
