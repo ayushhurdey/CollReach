@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(path = "/user")
 public class UserInfoUpdateController {
-    //@Autowired
-    //UserLoginService userLoginService;
+
     @Autowired
     UserInfoUpdateService userInfoUpdateService;
-
-    //private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
     @PutMapping(path = "/updateEmail")
     public ResponseEntity<String> updateEmail(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){

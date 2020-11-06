@@ -1,6 +1,5 @@
 package com.collreach.userprofile.model.response;
 
-import javax.persistence.Column;
 
 public class CourseInfoResponse {
     private String branch;

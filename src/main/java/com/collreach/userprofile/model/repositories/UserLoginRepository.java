@@ -1,6 +1,5 @@
 package com.collreach.userprofile.model.repositories;
 
-import com.collreach.userprofile.model.bo.CourseInfo;
 import com.collreach.userprofile.model.bo.UserLogin;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

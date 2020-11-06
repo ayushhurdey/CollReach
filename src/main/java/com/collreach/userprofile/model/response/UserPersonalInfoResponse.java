@@ -1,8 +1,5 @@
 package com.collreach.userprofile.model.response;
 
-import com.collreach.userprofile.model.bo.CourseInfo;
-
-import javax.persistence.*;
 
 public class UserPersonalInfoResponse {
     private String email;

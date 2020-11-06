@@ -1,13 +1,8 @@
 package com.collreach.userprofile.controller;
 
-import com.collreach.userprofile.mappers.UserProfileMapper;
-import com.collreach.userprofile.model.bo.UserLogin;
-import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
-import com.collreach.userprofile.model.repositories.UserLoginRepository;
 import com.collreach.userprofile.model.request.UserLoginRequest;
 import com.collreach.userprofile.model.response.UserLoginResponse;
 import com.collreach.userprofile.service.UserLoginService;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,9 +15,6 @@ public class UserLoginController {
 
     @Autowired
     UserLoginService userLoginService;
-
-    //@Autowired
-    //private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
     @PostMapping(path = "/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest){

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     @RequestMapping("/hello")
-    public String hello() { return "Hey!! you got it."; }
+    public String hello() { return "Hello! Server is listening at port 8082."; }
 
     @RequestMapping("/server")
     public String server(){
