@@ -1,23 +1,17 @@
 package com.collreach.userprofile.service.impl;
 
 import com.collreach.userprofile.mappers.UserProfileMapper;
-import com.collreach.userprofile.model.bo.CourseInfo;
-import com.collreach.userprofile.model.bo.UserLogin;
-import com.collreach.userprofile.model.bo.UserPersonalInfo;
 import com.collreach.userprofile.model.repositories.CourseInfoRepository;
 import com.collreach.userprofile.model.repositories.UserLoginRepository;
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
+import com.collreach.userprofile.model.request.UserLoginUpdateRequest;
 import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
-import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.response.UserLoginResponse;
 import com.collreach.userprofile.service.UserInfoUpdateService;
 import com.collreach.userprofile.service.UserLoginService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
@@ -76,14 +70,11 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     }
 
     @Override
-    public String updateCourseId(UserInfoUpdateRequest userInfoUpdateRequest){
+    public String updateCourseInfo(UserInfoUpdateRequest userInfoUpdateRequest){
         UserLoginResponse user = userLoginService.login(
                 userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
         if(user != null) {
             String email = user.getUserPersonalInfoResponse().getEmail();
-            //System.out.println("OldPhone : " + oldPhoneNo);
-            //System.out.println("newPhone: " + userInfoUpdateRequest.getPhoneNo());
-            //CourseInfo courseInfo = new CourseInfo();
             var courseInfo = courseInfoRepository.findById(userInfoUpdateRequest.getCourseId()).orElse(null);
             if(courseInfo != null) {
                 userPersonalInfoRepository.updateCourseId(email, courseInfo);
@@ -92,5 +83,45 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
             return "Course Info invalid.";
         }
         return "Invalid credentials..";
+    }
+
+    @Override
+    public String updatePassword(UserLoginUpdateRequest userLoginUpdateRequest){
+        UserLoginResponse user = userLoginService.login(
+                userProfileMapper.userLoginUpdateRequestToUserLoginRequest(userLoginUpdateRequest));
+        if(user != null) {
+            String username = user.getUserName();
+            String newPassword = userLoginUpdateRequest.getNewPassword();
+
+            if(user.getPassword().equals(newPassword))
+                return "Try password other than previous one.";
+
+            if(!newPassword.equals("")){
+                userLoginRepository.updatePassword(username, newPassword);
+                return "Password updated";
+            }
+            return "Invalid new Password.";
+        }
+        return "Invalid credentials.";
+    }
+
+    @Override
+    public String updateUserName(UserLoginUpdateRequest userLoginUpdateRequest){
+        UserLoginResponse user = userLoginService.login(
+                userProfileMapper.userLoginUpdateRequestToUserLoginRequest(userLoginUpdateRequest));
+        if(user != null) {
+            String username = user.getUserName();
+            String newUserName = userLoginUpdateRequest.getNewUserName();
+
+            if(username.equals(newUserName))
+                return "Try username other than previous one.";
+
+            if(!newUserName.equals("")){
+                userLoginRepository.updateUserName(username, newUserName);
+                return "Username updated.";
+            }
+            return "Invalid new username.";
+        }
+        return "Invalid credentials.";
     }
 }

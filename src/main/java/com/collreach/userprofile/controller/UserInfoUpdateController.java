@@ -1,17 +1,11 @@
 package com.collreach.userprofile.controller;
 
-import com.collreach.userprofile.mappers.UserProfileMapper;
+import com.collreach.userprofile.model.request.UserLoginUpdateRequest;
 import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
-import com.collreach.userprofile.model.request.UserLoginRequest;
-import com.collreach.userprofile.model.request.UserSignupRequest;
-import com.collreach.userprofile.model.response.UserLoginResponse;
 import com.collreach.userprofile.service.UserInfoUpdateService;
-import com.collreach.userprofile.service.UserLoginService;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,8 +39,20 @@ public class UserInfoUpdateController {
     }
 
     @PutMapping(path = "/updateCourseId")
-    public ResponseEntity<String> updateCourseId(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
-        String msg = userInfoUpdateService.updateCourseId(userInfoUpdateRequest);
+    public ResponseEntity<String> updateCourseInfo(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
+        String msg = userInfoUpdateService.updateCourseInfo(userInfoUpdateRequest);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @PutMapping(path = "/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestBody UserLoginUpdateRequest userLoginUpdateRequest){
+        String msg = userInfoUpdateService.updatePassword(userLoginUpdateRequest);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @PutMapping(path = "/updateUserName")
+    public ResponseEntity<String> updateUserName(@RequestBody UserLoginUpdateRequest userLoginUpdateRequest){
+        String msg = userInfoUpdateService.updateUserName(userLoginUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
 }

@@ -3,9 +3,9 @@ package com.collreach.userprofile.mappers;
 import com.collreach.userprofile.model.bo.CourseInfo;
 import com.collreach.userprofile.model.bo.UserLogin;
 import com.collreach.userprofile.model.bo.UserPersonalInfo;
+import com.collreach.userprofile.model.request.UserLoginUpdateRequest;
 import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
 import com.collreach.userprofile.model.request.UserLoginRequest;
-import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.response.CourseInfoResponse;
 import com.collreach.userprofile.model.response.UserLoginResponse;
 import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
@@ -23,6 +23,7 @@ public interface UserProfileMapper {
 
     public CourseInfoResponse courseInfoToCourseInfoResponse(CourseInfo courseInfo);
 
-    //@Mappings({@Mapping(target="userLoginRequest", source = "userSignupRequest")})
     public UserLoginRequest userInfoUpdateRequestToUserLoginRequest(UserInfoUpdateRequest userInfoUpdateRequest);
+
+    public UserLoginRequest userLoginUpdateRequestToUserLoginRequest(UserLoginUpdateRequest userLoginUpdateRequest);
 }
