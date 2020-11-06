@@ -1,5 +1,6 @@
 package com.collreach.userprofile.model.repositories;
 
+import com.collreach.userprofile.model.bo.CourseInfo;
 import com.collreach.userprofile.model.bo.UserPersonalInfo;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +28,9 @@ public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalI
     @Transactional
     @Query("update UserPersonalInfo u set u.phoneNo = :phoneNo where u.phoneNo = :oldPhoneNo")
     void updatePhoneNo(@Param(value = "oldPhoneNo") String oldPhoneNo, @Param(value = "phoneNo") String phoneNo);
+
+    @Modifying
+    @Transactional
+    @Query("update UserPersonalInfo u set u.courseInfo = :courseInfo where u.email = :email")
+    void updateCourseId(@Param(value = "email") String email, @Param(value = "courseInfo") CourseInfo courseInfo);
 }

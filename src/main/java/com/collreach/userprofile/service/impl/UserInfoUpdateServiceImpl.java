@@ -1,8 +1,10 @@
 package com.collreach.userprofile.service.impl;
 
 import com.collreach.userprofile.mappers.UserProfileMapper;
+import com.collreach.userprofile.model.bo.CourseInfo;
 import com.collreach.userprofile.model.bo.UserLogin;
 import com.collreach.userprofile.model.bo.UserPersonalInfo;
+import com.collreach.userprofile.model.repositories.CourseInfoRepository;
 import com.collreach.userprofile.model.repositories.UserLoginRepository;
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
 import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
@@ -25,6 +27,9 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     UserLoginRepository userLoginRepository;
     @Autowired
     UserPersonalInfoRepository userPersonalInfoRepository;
+
+    @Autowired
+    CourseInfoRepository courseInfoRepository;
 
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
@@ -66,6 +71,25 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
             //System.out.println("newPhone: " + userInfoUpdateRequest.getPhoneNo());
             userPersonalInfoRepository.updatePhoneNo(oldPhoneNo, userInfoUpdateRequest.getPhoneNo());
             return "Updated Phone No.";
+        }
+        return "Invalid credentials..";
+    }
+
+    @Override
+    public String updateCourseId(UserInfoUpdateRequest userInfoUpdateRequest){
+        UserLoginResponse user = userLoginService.login(
+                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        if(user != null) {
+            String email = user.getUserPersonalInfoResponse().getEmail();
+            //System.out.println("OldPhone : " + oldPhoneNo);
+            //System.out.println("newPhone: " + userInfoUpdateRequest.getPhoneNo());
+            //CourseInfo courseInfo = new CourseInfo();
+            var courseInfo = courseInfoRepository.findById(userInfoUpdateRequest.getCourseId()).orElse(null);
+            if(courseInfo != null) {
+                userPersonalInfoRepository.updateCourseId(email, courseInfo);
+                return "Updated Course.";
+            }
+            return "Course Info invalid.";
         }
         return "Invalid credentials..";
     }

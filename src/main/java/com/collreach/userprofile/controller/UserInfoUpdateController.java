@@ -43,4 +43,10 @@ public class UserInfoUpdateController {
         String msg = userInfoUpdateService.updatePhoneNo(userInfoUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
+
+    @PutMapping(path = "/updateCourseId")
+    public ResponseEntity<String> updateCourseId(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
+        String msg = userInfoUpdateService.updateCourseId(userInfoUpdateRequest);
+        return ResponseEntity.ok().body(msg);
+    }
 }

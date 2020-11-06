@@ -7,4 +7,5 @@ public interface UserInfoUpdateService {
     public String updateEmail(UserInfoUpdateRequest userInfoUpdateRequest);
     public String updateAlternateEmail(UserInfoUpdateRequest userInfoUpdateRequest);
     public String updatePhoneNo(UserInfoUpdateRequest userInfoUpdateRequest);
+    public String updateCourseId(UserInfoUpdateRequest userInfoUpdateRequest);
 }
