@@ -1,13 +1,13 @@
 package com.collreach.userprofile.model.request;
 
 public class UserSignupRequest {
-    private String userName;
-    private String password;
-    private String email;
-    private String name;
-    private int courseId;
-    private String alternateEmail;
-    private String phoneNo;
+    protected String userName;
+    protected String password;
+    protected String email;
+    protected String name;
+    protected int courseId;
+    protected String alternateEmail;
+    protected String phoneNo;
 
     public String getUserName() {
         return userName;

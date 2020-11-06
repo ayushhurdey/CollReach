@@ -42,10 +42,9 @@ public class UserProfileServiceImpl implements UserProfileService {
     public String checkUsername(UserSignupRequest userSignupRequest){
         try {
             boolean user = userLoginRepository.existsById(userSignupRequest.getUserName());
-            String msg = "";
             if (user)
-                msg = "Username exists already.";
-            return msg;
+                return "Username exists already.";
+            return "";
         }
         catch(Exception e){
             return "Username required.";
@@ -55,30 +54,27 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public String checkEmail(UserSignupRequest userSignupRequest){
         Boolean email = userPersonalInfoRepository.existsByEmail(userSignupRequest.getEmail());
-        String msg = "";
         if(email){
-            msg = "Email already exists.";
+            return "Email already exists.";
         }
-        return msg;
+        return "";
     }
 
     @Override
     public String checkAlternateEmail(UserSignupRequest userSignupRequest){
         Boolean email = userPersonalInfoRepository.existsByAlternateEmail(userSignupRequest.getAlternateEmail());
-        String msg = "";
         if(email){
-            msg = "This Email already exists.";
+            return "This Email already exists.";
         }
-        return msg;
+        return "";
     }
 
     @Override
     public String checkPhoneNo(UserSignupRequest userSignupRequest){
         Boolean phone = userPersonalInfoRepository.existsByPhoneNo(userSignupRequest.getPhoneNo());
-        String msg = "";
         if(phone){
-            msg = "Phone No. already exists.";
+            return "Phone No. already exists.";
         }
-        return msg;
+        return "";
     }
 }

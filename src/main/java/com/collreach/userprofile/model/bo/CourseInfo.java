@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class CourseInfo {
     @Id
     @Column(name = "course_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int courseId;
 
     @Column(nullable = false)
