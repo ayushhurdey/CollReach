@@ -33,14 +33,39 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         UserLoginResponse user = userLoginService.login(
                 userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
         if(user != null) {
-            UserPersonalInfo userInfo = new UserPersonalInfo();
-            //UserLogin usr = userLoginRepository.findById(userInfoUpdateRequest.getUserName()).get();
             String oldEmail = user.getUserPersonalInfoResponse().getEmail();
-            //user
-            //userInfo.setEmail(userInfoUpdateRequest.getEmail());
+            //System.out.println("OldEmail : " + oldEmail);
+            //System.out.println("newMail: " + userInfoUpdateRequest.getEmail());
             userPersonalInfoRepository.updateEmail(oldEmail, userInfoUpdateRequest.getEmail());
-            userPersonalInfoRepository.save(userInfo);
-            return "Updated.";
+            return "Updated Email.";
+        }
+        return "Invalid credentials..";
+    }
+
+    @Override
+    public String updateAlternateEmail(UserInfoUpdateRequest userInfoUpdateRequest){
+        UserLoginResponse user = userLoginService.login(
+                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        if(user != null) {
+            String oldEmail = user.getUserPersonalInfoResponse().getAlternateEmail();
+            //System.out.println("OldEmail : " + oldEmail);
+            //System.out.println("newMail: " + userInfoUpdateRequest.getAlternateEmail());
+            userPersonalInfoRepository.updateAlternateEmail(oldEmail, userInfoUpdateRequest.getAlternateEmail());
+            return "Updated Alternate Email.";
+        }
+        return "Invalid credentials..";
+    }
+
+    @Override
+    public String updatePhoneNo(UserInfoUpdateRequest userInfoUpdateRequest){
+        UserLoginResponse user = userLoginService.login(
+                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        if(user != null) {
+            String oldPhoneNo = user.getUserPersonalInfoResponse().getPhoneNo();
+            //System.out.println("OldPhone : " + oldPhoneNo);
+            //System.out.println("newPhone: " + userInfoUpdateRequest.getPhoneNo());
+            userPersonalInfoRepository.updatePhoneNo(oldPhoneNo, userInfoUpdateRequest.getPhoneNo());
+            return "Updated Phone No.";
         }
         return "Invalid credentials..";
     }

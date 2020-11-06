@@ -31,4 +31,16 @@ public class UserInfoUpdateController {
         String msg = userInfoUpdateService.updateEmail(userInfoUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
+
+    @PutMapping(path = "/updateAlternateEmail")
+    public ResponseEntity<String> updateAlternateEmail(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
+        String msg = userInfoUpdateService.updateAlternateEmail(userInfoUpdateRequest);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @PutMapping(path = "/updatePhoneNo")
+    public ResponseEntity<String> updatePhoneNo(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
+        String msg = userInfoUpdateService.updatePhoneNo(userInfoUpdateRequest);
+        return ResponseEntity.ok().body(msg);
+    }
 }
