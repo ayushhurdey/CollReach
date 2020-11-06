@@ -33,8 +33,6 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
                 userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
         if(user != null) {
             String oldEmail = user.getUserPersonalInfoResponse().getEmail();
-            //System.out.println("OldEmail : " + oldEmail);
-            //System.out.println("newMail: " + userInfoUpdateRequest.getEmail());
             userPersonalInfoRepository.updateEmail(oldEmail, userInfoUpdateRequest.getEmail());
             return "Updated Email.";
         }
@@ -47,8 +45,6 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
                 userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
         if(user != null) {
             String oldEmail = user.getUserPersonalInfoResponse().getAlternateEmail();
-            //System.out.println("OldEmail : " + oldEmail);
-            //System.out.println("newMail: " + userInfoUpdateRequest.getAlternateEmail());
             userPersonalInfoRepository.updateAlternateEmail(oldEmail, userInfoUpdateRequest.getAlternateEmail());
             return "Updated Alternate Email.";
         }
@@ -61,8 +57,6 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
                 userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
         if(user != null) {
             String oldPhoneNo = user.getUserPersonalInfoResponse().getPhoneNo();
-            //System.out.println("OldPhone : " + oldPhoneNo);
-            //System.out.println("newPhone: " + userInfoUpdateRequest.getPhoneNo());
             userPersonalInfoRepository.updatePhoneNo(oldPhoneNo, userInfoUpdateRequest.getPhoneNo());
             return "Updated Phone No.";
         }

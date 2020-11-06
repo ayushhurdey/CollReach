@@ -1,6 +1,5 @@
 package com.collreach.userprofile.model.response;
 
-import com.collreach.userprofile.model.bo.UserPersonalInfo;
 
 public class UserLoginResponse {
     private String userName;

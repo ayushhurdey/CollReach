@@ -1,10 +1,5 @@
 package com.collreach.userprofile.controller;
 
-import com.collreach.userprofile.mappers.UserProfileMapper;
-import com.collreach.userprofile.model.bo.CourseInfo;
-import com.collreach.userprofile.model.bo.UserLogin;
-import com.collreach.userprofile.model.bo.UserPersonalInfo;
-import com.collreach.userprofile.model.repositories.UserLoginRepository;
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.service.UserProfileService;
