@@ -27,7 +27,6 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     UserLoginRepository userLoginRepository;
     @Autowired
     UserPersonalInfoRepository userPersonalInfoRepository;
-
     @Autowired
     CourseInfoRepository courseInfoRepository;
 
