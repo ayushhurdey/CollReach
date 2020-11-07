@@ -1,12 +1,15 @@
 package com.collreach.userprofile.model.response;
 
 
+import java.util.List;
+
 public class UserPersonalInfoResponse {
     private String email;
     private String name;
     private String alternateEmail;
     private String phoneNo;
     private CourseInfoResponse courseInfoResponse;
+    private List<String> skills;
 
     public String getEmail() {
         return email;
@@ -46,5 +49,13 @@ public class UserPersonalInfoResponse {
 
     public void setCourseInfoResponse(CourseInfoResponse courseInfoResponse) {
         this.courseInfoResponse = courseInfoResponse;
+    }
+
+    public List<String> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<String> skills) {
+        this.skills = skills;
     }
 }

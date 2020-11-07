@@ -1,6 +1,9 @@
 package com.collreach.userprofile.service.impl;
 
 import com.collreach.userprofile.mappers.UserProfileMapper;
+import com.collreach.userprofile.model.bo.SkillsInfo;
+import com.collreach.userprofile.model.bo.UserLogin;
+import com.collreach.userprofile.model.bo.UserPersonalInfo;
 import com.collreach.userprofile.model.repositories.CourseInfoRepository;
 import com.collreach.userprofile.model.repositories.UserLoginRepository;
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
@@ -12,6 +15,9 @@ import com.collreach.userprofile.service.UserLoginService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
@@ -27,6 +33,22 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
+    @Override
+    public String updateSkills(UserInfoUpdateRequest userInfoUpdateRequest){
+        UserLogin user = userLoginRepository.findById(userInfoUpdateRequest.getUserName()).get();
+        UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
+        int userId = userPersonalInfo.getUserId();
+        Set<SkillsInfo> skills = new HashSet<>();
+        for(int skillId : userInfoUpdateRequest.getSkills()){
+            SkillsInfo skillsInfo = new SkillsInfo();
+            skillsInfo.setSkillId(skillId);
+            skills.add(skillsInfo);
+        }
+        userPersonalInfo.setUserSkills(skills);
+        userPersonalInfoRepository.save(userPersonalInfo);
+        return "Updated Skills successfully.";
+    }
+    
     @Override
     public String updateEmail(UserInfoUpdateRequest userInfoUpdateRequest){
         UserLoginResponse user = userLoginService.login(

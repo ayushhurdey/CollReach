@@ -39,6 +39,15 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
+    public String deleteUser(String userName){
+        int userId = userLoginRepository.findById(userName).get().getUserPersonalInfo().getUserId();
+        System.out.println("User id is :" + userId);
+        userLoginRepository.deleteById(userName);
+        userPersonalInfoRepository.deleteByUserId(userId);
+        return "deleted Successfully.";
+    }
+
+    @Override
     public String checkUsername(UserSignupRequest userSignupRequest){
         try {
             boolean user = userLoginRepository.existsById(userSignupRequest.getUserName());

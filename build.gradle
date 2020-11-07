@@ -26,6 +26,8 @@ dependencies {
 	//implementation 'commons-beanutils:commons-beanutils:1.9.3'
 	//implementation 'org.webjars:bootstrap:3.3.7'
 	//implementation 'org.webjars:jquery:3.2.1'
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
