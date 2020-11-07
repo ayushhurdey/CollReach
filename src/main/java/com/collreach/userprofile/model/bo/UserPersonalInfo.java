@@ -1,6 +1,8 @@
 package com.collreach.userprofile.model.bo;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class UserPersonalInfo {
@@ -24,6 +26,16 @@ public class UserPersonalInfo {
     @OneToOne
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     private CourseInfo courseInfo;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_skills",
+            joinColumns = @JoinColumn(
+                    name = "user_id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "skill_id"))
+    private Set<SkillsInfo> userSkills;
+
 
     public int getUserId() {
         return userId;
@@ -71,5 +83,13 @@ public class UserPersonalInfo {
 
     public void setCourseInfo(CourseInfo courseInfo) {
         this.courseInfo = courseInfo;
+    }
+
+    public Set<SkillsInfo> getUserSkills() {
+        return userSkills;
+    }
+
+    public void setUserSkills(Set<SkillsInfo> userSkills) {
+        this.userSkills = userSkills;
     }
 }

@@ -13,6 +13,11 @@ public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalI
     Boolean existsByAlternateEmail(String alternateEmail);
     Boolean existsByPhoneNo(String phoneNo);
 
+    @Modifying
+    @Transactional
+    @Query("delete from UserPersonalInfo u where u.userId = :userId")
+    void deleteByUserId(@Param(value = "userId") int userId);
+
 
     @Modifying
     @Transactional
