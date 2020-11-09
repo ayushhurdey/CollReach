@@ -32,6 +32,7 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
+    /*
     @Override
     public String updateSkills(UserInfoUpdateRequest userInfoUpdateRequest){
         UserLogin user = userLoginRepository.findById(userInfoUpdateRequest.getUserName()).get();
@@ -46,7 +47,7 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         userPersonalInfo.setUserSkills(skills);
         userPersonalInfoRepository.save(userPersonalInfo);
         return "Updated Skills successfully.";
-    }
+    }*/
     
     @Override
     public String updateEmail(UserInfoUpdateRequest userInfoUpdateRequest){

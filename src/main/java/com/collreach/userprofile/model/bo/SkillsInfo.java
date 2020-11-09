@@ -13,8 +13,9 @@ public class SkillsInfo {
     @Column(nullable = false, unique = true)
     private String skill;
 
+    /*
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userSkills")
-    private Set<UserPersonalInfo> userInfo;
+    private Set<UserPersonalInfo> userInfo;*/
 
     public int getSkillId() {
         return skillId;
@@ -32,11 +33,12 @@ public class SkillsInfo {
         this.skill = skill;
     }
 
+    /*
     public Set<UserPersonalInfo> getUserInfo() {
         return userInfo;
     }
 
     public void setUserInfo(Set<UserPersonalInfo> userInfo) {
         this.userInfo = userInfo;
-    }
+    }*/
 }
