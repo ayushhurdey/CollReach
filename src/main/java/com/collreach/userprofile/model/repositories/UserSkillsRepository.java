@@ -1,5 +1,6 @@
 package com.collreach.userprofile.model.repositories;
 
+import com.collreach.userprofile.model.bo.SkillsInfo;
 import com.collreach.userprofile.model.bo.UserPersonalInfo;
 import com.collreach.userprofile.model.bo.UserSkills;
 import com.collreach.userprofile.model.bo.UserSkillsKey;
@@ -20,4 +21,8 @@ public interface UserSkillsRepository extends CrudRepository<UserSkills, UserSki
     @Query("delete from UserSkills u where u.userId = :userId")
     void deleteByUserId(@Param("userId") UserPersonalInfo userId);
 
+    @Modifying
+    @Transactional
+    @Query("update UserSkills u set u.skillUpvoteCount = :skillUpvoteCounts where u.userId = :userId and u.skillId = :skillId")
+    void updateByUserIdAndSkillId(@Param("userId") UserPersonalInfo userId, @Param("skillId") SkillsInfo skillId, @Param("skillUpvoteCounts") int skillUpvoteCounts);
 }

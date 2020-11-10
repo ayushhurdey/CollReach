@@ -2,10 +2,12 @@ package com.collreach.userprofile.controller;
 
 import com.collreach.userprofile.model.request.UserLoginUpdateRequest;
 import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
+import com.collreach.userprofile.model.request.UserSkillUpdateRequest;
 import com.collreach.userprofile.service.UserInfoUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +21,20 @@ public class UserInfoUpdateController {
 
 
     @PutMapping(path = "/skills")
-    public ResponseEntity<String> updateSkills(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
-        String msg = userInfoUpdateService.updateSkills(userInfoUpdateRequest);
+    public ResponseEntity<String> updateSkills(@RequestBody UserSkillUpdateRequest userSkillUpdateRequest){
+        String msg = userInfoUpdateService.updateSkills(userSkillUpdateRequest);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @PutMapping(path = "/skills-upvote-count")
+    public ResponseEntity<String> updateSkillUpvoteCount(@RequestBody UserSkillUpdateRequest userSkillUpdateRequest){
+        String msg = userInfoUpdateService.updateSkillUpvoteCount(userSkillUpdateRequest);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @DeleteMapping(path = "/delete-skills")
+    public ResponseEntity<String> deleteSkills(@RequestBody UserSkillUpdateRequest userSkillUpdateRequest){
+        String msg = userInfoUpdateService.deleteUserSkills(userSkillUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
 
