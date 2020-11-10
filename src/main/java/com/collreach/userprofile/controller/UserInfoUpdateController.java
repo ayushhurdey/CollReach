@@ -17,12 +17,12 @@ public class UserInfoUpdateController {
     @Autowired
     UserInfoUpdateService userInfoUpdateService;
 
-    /*
+
     @PutMapping(path = "/skills")
     public ResponseEntity<String> updateSkills(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
         String msg = userInfoUpdateService.updateSkills(userInfoUpdateRequest);
         return ResponseEntity.ok().body(msg);
-    }*/
+    }
 
     @PutMapping(path = "/updateEmail")
     public ResponseEntity<String> updateEmail(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){

@@ -1,7 +1,5 @@
 package com.collreach.userprofile.model.bo;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,6 +11,10 @@ public class UserSkillsKey implements Serializable {
     public UserSkillsKey() {
     }
 
+    public UserSkillsKey(int userId, int skillId) {
+        this.userId = userId;
+        this.skillId = skillId;
+    }
 
     @Override
     public boolean equals(Object o) {

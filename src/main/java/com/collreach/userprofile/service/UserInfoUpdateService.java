@@ -10,5 +10,5 @@ public interface UserInfoUpdateService {
     public String updateCourseInfo(UserInfoUpdateRequest userInfoUpdateRequest);
     public String updatePassword(UserLoginUpdateRequest userLoginUpdateRequest);
     public String updateUserName(UserLoginUpdateRequest userLoginUpdateRequest);
-    /*public String updateSkills(UserInfoUpdateRequest userInfoUpdateRequest);*/
+    public String updateSkills(UserInfoUpdateRequest userInfoUpdateRequest);
 }
