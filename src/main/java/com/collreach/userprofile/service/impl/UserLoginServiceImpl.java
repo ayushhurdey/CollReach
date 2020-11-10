@@ -4,7 +4,6 @@ import com.collreach.userprofile.mappers.UserProfileMapper;
 import com.collreach.userprofile.model.bo.SkillsInfo;
 import com.collreach.userprofile.model.bo.UserLogin;
 import com.collreach.userprofile.model.bo.UserSkills;
-import com.collreach.userprofile.model.repositories.SkillsInfoRepository;
 import com.collreach.userprofile.model.repositories.UserLoginRepository;
 import com.collreach.userprofile.model.repositories.UserSkillsRepository;
 import com.collreach.userprofile.model.request.UserLoginRequest;
@@ -25,8 +24,7 @@ public class UserLoginServiceImpl implements UserLoginService {
     private UserLoginRepository userLoginRepository;
     @Autowired
     private UserSkillsRepository userSkillsRepository;
-    @Autowired
-    private SkillsInfoRepository skillsInfoRepository;
+
 
     @Override
     public UserLoginResponse login(UserLoginRequest userLoginRequest) {
@@ -36,19 +34,12 @@ public class UserLoginServiceImpl implements UserLoginService {
         if(user != null){
             username = user.getUserName();
             password = user.getPassword();
-            //Set<SkillsInfo> skillSet = user.getUserPersonalInfo().getUserSkills();
 
-            var userSkills = userSkillsRepository.findAllByUserId(user.getUserPersonalInfo());
+            List<UserSkills> userSkills = userSkillsRepository.findAllByUserId(user.getUserPersonalInfo());
             Set<SkillsInfo> skillSet = new HashSet<SkillsInfo>();
-            /*for(Optional<UserSkills> userSkill: userSkills){
-                userSkill.ifPresent(skills -> skillSet.add(skills.getSkillId()));
-            }*/
             for(UserSkills userSkill: userSkills){
-                //var x = userSkill.getUserId().getUserId();
-                //if(x == user.getUserPersonalInfo().getUserId())
                     skillSet.add(userSkill.getSkillId());
             }
-
 
             if(username.equals(userLoginRequest.getUserName()) && password.equals(userLoginRequest.getPassword())){
                  UserLoginResponse userLoginResponse = userProfileMapper.userLoginToUserLoginResponse(user);

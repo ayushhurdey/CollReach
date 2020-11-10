@@ -29,31 +29,25 @@ public class UserProfileController {
     }
 
 
-    @DeleteMapping(path = "/deleteUser/{username}")
+    @DeleteMapping(path = "/delete-user/{username}")
     public ResponseEntity<String> deleteUser(@PathVariable(value = "username") String userName){
         String msg = userProfileService.deleteUser(userName);
         return ResponseEntity.ok().body(msg);
     }
 
-    @PostMapping(path = "/checkUsername")
+    @PostMapping(path = "/check-username")
     public ResponseEntity<String> checkUsername(@RequestBody UserSignupRequest userSignupRequest){
         String msg = userProfileService.checkUsername(userSignupRequest);
         return ResponseEntity.ok().body(msg);
     }
 
-    @PostMapping(path = "/checkEmail")
+    @PostMapping(path = "/check-email")
     public ResponseEntity<String> checkEmail(@RequestBody UserSignupRequest userSignupRequest){
         String msg = userProfileService.checkEmail(userSignupRequest);
         return ResponseEntity.ok().body(msg);
     }
 
-    @PostMapping(path = "/checkAlternateEmail")
-    public ResponseEntity<String> checkAlternateEmail(@RequestBody UserSignupRequest userSignupRequest){
-        String msg = userProfileService.checkAlternateEmail(userSignupRequest);
-        return ResponseEntity.ok().body(msg);
-    }
-
-    @PostMapping(path = "/checkPhoneNo")
+    @PostMapping(path = "/check-phone-no")
     public ResponseEntity<String> checkPhoneNo(@RequestBody UserSignupRequest userSignupRequest){
         String msg = userProfileService.checkPhoneNo(userSignupRequest);
         return ResponseEntity.ok().body(msg);
