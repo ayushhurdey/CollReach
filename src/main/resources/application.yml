@@ -7,7 +7,7 @@ spring:
       ddl-auto: update
     show-sql: true
   datasource:
-    url: jdbc:mysql://localhost:3306/collreach_userLogin
+    url: jdbc:mysql://localhost:3306/collreach_userlogin
     username: root
     password: Sensitive@1
   security:

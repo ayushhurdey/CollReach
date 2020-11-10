@@ -26,7 +26,7 @@ public class UserPersonalInfo {
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     private CourseInfo courseInfo;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    /*@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_skills",
             joinColumns = @JoinColumn(
@@ -34,6 +34,7 @@ public class UserPersonalInfo {
             inverseJoinColumns = @JoinColumn(
                     name = "skill_id"))
     private Set<SkillsInfo> userSkills;
+     */
 
 
     public int getUserId() {
@@ -84,6 +85,7 @@ public class UserPersonalInfo {
         this.courseInfo = courseInfo;
     }
 
+    /*
     public Set<SkillsInfo> getUserSkills() {
         return userSkills;
     }
@@ -91,4 +93,5 @@ public class UserPersonalInfo {
     public void setUserSkills(Set<SkillsInfo> userSkills) {
         this.userSkills = userSkills;
     }
+     */
 }
