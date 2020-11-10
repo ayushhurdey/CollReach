@@ -3,8 +3,10 @@ package com.collreach.userprofile.service.impl;
 import com.collreach.userprofile.mappers.UserProfileMapper;
 import com.collreach.userprofile.model.bo.*;
 import com.collreach.userprofile.model.repositories.*;
-import com.collreach.userprofile.model.request.UserLoginUpdateRequest;
 import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
+import com.collreach.userprofile.model.request.UserLoginUpdateRequest;
+import com.collreach.userprofile.model.request.UserSkillUpdateRequest;
+import com.collreach.userprofile.model.request.UserSkillUpdateRequest;
 import com.collreach.userprofile.model.response.UserLoginResponse;
 import com.collreach.userprofile.service.UserInfoUpdateService;
 import com.collreach.userprofile.service.UserLoginService;
@@ -12,9 +14,8 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
+
 
 @Service
 public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
@@ -49,15 +50,15 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     }*/
 
     @Override
-    public String updateSkills(UserInfoUpdateRequest userInfoUpdateRequest){
-        Optional<UserLogin> userLogin = userLoginRepository.findById(userInfoUpdateRequest.getUserName());
+    public String updateSkills(UserSkillUpdateRequest userSkillUpdateRequest){
+        Optional<UserLogin> userLogin = userLoginRepository.findById(userSkillUpdateRequest.getUserName());
         UserLogin user;
         if(!userLogin.isPresent()){
             return "Invalid details provided.";
         }
         user = userLogin.get();
         UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
-        for(int skillId : userInfoUpdateRequest.getSkills()){
+        for(int skillId : userSkillUpdateRequest.getSkills()){
             SkillsInfo skillsInfo = new SkillsInfo();
             UserSkills userSkills = new UserSkills();
             skillsInfo.setSkillId(skillId);
@@ -72,7 +73,36 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         }
         return "Updated Skills successfully.";
     }
-    
+
+    @Override
+    public String updateSkillUpvoteCount(UserSkillUpdateRequest userSkillUpdateRequest){
+        int skillId = userSkillUpdateRequest.getSkillId();
+        Optional<UserLogin> userLogin = userLoginRepository.findById(userSkillUpdateRequest.getUserName());
+        if(userLogin.isPresent()){
+            UserPersonalInfo userPersonalInfo = userLogin.get().getUserPersonalInfo();
+            UserSkills userSkills = userSkillsRepository
+                    .findById(new UserSkillsKey( userPersonalInfo.getUserId(), skillId )).get();
+            int skillUpvoteCounts = userSkills.getSkillUpvoteCount() + 1;
+            SkillsInfo skillsInfo = new SkillsInfo();
+            skillsInfo.setSkillId(skillId);
+            userSkillsRepository.updateByUserIdAndSkillId(userPersonalInfo, skillsInfo, skillUpvoteCounts);
+            return "skill upvote count increased by 1.";
+        }
+        return "Something went wrong.";
+    }
+
+    @Override
+    public String deleteUserSkills(UserSkillUpdateRequest userSkillUpdateRequest){
+        Optional<UserLogin> userLogin = userLoginRepository.findById(userSkillUpdateRequest.getUserName());
+        if(userLogin.isPresent()) {
+            for(int skillId : userSkillUpdateRequest.getSkills()){
+                userSkillsRepository.deleteById(new UserSkillsKey( userLogin.get().getUserPersonalInfo().getUserId(), skillId ));
+            }
+            return "skills deleted successfully.";
+        }
+        return "Something went wrong.";
+    }
+
     @Override
     public String updateEmail(UserInfoUpdateRequest userInfoUpdateRequest){
         UserLoginResponse user = userLoginService.login(

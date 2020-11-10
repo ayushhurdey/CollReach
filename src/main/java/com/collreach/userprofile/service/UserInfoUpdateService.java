@@ -2,6 +2,7 @@ package com.collreach.userprofile.service;
 
 import com.collreach.userprofile.model.request.UserLoginUpdateRequest;
 import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
+import com.collreach.userprofile.model.request.UserSkillUpdateRequest;
 
 public interface UserInfoUpdateService {
     public String updateEmail(UserInfoUpdateRequest userInfoUpdateRequest);
@@ -10,5 +11,7 @@ public interface UserInfoUpdateService {
     public String updateCourseInfo(UserInfoUpdateRequest userInfoUpdateRequest);
     public String updatePassword(UserLoginUpdateRequest userLoginUpdateRequest);
     public String updateUserName(UserLoginUpdateRequest userLoginUpdateRequest);
-    public String updateSkills(UserInfoUpdateRequest userInfoUpdateRequest);
+    public String updateSkills(UserSkillUpdateRequest userSkillUpdateRequest);
+    public String updateSkillUpvoteCount(UserSkillUpdateRequest userSkillUpdateRequest);
+    public String deleteUserSkills(UserSkillUpdateRequest userSkillUpdateRequest);
 }
