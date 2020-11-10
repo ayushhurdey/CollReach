@@ -5,10 +5,13 @@ import com.collreach.userprofile.model.bo.UserLogin;
 import com.collreach.userprofile.model.bo.UserPersonalInfo;
 import com.collreach.userprofile.model.repositories.UserLoginRepository;
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
+import com.collreach.userprofile.model.repositories.UserSkillsRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
@@ -17,6 +20,9 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Autowired
     UserPersonalInfoRepository userPersonalInfoRepository;
+    
+    @Autowired
+    UserSkillsRepository userSkillsRepository;
 
     @Override
     public String signup(UserSignupRequest userSignupRequest) {
@@ -40,11 +46,17 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public String deleteUser(String userName){
-        int userId = userLoginRepository.findById(userName).get().getUserPersonalInfo().getUserId();
-        System.out.println("User id is :" + userId);
-        userLoginRepository.deleteById(userName);
-        userPersonalInfoRepository.deleteByUserId(userId);
-        return "deleted Successfully.";
+        Optional<UserLogin> userLogin = userLoginRepository.findById(userName);
+        if(userLogin.isPresent()) {
+            UserPersonalInfo user = userLogin.get().getUserPersonalInfo();
+            System.out.println("User id is :" + user.getUserId());
+            userSkillsRepository.deleteByUserId(user);
+            userLoginRepository.deleteById(userName);
+            userPersonalInfoRepository.deleteByUserId(user.getUserId());
+            return "deleted Successfully.";
+        }
+        else
+            return "User not found.";
     }
 
     @Override

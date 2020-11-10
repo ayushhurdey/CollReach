@@ -1,12 +1,8 @@
 package com.collreach.userprofile.service.impl;
 
 import com.collreach.userprofile.mappers.UserProfileMapper;
-import com.collreach.userprofile.model.bo.SkillsInfo;
-import com.collreach.userprofile.model.bo.UserLogin;
-import com.collreach.userprofile.model.bo.UserPersonalInfo;
-import com.collreach.userprofile.model.repositories.CourseInfoRepository;
-import com.collreach.userprofile.model.repositories.UserLoginRepository;
-import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
+import com.collreach.userprofile.model.bo.*;
+import com.collreach.userprofile.model.repositories.*;
 import com.collreach.userprofile.model.request.UserLoginUpdateRequest;
 import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
 import com.collreach.userprofile.model.response.UserLoginResponse;
@@ -17,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -29,6 +26,8 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     UserPersonalInfoRepository userPersonalInfoRepository;
     @Autowired
     CourseInfoRepository courseInfoRepository;
+    @Autowired
+    UserSkillsRepository userSkillsRepository;
 
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
@@ -48,6 +47,31 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         userPersonalInfoRepository.save(userPersonalInfo);
         return "Updated Skills successfully.";
     }*/
+
+    @Override
+    public String updateSkills(UserInfoUpdateRequest userInfoUpdateRequest){
+        Optional<UserLogin> userLogin = userLoginRepository.findById(userInfoUpdateRequest.getUserName());
+        UserLogin user;
+        if(!userLogin.isPresent()){
+            return "Invalid details provided.";
+        }
+        user = userLogin.get();
+        UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
+        for(int skillId : userInfoUpdateRequest.getSkills()){
+            SkillsInfo skillsInfo = new SkillsInfo();
+            UserSkills userSkills = new UserSkills();
+            skillsInfo.setSkillId(skillId);
+            Optional<UserSkills> oldSkills = userSkillsRepository
+                    .findById(new UserSkillsKey(userPersonalInfo.getUserId(),skillsInfo.getSkillId()));
+            if(!oldSkills.isPresent()){
+                userSkills.setUserId(userPersonalInfo);
+                userSkills.setSkillId(skillsInfo);
+                userSkills.setSkillUpvoteCount(0);
+                userSkillsRepository.save(userSkills);
+            }
+        }
+        return "Updated Skills successfully.";
+    }
     
     @Override
     public String updateEmail(UserInfoUpdateRequest userInfoUpdateRequest){
