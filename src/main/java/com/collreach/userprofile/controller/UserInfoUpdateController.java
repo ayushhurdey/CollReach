@@ -32,43 +32,43 @@ public class UserInfoUpdateController {
         return ResponseEntity.ok().body(msg);
     }
 
-    @DeleteMapping(path = "/delete-skills")
+    @DeleteMapping(path = "/skills")
     public ResponseEntity<String> deleteSkills(@RequestBody UserSkillUpdateRequest userSkillUpdateRequest){
         String msg = userInfoUpdateService.deleteUserSkills(userSkillUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
 
-    @PutMapping(path = "/updateEmail")
+    @PutMapping(path = "/email")
     public ResponseEntity<String> updateEmail(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
         String msg = userInfoUpdateService.updateEmail(userInfoUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
 
-    @PutMapping(path = "/updateAlternateEmail")
+    @PutMapping(path = "/alternate-email")
     public ResponseEntity<String> updateAlternateEmail(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
         String msg = userInfoUpdateService.updateAlternateEmail(userInfoUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
 
-    @PutMapping(path = "/updatePhoneNo")
+    @PutMapping(path = "/phone-no")
     public ResponseEntity<String> updatePhoneNo(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
         String msg = userInfoUpdateService.updatePhoneNo(userInfoUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
 
-    @PutMapping(path = "/updateCourseId")
+    @PutMapping(path = "/course-id")
     public ResponseEntity<String> updateCourseInfo(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
         String msg = userInfoUpdateService.updateCourseInfo(userInfoUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
 
-    @PutMapping(path = "/updatePassword")
+    @PutMapping(path = "/password")
     public ResponseEntity<String> updatePassword(@RequestBody UserLoginUpdateRequest userLoginUpdateRequest){
         String msg = userInfoUpdateService.updatePassword(userLoginUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
 
-    @PutMapping(path = "/updateUserName")
+    @PutMapping(path = "/username")
     public ResponseEntity<String> updateUserName(@RequestBody UserLoginUpdateRequest userLoginUpdateRequest){
         String msg = userInfoUpdateService.updateUserName(userLoginUpdateRequest);
         return ResponseEntity.ok().body(msg);

@@ -6,7 +6,6 @@ import com.collreach.userprofile.model.repositories.*;
 import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
 import com.collreach.userprofile.model.request.UserLoginUpdateRequest;
 import com.collreach.userprofile.model.request.UserSkillUpdateRequest;
-import com.collreach.userprofile.model.request.UserSkillUpdateRequest;
 import com.collreach.userprofile.model.response.UserLoginResponse;
 import com.collreach.userprofile.service.UserInfoUpdateService;
 import com.collreach.userprofile.service.UserLoginService;
@@ -145,7 +144,7 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
                 userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
         if(user != null) {
             String email = user.getUserPersonalInfoResponse().getEmail();
-            var courseInfo = courseInfoRepository.findById(userInfoUpdateRequest.getCourseId()).orElse(null);
+            CourseInfo courseInfo = courseInfoRepository.findById(userInfoUpdateRequest.getCourseId()).orElse(null);
             if(courseInfo != null) {
                 userPersonalInfoRepository.updateCourseId(email, courseInfo);
                 return "Updated Course.";

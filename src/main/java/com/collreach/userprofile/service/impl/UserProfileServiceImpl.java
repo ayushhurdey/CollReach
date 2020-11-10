@@ -75,20 +75,13 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public String checkEmail(UserSignupRequest userSignupRequest){
         Boolean email = userPersonalInfoRepository.existsByEmail(userSignupRequest.getEmail());
-        if(email){
+        Boolean altEmail = userPersonalInfoRepository.existsByAlternateEmail(userSignupRequest.getAlternateEmail());
+        if(email || altEmail){
             return "Email already exists.";
         }
         return "";
     }
 
-    @Override
-    public String checkAlternateEmail(UserSignupRequest userSignupRequest){
-        Boolean email = userPersonalInfoRepository.existsByAlternateEmail(userSignupRequest.getAlternateEmail());
-        if(email){
-            return "This Email already exists.";
-        }
-        return "";
-    }
 
     @Override
     public String checkPhoneNo(UserSignupRequest userSignupRequest){
