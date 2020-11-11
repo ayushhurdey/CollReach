@@ -93,4 +93,13 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
         return "";
     }
+
+    @Override
+    public String checkLinkedinLink(UserSignupRequest userSignupRequest){
+        Boolean linkedinLink = userPersonalInfoRepository.existsByLinkedinLink(userSignupRequest.getLinkedinLink());
+        if(linkedinLink){
+            return "This linkedin link already exists.";
+        }
+        return "";
+    }
 }

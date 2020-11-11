@@ -8,4 +8,5 @@ public interface UserProfileService {
     public String checkUsername(UserSignupRequest userSignupRequest);
     public String checkEmail(UserSignupRequest userSignupRequest);
     public String checkPhoneNo(UserSignupRequest userSignupRequest);
+    public String checkLinkedinLink(UserSignupRequest userSignupRequest);
 }
