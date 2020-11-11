@@ -2,6 +2,7 @@ package com.collreach.userprofile.model.response;
 
 
 import java.util.List;
+import java.util.Map;
 
 public class UserPersonalInfoResponse {
     private String email;
@@ -9,7 +10,7 @@ public class UserPersonalInfoResponse {
     private String alternateEmail;
     private String phoneNo;
     private CourseInfoResponse courseInfoResponse;
-    private List<String> skills;
+    private Map<String,Integer> skills;
 
     public String getEmail() {
         return email;
@@ -51,11 +52,11 @@ public class UserPersonalInfoResponse {
         this.courseInfoResponse = courseInfoResponse;
     }
 
-    public List<String> getSkills() {
+    public Map<String, Integer> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<String> skills) {
+    public void setSkills(Map<String, Integer> skills) {
         this.skills = skills;
     }
 }
