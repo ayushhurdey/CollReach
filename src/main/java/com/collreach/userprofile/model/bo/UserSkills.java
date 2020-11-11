@@ -1,8 +1,7 @@
 package com.collreach.userprofile.model.bo;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
+
 
 @Entity
 @Table(name= "user_skills")

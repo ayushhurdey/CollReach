@@ -1,7 +1,7 @@
 package com.collreach.userprofile.model.response;
 
 
-import java.util.List;
+
 import java.util.Map;
 
 public class UserPersonalInfoResponse {
@@ -9,6 +9,8 @@ public class UserPersonalInfoResponse {
     private String name;
     private String alternateEmail;
     private String phoneNo;
+    private String linkedinLink;
+    private String description;
     private CourseInfoResponse courseInfoResponse;
     private Map<String,Integer> skills;
 
@@ -58,5 +60,21 @@ public class UserPersonalInfoResponse {
 
     public void setSkills(Map<String, Integer> skills) {
         this.skills = skills;
+    }
+
+    public String getLinkedinLink() {
+        return linkedinLink;
+    }
+
+    public void setLinkedinLink(String linkedinLink) {
+        this.linkedinLink = linkedinLink;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

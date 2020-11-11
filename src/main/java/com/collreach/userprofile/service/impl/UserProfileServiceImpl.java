@@ -36,6 +36,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         userPersonalInfo.setEmail(userSignupRequest.getEmail());
         userPersonalInfo.setName(userSignupRequest.getName());
         userPersonalInfo.setPhoneNo(userSignupRequest.getPhoneNo());
+        userPersonalInfo.setLinkedinLink(userSignupRequest.getLinkedinLink());
+        userPersonalInfo.setLinkedinLink(userSignupRequest.getDescription());
         userLogin.setUserPersonalInfo(userPersonalInfo);
         userLogin.setPassword(userSignupRequest.getPassword());
         userLogin.setUserName(userSignupRequest.getUserName());

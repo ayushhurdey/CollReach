@@ -193,4 +193,28 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         }
         return "Invalid credentials.";
     }
+
+    @Override
+    public String updateLinkedinLink(UserInfoUpdateRequest userInfoUpdateRequest){
+        UserLoginResponse user = userLoginService.login(
+                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        if(user != null) {
+            String oldLinkedinLink = user.getUserPersonalInfoResponse().getLinkedinLink();
+            userPersonalInfoRepository.updateLinkedinLink(oldLinkedinLink, userInfoUpdateRequest.getLinkedinLink());
+            return "Updated LinkedIn Link.";
+        }
+        return "Invalid credentials..";
+    }
+
+    @Override
+    public String updateDescription(UserInfoUpdateRequest userInfoUpdateRequest){
+        UserLoginResponse user = userLoginService.login(
+                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        if(user != null) {
+            String email = user.getUserPersonalInfoResponse().getEmail();
+            userPersonalInfoRepository.updateDescription(email, userInfoUpdateRequest.getDescription());
+            return "Updated Description Successfully.";
+        }
+        return "Invalid credentials..";
+    }
 }

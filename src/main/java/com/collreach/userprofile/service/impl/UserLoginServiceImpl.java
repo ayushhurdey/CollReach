@@ -1,7 +1,6 @@
 package com.collreach.userprofile.service.impl;
 
 import com.collreach.userprofile.mappers.UserProfileMapper;
-import com.collreach.userprofile.model.bo.SkillsInfo;
 import com.collreach.userprofile.model.bo.UserLogin;
 import com.collreach.userprofile.model.bo.UserSkills;
 import com.collreach.userprofile.model.repositories.UserLoginRepository;

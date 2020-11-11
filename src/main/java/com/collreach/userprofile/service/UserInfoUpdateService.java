@@ -14,4 +14,6 @@ public interface UserInfoUpdateService {
     public String updateSkills(UserSkillUpdateRequest userSkillUpdateRequest);
     public String updateSkillUpvoteCount(UserSkillUpdateRequest userSkillUpdateRequest);
     public String deleteUserSkills(UserSkillUpdateRequest userSkillUpdateRequest);
+    public String updateLinkedinLink(UserInfoUpdateRequest userInfoUpdateRequest);
+    public String updateDescription(UserInfoUpdateRequest userInfoUpdateRequest);
 }
