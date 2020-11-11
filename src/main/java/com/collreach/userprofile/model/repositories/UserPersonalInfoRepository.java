@@ -12,6 +12,7 @@ public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalI
     Boolean existsByEmail(String email);
     Boolean existsByAlternateEmail(String alternateEmail);
     Boolean existsByPhoneNo(String phoneNo);
+    Boolean existsByLinkedinLink(String linkedinLink);
 
     @Modifying
     @Transactional
@@ -38,4 +39,14 @@ public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalI
     @Transactional
     @Query("update UserPersonalInfo u set u.courseInfo = :courseInfo where u.email = :email")
     void updateCourseId(@Param(value = "email") String email, @Param(value = "courseInfo") CourseInfo courseInfo);
+
+    @Modifying
+    @Transactional
+    @Query("update UserPersonalInfo u set u.linkedinLink = :linkedinLink where u.linkedinLink = :oldLinkedinLink")
+    void updateLinkedinLink(@Param(value = "oldLinkedinLink") String oldLinkedinLink, @Param(value = "linkedinLink") String linkedinLink);
+
+    @Modifying
+    @Transactional
+    @Query("update UserPersonalInfo u set u.description = :description where u.email = :email")
+    void updateDescription(@Param(value = "email") String email, @Param(value = "description") String description);
 }

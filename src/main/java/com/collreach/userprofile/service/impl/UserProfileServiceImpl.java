@@ -36,6 +36,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         userPersonalInfo.setEmail(userSignupRequest.getEmail());
         userPersonalInfo.setName(userSignupRequest.getName());
         userPersonalInfo.setPhoneNo(userSignupRequest.getPhoneNo());
+        userPersonalInfo.setLinkedinLink(userSignupRequest.getLinkedinLink());
+        userPersonalInfo.setLinkedinLink(userSignupRequest.getDescription());
         userLogin.setUserPersonalInfo(userPersonalInfo);
         userLogin.setPassword(userSignupRequest.getPassword());
         userLogin.setUserName(userSignupRequest.getUserName());
@@ -88,6 +90,15 @@ public class UserProfileServiceImpl implements UserProfileService {
         Boolean phone = userPersonalInfoRepository.existsByPhoneNo(userSignupRequest.getPhoneNo());
         if(phone){
             return "Phone No. already exists.";
+        }
+        return "";
+    }
+
+    @Override
+    public String checkLinkedinLink(UserSignupRequest userSignupRequest){
+        Boolean linkedinLink = userPersonalInfoRepository.existsByLinkedinLink(userSignupRequest.getLinkedinLink());
+        if(linkedinLink){
+            return "This linkedin link already exists.";
         }
         return "";
     }

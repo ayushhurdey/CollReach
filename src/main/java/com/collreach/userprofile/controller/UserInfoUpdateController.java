@@ -73,4 +73,16 @@ public class UserInfoUpdateController {
         String msg = userInfoUpdateService.updateUserName(userLoginUpdateRequest);
         return ResponseEntity.ok().body(msg);
     }
+
+    @PutMapping(path = "/linkedin-link")
+    public ResponseEntity<String> updateLinkedinLink(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
+        String msg = userInfoUpdateService.updateLinkedinLink(userInfoUpdateRequest);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @PutMapping(path = "/description")
+    public ResponseEntity<String> updateDescription(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
+        String msg = userInfoUpdateService.updateDescription(userInfoUpdateRequest);
+        return ResponseEntity.ok().body(msg);
+    }
 }

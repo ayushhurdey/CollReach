@@ -52,4 +52,10 @@ public class UserProfileController {
         String msg = userProfileService.checkPhoneNo(userSignupRequest);
         return ResponseEntity.ok().body(msg);
     }
+
+    @PostMapping(path = "/check-linkedin-link")
+    public ResponseEntity<String> checkLinkedinLink(@RequestBody UserSignupRequest userSignupRequest){
+        String msg = userProfileService.checkLinkedinLink(userSignupRequest);
+        return ResponseEntity.ok().body(msg);
+    }
 }

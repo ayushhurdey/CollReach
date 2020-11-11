@@ -8,6 +8,8 @@ public class UserSignupRequest {
     protected int courseId;
     protected String alternateEmail;
     protected String phoneNo;
+    private String linkedinLink;
+    private String description;
 
     public String getUserName() {
         return userName;
@@ -63,5 +65,21 @@ public class UserSignupRequest {
 
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
+    }
+
+    public String getLinkedinLink() {
+        return linkedinLink;
+    }
+
+    public void setLinkedinLink(String linkedinLink) {
+        this.linkedinLink = linkedinLink;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
