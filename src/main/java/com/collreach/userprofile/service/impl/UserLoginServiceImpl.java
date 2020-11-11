@@ -35,20 +35,16 @@ public class UserLoginServiceImpl implements UserLoginService {
             username = user.getUserName();
             password = user.getPassword();
 
-            List<UserSkills> userSkills = userSkillsRepository.findAllByUserId(user.getUserPersonalInfo());
-            Set<SkillsInfo> skillSet = new HashSet<SkillsInfo>();
-            for(UserSkills userSkill: userSkills){
-                    skillSet.add(userSkill.getSkillId());
-            }
-
             if(username.equals(userLoginRequest.getUserName()) && password.equals(userLoginRequest.getPassword())){
-                 UserLoginResponse userLoginResponse = userProfileMapper.userLoginToUserLoginResponse(user);
-                 List<String> skills = new ArrayList<String>();
-                 for(SkillsInfo skillsInfo : skillSet){
-                    skills.add(skillsInfo.getSkill());
-                 }
-                 userLoginResponse.getUserPersonalInfoResponse().setSkills(skills);
-                 return userLoginResponse;
+                UserLoginResponse userLoginResponse = userProfileMapper.userLoginToUserLoginResponse(user);
+                List<UserSkills> userSkills = userSkillsRepository.findAllByUserId(user.getUserPersonalInfo());
+
+                Map<String,Integer> skills = new HashMap<String,Integer>();
+                for(UserSkills userSkill: userSkills){
+                    skills.put(userSkill.getSkillId().getSkill(), userSkill.getSkillUpvoteCount());
+                }
+                userLoginResponse.getUserPersonalInfoResponse().setSkills(skills);
+                return userLoginResponse;
             }
         }
         return userProfileMapper.userLoginToUserLoginResponse(null);
