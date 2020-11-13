@@ -29,6 +29,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         CourseInfo courseInfo = new CourseInfo();
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo();
         UserLogin userLogin = new UserLogin();
+        String defaultProfilePhotoAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\default.jpeg";
 
         courseInfo.setCourseId(userSignupRequest.getCourseId());
         userPersonalInfo.setCourseInfo(courseInfo);
@@ -38,6 +39,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         userPersonalInfo.setPhoneNo(userSignupRequest.getPhoneNo());
         userPersonalInfo.setLinkedinLink(userSignupRequest.getLinkedinLink());
         userPersonalInfo.setDescription(userSignupRequest.getDescription());
+        userPersonalInfo.setUserProfilePhoto(defaultProfilePhotoAddress);
         userLogin.setUserPersonalInfo(userPersonalInfo);
         userLogin.setPassword(userSignupRequest.getPassword());
         userLogin.setUserName(userSignupRequest.getUserName());

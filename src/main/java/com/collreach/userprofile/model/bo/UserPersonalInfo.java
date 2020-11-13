@@ -1,7 +1,6 @@
 package com.collreach.userprofile.model.bo;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class UserPersonalInfo {
@@ -27,6 +26,9 @@ public class UserPersonalInfo {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "user_profile_photo")
+    private String userProfilePhoto;
 
     @OneToOne
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")
@@ -105,5 +107,13 @@ public class UserPersonalInfo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUserProfilePhoto() {
+        return userProfilePhoto;
+    }
+
+    public void setUserProfilePhoto(String userProfilePhoto) {
+        this.userProfilePhoto = userProfilePhoto;
     }
 }

@@ -7,10 +7,10 @@ import com.collreach.userprofile.service.UserInfoUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping(path = "/user")
@@ -83,6 +83,18 @@ public class UserInfoUpdateController {
     @PutMapping(path = "/description")
     public ResponseEntity<String> updateDescription(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
         String msg = userInfoUpdateService.updateDescription(userInfoUpdateRequest);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @PutMapping(path = "/profile-photo")
+    public ResponseEntity<String> updateProfilePhoto(@RequestParam("file") MultipartFile file ,@RequestParam("userName") String userName) throws IOException {
+        String msg = userInfoUpdateService.updateProfilePhoto(file, userName);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @DeleteMapping(path = "/profile-photo")
+    public ResponseEntity<String> deleteProfilePhoto(@RequestParam("userName") String userName) {
+        String msg = userInfoUpdateService.deleteUserProfilePhoto(userName);
         return ResponseEntity.ok().body(msg);
     }
 }

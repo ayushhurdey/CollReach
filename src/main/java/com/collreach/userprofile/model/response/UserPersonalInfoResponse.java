@@ -11,6 +11,7 @@ public class UserPersonalInfoResponse {
     private String phoneNo;
     private String linkedinLink;
     private String description;
+    private String userProfilePhoto;
     private CourseInfoResponse courseInfoResponse;
     private Map<String,Integer> skills;
 
@@ -76,5 +77,13 @@ public class UserPersonalInfoResponse {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUserProfilePhoto() {
+        return userProfilePhoto;
+    }
+
+    public void setUserProfilePhoto(String userProfilePhoto) {
+        this.userProfilePhoto = userProfilePhoto;
     }
 }
