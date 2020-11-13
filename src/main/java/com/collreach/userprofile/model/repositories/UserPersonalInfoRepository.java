@@ -49,4 +49,9 @@ public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalI
     @Transactional
     @Query("update UserPersonalInfo u set u.description = :description where u.email = :email")
     void updateDescription(@Param(value = "email") String email, @Param(value = "description") String description);
+
+    @Modifying
+    @Transactional
+    @Query("update UserPersonalInfo u set u.userProfilePhoto = :userProfilePhoto where u.email = :email")
+    void updateUserProfilePhoto(@Param(value = "email") String email, @Param(value = "userProfilePhoto") String userProfilePhoto);
 }

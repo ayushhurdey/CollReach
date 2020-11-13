@@ -12,8 +12,12 @@ import com.collreach.userprofile.service.UserLoginService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 @Service
@@ -216,5 +220,50 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
             return "Updated Description Successfully.";
         }
         return "Invalid credentials..";
+    }
+
+    @Override
+    public String updateProfilePhoto(MultipartFile file, String userName) throws IOException{
+        String fileName = file.getOriginalFilename();
+        int index = fileName.lastIndexOf('.');
+        boolean userNameExists = userLoginRepository.existsById(userName);
+
+        /* -------------max upload size exception has to be handled.---------------- */
+
+        System.out.println("file size : " + ((float)(file.getSize()/1024)/1024) + "MB");
+        if(index > 0 && userNameExists) {
+            String extension = fileName.substring(index + 1);
+            System.out.println("File extension is " + extension);
+            try {
+                String photoStorageAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\"
+                        + userName + "." + extension;
+                // photos in db has to be stored as "localhost:8081/images/default.jpeg"
+                UserPersonalInfo userPersonalInfo = userLoginRepository.findById(userName).get().getUserPersonalInfo();
+
+                if(userPersonalInfo != null){
+                    String email = userPersonalInfo.getEmail();
+                    file.transferTo(new File(photoStorageAddress));
+                    userPersonalInfoRepository.updateUserProfilePhoto(email, photoStorageAddress);
+                }
+                else return "Please update your personal info first.";
+            }catch(Exception e){
+                return e.getLocalizedMessage();
+            }
+            return "Profile picture updated successfully.";
+        }
+        return "Either username is invalid or file format is not supported.";
+    }
+
+    @Override
+    public String deleteUserProfilePhoto(String userName){
+        String defaultAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\default.jpeg";
+        AtomicReference<String> msg = new AtomicReference<>("");
+        userLoginRepository.findById(userName).ifPresentOrElse(
+                (y) -> {
+                        userPersonalInfoRepository.updateUserProfilePhoto(y.getUserPersonalInfo().getEmail(),defaultAddress);
+                        msg.set("Profile photo set as default.");
+                        },
+                () -> { msg.set("Some Error Occurred.");} );
+        return msg.get();
     }
 }
