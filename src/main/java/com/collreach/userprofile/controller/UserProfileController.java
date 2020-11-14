@@ -28,6 +28,11 @@ public class UserProfileController {
         }
     }
 
+    @PutMapping(path = "/user-personal-info")
+    public ResponseEntity<String> updateUserPersonalInfo(@RequestBody UserSignupRequest userSignupRequest){
+        String msg = userProfileService.updateUserPersonalInfo(userSignupRequest);
+        return ResponseEntity.ok().body(msg);
+    }
 
     @DeleteMapping(path = "/delete-user/{username}")
     public ResponseEntity<String> deleteUser(@PathVariable(value = "username") String userName){
