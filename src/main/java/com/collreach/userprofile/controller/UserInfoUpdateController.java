@@ -14,6 +14,7 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping(path = "/user")
+@CrossOrigin("*")
 public class UserInfoUpdateController {
 
     @Autowired

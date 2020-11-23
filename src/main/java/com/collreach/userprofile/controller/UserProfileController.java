@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(path = "/user")
+@CrossOrigin("*")
 public class UserProfileController {
 
     @Autowired
