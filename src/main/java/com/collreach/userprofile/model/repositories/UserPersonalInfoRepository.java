@@ -27,13 +27,13 @@ public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalI
 
     @Modifying
     @Transactional
-    @Query("update UserPersonalInfo u set u.alternateEmail = :email where u.alternateEmail = :oldEmail")
-    void updateAlternateEmail(@Param(value = "oldEmail") String oldEmail, @Param(value = "email") String email);
+    @Query("update UserPersonalInfo u set u.alternateEmail = :altEmail where u.email = :email")
+    void updateAlternateEmail(@Param(value = "email") String email, @Param(value = "altEmail") String altEmail);
 
     @Modifying
     @Transactional
-    @Query("update UserPersonalInfo u set u.phoneNo = :phoneNo where u.phoneNo = :oldPhoneNo")
-    void updatePhoneNo(@Param(value = "oldPhoneNo") String oldPhoneNo, @Param(value = "phoneNo") String phoneNo);
+    @Query("update UserPersonalInfo u set u.phoneNo = :phoneNo where u.email = :email")
+    void updatePhoneNo(@Param(value = "email") String email, @Param(value = "phoneNo") String phoneNo);
 
     @Modifying
     @Transactional
@@ -42,8 +42,8 @@ public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalI
 
     @Modifying
     @Transactional
-    @Query("update UserPersonalInfo u set u.linkedinLink = :linkedinLink where u.linkedinLink = :oldLinkedinLink")
-    void updateLinkedinLink(@Param(value = "oldLinkedinLink") String oldLinkedinLink, @Param(value = "linkedinLink") String linkedinLink);
+    @Query("update UserPersonalInfo u set u.linkedinLink = :linkedinLink where u.email = :email")
+    void updateLinkedinLink(@Param(value = "email") String email, @Param(value = "linkedinLink") String linkedinLink);
 
     @Modifying
     @Transactional
