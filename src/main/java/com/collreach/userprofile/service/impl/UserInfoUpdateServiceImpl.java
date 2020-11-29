@@ -123,8 +123,8 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         UserLoginResponse user = userLoginService.login(
                 userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
         if(user != null) {
-            String oldEmail = user.getUserPersonalInfoResponse().getAlternateEmail();
-            userPersonalInfoRepository.updateAlternateEmail(oldEmail, userInfoUpdateRequest.getAlternateEmail());
+            String email = user.getUserPersonalInfoResponse().getEmail();
+            userPersonalInfoRepository.updateAlternateEmail(email, userInfoUpdateRequest.getAlternateEmail());
             return "Updated Alternate Email.";
         }
         return "Invalid credentials..";
@@ -135,8 +135,8 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         UserLoginResponse user = userLoginService.login(
                 userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
         if(user != null) {
-            String oldPhoneNo = user.getUserPersonalInfoResponse().getPhoneNo();
-            userPersonalInfoRepository.updatePhoneNo(oldPhoneNo, userInfoUpdateRequest.getPhoneNo());
+            String email = user.getUserPersonalInfoResponse().getEmail();
+            userPersonalInfoRepository.updatePhoneNo(email, userInfoUpdateRequest.getPhoneNo());
             return "Updated Phone No.";
         }
         return "Invalid credentials..";
@@ -203,8 +203,8 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         UserLoginResponse user = userLoginService.login(
                 userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
         if(user != null) {
-            String oldLinkedinLink = user.getUserPersonalInfoResponse().getLinkedinLink();
-            userPersonalInfoRepository.updateLinkedinLink(oldLinkedinLink, userInfoUpdateRequest.getLinkedinLink());
+            String email = user.getUserPersonalInfoResponse().getEmail();
+            userPersonalInfoRepository.updateLinkedinLink(email, userInfoUpdateRequest.getLinkedinLink());
             return "Updated LinkedIn Link.";
         }
         return "Invalid credentials..";
@@ -263,7 +263,7 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
                         userPersonalInfoRepository.updateUserProfilePhoto(y.getUserPersonalInfo().getEmail(),defaultAddress);
                         msg.set("Profile photo set as default.");
                         },
-                () -> { msg.set("Some Error Occurred.");} );
+                () -> msg.set("Some Error Occurred."));
         return msg.get();
     }
 }
