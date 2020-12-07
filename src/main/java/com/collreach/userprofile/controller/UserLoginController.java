@@ -25,6 +25,14 @@ public class UserLoginController {
         return ResponseEntity.ok().body(userLoginResponse);
     }
 
+    @PostMapping(path = "/get-user-details/{username}")
+    public ResponseEntity<UserLoginResponse> getUserDetails(@PathVariable(value = "username") String userName){
+        UserLoginResponse userLoginResponse = userLoginService.getUserDetails(userName);
+        if(userLoginResponse == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(userLoginResponse);
+    }
+
     /*
     @PostMapping(path="/signup")
     public ResponseEntity<String> addNewUser(@RequestBody UserAddRequest userAddRequest) throws Exception{

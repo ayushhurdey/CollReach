@@ -108,8 +108,10 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     @Override
     public String updateEmail(UserInfoUpdateRequest userInfoUpdateRequest){
-        UserLoginResponse user = userLoginService.login(
-                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        //UserLoginResponse user = userLoginService.login(
+        //        userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+
+        UserLoginResponse user = userLoginService.getUserDetails(userInfoUpdateRequest.getUserName());
         if(user != null) {
             String oldEmail = user.getUserPersonalInfoResponse().getEmail();
             userPersonalInfoRepository.updateEmail(oldEmail, userInfoUpdateRequest.getEmail());
@@ -120,8 +122,9 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     @Override
     public String updateAlternateEmail(UserInfoUpdateRequest userInfoUpdateRequest){
-        UserLoginResponse user = userLoginService.login(
-                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        //UserLoginResponse user = userLoginService.login(
+        //        userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        UserLoginResponse user = userLoginService.getUserDetails(userInfoUpdateRequest.getUserName());
         if(user != null) {
             String email = user.getUserPersonalInfoResponse().getEmail();
             userPersonalInfoRepository.updateAlternateEmail(email, userInfoUpdateRequest.getAlternateEmail());
@@ -132,8 +135,9 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     @Override
     public String updatePhoneNo(UserInfoUpdateRequest userInfoUpdateRequest){
-        UserLoginResponse user = userLoginService.login(
-                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        //UserLoginResponse user = userLoginService.login(
+        //        userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        UserLoginResponse user = userLoginService.getUserDetails(userInfoUpdateRequest.getUserName());
         if(user != null) {
             String email = user.getUserPersonalInfoResponse().getEmail();
             userPersonalInfoRepository.updatePhoneNo(email, userInfoUpdateRequest.getPhoneNo());
@@ -144,8 +148,9 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     @Override
     public String updateCourseInfo(UserInfoUpdateRequest userInfoUpdateRequest){
-        UserLoginResponse user = userLoginService.login(
-                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        //UserLoginResponse user = userLoginService.login(
+        //        userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        UserLoginResponse user = userLoginService.getUserDetails(userInfoUpdateRequest.getUserName());
         if(user != null) {
             String email = user.getUserPersonalInfoResponse().getEmail();
             CourseInfo courseInfo = courseInfoRepository.findById(userInfoUpdateRequest.getCourseId()).orElse(null);
@@ -160,8 +165,9 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     @Override
     public String updatePassword(UserLoginUpdateRequest userLoginUpdateRequest){
-        UserLoginResponse user = userLoginService.login(
-                userProfileMapper.userLoginUpdateRequestToUserLoginRequest(userLoginUpdateRequest));
+        //UserLoginResponse user = userLoginService.login(
+        //        userProfileMapper.userLoginUpdateRequestToUserLoginRequest(userLoginUpdateRequest));
+        UserLoginResponse user = userLoginService.getUserDetails(userLoginUpdateRequest.getUserName());
         if(user != null) {
             String username = user.getUserName();
             String newPassword = userLoginUpdateRequest.getNewPassword();
@@ -180,8 +186,9 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     @Override
     public String updateUserName(UserLoginUpdateRequest userLoginUpdateRequest){
-        UserLoginResponse user = userLoginService.login(
-                userProfileMapper.userLoginUpdateRequestToUserLoginRequest(userLoginUpdateRequest));
+        //UserLoginResponse user = userLoginService.login(
+        //        userProfileMapper.userLoginUpdateRequestToUserLoginRequest(userLoginUpdateRequest));
+        UserLoginResponse user = userLoginService.getUserDetails(userLoginUpdateRequest.getUserName());
         if(user != null) {
             String username = user.getUserName();
             String newUserName = userLoginUpdateRequest.getNewUserName();
@@ -200,8 +207,9 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     @Override
     public String updateLinkedinLink(UserInfoUpdateRequest userInfoUpdateRequest){
-        UserLoginResponse user = userLoginService.login(
-                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        //UserLoginResponse user = userLoginService.login(
+        //        userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        UserLoginResponse user = userLoginService.getUserDetails(userInfoUpdateRequest.getUserName());
         if(user != null) {
             String email = user.getUserPersonalInfoResponse().getEmail();
             userPersonalInfoRepository.updateLinkedinLink(email, userInfoUpdateRequest.getLinkedinLink());
@@ -212,8 +220,9 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     @Override
     public String updateDescription(UserInfoUpdateRequest userInfoUpdateRequest){
-        UserLoginResponse user = userLoginService.login(
-                userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        //UserLoginResponse user = userLoginService.login(
+        //        userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+        UserLoginResponse user = userLoginService.getUserDetails(userInfoUpdateRequest.getUserName());
         if(user != null) {
             String email = user.getUserPersonalInfoResponse().getEmail();
             userPersonalInfoRepository.updateDescription(email, userInfoUpdateRequest.getDescription());

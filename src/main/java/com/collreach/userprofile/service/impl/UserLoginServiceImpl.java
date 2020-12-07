@@ -48,4 +48,22 @@ public class UserLoginServiceImpl implements UserLoginService {
         }
         return userProfileMapper.userLoginToUserLoginResponse(null);
     }
+
+    @Override
+    public UserLoginResponse getUserDetails(String userName) {
+        UserLogin user = userLoginRepository.findById(userName).orElse(null);
+
+        if(user != null){
+            UserLoginResponse userLoginResponse = userProfileMapper.userLoginToUserLoginResponse(user);
+            List<UserSkills> userSkills = userSkillsRepository.findAllByUserId(user.getUserPersonalInfo());
+
+            Map<String,Integer> skills = new HashMap<String,Integer>();
+            for(UserSkills userSkill: userSkills){
+                skills.put(userSkill.getSkillId().getSkill(), userSkill.getSkillUpvoteCount());
+            }
+            userLoginResponse.getUserPersonalInfoResponse().setSkills(skills);
+            return userLoginResponse;
+        }
+        return userProfileMapper.userLoginToUserLoginResponse(null);
+    }
 }
