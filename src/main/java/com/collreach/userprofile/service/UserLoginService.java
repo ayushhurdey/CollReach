@@ -5,4 +5,6 @@ import com.collreach.userprofile.model.response.UserLoginResponse;
 
 public interface UserLoginService {
     public UserLoginResponse login(UserLoginRequest userLoginRequest);
+
+    public UserLoginResponse getUserDetails(String userName);
 }
