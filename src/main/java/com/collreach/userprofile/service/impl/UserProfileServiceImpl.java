@@ -1,16 +1,21 @@
 package com.collreach.userprofile.service.impl;
 
-import com.collreach.userprofile.model.bo.CourseInfo;
-import com.collreach.userprofile.model.bo.UserLogin;
-import com.collreach.userprofile.model.bo.UserPersonalInfo;
+import com.collreach.userprofile.model.bo.*;
+import com.collreach.userprofile.model.repositories.SkillsInfoRepository;
 import com.collreach.userprofile.model.repositories.UserLoginRepository;
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
 import com.collreach.userprofile.model.repositories.UserSkillsRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
+import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
+import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +28,9 @@ public class UserProfileServiceImpl implements UserProfileService {
     
     @Autowired
     UserSkillsRepository userSkillsRepository;
+
+    @Autowired
+    SkillsInfoRepository skillsInfoRepository;
 
     @Override
     public String signup(UserSignupRequest userSignupRequest) {
@@ -90,6 +98,31 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
         else
             return "User not found.";
+    }
+
+    @Override
+    public UsersSkillsResponse getUsersFromSkills(UsersFromSkillsRequest usersFromSkillsRequest){
+        var list = usersFromSkillsRequest.getSkills();
+        HashMap<String, ArrayList<String>> userSkillsMap = new HashMap<String, ArrayList<String>>();
+
+        for(String skill: list){
+            Optional<SkillsInfo> skillsInfo = skillsInfoRepository.findBySkill(skill);
+
+            if(skillsInfo.isPresent()) {
+                List<UserSkills> userSkills = userSkillsRepository.findAllBySkillId(skillsInfo.get());
+
+                for (UserSkills userSkill : userSkills)
+                    if (!userSkillsMap.containsKey(userSkill.getUserId().getName())) {
+                        userSkillsMap.put(userSkill.getUserId().getName(), new ArrayList<String>());
+                        userSkillsMap.get(userSkill.getUserId().getName()).add(userSkill.getSkillId().getSkill());
+                    } else {
+                        userSkillsMap.get(userSkill.getUserId().getName()).add(userSkill.getSkillId().getSkill());
+                    }
+            }
+        }
+        UsersSkillsResponse usersSkillsResponse = new UsersSkillsResponse();
+        usersSkillsResponse.setUsersSkills(userSkillsMap);
+        return usersSkillsResponse;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.collreach.userprofile.service;
 
 import com.collreach.userprofile.model.request.UserSignupRequest;
+import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
+import com.collreach.userprofile.model.response.UsersSkillsResponse;
 
 public interface UserProfileService {
     public String signup(UserSignupRequest userSignupRequest);
@@ -10,4 +12,5 @@ public interface UserProfileService {
     public String checkPhoneNo(UserSignupRequest userSignupRequest);
     public String checkLinkedinLink(UserSignupRequest userSignupRequest);
     public String updateUserPersonalInfo(UserSignupRequest userSignupRequest);
+    public UsersSkillsResponse getUsersFromSkills(UsersFromSkillsRequest usersFromSkillsRequest);
 }

@@ -2,6 +2,8 @@ package com.collreach.userprofile.controller;
 
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
+import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
+import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,12 @@ public class UserProfileController {
     @DeleteMapping(path = "/delete-user/{username}")
     public ResponseEntity<String> deleteUser(@PathVariable(value = "username") String userName){
         String msg = userProfileService.deleteUser(userName);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @PostMapping(path = "/get-user-from-skills")
+    public ResponseEntity<UsersSkillsResponse> getUserFromSkills(@RequestBody UsersFromSkillsRequest usersFromSkillsRequest){
+        var msg = userProfileService.getUsersFromSkills(usersFromSkillsRequest);
         return ResponseEntity.ok().body(msg);
     }
 

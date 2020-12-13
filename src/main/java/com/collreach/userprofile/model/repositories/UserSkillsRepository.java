@@ -15,6 +15,7 @@ import java.util.List;
 public interface UserSkillsRepository extends CrudRepository<UserSkills, UserSkillsKey> {
 
     List<UserSkills> findAllByUserId(UserPersonalInfo userId);
+    List<UserSkills> findAllBySkillId(SkillsInfo skillId);
 
     @Modifying
     @Transactional
