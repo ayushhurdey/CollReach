@@ -39,9 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/token","/*.html","/*.html/*","/user/signup","/hello").permitAll()
-                .antMatchers("/*.css","/*.css/*","/*.js","/*.js/*").permitAll()
+                .antMatchers("/*.css","/*.css/*","/*.js","/*.js/*","/*.map").permitAll()
                 .antMatchers("/*.jpg","/*.jpeg","/*.png","/*.PNG").permitAll()
-                .antMatchers("/check-username","check-email","check-phone-no","check-linkedin-link").permitAll()
+                .antMatchers("/user/check-username","/user/check-email","/user/check-phone-no","/user/check-linkedin-link").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

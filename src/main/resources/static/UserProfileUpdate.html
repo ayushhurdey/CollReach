@@ -117,7 +117,7 @@
             xhr.send(data);
         }
 
-
+        //checks if linkedin link exists or not
         function validatelinkedInlink() {
             var linkedIn = document.linkedInUpdate.linkedIn.value;
             linkedIn === "" ? linkedIn = "null" : linkedIn = linkedIn;
@@ -157,6 +157,7 @@
             var url = "http://localhost:8082/user/alternate-email";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var responseMsg = xhr.responseText;
@@ -170,8 +171,7 @@
                 }
             };
             var data = JSON.stringify({
-                "userName": "1822cs1036",
-                "password": "Aradhya@1",
+                "userName": localStorage.getItem('username'),
                 "alternateEmail": personalEmail
 
             });
@@ -184,6 +184,7 @@
             var url = "http://localhost:8082/user/phone-no";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var responseMsg = xhr.responseText;
@@ -197,10 +198,8 @@
                 }
             };
             var data = JSON.stringify({
-                "userName": "1822cs1036",
-                "password": "Aradhya@1",
+                "userName": localStorage.getItem('username'),
                 "phoneNo": phoneNo
-
             });
             xhr.send(data);
         }
@@ -212,6 +211,7 @@
             var url = "http://localhost:8082/user/description";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var responseMsg = xhr.responseText;
@@ -225,8 +225,7 @@
                 }
             };
             var data = JSON.stringify({
-                "userName": "1822cs1049",
-                "password": "Ayush@1",
+                "userName": localStorage.getItem('username'),
                 "description": description
 
             });
@@ -240,6 +239,7 @@
             var url = "http://localhost:8082/user/linkedin-link";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var responseMsg = xhr.responseText;
@@ -253,8 +253,7 @@
                 }
             };
             var data = JSON.stringify({
-                "userName": "1822cs1049",
-                "password": "Ayush@12",
+                "userName": localStorage.getItem('username'),
                 "linkedinLink": linkedIn
 
             });
@@ -299,6 +298,7 @@
             var url = "http://localhost:8082/user/login";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     console.log(xhr.responseText);
@@ -319,6 +319,7 @@
                     var url = "http://localhost:8082/user/course-id";
                     xhr2.open("PUT", url, true);
                     xhr2.setRequestHeader("Content-Type", "application/json");
+                    xhr2.setRequestHeader("Authorization", localStorage.getItem('auth'));
                     xhr2.onreadystatechange = function() {
                         if (xhr2.readyState === 4 && xhr2.status === 200) {
                             var responseMsg = xhr2.responseText;
@@ -332,8 +333,7 @@
                         }
                     };
                     var data2 = JSON.stringify({
-                        "userName": "1822cs1049",
-                        "password": "Ayush@1",
+                        "userName": localStorage.getItem('username'),
                         "courseId": courseId
                     });
                     xhr2.send(data2);
@@ -341,8 +341,7 @@
                 }
             };
             var data = JSON.stringify({
-                "userName": "1822cs1049",
-                "password": "Ayush@1"
+                "userName": localStorage.getItem('username')
             });
             xhr.send(data);
         }
@@ -356,6 +355,7 @@
             var url = "http://localhost:8082/user/password";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var responseMsg = xhr.responseText;
@@ -369,13 +369,14 @@
                 }
             };
             var data = JSON.stringify({
-                "userName": "1822cs1049",
+                "userName": localStorage.getItem('username'),
                 "password": password,
                 "newPassword": newPassword
 
             });
             xhr.send(data);
         }
+        
         //send password to backend after proper validations
         function sendPasswordData() {
             if (validatePassword() == true) {
@@ -423,6 +424,7 @@
             var url = "http://localhost:8082/user/skills";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var responseMsg = xhr.responseText;
@@ -440,7 +442,7 @@
                 mappedSkills.push(skillIdmapping(arr[i]));
             }
             var data = JSON.stringify({
-                "userName": "1822cs1049",
+                "userName": localStorage.getItem('username'),
                 "skills": mappedSkills
             });
             xhr.send(data);
@@ -506,7 +508,7 @@
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 
                                         <!-- Main input area -->
-                                        <input class="form-control" type="text" id="personalEmail" name="personalEmail" placeholder="mail ID" onchange="validateEmail()" >
+                                        <input class="form-control" type="text" id="personalEmail" name="personalEmail" placeholder="mail ID" onkeyup="validateEmail()" >
 
                                     </div>
                                     <input class="btn btn-secondary" type="button" value="Update" onclick="sendEmailData()">
@@ -532,7 +534,7 @@
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 
                                         <!-- Main input area -->
-                                        <input class="form-control" type="text" id="phoneNo" name="phoneNo" placeholder="Phone No." onchange="validatePhoneNo()" >
+                                        <input class="form-control" type="text" id="phoneNo" name="phoneNo" placeholder="Phone No." onkeyup = "validatePhoneNo()" >
 
                                     </div>
 
@@ -589,7 +591,7 @@
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
 
                                         <!-- Main input area -->
-                                        <input class="form-control" type="text" id="linkedIn" placeholder="LinkedIn ID" name="linkedIn" onchange="validatelinkedInlink()">
+                                        <input class="form-control" type="text" id="linkedIn" placeholder="LinkedIn ID" name="linkedIn" onkeyup="validatelinkedInlink()">
 
                                         
                                     </div>

@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <title> Sign Up </title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="login.css">
-    <link rel="icon" href="CollReach.PNG" type="image/x-icon">
+    <link rel="stylesheet" href="/login.css">
+    <link rel="icon" href="/CollReach.PNG" type="image/x-icon">
 </head>
 <script type="text/javascript">
     function loginValidation() {
@@ -45,7 +45,7 @@
             var url = "http://localhost:8082/user/login";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
-	    xhr.setRequestHeader("Authorization",localStorage.getItem('auth'));
+            xhr.setRequestHeader("Authorization",localStorage.getItem('auth'));
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     console.log(xhr.responseText);

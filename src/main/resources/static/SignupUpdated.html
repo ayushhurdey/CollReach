@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <title> Sign Up </title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="projectcss.css">
-    <link rel="icon" href="CollReach.PNG" type="image/x-icon">
+    <link rel="stylesheet" href="/projectcss.css">
+    <link rel="icon" href="/CollReach.PNG" type="image/x-icon">
     <style>
 	body{
 		
@@ -210,15 +210,19 @@
 					console.log(xhr.responseText);
 					var errorMsg = document.getElementById("usernameValidation");
 					if(xhr.responseText != ""){
-						document.getElementById("libid").style.background = "red";
-						document.getElementById("libid").style.color = "white";
+						var libid = document.getElementById("libid");
+						//libid.style.border = "2px solid red";
+						libid.style.transition = "all 0.30s ease-in-out";
+						libid.style.boxShadow = "0px 0px 5px 2px red";
+						//document.getElementById("libid").style.color = "white";
 						errorMsg.style.display = "block";
 						errorMsg.innerHTML = (xhr.responseText);
 						errorMsg.style.color = "red";
 					}
 					else if(libid === "" || xhr.responseText === ""){
-						document.getElementById("libid").style.background = "white";
-						document.getElementById("libid").style.color = "black";
+						//document.getElementById("libid").style.background = "white";
+						//document.getElementById("libid").style.color = "black";
+						document.getElementById("libid").style.boxShadow = "0px 0px 5px 2px dodgerblue";
 						errorMsg.style.display = "none";
 					}
 				}
@@ -228,6 +232,8 @@
 			});
 			xhr.send(data);
 		}
+		
+		
 		function validateKietemail(){
 			var email = document.reg.email.value;
 			email === "" ? email = "null" : email = email;
@@ -241,15 +247,19 @@
 					console.log(xhr.responseText);
 					var errorMsg = document.getElementById("emailValidation");
 					if(xhr.responseText != ""){
-						document.getElementById("email").style.background = "red";
-						document.getElementById("email").style.color = "white";
+						var email = document.getElementById("email");
+						//email.style.border = "2px solid red";
+						email.style.transition = "all 0.30s ease-in-out";
+						email.style.boxShadow = "0px 0px 5px 2px red";
+						//document.getElementById("email").style.color = "white";
 						errorMsg.style.display = "block";
 						errorMsg.innerHTML = (xhr.responseText);
 						errorMsg.style.color = "red";
 					}
 					else if(email === "" || xhr.responseText === ""){
-						document.getElementById("email").style.background = "white";
-						document.getElementById("email").style.color = "black";
+						//document.getElementById("email").style.background = "white";
+						//document.getElementById("email").style.color = "black";
+						document.getElementById("email").style.boxShadow = "0px 0px 5px 2px dodgerblue";
 						errorMsg.style.display = "none";
 					}
 				}
@@ -272,15 +282,19 @@
 					console.log(xhr.responseText);
 					var errorMsg = document.getElementById("alternateEmailvalidation");
 					if(xhr.responseText != ""){
-						document.getElementById("oemail").style.background = "red";
-						document.getElementById("oemail").style.color = "white";
+						var oemail = document.getElementById("oemail");
+						//oemail.style.border = "2px solid red";
+						oemail.style.transition = "all 0.30s ease-in-out";
+						oemail.style.boxShadow = "0px 0px 5px 2px red";
+						//document.getElementById("oemail").style.color = "white";
 						errorMsg.style.display = "block";
 						errorMsg.innerHTML = (xhr.responseText);
 						errorMsg.style.color = "red";
 					}
 					else if(oemail === "" || xhr.responseText === ""){
-						document.getElementById("oemail").style.background = "white";
-						document.getElementById("oemail").style.color = "black";
+						//document.getElementById("oemail").style.background = "white";
+						//document.getElementById("oemail").style.color = "black";
+						document.getElementById("oemail").style.boxShadow = "0px 0px 5px 2px dodgerblue";
 						errorMsg.style.display = "none";
 					}
 				}
@@ -303,15 +317,19 @@
 					console.log(xhr.responseText);
 					var errorMsg = document.getElementById("phoneNovalidation");
 					if(xhr.responseText != ""){
-						document.getElementById("phone").style.background = "red";
-						document.getElementById("phone").style.color = "white";
+						var phone = document.getElementById("phone");
+						//phone.style.border = "2px solid red";
+						phone.style.transition = "all 0.30s ease-in-out";
+						phone.style.boxShadow = "0px 0px 5px 2px red";
+						//document.getElementById("phone").style.color = "white";
 						errorMsg.style.display = "block";
 						errorMsg.innerHTML = (xhr.responseText);
 						errorMsg.style.color = "red";
 					}
 					else if(phone === "" || xhr.responseText === ""){
-						document.getElementById("phone").style.background = "white";
-						document.getElementById("phone").style.color = "black";
+						//document.getElementById("phone").style.background = "white";
+						//document.getElementById("phone").style.color = "black";
+						document.getElementById("phone").style.boxShadow = "0px 0px 5px 2px dodgerblue";
 						errorMsg.style.display = "none";
 					}
 				}
@@ -355,7 +373,7 @@
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 
                             <!-- Main input area -->
-                            <input class="form-control" type="text" id="email" name="email" size="35" placeholder="email(abc.1822cs0001@kiet.edu)" onchange = "validateKietemail()" required>
+                            <input class="form-control" type="text" id="email" name="email" size="35" placeholder="email(abc.1822cs0001@kiet.edu)" onkeyup = "validateKietemail()" required>
                         </div>
 
 
@@ -382,7 +400,7 @@
                     
                       <div class="input-group">
                       <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                      <input class="form-control" type="text" id="libid" name="libid" placeholder="LIB ID(1822cs0001)" onchange = "validateUserName()" required>
+                      <input class="form-control" type="text" id="libid" name="libid" placeholder="LIB ID(1822cs0001)" onkeyup = "validateUserName()" required>
                     </div>
                     <p id = "usernameValidation" style = "display: none;"></p>
                 </div>
@@ -479,7 +497,7 @@
 
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-                          <input class="form-control" type="text" id="phone" name="phone" placeholder="PhoneNo" onchange="validatePhoneNumber()">
+                          <input class="form-control" type="text" id="phone" name="phone" placeholder="PhoneNo" onkeyup="validatePhoneNumber()">
                         </div>
                         <p id = "phoneNovalidation" style = "display: none;"></p>
                 </div>
@@ -489,7 +507,7 @@
                       <label for="oemail">Personal Mail</label>
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                          <input class="form-control" type="text" id="oemail" name="oemail" placeholder="Personal email" onchange="validateAlternateEmail()">
+                          <input class="form-control" type="text" id="oemail" name="oemail" placeholder="Personal email" onkeyup="validateAlternateEmail()">
                         </div>
                         <p id = "alternateEmailvalidation" style = "display: none;"></p>
                       <small id="emailHelp" class="form-text text-muted">
@@ -502,7 +520,7 @@
                       <label  class="required" for="pass">Create Password:</label>
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                          <input class="form-control" type="password" id="pass" name="pass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Create Password"required>
+                          <input class="form-control" type="password" id="pass" name="pass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Create Password" required>
 
                         </div>
                     
