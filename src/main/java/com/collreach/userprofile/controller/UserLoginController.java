@@ -3,6 +3,8 @@ package com.collreach.userprofile.controller;
 import com.collreach.userprofile.model.request.UserLoginRequest;
 import com.collreach.userprofile.model.response.UserLoginResponse;
 import com.collreach.userprofile.service.UserLoginService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ public class UserLoginController {
     @Autowired
     UserLoginService userLoginService;
 
+    @ApiOperation(value = "", authorizations = { @Authorization(value="apiKey") })
     @PostMapping(path = "/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest){
         UserLoginResponse userLoginResponse = userLoginService.login(userLoginRequest);

@@ -1,6 +1,8 @@
 server:
   port: 8082
 ops: window
+jwt:
+  secret: secretKeyToBeChangedInFuture
 spring:
   jpa:
     hibernate:

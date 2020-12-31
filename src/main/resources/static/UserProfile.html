@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Profile</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="UserProfileCss.css">
+    <link rel="icon" href="CollReach.PNG" type="image/x-icon">
+    <script>
+        function login() {
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/login";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var userInfo = JSON.parse(xhr.responseText);
+                    document.getElementById('name').innerHTML = userInfo.userPersonalInfoResponse.name;
+                    document.getElementById('description').innerHTML = userInfo.userPersonalInfoResponse.description;
+                    document.getElementById('year').innerHTML = userInfo.userPersonalInfoResponse.courseInfoResponse.yearOfStudy;
+                    document.getElementById('sem').innerHTML = userInfo.userPersonalInfoResponse.courseInfoResponse.semester;
+                    document.getElementById('branch').innerHTML = userInfo.userPersonalInfoResponse.courseInfoResponse.branch;
+                    document.getElementById('course').innerHTML = userInfo.userPersonalInfoResponse.courseInfoResponse.courseName;
+                    document.getElementById('kietEmail').innerHTML = userInfo.userPersonalInfoResponse.email;
+                    document.getElementById('personalEmail').innerHTML = userInfo.userPersonalInfoResponse.alternateEmail;
+                    document.getElementById('phoneNo').innerHTML = userInfo.userPersonalInfoResponse.phoneNo;
+                    document.getElementById('linkedIn').innerHTML = userInfo.userPersonalInfoResponse.linkedinLink;
+                    var skill = userInfo.userPersonalInfoResponse.skills;
+                    for (let [k, v] of Object.entries(skill)) {
+                        console.log(k, v);
+                        document.getElementById('skills').innerHTML += (`${JSON.stringify(k)}:- ${JSON.stringify(v)}`) + "<br>";
+                    }
+                }
+            };
+            var data = JSON.stringify({
+                "userName": "1822cs1049"
+                , "password": "Ayush@123"
+            });
+            xhr.send(data);
+        }
+    </script>
+</head>
+
+<body onload="login()">
+
+<section class="shadow p-3 mb-5 bg-white" id="heading">
+    <h2>
+        COLLREACH
+    </h2>
+    <div>
+    --Connect the opportunity
+    </div>
+</section>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+            <div class="col-md-12">
+            <div class="card" id="main-title" >
+                
+                <div id="kietEmail">email</div>
+
+
+            </div>
+            </div>
+            <div class="col-lg-8 col-md-7">
+            <div class="card" id="no-border" >
+                <div id="name">Update your name
+                </div>
+
+                <div>
+                    <br>
+                    <p>About me-</p>
+                    <div class="content" id="description"></div>
+                </div>
+                
+            </div>
+            </div>
+
+
+
+            <div class="col-lg-4 col-md-5">
+            <div class="card" id="no-border">
+                <label for="image"></label>
+             <img src="CollReach.PNG" alt="Profile Image">
+
+
+                    <form>
+
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="img" name="img" accept="image/*">
+                        <label class="custom-file-label" style="text-align: left;">Edit pic here</label>
+                        <div class="invalid-feedback">choose suitable file</div>
+                      </div>
+                    </form>
+
+
+                    <div>
+                        <input class="btn btn-primary btn-sm" type="submit" value="Set">
+                        <input class="btn btn-secondary btn-sm" type="button" value="Remove">
+                        
+                    </div>
+            </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+            <div class="card">
+                 <h5 class="card-title">SKILLS:VOTES</h5>
+
+                <div class="content">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div id="skills"></div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div id="skillLevel"></div>
+                    </div>
+                </div>
+              
+            </div>
+            </div>
+
+
+            <div class="col-md-12">
+            <div class="card">
+                <div class="title">
+                <h5 class="card-title">
+                COURSE INFO</h5>
+                </div>
+
+                <div class="content">
+
+
+                    <table>                      
+                        <tr>
+                            <td>COURSE
+                            <td> <div id="course"></div>
+                        </tr>
+                        <tr>
+                            <td>BRANCH
+                            <td> <div id="branch"></div> 
+                        </tr>
+                        <tr>
+                            <td>YEAR
+                            <td><div id="year"></div> 
+                        </tr>
+                                
+                        <tr>
+                            <td>SEMESTER
+                            <td> <div id="sem"></div> 
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            </div>
+
+            <div class="col-md-12">
+            <div class="card">
+                <h5 class="card-title">CONTACT DETAILS</h5>
+                
+                
+                <div class="content">
+
+                    <table>
+                        <tr>
+                            <td>EMAIL
+                            <td><div id="personalEmail"></div>
+                        </tr>
+                                
+                        <tr>
+                            <td>PHONE NUMBER
+                            <td><div id="phoneNo"></div>  
+                        </tr>
+
+                        <tr>
+                            <td>LINKEDIN
+                            <td><div id="linkedIn"></div>
+                        </tr>
+                            
+
+                    </table>
+                    
+                     
+                    
+                    
+                </div>
+
+
+
+
+
+            </div>
+            </div>  
+
+
+
+
+            <div class="col-lg-12">
+            <button id="updatebutton" class="btn btn-primary" onclick="window.location.href='UserProfileUpdate.html';">UPDATE PROFILE</button>
+            </div>
+
+    </div>
+</div>
+
+</body>
+
+</html>
