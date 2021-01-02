@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+<!--USER_PROFILE_UPDATE FRONT_END-->
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="UserProfileUpdateCss.css">
+    <link rel="icon" href="CollReach.PNG" type="image/x-icon">
+    
+    <title>Profile Update</title>
+    <link rel="icon" href="CollReach.PNG" type="image/x-icon">
+    <script type="text/javascript">
+        var arr = new Array();
+        var userInfo = "";
+        // checks password validity
+        function validatePassword() {
+            var newPassword = document.passwordUpdate.newPassword.value;
+            if (newPassword != "") {
+                if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(newPassword) != true) {
+                    alert("Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        //checks email correctness
+        function emailcorrector() {
+            var personalEmail = document.personalEmailUpdate.personalEmail.value;
+            if (personalEmail != "") {
+                if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(personalEmail) != true) {
+                    alert("Personal email is wrong");
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        
+        //checks linkedin link correctness
+        function linkedIncorrector() {
+            var linkedIn = document.linkedInUpdate.linkedIn.value;
+            if (linkedIn != "") {
+                if (/((https?:\/\/)?((www|\w\w)\.)?linkedin\.com\/)((([\w]{2,3})?)|([^\/]+\/(([\w|\d-&#?=])+\/?){1,}))$/.test(linkedIn) != true) {
+                    alert("Wrong LinkedIn link");
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        //checks if the email exists or not
+        function validateEmail() {
+            var personalEmail = document.personalEmailUpdate.personalEmail.value;
+            personalEmail === "" ? personalEmail = "null" : personalEmail = personalEmail;
+
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/check-email";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var errorMsg = document.getElementById("validateEmail");
+                    if (xhr.responseText != "") {
+                        document.getElementById("personalEmail").style.background = "red";
+                        document.getElementById("personalEmail").style.color = "white";
+                        errorMsg.style.display = "block";
+                        errorMsg.innerHTML = (xhr.responseText);
+                        errorMsg.style.color = "red";
+                    } else if (personalEmail === "" || xhr.responseText === "") {
+                        document.getElementById("personalEmail").style.background = "white";
+                        document.getElementById("personalEmail").style.color = "black";
+                        errorMsg.style.display = "none";
+                    }
+                }
+            };
+            var data = JSON.stringify({
+                "email": personalEmail
+            });
+            xhr.send(data);
+        }
+        
+        
+        //checks if phone number exists or not
+        function validatePhoneNo() {
+            var phoneNo = document.phoneNoUpdate.phoneNo.value;
+            phoneNo === "" ? phoneNo = "null" : phoneNo = phoneNo;
+
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/check-phone-no";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var errorMsg = document.getElementById("phoneNovalidation");
+                    if (xhr.responseText != "") {
+                        document.getElementById("phoneNo").style.background = "red";
+                        document.getElementById("phoneNo").style.color = "white";
+                        errorMsg.style.display = "block";
+                        errorMsg.innerHTML = (xhr.responseText);
+                        errorMsg.style.color = "red";
+                    } else if (phoneNo === "" || xhr.responseText === "") {
+                        document.getElementById("phoneNo").style.background = "white";
+                        document.getElementById("phoneNo").style.color = "black";
+                        errorMsg.style.display = "none";
+                    }
+                }
+            };
+            var data = JSON.stringify({
+                "phoneNo": phoneNo
+            });
+            xhr.send(data);
+        }
+
+        //checks if linkedin link exists or not
+        function validatelinkedInlink() {
+            var linkedIn = document.linkedInUpdate.linkedIn.value;
+            linkedIn === "" ? linkedIn = "null" : linkedIn = linkedIn;
+
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/check-linkedin-link";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var errorMsg = document.getElementById("linkedInvalidation");
+                    if (xhr.responseText != "") {
+                        document.getElementById("linkedIn").style.background = "red";
+                        document.getElementById("linkedIn").style.color = "white";
+                        errorMsg.style.display = "block";
+                        errorMsg.innerHTML = (xhr.responseText);
+                        errorMsg.style.color = "red";
+                    } else if (linkedIn === "" || xhr.responseText === "") {
+                        document.getElementById("linkedIn").style.background = "white";
+                        document.getElementById("linkedIn").style.color = "black";
+                        errorMsg.style.display = "none";
+                    }
+                }
+            };
+            var data = JSON.stringify({
+                "linkedinLink": linkedIn
+            });
+            xhr.send(data);
+        }
+        
+        
+        //updates Alternative Email
+        function EmailUpdate() {
+            var personalEmail = document.personalEmailUpdate.personalEmail.value;
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/alternate-email";
+            xhr.open("PUT", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var responseMsg = xhr.responseText;
+                    console.log(responseMsg);
+                    var msg = document.getElementById("msg");
+                    msg.innerHTML = "</br>" + (xhr.responseText);
+                    if (responseMsg.includes("Error"))
+                        msg.style.color = "red";
+                    else
+                        msg.style.color = "green";
+                }
+            };
+            var data = JSON.stringify({
+                "userName": localStorage.getItem('username'),
+                "alternateEmail": personalEmail
+
+            });
+            xhr.send(data);
+        }
+        //Updates Phone Number
+        function phonenoUpdate() {
+            var phoneNo = document.phoneNoUpdate.phoneNo.value;
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/phone-no";
+            xhr.open("PUT", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var responseMsg = xhr.responseText;
+                    console.log(responseMsg);
+                    var msg = document.getElementById("msg1");
+                    msg.innerHTML = "</br>" + (xhr.responseText);
+                    if (responseMsg.includes("Error"))
+                        msg.style.color = "red";
+                    else
+                        msg.style.color = "green";
+                }
+            };
+            var data = JSON.stringify({
+                "userName": localStorage.getItem('username'),
+                "phoneNo": phoneNo
+            });
+            xhr.send(data);
+        }
+        
+        //updates Description
+        function DescriptionUpdate() {
+            var description = document.descriptionUpdate.description.value;
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/description";
+            xhr.open("PUT", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var responseMsg = xhr.responseText;
+                    console.log(responseMsg);
+                    var msg = document.getElementById("msg2");
+                    msg.innerHTML = "</br>" + (xhr.responseText);
+                    if (responseMsg.includes("Error"))
+                        msg.style.color = "red";
+                    else
+                        msg.style.color = "green";
+                }
+            };
+            var data = JSON.stringify({
+                "userName": localStorage.getItem('username'),
+                "description": description
+
+            });
+            xhr.send(data);
+
+        }
+        //update linkedin link
+        function linkedinUpdate() {
+            var linkedIn = document.linkedInUpdate.linkedIn.value;
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/linkedin-link";
+            xhr.open("PUT", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var responseMsg = xhr.responseText;
+                    console.log(responseMsg);
+                    var msg = document.getElementById("msg3");
+                    msg.innerHTML = "</br>" + (xhr.responseText);
+                    if (responseMsg.includes("Error"))
+                        msg.style.color = "red";
+                    else
+                        msg.style.color = "green";
+                }
+            };
+            var data = JSON.stringify({
+                "userName": localStorage.getItem('username'),
+                "linkedinLink": linkedIn
+
+            });
+            xhr.send(data);
+
+        }
+        
+        
+        function courseIdMapping(course,branch,sem,year) {
+            var courseId;
+                    
+            if ((course == "B.tech") && (branch == "CSE") && (sem == "5") && (year == "3"))
+                courseId = 1;
+            else if ((course == "B.tech") && (branch == "CSE") && (sem == "4") && (year == "2"))
+                courseId = 3;
+            else if ((course == "B.tech") && (branch == "ME") && (sem == "5") && (year == "3"))
+                courseId = 2;
+            else if ((course == "B.tech") && (branch == "EN") && (sem == "5") && (year == "3"))
+                courseId = 11;
+            else if ((course == "B.tech") && (branch == "ECE") && (sem == "5") && (year == "3"))
+                courseId = 4;
+            else if ((course == "B.tech") && (branch == "CE") && (sem == "5") && (year == "3"))
+                courseId = 5;
+            else if ((course == "B.tech") && (branch == "CSI") && (sem == "7") && (year == "4"))
+                courseId = 6;
+            else if ((course == "B.tech") && (branch == "CO") && (sem == "5") && (year == "3"))
+                courseId = 7;
+            else if ((course == "B.tech") && (branch == "IT") && (sem == "5") && (year == "3"))
+                courseId = 8;
+            else if ((course == "B.tech") && (branch == "EIE") && (sem == "5") && (year == "3"))
+                courseId = 9;
+            else if ((course == "B.tech") && (branch = "ECE") && (sem == "4") && (year == "2"))
+                courseId = 10;
+            
+            return courseId;
+        }
+        
+        //update semester and year
+        function YearsemUpdate() {
+            var courseId;
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/login";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    userInfo = JSON.parse(xhr.responseText);
+                    console.log("userInfo" + userInfo.userPersonalInfoResponse.courseInfoResponse.courseName);
+                    
+                    console.log("inside mapping" + userInfo);
+                    var course = userInfo.userPersonalInfoResponse.courseInfoResponse.courseName;
+                    var branch = userInfo.userPersonalInfoResponse.courseInfoResponse.branch;
+                    var sem = document.yearsemUpdate.sem.value;
+                    var year = String(Math.ceil(Number(sem) / 2));
+                    console.log(year +" " + branch + " " + course);
+                    
+                    courseId = courseIdMapping(course,branch,sem,year);
+                        
+                    console.log("courseInfo : " + courseId);
+                    var xhr2 = new XMLHttpRequest();
+                    var url = "http://localhost:8082/user/course-id";
+                    xhr2.open("PUT", url, true);
+                    xhr2.setRequestHeader("Content-Type", "application/json");
+                    xhr2.setRequestHeader("Authorization", localStorage.getItem('auth'));
+                    xhr2.onreadystatechange = function() {
+                        if (xhr2.readyState === 4 && xhr2.status === 200) {
+                            var responseMsg = xhr2.responseText;
+                            console.log(responseMsg);
+                            var msg = document.getElementById("msg4");
+                            msg.innerHTML = "</br>" + (xhr2.responseText);
+                            if (responseMsg.includes("Error"))
+                                msg.style.color = "red";
+                            else
+                                msg.style.color = "green";
+                        }
+                    };
+                    var data2 = JSON.stringify({
+                        "userName": localStorage.getItem('username'),
+                        "courseId": courseId
+                    });
+                    xhr2.send(data2);
+                    
+                }
+            };
+            var data = JSON.stringify({
+                "userName": localStorage.getItem('username')
+            });
+            xhr.send(data);
+        }
+
+        
+        //change password
+        function PasswordUpdate() {
+            var newPassword = document.passwordUpdate.newPassword.value;
+            var password = document.passwordUpdate.password.value;
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/password";
+            xhr.open("PUT", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var responseMsg = xhr.responseText;
+                    console.log(responseMsg);
+                    var msg = document.getElementById("msg6");
+                    msg.innerHTML = "</br>" + (xhr.responseText);
+                    if (responseMsg.includes("Error"))
+                        msg.style.color = "red";
+                    else
+                        msg.style.color = "green";
+                }
+            };
+            var data = JSON.stringify({
+                "userName": localStorage.getItem('username'),
+                "password": password,
+                "newPassword": newPassword
+
+            });
+            xhr.send(data);
+        }
+        
+        //send password to backend after proper validations
+        function sendPasswordData() {
+            if (validatePassword() == true) {
+                PasswordUpdate();
+            } else
+                return false;
+        }
+        
+        
+        //send email to backend after proper validations
+        function sendEmailData() {
+            if (emailcorrector() == true) {
+                EmailUpdate();
+            } else
+                return false;
+        }
+
+        
+        //send updated linkedIn link to database
+        function linkedInDataSend() {
+            if (linkedIncorrector() == true) {
+                linkedinUpdate();
+            } else
+                return false;
+        }
+
+
+        function skillIdmapping(skill) {
+            //var skill = document.skillUpdate.skill.value;
+            if (skill == "AI")
+                return 5;  //9
+            else if (skill == "Android")
+                return 2;  //11
+            else if (skill == "Deep Learning")
+                return 4;  // 10
+            else if (skill == "ML")
+                return 3;   // 7
+            else if (skill == "Web Development")
+                return 1;   // 8
+        }
+        
+        function skillUpdate() {
+            //var skill = skillIdmapping(arr);
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/skills";
+            xhr.open("PUT", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var responseMsg = xhr.responseText;
+                    console.log(responseMsg);
+                    var msg = document.getElementById("msg5");
+                    msg.innerHTML = "</br>" + (xhr.responseText);
+                    if (responseMsg.includes("Error"))
+                        msg.style.color = "red";
+                    else
+                        msg.style.color = "green";
+                }
+            };
+            var mappedSkills = new Array();
+            for(var i = 0; i < arr.length; i++){
+                mappedSkills.push(skillIdmapping(arr[i]));
+            }
+            var data = JSON.stringify({
+                "userName": localStorage.getItem('username'),
+                "skills": mappedSkills
+            });
+            xhr.send(data);
+        }
+
+
+        function addSkill() {
+            var text = document.getElementById("skill").value;
+            console.log(text);
+            //var node = document.createElement("LI");
+            //var textnode = document.createTextNode(text);
+            //node.appendChild(textnode);
+            var skills = document.getElementById("skillset");
+            if (!arr.includes(text)) {
+                var skill = document.createElement("span");
+                var textnode = document.createTextNode(text);
+                skill.appendChild(textnode);
+                skill.style.margin = "10px";
+                skill.style.padding = "5px";
+                skill.style.paddingLeft = "15px";
+                skill.style.paddingRight = "15px";
+                skill.style.backgroundColor = "purple";
+                skill.style.color = "white";
+                skill.style.borderRadius = "60px";
+                skill.style.display = "block";
+                skills.appendChild(skill);
+
+                //document.getElementById("myList").appendChild(node);
+                arr.push(text);
+                console.log(arr);
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <section class="shadow p-3 mb-5 bg-white" id="heading">
+    <h2>
+        Profile Update
+    </h2>
+    </section>
+
+
+<div class="container-fluid">
+
+    <div class="row">
+                
+                <div class="col-md-12" id="titles" >
+                    <h3>PERSONAL DETAILS</h3>
+                </div>
+
+
+
+        
+                <div class="col-md-6">
+                    
+
+                    <div class="card">
+                                <form name="personalEmailUpdate" method="post" action="#">
+                                    <label for="personalEmail">Personal Email</label>
+                                    <div class="input-group">            
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+
+                                        <!-- Main input area -->
+                                        <input class="form-control" type="text" id="personalEmail" name="personalEmail" placeholder="mail ID" onkeyup="validateEmail()" >
+
+                                    </div>
+                                    <input class="btn btn-secondary" type="button" value="Update" onclick="sendEmailData()">
+
+                                    <p id="validateEmail" style="display: none;"></p>
+                                    <p id="msg"></p>
+                                </form>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-md-6">
+                    <div class="card">
+                                <form name="phoneNoUpdate" method="post" action="#">
+                                    <label for="phoneNo">Phone Number</label>
+
+                                    <div class="input-group">
+
+                            
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+
+                                        <!-- Main input area -->
+                                        <input class="form-control" type="text" id="phoneNo" name="phoneNo" placeholder="Phone No." onkeyup = "validatePhoneNo()" >
+
+                                    </div>
+
+                                    <input class="btn btn-secondary" type="button" value="Update" onclick="phonenoUpdate()">
+                                    <p id="PhoneNovalidation" style="display:none;"></p>
+                                    
+                                    <p id="msg1"></p>
+                                </form>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-md-6" id="grid-adjust">
+                    <div class="card" id="des-card">
+                                <form name="descriptionUpdate" method="post" action="#">
+                                    <label for="description">Description</label>
+
+                                    <div class="input-group">
+
+                            
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
+
+                                        <!-- Main input area -->
+                                        <textarea class="form-control"  id="description" placeholder="About me" name="description" maxlength = "200"></textarea>
+
+                                       
+                                    </div>
+                                    <input class="btn btn-secondary" type="button" value="Update" onclick="DescriptionUpdate()">
+
+                                    
+                                    
+                                    <p id="msg2"></p>
+                                </form>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="col-md-6" id="grid-adjust1">
+                    <div class="card" id="lin-card">
+                                <form name="linkedInUpdate" method="post" action="#">
+                                    <label for="linkedIn">LinkedIn Link</label>
+
+
+                                    <div class="input-group">
+
+                            
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
+
+                                        <!-- Main input area -->
+                                        <input class="form-control" type="text" id="linkedIn" placeholder="LinkedIn ID" name="linkedIn" onkeyup="validatelinkedInlink()">
+
+                                        
+                                    </div>
+                                    <input id="lin-button" class="btn btn-secondary" type="button" value="Update" onclick="linkedInDataSend()">
+
+                                    
+                                    <p id="linkedInvalidation" style="display:none;"></p>
+                                    
+                                    <p id="msg3"></p>
+                                </form>
+
+                    </div>  
+
+                </div>
+                   
+
+                <div class="col-md-12" id="titles">
+                    <h3>UPDATE COLLEGE DETAILS</h3>
+                </div>
+
+
+        
+                <div class="col-md-6">
+                    <div class="card" id="sem-card">
+                                <form name="yearsemUpdate" method="post" action="#">
+                                    <label for="sem">Semester</label>
+
+
+                                    <div class="input-group">
+
+                            
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
+
+                                        <!-- Main input area -->
+                                        <select class="form-control" id="sem" name="sem">
+                                        <option value="none">Select semester</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        </select>
+
+                                    </div>
+                                    <input id="sem-button" class="btn btn-secondary" type="button" value="Update" onclick="YearsemUpdate()">
+                                    
+                                    
+                                    <p id="msg4"></p>
+                                </form>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-md-6">
+                    <div class="card">
+                                <form name="skillupdate" method="post" action="#">
+                                    <label for="skill">Skills</label>
+
+
+                                    <div class="input-group">
+
+                            
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-education"></i></span>
+
+                                        <!-- Main input area -->
+                                        <select class="form-control" id="skill" name="skill" onchange="addSkill()">
+                                        <option value = "AI">AI</option>
+                                        <option value = "Web Development">Web Developement</option>
+                                        <option value = "ML">ML</option>
+                                        <option value = "Deep Learning">Deep Learning</option>
+                                        <option value = "Android">Android</option>
+                                        </select>
+
+                                    </div>
+
+                                    
+                                    <p id="skill-box">Selected skill will show here..</p>
+                                    <div id="skillset"></div>
+                                    <input class="btn btn-secondary" type="button" value="Update" onclick="skillUpdate()">
+                                    <p id="msg5"></p>
+                                </form>
+                    </div>
+                   <br>
+                </div>
+        
+
+
+
+
+
+
+
+                <div class="col-md-12" id="titles">
+                    <h3>UPDATE PASSWORD</h3>
+                </div>
+
+
+        
+                <div class="col-md-12">
+                    <div class="card" id=up-pass >
+                                <form name="passwordUpdate" method="post" action="#">
+                                    <label for="password">OLD PASSWORD</label>
+
+
+                                    <div class="input-group">
+
+                            
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+
+                                        <!-- Main input area -->
+                                        <input class="form-control" type="text" placeholder="Old Password"  id="password" name="password">
+                                    </div>
+                                    
+                                    <br>
+                                    <label for="newPassword">NEW PASSWORD</label>
+                                    <div class="input-group">
+
+                            
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-ok"></i></span>
+
+                                        <!-- Main input area -->
+                                        <input class="form-control" type="text"placeholder="New Password" id="newPassword" name="newPassword">
+                                    </div>
+                                    
+
+
+                                    
+                                    <input class="btn btn-secondary" type="button" value="Confirm" id="password-button" onclick="sendPasswordData()">
+                                    <p id="msg6"></p>
+                                </form>
+                    </div>
+                </div>
+       
+
+</div>
+</div>
+</body>
+
+</html>
