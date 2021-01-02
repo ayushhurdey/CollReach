@@ -264,6 +264,7 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
                 if(userPersonalInfo != null){
                     String email = userPersonalInfo.getEmail();
+                    deleteUserProfilePhoto(userName);
                     file.transferTo(new File(photoStorageAddress));   // needs to be changed to a server address..
                     userPersonalInfoRepository.updateUserProfilePhoto(email, imgServerAddress + userName + "$" + ts + "." + extension);
                 }
@@ -282,6 +283,13 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         AtomicReference<String> msg = new AtomicReference<>("");
         userLoginRepository.findById(userName).ifPresentOrElse(
                 (y) -> {
+                        String address = y.getUserPersonalInfo().getUserProfilePhoto().replace(imgServerAddress,"");
+                        System.out.println(address);
+                        address = defaultAddress.replace("default.jpeg",address);
+                        File imgFile = new File(address);
+                        if(imgFile.delete())
+                            System.out.println(address + " File deleted");
+                        else System.out.println("File " + address + " doesn't exist");
                         userPersonalInfoRepository.updateUserProfilePhoto(y.getUserPersonalInfo().getEmail(),defaultImgAddress);
                         msg.set("Profile photo set as default.");
                         },
