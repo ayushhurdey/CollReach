@@ -1,232 +1,205 @@
-*{
+* {
   box-sizing: border-box;
   font-family: trebuchet ms;
-
 }
 
-section{
+section {
   margin: 3px;
 }
 
-body{
-  background-color: #E2DBE2;
+body {
+  background-color: #e2dbe2;
 }
-.container-fluid{
+.container-fluid {
   padding-top: 3%;
-  background-color: #F7F5F7;
+  background-color: #f7f5f7;
   border-radius: 60px;
 }
-img{
+img {
   border-radius: 50px;
 }
 
-h2{
-
+h2 {
   font-family: Goudy Stout;
   text-align: center;
-  text-shadow: 0 0 3px #1DADCA;
-  
+  text-shadow: 0 0 3px #1dadca;
 }
-#heading{
+#heading {
   border-radius: 15px;
 }
-section div{
+section div {
   font-size: 1.2em;
-  font-style: italic; 
+  font-style: italic;
   position: relative;
-  float:right;
-  bottom:15px;
+  float: right;
+  bottom: 15px;
   right: 10px;
-  text-shadow: 0 0 3px #24FFE3;
+  text-shadow: 0 0 3px #24ffe3;
 }
-#main-title{
-  box-shadow: 0px 0px 5px 5px #7B9C9C;
+#main-title {
+  box-shadow: 0px 0px 5px 5px #7b9c9c;
 }
 
-.card-title{
+.card-title {
   position: relative;
-  margin:0px;
+  margin: 0px;
   padding: 10px;
-  background-color: #406D94;
-  color:white;
+  background-color: #406d94;
+  color: white;
   font-family: Copperplate Gothic Bold;
 }
 
-.card{
+.card {
   position: relative;
-  padding:0px;
-  margin:2px;
+  padding: 0px;
+  margin: 2px;
   overflow: auto;
-  border-color: #5797D0;
+  border-color: #5797d0;
   border-radius: 18px;
   margin-bottom: 10px;
- text-align: center;
- border-left: 5px solid #68AEEC;
- border-right: 5px solid #68AEEC;
- 
+  text-align: center;
+  border-left: 5px solid #68aeec;
+  border-right: 5px solid #68aeec;
 }
-.card:hover{
-  
-  box-shadow: 0px 0px 5px 5px #7B9C9C;
-  font-size: 1.0em;
-  
+.card:hover {
+  box-shadow: 0px 0px 5px 5px #7b9c9c;
+  font-size: 1em;
 }
-#no-border{
-  border:none;
+#no-border {
+  border: none;
 }
-#no-border:hover{
+#no-border:hover {
   box-shadow: none;
 }
 
-.row{
-    margin:20px;
-    background:rgba(255,255,255);
-    align-content:  center;
-    padding: 10px;
-    overflow: auto;
-    background-color: #ffffff;
-    border-radius: 30px;
-    box-shadow: 0px 0px 10px 10px #838383;
-    border-left: 10px solid #132B65;
-    border-right: 10px solid #132B65;
-   
+.row {
+  margin: 20px;
+  background: rgba(255, 255, 255);
+  align-content: center;
+  padding: 10px;
+  overflow: auto;
+  background-color: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px 10px #838383;
+  border-left: 10px solid #132b65;
+  border-right: 10px solid #132b65;
 }
 
-#kietEmail{
+#kietEmail {
   font-size: 2em;
   text-decoration: underline;
-  text-shadow: 0px 0px 2px #11A3E1;
+  text-shadow: 0px 0px 2px #11a3e1;
   padding: 10px;
   text-align: center;
-
 }
-#name{
+#name {
   margin: auto;
   text-transform: uppercase;
   margin-top: 11%;
   font-size: 3.7em;
   font-weight: 600;
-  text-shadow:  2px 2px 6px  #3B11E1;
+  text-shadow: 2px 2px 6px #3b11e1;
 }
-#description{
+#description {
   margin-top: 15px;
-  border:1px dashed #5797D0;
+  border: 1px dashed #5797d0;
   border-radius: 18px;
 }
-div> p{
+div > p {
   margin: auto;
   font-family: Brush Script MT;
   font-size: 1.3em;
   position: relative;
-  float:left;
-  left:10px;
-  top:-10px;
-
-
+  float: left;
+  left: 10px;
+  top: -10px;
 }
 
-.col-md-12{
+.col-md-12 {
   padding: 0px;
 }
-.content{
+.content {
   padding: 10px;
   font-family: comic sans ms;
 }
 
-#updatebutton{
+#updatebutton {
   position: relative;
   border-radius: 20px;
   float: right;
   background-color: #0077ff;
-
 }
-.btn{
+.btn {
   position: relative;
-  margin:2px;
-  width:30%;
+  margin: 2px;
+  width: 30%;
   float: right;
-  
-  border:0px;
-  border-radius: 20px
+
+  border: 0px;
+  border-radius: 20px;
 }
-.btn:hover{
-  transform:scale(1); 
+.btn:hover {
+  transform: scale(1);
 }
-.btn-primary{
-  background-color: #85C6AA;
-  
+.btn-primary {
+  background-color: #85c6aa;
 }
 
-table{
+table {
   position: relative;
-  width:100%;
-  
-
+  width: 100%;
 }
-td{
-  width:50%;
-  
+td {
+  width: 50%;
 }
-.btn:hover{
-  font-size: .9em;
-
+.btn:hover {
+  font-size: 0.9em;
 }
 
 #updatebutton:hover {
   transform: scale(1.1);
 }
 
+@media (max-width: 720px) {
+  #kietEmail {
+    font-size: 1.4em;
+    text-align: center;
+  }
 
+  #name {
+    margin: auto;
+    text-transform: uppercase;
+    margin-top: 14%;
+    font-size: 2.4em;
 
-@media (max-width: 720px){
-#kietEmail{
-  font-size: 1.4em;
-  text-align: center;
-  
+    text-shadow: 2px 2px 6px #3b11e1;
+  }
+
+  img {
+    width: 70%;
+    margin: auto;
+  }
+
+  .row {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  #updatebutton {
+    margin: auto;
+    padding: 10px;
+    width: 40%;
+    font-size: 1em;
+  }
 }
 
-#name{
-  margin: auto;
-  text-transform: uppercase;
-  margin-top: 14%;
-  font-size: 2.4em;
-  
-  text-shadow:  2px 2px 6px  #3B11E1;
+@media (max-width: 1080px) and (min-width: 721px) {
+  #name {
+    font-size: 3em;
+  }
 }
 
-
-img{
-  width: 70%;
-  margin: auto;
-}
-
-.row{
-  margin-right: 10px;
-  margin-left: 10px;
-}
-#updatebutton{
-  margin: auto;
-  padding: 10px;
-  width: 40%;
-  font-size: 1em;
-
-}
-
-
-}
-
-
-@media (max-width: 1080px) and (min-width:721px)
-{
-  #name{
-  font-size: 3em;
-}
-};
-
-@media (min-width: 1081px) and (max-width: 1920px){
-#updatebutton:hover {
-  transform: scale(1.1);
-}
-
-
+@media (min-width: 1081px) and (max-width: 1920px) {
+  #updatebutton:hover {
+    transform: scale(1.1);
+  }
 }
