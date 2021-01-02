@@ -4,6 +4,8 @@ import com.collreach.userprofile.model.request.UserLoginUpdateRequest;
 import com.collreach.userprofile.model.request.UserInfoUpdateRequest;
 import com.collreach.userprofile.model.request.UserSkillUpdateRequest;
 import com.collreach.userprofile.service.UserInfoUpdateService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -87,12 +89,14 @@ public class UserInfoUpdateController {
         return ResponseEntity.ok().body(msg);
     }
 
+    @ApiOperation(value = "", authorizations = { @Authorization(value="apiKey") })
     @PutMapping(path = "/profile-photo")
     public ResponseEntity<String> updateProfilePhoto(@RequestParam("file") MultipartFile file ,@RequestParam("userName") String userName) throws IOException {
         String msg = userInfoUpdateService.updateProfilePhoto(file, userName);
         return ResponseEntity.ok().body(msg);
     }
 
+    @ApiOperation(value = "", authorizations = { @Authorization(value="apiKey") })
     @DeleteMapping(path = "/profile-photo")
     public ResponseEntity<String> deleteProfilePhoto(@RequestParam("userName") String userName) {
         String msg = userInfoUpdateService.deleteUserProfilePhoto(userName);

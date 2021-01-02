@@ -1,171 +1,157 @@
-*{
+* {
   box-sizing: border-box;
   font-family: trebuchet ms;
 }
 
-section{
+section {
   margin: 3px;
 }
 
-body{
-  background-color: #E2DBE2;
+body {
+  background-color: #e2dbe2;
 }
-h2{
-
+h2 {
   font-family: Berlin Sans FB Demi;
   text-align: center;
-  text-shadow: 0 0 3px #1DADCA;
+  text-shadow: 0 0 3px #1dadca;
   font-size: 2.6em;
-  
 }
-img{
-	width: 100%;
-	height: 70%;
+img {
+  width: 100%;
+  height: 70%;
 }
 
-.container-fluid{
+.container-fluid {
   padding-top: 3%;
-  background-color: #F7F5F7;
+  background-color: #f7f5f7;
   border-radius: 60px;
 }
-#heading{
+#heading {
   border-radius: 15px;
 }
 
-#titles{
-	margin: auto;
-	padding:0px;
-	background-color: #7D84C4;
-	text-align: center;
-	border-radius: 30px;
-	color:white;
-	box-shadow: 0px 0px 4px 4px #838383;
+#titles {
+  margin: auto;
+  padding: 0px;
+  background-color: #7d84c4;
+  text-align: center;
+  border-radius: 30px;
+  color: white;
+  box-shadow: 0px 0px 4px 4px #838383;
 }
 
 #skillset {
-            width: 80%;
-            height: auto;
-            margin:auto;
-            margin-top: 10px;
-            overflow: auto;
-            background: #202020;
-            padding: 20px;
-            display: block;
-
-        }
-
-#skill-box-msg{
-	margin-top: 10px;
-	margin-bottom: 1px;
-}
-.row{
-    margin:20px;
-    background:rgba(255,255,255);
-    align-content:  center;
-    padding: 10px;
-    overflow: auto;
-    background-color: #DFD8F2;
-    border-radius: 30px;
-    box-shadow: 0px 0px 10px 10px #838383;
-    border-left: 10px solid #132B65;
-    border-right: 10px solid #132B65;
-   
-}
-form{
-
+  width: 80%;
+  height: auto;
+  margin: auto;
+  margin-top: 10px;
+  overflow: auto;
+  background: #202020;
+  padding: 20px;
+  display: block;
 }
 
-.input-group{
-	width: 80%;
-	margin: auto;
+#skill-box-msg {
+  margin-top: 10px;
+  margin-bottom: 1px;
+}
+.row {
+  margin: 20px;
+  background: rgba(255, 255, 255);
+  align-content: center;
+  padding: 10px;
+  overflow: auto;
+  background-color: #dfd8f2;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px 10px #838383;
+  border-left: 10px solid #132b65;
+  border-right: 10px solid #132b65;
+}
+form {
 }
 
-
-
-.btn{
-	position: relative;
-	float: right;
-	margin-top: 5%;
-	background-color: #89B9AA;
-	border-radius: 30px;
-
-}
-.btn:hover{
-	background-color: #81A298;
-	border: none;
-	transform: scale(1.1);
-}
-.col-md-6{
-	margin-top: 10px;
-
-}
-.col-md-12{
-	margin-top: 10px;
+.input-group {
+  width: 80%;
+  margin: auto;
 }
 
-.card{
-	padding: 10px;
-	margin:6px;
-	border-radius: 30px;
-	text-align: center;
-	box-shadow: 0px 0px 4px 4px #F6CAE2;
+.btn {
+  position: relative;
+  float: right;
+  margin-top: 5%;
+  background-color: #89b9aa;
+  border-radius: 30px;
 }
-.card:hover{
-	background-color: #FCF1E0;
-	box-shadow: 0px 0px 4px 4px #FF7CC2;
+.btn:hover {
+  background-color: #81a298;
+  border: none;
+  transform: scale(1.1);
 }
-
-form p:last-child{
-	color:red;
+.col-md-6 {
+  margin-top: 10px;
 }
-
-#lin-card{
-	height: 93%;
-
-	}
-#lin-button{
-	position: relative;
-	float: right;
-	bottom: -37px;
+.col-md-12 {
+  margin-top: 10px;
 }
 
-#grid-adjust1{
-	margin-bottom: 20px;
+.card {
+  padding: 10px;
+  margin: 6px;
+  border-radius: 30px;
+  text-align: center;
+  box-shadow: 0px 0px 4px 4px #f6cae2;
 }
-#up-pass:hover{
-		margin-top: 10px;
-		margin-bottom: 10px;
-
-	}
-@media (min-width: 765px){
-	#sem-card{
-		height: 86%;
-	}
-
-	#sem-button{
-	position: relative;
-	bottom:-67px;
+.card:hover {
+  background-color: #fcf1e0;
+  box-shadow: 0px 0px 4px 4px #ff7cc2;
 }
 
-	.btn{
-		width: 30%;
-	}
-
-	#password-button{
-
-	width: 15%;
-	margin: auto;
-	margin-top: 10px;
-	}
-
-	#grid-adjust{
-	margin-bottom: 20px;
-}
-}
-@media (max-width: 764px){
-	#lin-button{
-	
-	bottom:-1px;
+form p:last-child {
+  color: red;
 }
 
-	}
+#lin-card {
+  height: 93%;
+}
+#lin-button {
+  position: relative;
+  float: right;
+  bottom: -37px;
+}
+
+#grid-adjust1 {
+  margin-bottom: 20px;
+}
+#up-pass:hover {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+@media (min-width: 765px) {
+  #sem-card {
+    height: 86%;
+  }
+
+  #sem-button {
+    position: relative;
+    bottom: -67px;
+  }
+
+  .btn {
+    width: 30%;
+  }
+
+  #password-button {
+    width: 15%;
+    margin: auto;
+    margin-top: 10px;
+  }
+
+  #grid-adjust {
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 764px) {
+  #lin-button {
+    bottom: -1px;
+  }
+}

@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>
-        Sign in
-    </title>
+    <title>Sign in</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <title> Sign Up </title>
@@ -80,51 +78,52 @@
 </script>
 <body>
 <section class="shadow p-3 mb-5 bg-white" id="heading">
-    <!--<img src="CollReach.PNG" class="img-circle" alt="collreach logo"><img>--> 
+    <!--<img src="CollReach.PNG" class="img-circle" alt="collreach logo"><img>-->
     <h2>
         SIGN IN
     </h2>
 </section>
 
-<div  class="container-fluid" >
-           
+<div class="container-fluid">
 
     <form name=reg action="#" method="post">
         <div id="centering">
-         <!-- parent of all div-->
-        <div class="row">
-            <!-- Bootstrap grinding-->
-            <div class="col-lg-12">
-                <label for="libid">Library Id:</label>
-                <div class="input-group">
-                      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                      <input class="form-control" type="text" id="libid" name="libid" title="Please fill your registered library id">
+            <!-- parent of all div-->
+            <div class="row">
+                <!-- Bootstrap grinding-->
+                <div class="col-lg-12">
+                    <label for="libid">Library Id:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input class="form-control" type="text" id="libid" name="libid"
+                            title="Please fill your registered library id">
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="col-lg-12"> 
-                <label for="pass">Password:</label>
+                <div class="col-lg-12">
+                    <label for="pass">Password:</label>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         <input class="form-control" type="password" id="pass" name="pass">
                     </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <input type="button" id="submit-button" class="btn btn-primary" value="Login" onclick="check()">
+                    <button type="reset" class="btn btn-secondary" id="submit-button"
+                        value="reset">Cancel</button><br><br>
+                    <p>
+                        <a href="CollReach.html" data-toggle="tooltip" data-placement="bottom"
+                            title="Take you to the CollReach Homepage">Home</a>
+                    </p>
+                </div>
+                <p id="msg"></p>
             </div>
-
-
-            <div class="col-md-12">
-                <input type="button" id="submit-button" class="btn btn-primary" value="Login" onclick="check()">
-
-            
-                <button type="reset" class="btn btn-secondary" id="submit-button" value="reset">Cancel</button><br><br>
-                <p>
-                <a href="CollReach.html" data-toggle="tooltip" data-placement="bottom" title="Take you to the CollReach Homepage">Home</a>
-                </p>
-            </div>
-            <p id = "msg"></p>
         </div>
-    </div>
     </form>
 </div>
 
-</body></html>
+</body>
+</html>

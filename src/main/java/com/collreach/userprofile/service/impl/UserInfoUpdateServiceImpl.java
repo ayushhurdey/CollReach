@@ -11,11 +11,13 @@ import com.collreach.userprofile.service.UserInfoUpdateService;
 import com.collreach.userprofile.service.UserLoginService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -32,6 +34,12 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     CourseInfoRepository courseInfoRepository;
     @Autowired
     UserSkillsRepository userSkillsRepository;
+
+    @Value("${images.server-address}")
+    private String imgServerAddress;
+
+    @Value("${images.default-image}")
+    private String defaultImgAddress;
 
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
@@ -243,22 +251,27 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         if(index > 0 && userNameExists) {
             String extension = fileName.substring(index + 1);
             System.out.println("File extension is " + extension);
+            String ts = "";
             try {
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                ts = String.valueOf(timestamp.getTime());
+                System.out.println("Current Timestamp: " + ts);
+
                 String photoStorageAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\"
-                        + userName + "." + extension;
+                        + userName + "$" + ts + "." + extension;
                 // photos in db has to be stored as "localhost:8081/images/default.jpeg"
                 UserPersonalInfo userPersonalInfo = userLoginRepository.findById(userName).get().getUserPersonalInfo();
 
                 if(userPersonalInfo != null){
                     String email = userPersonalInfo.getEmail();
-                    file.transferTo(new File(photoStorageAddress));
-                    userPersonalInfoRepository.updateUserProfilePhoto(email, photoStorageAddress);
+                    file.transferTo(new File(photoStorageAddress));   // needs to be changed to a server address..
+                    userPersonalInfoRepository.updateUserProfilePhoto(email, imgServerAddress + userName + "$" + ts + "." + extension);
                 }
                 else return "Please update your personal info first.";
             }catch(Exception e){
                 return e.getLocalizedMessage();
             }
-            return "Profile picture updated successfully.";
+            return "Profile picture updated successfully. $" + ts + "." + extension;
         }
         return "Either username is invalid or file format is not supported.";
     }
@@ -269,7 +282,7 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         AtomicReference<String> msg = new AtomicReference<>("");
         userLoginRepository.findById(userName).ifPresentOrElse(
                 (y) -> {
-                        userPersonalInfoRepository.updateUserProfilePhoto(y.getUserPersonalInfo().getEmail(),defaultAddress);
+                        userPersonalInfoRepository.updateUserProfilePhoto(y.getUserPersonalInfo().getEmail(),defaultImgAddress);
                         msg.set("Profile photo set as default.");
                         },
                 () -> msg.set("Some Error Occurred."));

@@ -3,6 +3,9 @@ server:
 ops: window
 jwt:
   secret: secretKeyToBeChangedInFuture
+images:
+  server-address: http://localhost:8081/images/
+  default-image: http://localhost:8081/images/default.jpeg
 spring:
   jpa:
     hibernate:
