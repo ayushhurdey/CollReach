@@ -47,6 +47,10 @@ input {
   font-weight: 1.4em;
 }
 
+#remember-me-label {
+  margin-left: 25px;
+}
+
 /* Form main div for styling*/
 .row {
   margin-left: 20%;

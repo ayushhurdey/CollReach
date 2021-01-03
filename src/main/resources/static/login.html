@@ -40,17 +40,22 @@
         var libid = document.reg.libid.value;
         var pass  = document.reg.pass.value;
         var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/login";
+            var url = "http://localhost:8082/token";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.setRequestHeader("Authorization",localStorage.getItem('auth'));
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     console.log(xhr.responseText);
-                    var msg = document.getElementById("msg");
-                    msg.innerHTML = "Login Successfull.";
-                    msg.style.color = "green";
-                    //msg.style.display = "none";
+                    var rememberMe = document.getElementById('remember-me-check').checked
+                    if(rememberMe){
+                        localStorage.setItem('username',libid);
+                        localStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
+                    }
+                    else{
+                        sessionStorage.setItem('username',libid);
+                        sessionStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
+                    }
+                    getDetails();
                 }
                 else{
                     var errorMsg = document.getElementById("msg");
@@ -66,6 +71,38 @@
             xhr.send(data);
     }
     
+    function getDetails(){
+        var libid = document.reg.libid.value;
+        var pass  = document.reg.pass.value;
+        console.log("id: " + libid);
+
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:8082/user/get-user-details/" + 
+            (localStorage.getItem('username') || sessionStorage.getItem('username'));
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Authorization",
+            (localStorage.getItem('auth') || sessionStorage.getItem('username')));
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);
+                var msg = document.getElementById("msg");
+                msg.innerHTML = "Login Successfull.";
+                msg.style.color = "green";
+                window.location.href = "http://localhost:8082/UserProfile.html";
+                //msg.style.display = "none";
+            }
+            else{
+                var errorMsg = document.getElementById("msg");
+                errorMsg.innerHTML = "</br>" + "Either username or password or both are incorrect.";
+                errorMsg.style.color = "red";
+                errorMsg.style.display = "block";
+            }
+        };
+        //var data = JSON.stringify({});
+        xhr.send();
+    }
+
     function check(){
         if(loginValidation() == true){
             submitForm();
@@ -76,7 +113,7 @@
         }
     }
 </script>
-<body>
+<body onload = "getDetails()">
 <section class="shadow p-3 mb-5 bg-white" id="heading">
     <!--<img src="CollReach.PNG" class="img-circle" alt="collreach logo"><img>-->
     <h2>
@@ -109,6 +146,11 @@
                     </div>
                 </div>
 
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="remember-me-check">
+                    <label class="form-check-label" for="remember-me-check" 
+                        id = "remember-me-label">Remember Me</label>
+                </div>
 
                 <div class="col-md-12">
                     <input type="button" id="submit-button" class="btn btn-primary" value="Login" onclick="check()">
