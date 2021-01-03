@@ -1,22 +1,20 @@
-package com.collreach.userprofile.controller;
-
-import java.io.*;
+package com.collreach.userprofile.util;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-@Deprecated
-@Controller
-@RequestMapping(path = "/ftp")
-@CrossOrigin("*")
-public class FTPController {
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+
+@Component
+public class FtpUtil {
 
     @Value("${ftp.host}")
     private String host;
@@ -27,40 +25,41 @@ public class FTPController {
     @Value("${ftp.pwd}")
     private String pwd;
 
+    @Value("${ftp.host-dir}")
+    private String hostDir;
+
     FTPClient ftp = null;
 
-    @PostMapping(path = "/upload")
-    public ResponseEntity<String> ftpConnect(@RequestParam("file") MultipartFile file) throws Exception{
+    public String ftpUpload(MultipartFile file, String fileName) throws Exception{
         System.out.println("Start");
-        var some = file.getInputStream();
-        FTPUploader(host, user, pwd);
-        //FTP server path is relative. So if FTP account HOME directory is
-        // "/home/pankaj/public_html/" and you need to upload
-        // files to "/home/pankaj/public_html/wp-content/uploads/image2/",
-        // you should pass directory parameter as "/wp-content/uploads/image2/"
-        uploadFile(file, file.getOriginalFilename(), "/htdocs/frontend/");
+        FTPConnect(host, user, pwd);
+            //FTP server path is relative. So if FTP account HOME directory is
+            // "/home/pankaj/public_html/" and you need to upload
+            // files to "/home/pankaj/public_html/wp-content/uploads/image2/",
+            // you should pass directory parameter as "/wp-content/uploads/image2/"
+        uploadFile(file, fileName);
         disconnect();
         System.out.println("Done");
-        return ResponseEntity.ok().body("Done successfully.");
+        return "Done successfully.";
     }
 
-    @GetMapping("/delete")
-    public ResponseEntity<String> deletingFile() {
+
+    public String deletingFile(String fileName) {
         boolean fileDeleted = false;
         try {
-            FTPUploader(host,user,pwd);
-            fileDeleted = deleteFile();
+            FTPConnect(host,user,pwd);
+            fileDeleted = deleteFile(fileName);
             disconnect();
         }catch(Exception e){
-            return ResponseEntity.ok().body("File not found");
+            return "Could not connect.";
         }
         if(fileDeleted)
-            return ResponseEntity.ok().body("deleted Successfully.");
+            return "deleted Successfully.";
         else
-            return ResponseEntity.ok().body("No such file exists.");
+            return "No such file exists.";
     }
 
-    public void FTPUploader(String host, String user, String pwd) throws Exception{
+    public void FTPConnect(String host, String user, String pwd) throws Exception{
         ftp = new FTPClient();
         ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
         int reply;
@@ -75,17 +74,17 @@ public class FTPController {
         ftp.enterLocalPassiveMode();
     }
 
-    public void uploadFile(MultipartFile file, String fileName, String hostDir)
+    public void uploadFile(MultipartFile file, String fileName)
             throws Exception {
         try(InputStream input = file.getInputStream()){
-            this.ftp.storeFile(hostDir + fileName, input);
+            this.ftp.storeFile(fileName, input);
         }
     }
 
-    public boolean deleteFile() {
+    public boolean deleteFile(String fileName) {
         boolean deleted = false;
         try {
-            deleted = this.ftp.deleteFile("/htdocs/frontend/TESTIMAGE.png");
+            deleted = this.ftp.deleteFile(hostDir + fileName);
         }catch(Exception e){
             System.out.println("-> :" + e);
         }

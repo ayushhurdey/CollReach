@@ -10,6 +10,9 @@ ftp:
   host: ftp.unaux.com
   user: unaux_27598440
   pwd: 689j616h7yuiwu
+  host-dir: /htdocs/frontend/images/
+  img-address-server: http://maybelater.unaux.com/frontend/images
+  default-img: default.jpeg
 spring:
   jpa:
     hibernate:
