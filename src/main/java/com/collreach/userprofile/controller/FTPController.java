@@ -1,24 +1,63 @@
 package com.collreach.userprofile.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
 
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(path = "/ftp")
 @CrossOrigin("*")
 public class FTPController {
+
+    @Value("${ftp.host}")
+    private String host;
+
+    @Value("${ftp.user}")
+    private String user;
+
+    @Value("${ftp.pwd}")
+    private String pwd;
+
     FTPClient ftp = null;
+
+    @PostMapping(path = "/upload")
+    public ResponseEntity<String> ftpConnect(@RequestParam("file") MultipartFile file) throws Exception{
+        System.out.println("Start");
+        var some = file.getInputStream();
+        FTPUploader(host, user, pwd);
+        //FTP server path is relative. So if FTP account HOME directory is
+        // "/home/pankaj/public_html/" and you need to upload
+        // files to "/home/pankaj/public_html/wp-content/uploads/image2/",
+        // you should pass directory parameter as "/wp-content/uploads/image2/"
+        uploadFile(file, file.getOriginalFilename(), "/htdocs/frontend/");
+        disconnect();
+        System.out.println("Done");
+        return ResponseEntity.ok().body("Done successfully.");
+    }
+
+    @GetMapping("/delete")
+    public ResponseEntity<String> deletingFile() {
+        boolean fileDeleted = false;
+        try {
+            FTPUploader(host,user,pwd);
+            fileDeleted = deleteFile();
+            disconnect();
+        }catch(Exception e){
+            return ResponseEntity.ok().body("File not found");
+        }
+        if(fileDeleted)
+            return ResponseEntity.ok().body("deleted Successfully.");
+        else
+            return ResponseEntity.ok().body("No such file exists.");
+    }
 
     public void FTPUploader(String host, String user, String pwd) throws Exception{
         ftp = new FTPClient();
@@ -34,11 +73,22 @@ public class FTPController {
         ftp.setFileType(FTP.BINARY_FILE_TYPE);
         ftp.enterLocalPassiveMode();
     }
-    public void uploadFile(String localFileFullName, String fileName, String hostDir)
+
+    public void uploadFile(MultipartFile file, String fileName, String hostDir)
             throws Exception {
-        try(InputStream input = new FileInputStream(new File(localFileFullName))){
+        try(InputStream input = file.getInputStream()){
             this.ftp.storeFile(hostDir + fileName, input);
         }
+    }
+
+    public boolean deleteFile() {
+        boolean deleted = false;
+        try {
+            deleted = this.ftp.deleteFile("/htdocs/frontend/TESTIMAGE.png");
+        }catch(Exception e){
+            System.out.println("-> :" + e);
+        }
+        return deleted;
     }
 
     public void disconnect(){
@@ -52,15 +102,4 @@ public class FTPController {
         }
     }
 
-    @GetMapping(path = "/upload")
-    public ResponseEntity<String> ftpConnect() throws Exception{
-        System.out.println("Start");
-        FTPUploader("ftp.unaux.com", "unaux_27598440", "689j616h7yuiwu");
-        //FTP server path is relative. So if FTP account HOME directory is "/home/pankaj/public_html/" and you need to upload
-        // files to "/home/pankaj/public_html/wp-content/uploads/image2/", you should pass directory parameter as "/wp-content/uploads/image2/"
-        uploadFile("D:\\background\\Stunning wallpapes\\RE4wpoi.jpeg", "default.jpeg", "/htdocs/frontend/");
-        disconnect();
-        System.out.println("Done");
-        return ResponseEntity.ok().body("Done successfully.");
-    }
 }

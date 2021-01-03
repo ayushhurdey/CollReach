@@ -6,6 +6,10 @@ jwt:
 images:
   server-address: http://localhost:8081/images/
   default-image: http://localhost:8081/images/default.jpeg
+ftp:
+  host: ftp.unaux.com
+  user: unaux_27598440
+  pwd: 689j616h7yuiwu
 spring:
   jpa:
     hibernate:
