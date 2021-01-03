@@ -9,6 +9,7 @@ import com.collreach.userprofile.model.request.UserSkillUpdateRequest;
 import com.collreach.userprofile.model.response.UserLoginResponse;
 import com.collreach.userprofile.service.UserInfoUpdateService;
 import com.collreach.userprofile.service.UserLoginService;
+import com.collreach.userprofile.util.FtpUtil;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,20 +27,30 @@ import java.util.concurrent.atomic.AtomicReference;
 public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     @Autowired
     UserLoginService userLoginService;
+
     @Autowired
     UserLoginRepository userLoginRepository;
+
     @Autowired
     UserPersonalInfoRepository userPersonalInfoRepository;
+
     @Autowired
     CourseInfoRepository courseInfoRepository;
+
     @Autowired
     UserSkillsRepository userSkillsRepository;
 
-    @Value("${images.server-address}")
-    private String imgServerAddress;
+    @Autowired
+    private FtpUtil ftpUtil;
 
-    @Value("${images.default-image}")
-    private String defaultImgAddress;
+    @Value("${ftp.host-dir}")
+    private String hostDir;
+
+    @Value("${ftp.img-address-server}")
+    private String imgAddressServer;
+
+    @Value("${ftp.default-img}")
+    private String defaultImg;
 
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
@@ -256,17 +267,15 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 ts = String.valueOf(timestamp.getTime());
                 System.out.println("Current Timestamp: " + ts);
-
-                String photoStorageAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\"
-                        + userName + "$" + ts + "." + extension;
-                // photos in db has to be stored as "localhost:8081/images/default.jpeg"
+                String filename = userName + "$" + ts + "." + extension;
+                String photoStorageAddress = imgAddressServer + "/" + filename;
                 UserPersonalInfo userPersonalInfo = userLoginRepository.findById(userName).get().getUserPersonalInfo();
 
                 if(userPersonalInfo != null){
                     String email = userPersonalInfo.getEmail();
                     deleteUserProfilePhoto(userName);
-                    file.transferTo(new File(photoStorageAddress));   // needs to be changed to a server address..
-                    userPersonalInfoRepository.updateUserProfilePhoto(email, imgServerAddress + userName + "$" + ts + "." + extension);
+                    ftpUtil.ftpUpload(file, hostDir + filename);
+                    userPersonalInfoRepository.updateUserProfilePhoto(email, photoStorageAddress);
                 }
                 else return "Please update your personal info first.";
             }catch(Exception e){
@@ -279,18 +288,24 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     @Override
     public String deleteUserProfilePhoto(String userName){
-        String defaultAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\default.jpeg";
+        //String defaultAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\default.jpeg";
         AtomicReference<String> msg = new AtomicReference<>("");
         userLoginRepository.findById(userName).ifPresentOrElse(
                 (y) -> {
-                        String address = y.getUserPersonalInfo().getUserProfilePhoto().replace(imgServerAddress,"");
-                        System.out.println(address);
-                        address = defaultAddress.replace("default.jpeg",address);
-                        File imgFile = new File(address);
-                        if(imgFile.delete())
-                            System.out.println(address + " File deleted");
-                        else System.out.println("File " + address + " doesn't exist");
-                        userPersonalInfoRepository.updateUserProfilePhoto(y.getUserPersonalInfo().getEmail(),defaultImgAddress);
+                        String filename = y.getUserPersonalInfo().getUserProfilePhoto()
+                                .replace(imgAddressServer + "/","");
+                        System.out.println(filename);
+                        //address = defaultAddress.replace("default.jpeg",address);
+                        //File imgFile = new File(address);
+                        String message = "";
+                        if(!filename.contains(defaultImg))
+                            message = ftpUtil.deletingFile(filename);
+                        if(message.contains("deleted Successfully"))
+                            System.out.println(filename + "   File deleted");
+                        else System.out.println("File " + message);
+                        if(!message.contains("Could not connect"))
+                            userPersonalInfoRepository.updateUserProfilePhoto(y.getUserPersonalInfo().getEmail(),
+                                   imgAddressServer + "/" + defaultImg);
                         msg.set("Profile photo set as default.");
                         },
                 () -> msg.set("Some Error Occurred."));

@@ -41,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/token","/*.html","/*.html/*","/user/signup","/hello").permitAll()
                 .antMatchers("/*.css","/*.css/*","/*.js","/*.js/*","/*.map").permitAll()
                 .antMatchers("/*.jpg","/*.jpeg","/*.png","/*.PNG").permitAll()
+                .antMatchers("/ftp/upload","/ftp/delete").permitAll()
                 .antMatchers("/user/check-username","/user/check-email","/user/check-phone-no","/user/check-linkedin-link").permitAll()
                 .anyRequest().authenticated()
                 .and()
