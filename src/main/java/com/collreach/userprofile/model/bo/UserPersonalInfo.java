@@ -15,6 +15,9 @@ public class UserPersonalInfo {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false, unique = true)
+    private String profileAccessKey;
+
     @Column(name = "alternate_email")
     private String alternateEmail;
 

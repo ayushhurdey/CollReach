@@ -11,6 +11,8 @@
     <script>
       function login() {
         var username = localStorage.getItem("username");
+        if(username == null)
+          window.location.href = "http://localhost:8082/login.html";
         var xhr = new XMLHttpRequest();
         var url = "http://localhost:8082/user/get-user-details/" + username;
         xhr.open("POST", url, true);

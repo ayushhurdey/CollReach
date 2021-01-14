@@ -63,6 +63,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println("Token is not validated.");
             }
         }
+        else{
+            System.out.println("Token not found or format of token is invalid.");
+        }
         filterChain.doFilter(request,response);
     }
 }
