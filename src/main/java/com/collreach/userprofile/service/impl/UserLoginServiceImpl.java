@@ -35,15 +35,7 @@ public class UserLoginServiceImpl implements UserLoginService {
             password = user.getPassword();
 
             if(username.equals(userLoginRequest.getUserName()) && password.equals(userLoginRequest.getPassword())){
-                UserLoginResponse userLoginResponse = userProfileMapper.userLoginToUserLoginResponse(user);
-                List<UserSkills> userSkills = userSkillsRepository.findAllByUserId(user.getUserPersonalInfo());
-
-                Map<String,Integer> skills = new HashMap<String,Integer>();
-                for(UserSkills userSkill: userSkills){
-                    skills.put(userSkill.getSkillId().getSkill(), userSkill.getSkillUpvoteCount());
-                }
-                userLoginResponse.getUserPersonalInfoResponse().setSkills(skills);
-                return userLoginResponse;
+                return getUserLoginResponse(user);
             }
         }
         return userProfileMapper.userLoginToUserLoginResponse(null);
@@ -54,16 +46,20 @@ public class UserLoginServiceImpl implements UserLoginService {
         UserLogin user = userLoginRepository.findById(userName).orElse(null);
 
         if(user != null){
-            UserLoginResponse userLoginResponse = userProfileMapper.userLoginToUserLoginResponse(user);
-            List<UserSkills> userSkills = userSkillsRepository.findAllByUserId(user.getUserPersonalInfo());
-
-            Map<String,Integer> skills = new HashMap<String,Integer>();
-            for(UserSkills userSkill: userSkills){
-                skills.put(userSkill.getSkillId().getSkill(), userSkill.getSkillUpvoteCount());
-            }
-            userLoginResponse.getUserPersonalInfoResponse().setSkills(skills);
-            return userLoginResponse;
+            return getUserLoginResponse(user);
         }
         return userProfileMapper.userLoginToUserLoginResponse(null);
+    }
+
+    private UserLoginResponse getUserLoginResponse(UserLogin user){
+        UserLoginResponse userLoginResponse = userProfileMapper.userLoginToUserLoginResponse(user);
+        List<UserSkills> userSkills = userSkillsRepository.findAllByUserId(user.getUserPersonalInfo());
+
+        Map<String,Integer> skills = new HashMap<String,Integer>();
+        for(UserSkills userSkill: userSkills){
+            skills.put(userSkill.getSkillId().getSkill(), userSkill.getSkillUpvoteCount());
+        }
+        userLoginResponse.getUserPersonalInfoResponse().setSkills(skills);
+        return userLoginResponse;
     }
 }
