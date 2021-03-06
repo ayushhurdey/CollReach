@@ -6,6 +6,7 @@ import com.collreach.userprofile.model.response.UsersSkillsResponse;
 
 public interface UserProfileService {
     public String signup(UserSignupRequest userSignupRequest);
+    public byte[] getImage(String filename) throws Exception;
     public String deleteUser(String userName);
     public String checkUsername(UserSignupRequest userSignupRequest);
     public String checkEmail(UserSignupRequest userSignupRequest);

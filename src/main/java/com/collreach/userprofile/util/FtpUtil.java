@@ -1,5 +1,6 @@
 package com.collreach.userprofile.util;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -72,6 +73,19 @@ public class FtpUtil {
         ftp.login(user, pwd);
         ftp.setFileType(FTP.BINARY_FILE_TYPE);
         ftp.enterLocalPassiveMode();
+    }
+
+    public byte[] downloadFile(String path) throws Exception {
+        try{
+            FTPConnect(host, user, pwd);
+            InputStream inputStream = ftp.retrieveFileStream(path);
+            disconnect();
+            return IOUtils.toByteArray(inputStream);
+        }
+        catch(Exception e){
+            System.out.println("Could not connect: " + e);
+        }
+        return new byte[0];
     }
 
     public void uploadFile(MultipartFile file, String fileName)

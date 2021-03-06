@@ -50,8 +50,9 @@
                 `${JSON.stringify(k)}:- ${JSON.stringify(v)}` + "<br>";
             }
 
-            document.getElementById("profile-photo").src =
-              userInfo.userPersonalInfoResponse.userProfilePhoto;
+            document.getElementById("profile-photo").src = 
+                "http://localhost:8082/user/get-image?filename=" +
+                 userInfo.userPersonalInfoResponse.userProfilePhoto;
             localStorage.setItem(
               "profilePhoto",
               userInfo.userPersonalInfoResponse.userProfilePhoto
