@@ -77,6 +77,9 @@
         <div class="col-md-12">
           <div class="card" id="main-title">
             <div id="kietEmail">email</div>
+            <div id="logout">
+              <button id = "logout-btn">Logout</button>
+            </div> 
           </div>
         </div>
 
@@ -242,6 +245,20 @@
       });
     });
 </script-->
+    <script>
+      let logoutButton = document.getElementById("logout-btn");
+      logoutButton.addEventListener("click", logout);
+
+      function logout(){
+        let wantToLogout = confirm("Do you want to logout?");
+        if(wantToLogout){
+            localStorage.removeItem('auth');
+            localStorage.removeItem('username');
+            localStorage.removeItem('profilePhoto');
+            window.location.href = "http://localhost:8082/login.html";
+        }
+      }
+    </script>
 
     <script>
       "use strict";
