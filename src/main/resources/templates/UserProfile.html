@@ -217,7 +217,7 @@
           <button
             id="updatebutton"
             class="btn btn-primary"
-            onclick="window.location.href='UserProfileUpdate.html';"
+            onclick='window.location.href="http://localhost:8082/profile-update";'
           >
             UPDATE PROFILE
           </button>
@@ -255,7 +255,7 @@
             localStorage.removeItem('auth');
             localStorage.removeItem('username');
             localStorage.removeItem('profilePhoto');
-            window.location.href = "http://localhost:8082/login.html";
+            window.location.href = "http://localhost:8082/login";
         }
       }
     </script>

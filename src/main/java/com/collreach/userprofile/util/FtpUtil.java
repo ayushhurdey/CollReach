@@ -75,7 +75,7 @@ public class FtpUtil {
     }
 
     public InputStream downloadFile(String path) throws Exception {
-        InputStream inputStream = new ByteArrayInputStream(new byte[0]);;
+        InputStream inputStream = new ByteArrayInputStream(new byte[0]);
         try{
             FTPConnect(host, user, pwd);
             inputStream = download(path);
