@@ -2,11 +2,13 @@ package com.collreach.userprofile.controller;
 
 import java.io.*;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +60,13 @@ public class FTPController {
             return ResponseEntity.ok().body("deleted Successfully.");
         else
             return ResponseEntity.ok().body("No such file exists.");
+    }
+
+    @GetMapping(value = "/get-image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> downloadImage(String filename) throws Exception {
+        FTPUploader(host, user, pwd);
+        var x = ftp.retrieveFileStream("/htdocs/frontend/images/" + filename);
+        return ResponseEntity.ok().body(IOUtils.toByteArray(x));
     }
 
     public void FTPUploader(String host, String user, String pwd) throws Exception{

@@ -11,6 +11,8 @@
     <script>
       function login() {
         var username = localStorage.getItem("username");
+        if(username == null)
+          window.location.href = "http://localhost:8082/login.html";
         var xhr = new XMLHttpRequest();
         var url = "http://localhost:8082/user/get-user-details/" + username;
         xhr.open("POST", url, true);
@@ -48,8 +50,9 @@
                 `${JSON.stringify(k)}:- ${JSON.stringify(v)}` + "<br>";
             }
 
-            document.getElementById("profile-photo").src =
-              userInfo.userPersonalInfoResponse.userProfilePhoto;
+            document.getElementById("profile-photo").src = 
+                "http://localhost:8082/user/get-image?filename=" +
+                 userInfo.userPersonalInfoResponse.userProfilePhoto;
             localStorage.setItem(
               "profilePhoto",
               userInfo.userPersonalInfoResponse.userProfilePhoto

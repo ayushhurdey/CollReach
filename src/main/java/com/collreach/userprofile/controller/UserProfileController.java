@@ -5,7 +5,9 @@ import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,11 @@ public class UserProfileController {
     public ResponseEntity<String> updateUserPersonalInfo(@RequestBody UserSignupRequest userSignupRequest){
         String msg = userProfileService.updateUserPersonalInfo(userSignupRequest);
         return ResponseEntity.ok().body(msg);
+    }
+
+    @GetMapping(value = "/get-image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImage(String filename) throws Exception {
+        return ResponseEntity.ok().body(IOUtils.toByteArray(userProfileService.getImage(filename)));
     }
 
     @DeleteMapping(path = "/delete-user/{username}")
