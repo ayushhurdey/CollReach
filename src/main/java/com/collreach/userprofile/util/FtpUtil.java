@@ -79,8 +79,6 @@ public class FtpUtil {
         try{
             FTPConnect(host, user, pwd);
             inputStream = download(path);
-            if(inputStream.available() <= 0)
-                disconnect();                // disconnect not working
         }
         catch(Exception e){
             System.out.println("Could not connect: " + e);

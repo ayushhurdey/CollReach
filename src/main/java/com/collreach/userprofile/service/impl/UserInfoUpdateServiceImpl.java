@@ -190,8 +190,11 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         if(user != null) {
             String username = user.getUserName();
             String newPassword = userLoginUpdateRequest.getNewPassword();
+            String currentPassword = user.getPassword();
 
-            if(user.getPassword().equals(newPassword))
+            if(!currentPassword.equals(userLoginUpdateRequest.getPassword()))
+                return "Current password does not match.";
+            else if(currentPassword.equals(newPassword))
                 return "Try password other than previous one.";
 
             if(!newPassword.equals("")){
