@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign in</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title> Sign Up </title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/login.css">
+    <link rel="icon" href="/CollReach.PNG" type="image/x-icon">
+</head>
+<script type="text/javascript">
+    function loginValidation() {
+        libidv = /^[0-9]{4}[a-z]{2}[0-9]{4}$/;
+        var pass = document.reg.pass.value;
+        var libid = document.reg.libid.value;
+        if (libid == "") {
+            alert("library id field required");
+            return false;
+        }
+        if (libidv.test(libid) == false) {
+            alert("library id is invalid");
+            return false;
+        }
+        if (pass.length == 0) {
+            alert("password is required");
+            return false;
+        }
+        if(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(reg.pass.value)!=true){
+                alert("Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+                return false;
+        }
+
+        return true;
+    }
+    
+    
+    function submitForm(){
+        var libid = document.reg.libid.value;
+        var pass  = document.reg.pass.value;
+        var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/token";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var rememberMe = document.getElementById('remember-me-check').checked
+                    if(rememberMe){
+                        localStorage.setItem('username',libid);
+                        localStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
+                    }
+                    else{
+                        sessionStorage.setItem('username',libid);
+                        sessionStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
+                    }
+                    getDetails();
+                }
+                else{
+                    var errorMsg = document.getElementById("msg");
+                    errorMsg.innerHTML = "</br>" + "Either username or password or both are incorrect.";
+                    errorMsg.style.color = "red";
+                    errorMsg.style.display = "block";
+                }
+            };
+            var data = JSON.stringify({
+                    "password": pass,
+                    "userName": libid
+                 });
+            xhr.send(data);
+    }
+    
+    function getDetails(){
+        var libid = document.reg.libid.value;
+        var pass  = document.reg.pass.value;
+        console.log("id: " + libid);
+
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:8082/user/get-user-details/" + 
+            (localStorage.getItem('username') || sessionStorage.getItem('username'));
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Authorization",
+            (localStorage.getItem('auth') || sessionStorage.getItem('auth')));
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);
+                var msg = document.getElementById("msg");
+                msg.innerHTML = "Login Successfull.";
+                msg.style.color = "green";
+                window.location.href = "http://localhost:8082/UserProfile.html";
+                //msg.style.display = "none";
+            }
+            else{
+                var errorMsg = document.getElementById("msg");
+                errorMsg.innerHTML = "</br>" + "Either username or password or both are incorrect.";
+                errorMsg.style.color = "red";
+                errorMsg.style.display = "block";
+            }
+        };
+        //var data = JSON.stringify({});
+        xhr.send();
+    }
+
+    function check(){
+        if(loginValidation() == true){
+            submitForm();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+</script>
+<body onload = "getDetails()">
+<section class="shadow p-3 mb-5 bg-white" id="heading">
+    <!--<img src="CollReach.PNG" class="img-circle" alt="collreach logo"><img>-->
+    <h2>
+        SIGN IN
+    </h2>
+</section>
+
+<div class="container-fluid">
+
+    <form name=reg action="#" method="post">
+        <div id="centering">
+            <!-- parent of all div-->
+            <div class="row">
+                <!-- Bootstrap grinding-->
+                <div class="col-lg-12">
+                    <label for="libid">Library Id:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input class="form-control" type="text" id="libid" name="libid"
+                            title="Please fill your registered library id">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-12">
+                    <label for="pass">Password:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input class="form-control" type="password" id="pass" name="pass">
+                    </div>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="remember-me-check">
+                    <label class="form-check-label" for="remember-me-check" 
+                        id = "remember-me-label">Remember Me</label>
+                </div>
+
+                <div class="col-md-12">
+                    <input type="button" id="submit-button" class="btn btn-primary" value="Login" onclick="check()">
+                    <button type="reset" class="btn btn-secondary" id="submit-button"
+                        value="reset">Cancel</button><br><br>
+                    <p>
+                        <a href="CollReach.html" data-toggle="tooltip" data-placement="bottom"
+                            title="Take you to the CollReach Homepage">Home</a>
+                    </p>
+                </div>
+                <p id="msg"></p>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

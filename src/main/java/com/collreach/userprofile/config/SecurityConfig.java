@@ -38,12 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/token","/*.html","/*.html/*","/user/signup","/hello").permitAll()
+                .antMatchers("/token","/*.html","/*.html/*","/user/signup","/hello","/response/*").permitAll()
                 .antMatchers("/*.css","/*.css/*","/*.js","/*.js/*","/*.map").permitAll()
                 .antMatchers("/*.jpg","/*.jpeg","/*.png","/*.PNG").permitAll()
                 .antMatchers("/ftp/upload","/ftp/*").permitAll()
                 .antMatchers("/user/check-username","/user/check-email","/user/get-image",
                               "/user/check-phone-no","/user/check-linkedin-link").permitAll()
+                .antMatchers("/login","/signup","/profile","/profile-update").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
