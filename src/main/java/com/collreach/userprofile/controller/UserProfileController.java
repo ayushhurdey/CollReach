@@ -40,8 +40,8 @@ public class UserProfileController {
     }
 
     @GetMapping(value = "/get-image", produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getImage(String filename) throws Exception {
-        return userProfileService.getImage(filename);
+    public ResponseEntity<byte[]> getImage(String filename) throws Exception {
+        return ResponseEntity.ok().body(IOUtils.toByteArray(userProfileService.getImage(filename)));
     }
 
     @DeleteMapping(path = "/delete-user/{username}")

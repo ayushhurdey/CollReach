@@ -10,15 +10,11 @@ import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
 import com.collreach.userprofile.util.FtpUtil;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.lang.reflect.Array;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -98,7 +94,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public byte[] getImage(String filename) throws Exception {
+    public InputStream getImage(String filename) throws Exception {
         return ftpUtil.downloadFile(hostDir + filename);
     }
 

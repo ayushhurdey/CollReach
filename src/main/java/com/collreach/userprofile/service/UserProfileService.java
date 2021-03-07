@@ -4,9 +4,11 @@ import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 
+import java.io.InputStream;
+
 public interface UserProfileService {
     public String signup(UserSignupRequest userSignupRequest);
-    public byte[] getImage(String filename) throws Exception;
+    public InputStream getImage(String filename) throws Exception;
     public String deleteUser(String userName);
     public String checkUsername(UserSignupRequest userSignupRequest);
     public String checkEmail(UserSignupRequest userSignupRequest);
