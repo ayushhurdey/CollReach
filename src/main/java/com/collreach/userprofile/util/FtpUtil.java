@@ -29,6 +29,7 @@ public class FtpUtil {
     private String hostDir;
 
     FTPClient ftp = null;
+    InputStream inputStream = null;
 
     public String ftpUpload(MultipartFile file, String fileName) throws Exception{
         System.out.println("Start");
@@ -75,12 +76,10 @@ public class FtpUtil {
     }
 
     public InputStream downloadFile(String path) throws Exception {
-        InputStream inputStream = new ByteArrayInputStream(new byte[0]);;
+        inputStream = new ByteArrayInputStream(new byte[0]);
         try{
             FTPConnect(host, user, pwd);
-            inputStream = download(path);
-            if(inputStream.available() <= 0)
-                disconnect();                // disconnect not working
+            download(path);
         }
         catch(Exception e){
             System.out.println("Could not connect: " + e);
@@ -88,8 +87,8 @@ public class FtpUtil {
         return inputStream;
     }
 
-    public InputStream download(String path) throws IOException {
-        return this.ftp.retrieveFileStream(path);
+    public void download(String path) throws IOException {
+        inputStream =  this.ftp.retrieveFileStream(path);
     }
 
     public void uploadFile(MultipartFile file, String fileName)
@@ -121,3 +120,18 @@ public class FtpUtil {
     }
 
 }
+
+//class Ftp{
+//    private static Ftp singletonFTP = null;
+//    public FTPClient ftpClient;
+//
+//    private Ftp(){
+//        ftpClient = new FTPClient();
+//    }
+//    public static Ftp getInstance() {
+//        if (singletonFTP == null) {
+//            singletonFTP = new Ftp();
+//        }
+//        return singletonFTP;
+//    }
+//}
