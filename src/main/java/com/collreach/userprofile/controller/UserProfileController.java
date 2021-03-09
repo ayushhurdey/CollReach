@@ -7,10 +7,13 @@ import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.InputStream;
 
 @Controller
 @RequestMapping(path = "/user")
@@ -40,8 +43,12 @@ public class UserProfileController {
     }
 
     @GetMapping(value = "/get-image", produces = MediaType.IMAGE_JPEG_VALUE)
+    @Cacheable(value="profile-image")
     public ResponseEntity<byte[]> getImage(String filename) throws Exception {
-        return ResponseEntity.ok().body(IOUtils.toByteArray(userProfileService.getImage(filename)));
+        InputStream inputStream = userProfileService.getImage(filename);
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        inputStream.close();
+        return ResponseEntity.ok().body(bytes);
     }
 
     @DeleteMapping(path = "/delete-user/{username}")
