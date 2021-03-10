@@ -1,6 +1,7 @@
 package com.collreach.userprofile.model.repositories;
 
 import com.collreach.userprofile.model.bo.CourseInfo;
+import com.collreach.userprofile.model.bo.SkillsInfo;
 import com.collreach.userprofile.model.bo.UserPersonalInfo;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,11 +9,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalInfo, Integer>{
     Boolean existsByEmail(String email);
     Boolean existsByAlternateEmail(String alternateEmail);
     Boolean existsByPhoneNo(String phoneNo);
     Boolean existsByLinkedinLink(String linkedinLink);
+    Optional<UserPersonalInfo> findByProfileAccessKey(String profileAccessKey);
 
     @Modifying
     @Transactional

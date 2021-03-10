@@ -3,6 +3,7 @@ package com.collreach.userprofile.controller;
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
+import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
 import org.apache.commons.io.IOUtils;
@@ -49,6 +50,13 @@ public class UserProfileController {
         byte[] bytes = IOUtils.toByteArray(inputStream);
         inputStream.close();
         return ResponseEntity.ok().body(bytes);
+    }
+
+    @GetMapping(path = "/profile/{profile-access-key}")
+    public ResponseEntity<UserPersonalInfoResponse> getUserPersonalInfo(
+            @PathVariable(value = "profile-access-key") String profileAccessKey){
+        UserPersonalInfoResponse userPersonalInfoResponse = userProfileService.getUserPersonalInfo(profileAccessKey);
+        return ResponseEntity.ok().body(userPersonalInfoResponse);
     }
 
     @DeleteMapping(path = "/delete-user/{username}")
