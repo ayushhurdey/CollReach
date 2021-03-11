@@ -9,54 +9,59 @@
     <link rel="icon" href="CollReach.PNG" type="image/x-icon" />
     <script>
       function login() {
-        var username = localStorage.getItem("username");
-        if(username == null)
-          window.location.href = "http://localhost:8082/login.html";
+        //var username = localStorage.getItem("username");
+        // if(username == null)
+        //   window.location.href = "http://localhost:8082/login";
+        currentUrl = window.location.href;
+        profile_access_key = currentUrl.substr(currentUrl.lastIndexOf('/')+1);
+
         var xhr = new XMLHttpRequest();
-        var url = "http://localhost:8082/user/get-user-details/" + username;
-        xhr.open("POST", url, true);
+        var url = "http://localhost:8082/user/profile/" + profile_access_key;
+        xhr.open("GET", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Authorization", localStorage.getItem("auth"));
+        //xhr.setRequestHeader("Authorization", localStorage.getItem("auth"));
         xhr.onreadystatechange = function () {
           if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText);
+            console.log(JSON.parse(xhr.responseText));
             var userInfo = JSON.parse(xhr.responseText);
             document.getElementById("name").innerHTML =
-              userInfo.userPersonalInfoResponse.name;
+              userInfo.name;
             document.getElementById("description").innerHTML =
-              userInfo.userPersonalInfoResponse.description;
+              userInfo.description;
             document.getElementById("year").innerHTML =
-              userInfo.userPersonalInfoResponse.courseInfoResponse.yearOfStudy;
+              userInfo.courseInfoResponse.yearOfStudy;
             document.getElementById("sem").innerHTML =
-              userInfo.userPersonalInfoResponse.courseInfoResponse.semester;
+              userInfo.courseInfoResponse.semester;
             document.getElementById("branch").innerHTML =
-              userInfo.userPersonalInfoResponse.courseInfoResponse.branch;
+              userInfo.courseInfoResponse.branch;
             document.getElementById("course").innerHTML =
-              userInfo.userPersonalInfoResponse.courseInfoResponse.courseName;
+              userInfo.courseInfoResponse.courseName;
             document.getElementById("kietEmail").innerHTML =
-              userInfo.userPersonalInfoResponse.email;
+              userInfo.email;
             document.getElementById("personalEmail").innerHTML =
-              userInfo.userPersonalInfoResponse.alternateEmail;
+              userInfo.alternateEmail;
             document.getElementById("phoneNo").innerHTML =
-              userInfo.userPersonalInfoResponse.phoneNo;
+              userInfo.phoneNo;
             document.getElementById("linkedIn").innerHTML =
-              userInfo.userPersonalInfoResponse.linkedinLink;
+              userInfo.linkedinLink;
 
-            var skill = userInfo.userPersonalInfoResponse.skills;
+            var skill = userInfo.skills;
             for (let [k, v] of Object.entries(skill)) {
               console.log(k, v);
               document.getElementById("skills").innerHTML +=
                 `${JSON.stringify(k)}:- ${JSON.stringify(v)}` + "<br>";
             }
 
-            document.getElementById("profile-photo").src = 
-                "http://localhost:8082/user/get-image?filename=" +
-                 userInfo.userPersonalInfoResponse.userProfilePhoto;
             localStorage.setItem(
               "profilePhoto",
-              userInfo.userPersonalInfoResponse.userProfilePhoto
+              userInfo.userProfilePhoto
             );
-            localStorage.setItem("username", userInfo.userName);
+
+            document.getElementById("profile-photo").src = 
+                "http://localhost:8082/user/get-image?filename=" +
+                 userInfo.userProfilePhoto;
+            
+           // localStorage.setItem("username", userInfo.userName);
           }
         };
         var data = JSON.stringify({});

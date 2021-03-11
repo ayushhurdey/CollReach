@@ -67,7 +67,7 @@ public class UserProfileController {
 
     @PostMapping(path = "/get-user-from-skills")
     public ResponseEntity<UsersSkillsResponse> getUserFromSkills(@RequestBody UsersFromSkillsRequest usersFromSkillsRequest){
-        var msg = userProfileService.getUsersFromSkills(usersFromSkillsRequest);
+        UsersSkillsResponse msg = userProfileService.getUsersFromSkills(usersFromSkillsRequest);
         return ResponseEntity.ok().body(msg);
     }
 

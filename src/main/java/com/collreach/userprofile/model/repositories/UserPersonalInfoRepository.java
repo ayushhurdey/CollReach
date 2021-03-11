@@ -17,6 +17,7 @@ public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalI
     Boolean existsByPhoneNo(String phoneNo);
     Boolean existsByLinkedinLink(String linkedinLink);
     Optional<UserPersonalInfo> findByProfileAccessKey(String profileAccessKey);
+    Boolean existsByProfileAccessKey(String profileAccessKey);
 
     @Modifying
     @Transactional
