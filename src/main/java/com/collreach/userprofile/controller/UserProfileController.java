@@ -3,6 +3,7 @@ package com.collreach.userprofile.controller;
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
+import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
 import org.apache.commons.io.IOUtils;
@@ -51,6 +52,13 @@ public class UserProfileController {
         return ResponseEntity.ok().body(bytes);
     }
 
+    @GetMapping(path = "/profile/{profile-access-key}")
+    public ResponseEntity<UserPersonalInfoResponse> getUserPersonalInfo(
+            @PathVariable(value = "profile-access-key") String profileAccessKey){
+        UserPersonalInfoResponse userPersonalInfoResponse = userProfileService.getUserPersonalInfo(profileAccessKey);
+        return ResponseEntity.ok().body(userPersonalInfoResponse);
+    }
+
     @DeleteMapping(path = "/delete-user/{username}")
     public ResponseEntity<String> deleteUser(@PathVariable(value = "username") String userName){
         String msg = userProfileService.deleteUser(userName);
@@ -59,7 +67,7 @@ public class UserProfileController {
 
     @PostMapping(path = "/get-user-from-skills")
     public ResponseEntity<UsersSkillsResponse> getUserFromSkills(@RequestBody UsersFromSkillsRequest usersFromSkillsRequest){
-        var msg = userProfileService.getUsersFromSkills(usersFromSkillsRequest);
+        UsersSkillsResponse msg = userProfileService.getUsersFromSkills(usersFromSkillsRequest);
         return ResponseEntity.ok().body(msg);
     }
 

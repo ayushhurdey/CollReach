@@ -1,5 +1,6 @@
 package com.collreach.userprofile.service.impl;
 
+import com.collreach.userprofile.mappers.UserProfileMapper;
 import com.collreach.userprofile.model.bo.*;
 import com.collreach.userprofile.model.repositories.SkillsInfoRepository;
 import com.collreach.userprofile.model.repositories.UserLoginRepository;
@@ -7,9 +8,11 @@ import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
 import com.collreach.userprofile.model.repositories.UserSkillsRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
+import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
 import com.collreach.userprofile.util.FtpUtil;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -39,6 +42,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Value("${ftp.host-dir}")
     private String hostDir;
+
+    private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
     @Override
     public String signup(UserSignupRequest userSignupRequest) {
@@ -96,6 +101,22 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public InputStream getImage(String filename) throws Exception {
         return ftpUtil.downloadFile(hostDir + filename);
+    }
+
+    @Override
+    public UserPersonalInfoResponse getUserPersonalInfo(String profileAccessKey){
+        Optional<UserPersonalInfo> user = userPersonalInfoRepository.findByProfileAccessKey(profileAccessKey);
+        UserPersonalInfoResponse userPersonalInfoResponse = null;
+        if(user.isPresent()){
+            userPersonalInfoResponse = userProfileMapper.userPersonalInfoToUserPersonalInfoResponse(user.get());
+            List<UserSkills> skills = userSkillsRepository.findAllByUserId(user.get());
+            HashMap<String, Integer> skillMap = new HashMap<>();
+            for(UserSkills userSkill: skills){
+                skillMap.put(userSkill.getSkillId().getSkill(),userSkill.getSkillUpvoteCount());
+            }
+            userPersonalInfoResponse.setSkills(skillMap);
+        }
+        return userPersonalInfoResponse;
     }
 
     @Override

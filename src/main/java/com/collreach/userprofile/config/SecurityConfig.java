@@ -43,8 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/*.jpg","/*.jpeg","/*.png","/*.PNG").permitAll()
                 .antMatchers("/ftp/upload","/ftp/*").permitAll()
                 .antMatchers("/user/check-username","/user/check-email","/user/get-image",
-                              "/user/check-phone-no","/user/check-linkedin-link").permitAll()
-                .antMatchers("/login","/signup","/profile","/profile-update").permitAll()
+                              "/user/check-phone-no","/user/check-linkedin-link","/user/profile/*").permitAll()
+                .antMatchers("/login","/signup","/profile","/profile/*","/profile-update").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
