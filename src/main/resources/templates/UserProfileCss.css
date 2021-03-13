@@ -15,6 +15,63 @@ body {
   background-color: #f7f5f7;
   border-radius: 60px;
 }
+
+#search-items{
+  background-color: black;
+  color: white;
+  padding: 5px;
+}
+
+.skill-item{
+  background-color: dodgerblue;
+  padding: 3px;
+  margin-left: 5px;
+}
+
+.skill-item-cross{
+  font-size: 15px;
+  cursor: pointer;
+}
+/* 
+#search-box{
+  display: inline-block;
+}
+
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*//*
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+
+/*when hovering an item:*//*
+.autocomplete-items div:hover {
+  background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*//*
+.autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+} */
+
 img {
   border-radius: 50px;
 }
