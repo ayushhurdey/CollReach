@@ -16,19 +16,19 @@ body {
   border-radius: 60px;
 }
 
-#search-items{
+.input-group #search-items{
   background-color: black;
   color: white;
   padding: 5px;
 }
 
-.skill-item{
+.input-group .skill-item{
   background-color: dodgerblue;
   padding: 3px;
   margin-left: 5px;
 }
 
-.skill-item-cross{
+.input-group .skill-item-cross{
   font-size: 15px;
   cursor: pointer;
 }
