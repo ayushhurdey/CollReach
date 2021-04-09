@@ -69,7 +69,72 @@
   <body onload="login()">
     <section class="shadow p-3 mb-5 bg-white" id="heading">
       <h2>COLLREACH</h2>
+      <div class="input-group">
+        <div class="form-outline">
+          <input type="text" 
+                 id="search-box" 
+                 list = "skills-list" 
+                 class="form-control" 
+                 placeholder = "Type skills separated with comma" 
+          />
+          <!--label class="form-label" for="form1">Search</label-->
+        </div>
+
+        <div id = "search-items">
+          <div class = "skill-item-cross" style = "display:hidden;"></div>
+        </div>
+
+        <input type="submit" id = "search-btn" class="btn btn-primary" value = "Search"/>
+      </div>
       <div>--Connect the opportunity</div>
+
+      <datalist id = "skills-list">
+        <option value = "java"></option>
+        <option value = "python"></option>
+        <option value = "b"></option>
+        <option value = "c programming"></option>
+        <option value = "c#"></option>
+        <option value = "perl"></option>
+        <option value = "html"></option>
+        <option value = "css"></option>
+        <option value = "javascript"></option>
+        <option value = "machine learning"></option>
+        <option value = "deep learning"></option>
+        <option value = "ai"></option>
+        <option value = "big data"></option>
+        <option value = "hadoop"></option>
+        <option value = "c/c++"></option>
+        <option value = "dbms"></option>
+        <option value = "database"></option>
+        <option value = "operating system"></option>
+        <option value = "spring"></option>
+        <option value = "spring boot"></option>
+        <option value = "spring-boot"></option>
+        <option value = "mysql"></option>
+        <option value = "oracle"></option>
+        <option value = "postgresql"></option>
+        <option value = "sqlite"></option>
+        <option value = "data analytics"></option>
+        <option value = "data mining"></option>
+        <option value = "php"></option>
+        <option value = "rust"></option>
+        <option value = "networking"></option>
+        <option value = "unit testing"></option>
+        <option value = "seo"></option>
+        <option value = "photography"></option>
+        <option value = "web analytics"></option>
+        <option value = "web automation"></option>
+        <option value = "cms"></option>
+        <option value = "hr"></option>
+        <option value = "git"></option>
+        <option value = "ms office"></option>
+        <option value = "ms excel"></option>
+        <option value = "ms powerpoint"></option>
+        <option value = "intellij"></option>
+        <option value = "vs code"></option>
+        <option value = "docker"></option>
+        <option value = "microservices"></option>
+      </datalist>
     </section>
 
     <div class="container-fluid">
@@ -258,6 +323,81 @@
             window.location.href = "http://localhost:8082/login";
         }
       }
+    </script>
+
+    <script>
+      let searchBox = document.getElementById("search-box");
+      let searchBtn = document.getElementById("search-btn");
+      let searchItems = document.getElementById('search-items');
+
+      searchBtn.addEventListener("click", search);
+
+      let ALL_SKILLS = ["java", "python", "c","c programming", "c++", "c/c++", "perl",
+                    "spring", "spring-boot", "spring boot", "c#", "machine learning",
+                    "deep learning", "ai", "big data", "hadoop","dbms", "database", 
+                    "mysql", "oracle", "postgresql","sqlite","data analytics", "data mining",
+                    "html", "css", "javascript", "php","rust","networking", "operating systems",
+                    "unit testing","seo", "photography","web analytics", "web automation",
+                    "cms","hr", "ms office", "ms excel", "ms powerpoint", "git", "intellij",
+                    "vs code", "docker", "microservices"];
+      
+      let finalSkills = [];
+
+      searchBox.addEventListener('input', function(){
+        skills = searchBox.value.trim().split(',');
+        found = [];
+        let current;
+        for(let i = 0; i < ALL_SKILLS.length; i++){
+          current = skills[skills.length -1].toLowerCase();
+          console.log(current);
+          if(current !== "" && ALL_SKILLS[i].toLowerCase().startsWith(current)){
+            found.push(ALL_SKILLS[i]);
+          }
+        }
+
+        console.log("FOUND: ", found);
+        console.log(finalSkills.includes(current), " " , ALL_SKILLS.includes(current));
+        if(!finalSkills.includes(current) && ALL_SKILLS.includes(current)){
+          finalSkills.push(current);
+          addSpan(searchItems, current);
+          if(searchItems.value === "")
+            searchItems.value = searchItems.value + current;
+          else
+            searchItems.value = searchItems.value + ("," + current);
+          searchBox.value = "";
+        }
+        console.log("final skills ", finalSkills);
+        found = [];
+      });
+
+      
+      function addSpan(div,value){
+        let newDiv = document.createElement('span');
+        let cross = document.createElement('span');
+        newDiv.setAttribute("class", "skill-item");
+        cross.setAttribute("class", "skill-item-cross");
+        cross.innerHTML = "   &#10005;";
+        newDiv.innerHTML = value;
+        newDiv.appendChild(cross);
+        div.appendChild(newDiv);
+        
+        cross.addEventListener('click', function(){
+          this.parentElement.style.display = 'none';
+          let value = this.parentElement.textContent;
+          value = value.slice( -value.length, -2).trim();
+          console.log(value);
+          finalSkills =  finalSkills.filter(item => item !== value);
+          console.log("-> final", finalSkills);
+        });
+      }
+
+      function search(){
+        console.log("Searching...");
+        // API call to be made here
+        //incomplete........
+      }
+      
+      //autocomplete(document.getElementById("search-box"), skills);
     </script>
 
     <script>
