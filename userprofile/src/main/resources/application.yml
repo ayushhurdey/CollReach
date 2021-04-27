@@ -1,0 +1,40 @@
+server:
+  port: 8082
+ops: window
+jwt:
+  secret: secretKeyToBeChangedInFuture
+images:
+  server-address: http://localhost:8081/images/
+  default-image: http://localhost:8081/images/default.jpeg
+ftp:
+  host: ftp.unaux.com
+  user: unaux_27598440
+  pwd: 689j616h7yuiwu
+  host-dir: /htdocs/frontend/images/
+  img-address-server: http://maybelater.unaux.com/frontend/images
+  default-img: default.jpeg
+spring:
+  application:
+    name: userprofile
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/collreach_userlogin
+    username: root
+    password: Sensitive@1
+  security:
+    user:
+      name: ayush
+      password: pass
+      roles: manager
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+
+eureka:
+  instance:
+    hostname: localhost

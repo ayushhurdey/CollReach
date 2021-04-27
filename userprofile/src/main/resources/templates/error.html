@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Oops! Error </title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="icon" href="/CollReach.PNG" type="image/x-icon">
+    <script>
+        window.onerror = function(){
+            document.getElementsByTagName('h1').innerText += response;
+        }
+    </script>
+
+    <style>
+        h1{
+            text-align: center;
+            margin-top: 100px;
+            color: red;
+        }
+        .home{
+            margin: auto;
+            text-align: center;
+        }
+        .home button{
+            background-color: dodgerblue;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            border: none;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>!!The page you requested is not currently available</h1>
+    <br/>
+    <div class = "home">
+        <button>Go Home</button>
+    </div>
+
+</body>
+</html>
