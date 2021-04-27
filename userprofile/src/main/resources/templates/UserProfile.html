@@ -3,12 +3,15 @@
   <head>
     <title>Profile</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="UserProfileCss.css" />
     <script type="application/javascript" src="./scripts/compress.js"></script>
     <link rel="icon" href="CollReach.PNG" type="image/x-icon" />
-    <script>
+
+   
+  <script>
       function login() {
         var username = localStorage.getItem("username");
         if(username == null)
@@ -66,11 +69,14 @@
     </script>
   </head>
 
-  <body onload="login()">
+  <!-- <body onload="login()"> -->
+    <body> <!--to be added later-->
     <section class="shadow p-3 mb-5 bg-white" id="heading">
       <h2>COLLREACH</h2>
+      <br>
       <div class="input-group">
         <div class="form-outline">
+         
           <input type="text" 
                  id="search-box" 
                  list = "skills-list" 
@@ -78,15 +84,26 @@
                  placeholder = "Type skills separated with comma" 
           />
           <!--label class="form-label" for="form1">Search</label-->
+         
+          
+          <input type="submit" id = "search-btn" class="btn btn-primary" value = "Search">
+         
+          
         </div>
 
         <div id = "search-items">
           <div class = "skill-item-cross" style = "display:hidden;"></div>
         </div>
 
-        <input type="submit" id = "search-btn" class="btn btn-primary" value = "Search"/>
+       
+                    
+                    
+                
+
+      <!--   <input type="submit" id = "search-btn" class="btn btn-primary" value = "Search"/> -->
       </div>
-      <div>--Connect the opportunity</div>
+      <br>
+     
 
       <datalist id = "skills-list">
         <option value = "java"></option>
@@ -135,16 +152,17 @@
         <option value = "docker"></option>
         <option value = "microservices"></option>
       </datalist>
-    </section>
-
+    
+  </section>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
           <div class="card" id="main-title">
-            <div id="kietEmail">email</div>
-            <div id="logout">
-              <button id = "logout-btn">Logout</button>
-            </div> 
+            <div id="kietEmail">email
+
+            
+              <button class="btn btn-primary" id = "logout-btn"><i class="fa fa-sign-out"></i></button>
+              </div>
           </div>
         </div>
 
@@ -164,43 +182,45 @@
           <div class="card" id="no-border">
             <label for="image"></label>
             <img
-              src=""
+              src="CollReach.PNG"
               id="profile-photo"
-              width="150px"
-              height="150px"
-              style="border-radius: 100px; overflow: hidden"
+            
+              style=" overflow: hidden"
               alt="Profile Image"
             />
             <span id="ok-done"></span>
 
             <form>
               <div class="custom-file">
+
                 <input
                   type="file"
                   class="custom-file-input"
                   id="img"
                   name="img"
                   accept="image/*"
-                />
-                <label class="custom-file-label" style="text-align: left"
-                  >Edit pic here</label
-                >
+                  multiple="multiple"> 
+
+                 
+                 <label class="custom-file-label" style="text-align: left"
+                  ><span class="glyphicon glyphicon-folder-open"></span></label> 
                 <div class="invalid-feedback">choose suitable file</div>
               </div>
             </form>
 
             <div>
-              <input
+              <button
                 class="btn btn-primary btn-sm"
                 id="set-profile-photo"
                 type="submit"
                 value="Set"
-              />
-              <input
+              ><span class="glyphicon glyphicon-saved"></span></button>
+              <button
+                id="cancel-profile-picture"
                 class="btn btn-secondary btn-sm"
                 type="button"
                 value="Remove"
-              />
+              ><span class="glyphicon glyphicon-remove"></span></button>
             </div>
           </div>
         </div>

@@ -6,37 +6,64 @@
 section {
   margin: 3px;
 }
+section p{
 
+}
 body {
   background-color: #e2dbe2;
 }
 .container-fluid {
   padding-top: 3%;
   background-color: #f7f5f7;
-  border-radius: 60px;
+  border-radius: 20px;
 }
 
 .input-group #search-items{
-  background-color: black;
+  display: block;
+ 
+  margin:2px;
+  background-color: white;
   color: white;
   padding: 5px;
+  overflow: auto;
+  border-radius: 20px;
+  box-shadow:  0px 0px 1px 1px #7b9c9c;
 }
 
 .input-group .skill-item{
-  background-color: dodgerblue;
-  padding: 3px;
-  margin-left: 5px;
+  display: block;
+  background-color: #46A7D8;
+  padding-left: 10px;
+  padding-right: 2px;
+  margin: 5px;
+  
+  border-radius: 20px;
+
+
 }
 
 .input-group .skill-item-cross{
-  font-size: 15px;
+  font-size: 10px;
   cursor: pointer;
+  color:black;
+  width: 100%;
+ padding: 1px;
+  
 }
-/* 
+ 
 #search-box{
-  display: inline-block;
-}
+  clear: right;
+  float: left;
+  width: 60%;
+  font-size: 10px;
 
+}
+#search-btn{
+  float: none;
+  border-radius: 10px;
+
+}
+/*
 .autocomplete {
   position: relative;
   display: inline-block;
@@ -72,13 +99,12 @@ body {
   color: #ffffff; 
 } */
 
-img {
-  border-radius: 50px;
-}
+
 
 h2 {
   font-family: Goudy Stout;
-  text-align: center;
+  text-align: left;
+  padding-left: 5%;
   text-shadow: 0 0 3px #1dadca;
 }
 #heading {
@@ -131,6 +157,8 @@ section div {
 
 .row {
   margin: 20px;
+  margin-right:8.5%; 
+  margin-left:8.5%;
   background: rgba(255, 255, 255);
   align-content: center;
   padding: 10px;
@@ -195,7 +223,7 @@ div > p {
   border: 0px;
   border-radius: 20px;
 }
-.btn:hover {
+#updatebutton:hover {
   transform: scale(1);
 }
 .btn-primary {
@@ -209,15 +237,67 @@ table {
 td {
   width: 50%;
 }
-.btn:hover {
+#updatebutton:hover {
   font-size: 0.9em;
 }
 
 #updatebutton:hover {
   transform: scale(1.1);
 }
+.custom-file-input{
+
+direction: rtl;
+float: left;
+}
+.custom-file-label{
+  float: left;
+  width: 130px;
+}
+.custom-file{
+  float: right;
+  width: 20%;
+}
+
+#set-profile-photo,#cancel-profile-picture{
+  width: 30px;
+  border-radius: 60px;
+  padding: 2px;
+}
+
+#search-items{
+  font-size: 0.6em;
+ 
+}
+.skill-item-cross{
+  font-size: 0.6em;
+}
+
+#logout-btn{
+  position: relative;
+  padding: 5px;
+  float:right;
+  width: 50px;
+  border-radius: 13px;
+  margin-right: 1%;
+  
+}
+@media (min-width: 721px){
+  .custom-file{
+  
+  width: 90px;
+}
+  #profile-photo {
+  margin: auto;
+  border-radius: 120px;
+  width:100%;
+  
+}
+}
 
 @media (max-width: 720px) {
+  .custom-file{
+  width: 90px;
+  }
   #kietEmail {
     font-size: 1.4em;
     text-align: center;
@@ -247,16 +327,42 @@ td {
     width: 40%;
     font-size: 1em;
   }
+
+     #logout-btn{
+  position: relative;
+  float:right;
+  width: 10%;
+  border-radius: 13px;
+  margin-right: 1%;
+  margin-bottom: 1%;
+   }
+   h2{
+    text-align: center;
+   }
+    #profile-photo{
+      width: 250px;
+  }
+}
+
+
+@media (max-width: 768px) and (min-width: 721px) {
+   #profile-photo{
+      width: 200px;
+  }
+
 }
 
 @media (max-width: 1080px) and (min-width: 721px) {
   #name {
     font-size: 3em;
   }
+
 }
 
 @media (min-width: 1081px) and (max-width: 1920px) {
   #updatebutton:hover {
     transform: scale(1.1);
   }
+
 }
+
