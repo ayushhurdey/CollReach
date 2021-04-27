@@ -24,7 +24,7 @@ img {
 .container-fluid {
   padding-top: 3%;
   background-color: #f7f5f7;
-  border-radius: 60px;
+  border-radius: 20px;
 }
 #heading {
   border-radius: 15px;
@@ -62,7 +62,7 @@ img {
   padding: 10px;
   overflow: auto;
   background-color: #dfd8f2;
-  border-radius: 30px;
+  border-radius: 20px;
   box-shadow: 0px 0px 10px 10px #838383;
   border-left: 10px solid #132b65;
   border-right: 10px solid #132b65;
@@ -92,6 +92,7 @@ form {
 }
 .col-md-12 {
   margin-top: 10px;
+ 
 }
 
 .card {
@@ -116,7 +117,8 @@ form p:last-child {
 #lin-button {
   position: relative;
   float: right;
-  bottom: -37px;
+  bottom: -20px;
+  
 }
 
 #grid-adjust1 {
@@ -125,6 +127,11 @@ form p:last-child {
 #up-pass:hover {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 @media (min-width: 765px) {
   #sem-card {
@@ -154,4 +161,9 @@ form p:last-child {
   #lin-button {
     bottom: -1px;
   }
+  .row{
+    margin-left: 2%;
+    margin-right: 2%;
+  }
 }
+
