@@ -1,0 +1,29 @@
+server:
+  port: 8084
+ops: window
+
+spring:
+  application:
+    name: posts
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/collreach_posts
+    username: root
+    password: Sensitive@1
+  security:
+    user:
+      name: ayush
+      password: pass
+      roles: manager
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+
+eureka:
+  instance:
+    hostname: localhost
