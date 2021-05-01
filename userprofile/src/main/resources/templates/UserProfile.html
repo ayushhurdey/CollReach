@@ -49,8 +49,16 @@
             var skill = userInfo.userPersonalInfoResponse.skills;
             for (let [k, v] of Object.entries(skill)) {
               console.log(k, v);
-              document.getElementById("skills").innerHTML +=
-                `${JSON.stringify(k)}:- ${JSON.stringify(v)}` + "<br>";
+              // document.getElementById("skills").innerHTML +=
+              //   `${JSON.stringify(k)}:- ${JSON.stringify(v)}` + "<br>";
+              let cloud = document.getElementsByClassName('cloud')[0];
+              let li = document.createElement('li');
+              let a = document.createElement('a');
+              a.setAttribute('href','#');
+              a.setAttribute('data-weight', v.toString());
+              a.innerText = k.toString();
+              li.appendChild(a);
+              cloud.appendChild(li);
             }
 
             document.getElementById("profile-photo").src = 
@@ -69,8 +77,7 @@
     </script>
   </head>
 
-  <!-- <body onload="login()"> -->
-    <body> <!--to be added later-->
+  <body onload="login()">
     <section class="shadow p-3 mb-5 bg-white" id="heading">
       <h2>COLLREACH</h2>
       <br>
@@ -154,17 +161,15 @@
       </datalist>
     
   </section>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card" id="main-title">
-            <div id="kietEmail">email
-
-            
-              <button class="btn btn-primary" id = "logout-btn"><i class="fa fa-sign-out"></i></button>
-              </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" id="main-title">
+          <div id="kietEmail">email
           </div>
+          <button class="btn btn-primary" id = "logout-btn"><i class="fa fa-sign-out"></i></button>
         </div>
+      </div>
 
         <div class="col-lg-8 col-md-7">
           <div class="card" id="no-border">
@@ -231,7 +236,11 @@
 
             <div class="content">
               <div class="col-lg-6 col-md-6 col-sm-6">
-                <div id="skills"></div>
+                <div id="skills">
+                  <ul class="cloud" role="navigation" data-show-value = "true" aria-label="Webdev word cloud">
+                      
+                  </ul>
+                </div>
               </div>
 
               <div class="col-lg-6 col-md-6 col-sm-6">

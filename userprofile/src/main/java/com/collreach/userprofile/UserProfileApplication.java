@@ -1,5 +1,6 @@
 package com.collreach.userprofile;
 
+import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -47,5 +48,11 @@ public class UserProfileApplication {
 
 	private ApiKey apiKey() {
 		return new ApiKey("apiKey", "Authorization", "header"); //`apiKey` is the name of the APIKey, `Authorization` is the key in the request header
+	}
+
+	// Making singleton Object of type FTPClient
+	@Bean
+	public FTPClient getFTPClient() {
+		return new FTPClient();
 	}
 }

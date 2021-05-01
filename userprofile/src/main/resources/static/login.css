@@ -8,12 +8,22 @@ body {
 
 /*registtration heading*/
 h2 {
+  font-family: Goudy Stout;
   text-align: center;
-  font-size: 1.2em;
+  text-shadow: 0 0 3px #1dadca;
+  border-radius: 0px;
+
+}
+#signin{
+  font-size: 1.5em;
+  margin-left: 3%;
+}
+.col-lg-12{
+  margin-bottom: 10px; 
 }
 
 /* Registration heading*/
-#heading {
+/*#heading {
   margin: 10px;
   border-left: 10px solid #0077ff;
   border-right: 10px solid #0077ff;
@@ -22,7 +32,7 @@ h2 {
   border-radius: 30px;
   font-size: 2.5em;
 }
-
+*/
 /*Main Form */
 #form {
   margin: 0px;
@@ -53,9 +63,11 @@ input {
 
 /* Form main div for styling*/
 .row {
-  margin-left: 20%;
-  margin-right: 20%;
+ /* margin-left: 34%;
+  margin-right: 34%;*/
   margin-top: 30px;
+  margin: auto;
+  width: 360px;
   background: rgba(255, 255, 255);
   align-content: center;
   font-size: 1.6em;
@@ -103,13 +115,28 @@ input {
 #submit-button {
   border: 0px;
   margin: 5px;
-  width: 100px;
-  float: right;
+  width: 100%;
   font-size: 1em;
   font-weight: bold;
   height: 40px;
   border-radius: 60px;
   padding: 3px;
+}
+#clear
+{
+  width: 100%;
+  margin: auto;
+}
+#clear-button{
+  border: 0px;
+  margin:auto;
+  float: right;
+  width:15%;
+  font-size: 0.8em;
+  height: 30px;
+  border-radius: 60px;
+  padding: 3px;
+
 }
 .btn-primary {
   background-color: #0077ff;
@@ -123,12 +150,16 @@ input {
   padding: 0px;
   font-size: 1.2em;
 }
+#clear-button:hover{
+  background-color: red;
+}
 p a {
   padding: 5px;
   background-color: #32ceb9;
   color: white;
   border-radius: 30px;
   text-decoration: none;
+
 }
 p a:hover {
   text-decoration: none;
@@ -147,12 +178,12 @@ p a:hover:after {
 
 /*media queries for responsiveness */
 /*1st */
-@media (max-width: 360px) and (min-width: 0px) {
+@media (max-width: 720px) and (min-width: 0px) {
   .row {
     border-left: 10px solid #0077ff;
     padding: 3px;
-    margin-right: 14px;
-    margin-left: 14px;
+   /* margin-right: 3%;
+    margin-left: 3%;*/
   }
   form {
     margin-right: 0px;

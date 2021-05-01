@@ -8,18 +8,29 @@ body {
 
 /*registtration heading*/
 h2 {
+  font-family: Goudy Stout;
   text-align: center;
+
+  text-shadow: 0 0 3px #1dadca;
+  border-radius: 0px;
+}
+#signup{
+  font-size: 1.9em;
+  font-weight: bold;
+ 
+  margin-bottom: 1%;
+  
 }
 
 /*collreach logo */
-img {
+/*img {
   position: relative;
   width: 10%;
   float: left;
-}
+}*/
 
 /* Registration heading*/
-#heading {
+/*#heading {
   margin: 10px;
   border-radius: 30px;
   border-left: 10px solid #0077ff;
@@ -27,7 +38,7 @@ img {
   padding: 10px;
   text-shadow: 0 0 3px #1dadca;
 }
-
+*/
 /*Main Form */
 #form {
   margin: 0px;
@@ -55,6 +66,8 @@ input {
 /* Form main div for styling*/
 .row {
   margin: 30px;
+  margin-right:8.5%; 
+  margin-left:8.5%;
   background: rgba(255, 255, 255);
   align-content: center;
   padding: 10px;
