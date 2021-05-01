@@ -12,6 +12,7 @@ public class UserPersonalInfoResponse {
     private String linkedinLink;
     private String description;
     private String userProfilePhoto;
+    private String profileAccessKey;
     private CourseInfoResponse courseInfoResponse;
     private Map<String,Integer> skills;
 
@@ -85,5 +86,13 @@ public class UserPersonalInfoResponse {
 
     public void setUserProfilePhoto(String userProfilePhoto) {
         this.userProfilePhoto = userProfilePhoto;
+    }
+
+    public String getProfileAccessKey() {
+        return profileAccessKey;
+    }
+
+    public void setProfileAccessKey(String profileAccessKey) {
+        this.profileAccessKey = profileAccessKey;
     }
 }
