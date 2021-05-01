@@ -4,6 +4,7 @@ import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +29,10 @@ public class FtpUtil {
     @Value("${ftp.host-dir}")
     private String hostDir;
 
-    FTPClient ftp = null;
+    @Autowired
+    FTPClient ftp;
+    // FTPClient ftp = null;
+
     InputStream inputStream = null;
 
     public String ftpUpload(MultipartFile file, String fileName) throws Exception{
@@ -61,7 +65,7 @@ public class FtpUtil {
     }
 
     public void FTPConnect(String host, String user, String pwd) throws Exception{
-        ftp = new FTPClient();
+        //ftp = new FTPClient();
         ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
         int reply;
         ftp.connect(host);

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Profile</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="http://localhost:8082/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="http://localhost:8082/UserProfileCss.css" />
+    <link rel="icon" href="CollReach.PNG" type="image/x-icon" />
+    <script>
+      function login() {
+        //var username = localStorage.getItem("username");
+        // if(username == null)
+        //   window.location.href = "http://localhost:8082/login";
+        currentUrl = window.location.href;
+        profile_access_key = currentUrl.substr(currentUrl.lastIndexOf('/')+1);
+
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:8082/user/profile/" + profile_access_key;
+        xhr.open("GET", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        //xhr.setRequestHeader("Authorization", localStorage.getItem("auth"));
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(JSON.parse(xhr.responseText));
+            var userInfo = JSON.parse(xhr.responseText);
+            document.getElementById("name").innerHTML =
+              userInfo.name;
+            document.getElementById("description").innerHTML =
+              userInfo.description;
+            document.getElementById("year").innerHTML =
+              userInfo.courseInfoResponse.yearOfStudy;
+            document.getElementById("sem").innerHTML =
+              userInfo.courseInfoResponse.semester;
+            document.getElementById("branch").innerHTML =
+              userInfo.courseInfoResponse.branch;
+            document.getElementById("course").innerHTML =
+              userInfo.courseInfoResponse.courseName;
+            document.getElementById("kietEmail").innerHTML =
+              userInfo.email;
+            document.getElementById("personalEmail").innerHTML =
+              userInfo.alternateEmail;
+            document.getElementById("phoneNo").innerHTML =
+              userInfo.phoneNo;
+            document.getElementById("linkedIn").innerHTML =
+              userInfo.linkedinLink;
+
+            var skill = userInfo.skills;
+            for (let [k, v] of Object.entries(skill)) {
+              console.log(k, v);
+              document.getElementById("skills").innerHTML +=
+                `${JSON.stringify(k)}:- ${JSON.stringify(v)}` + "<br>";
+            }
+
+            localStorage.setItem(
+              "profilePhoto",
+              userInfo.userProfilePhoto
+            );
+
+            document.getElementById("profile-photo").src = 
+                "http://localhost:8082/user/get-image?filename=" +
+                 userInfo.userProfilePhoto;
+            
+           // localStorage.setItem("username", userInfo.userName);
+          }
+        };
+        var data = JSON.stringify({});
+        xhr.send(data);
+      }
+    </script>
+  </head>
+
+  <body onload="login()">
+    <section class="shadow p-3 mb-5 bg-white" id="heading">
+      <h2>COLLREACH</h2>
+      <div>--Connect the opportunity</div>
+    </section>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card" id="main-title">
+            <div id="kietEmail">email</div>
+          </div>
+        </div>
+
+        <div class="col-lg-8 col-md-7">
+          <div class="card" id="no-border">
+            <div id="name">Update your name</div>
+
+            <div>
+              <br />
+              <p>About me-</p>
+              <div class="content" id="description"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-5">
+          <div class="card" id="no-border">
+            <label for="image"></label>
+            <img
+              src=""
+              id="profile-photo"
+              width="150px"
+              height="150px"
+              style="border-radius: 100px; overflow: hidden"
+              alt="Profile Image"
+            />
+
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="card">
+            <h5 class="card-title">SKILLS:VOTES</h5>
+
+            <div class="content">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div id="skills"></div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div id="skillLevel"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="card">
+            <div class="title">
+              <h5 class="card-title">COURSE INFO</h5>
+            </div>
+
+            <div class="content">
+              <table>
+                <tr>
+                  <td>COURSE</td>
+                  <td><div id="course"></div></td>
+                </tr>
+
+                <tr>
+                  <td>BRANCH</td>
+                  <td><div id="branch"></div></td>
+                </tr>
+
+                <tr>
+                  <td>YEAR</td>
+                  <td><div id="year"></div></td>
+                </tr>
+
+                <tr>
+                  <td>SEMESTER</td>
+                  <td><div id="sem"></div></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="card">
+            <h5 class="card-title">CONTACT DETAILS</h5>
+
+            <div class="content">
+              <table>
+                <tr>
+                  <td>EMAIL</td>
+                  <td><div id="personalEmail"></div></td>
+                </tr>
+
+                <tr>
+                  <td>PHONE NUMBER</td>
+                  <td><div id="phoneNo"></div></td>
+                </tr>
+
+                <tr>
+                  <td>LINKEDIN</td>
+                  <td><div id="linkedIn"></div></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+         
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+</html>
