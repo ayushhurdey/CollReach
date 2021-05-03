@@ -9,19 +9,19 @@ import com.collreach.userprofile.model.repositories.UserSkillsRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
 import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
+import com.collreach.userprofile.model.response.UserProfileSkillsResponse;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
 import com.collreach.userprofile.util.FtpUtil;
+import org.apache.logging.log4j.util.PropertySource;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
@@ -136,10 +136,36 @@ public class UserProfileServiceImpl implements UserProfileService {
             return "User not found.";
     }
 
+//    @Override
+//    public UsersSkillsResponse getUsersFromSkills(UsersFromSkillsRequest usersFromSkillsRequest){
+//        var list = usersFromSkillsRequest.getSkills();
+//        HashMap<String, ArrayList<String>> userSkillsMap = new HashMap<String, ArrayList<String>>();
+//
+//        for(String skill: list){
+//            Optional<SkillsInfo> skillsInfo = skillsInfoRepository.findBySkill(skill);
+//
+//            if(skillsInfo.isPresent()) {
+//                List<UserSkills> userSkills = userSkillsRepository.findAllBySkillId(skillsInfo.get());
+//
+//                for (UserSkills userSkill : userSkills)
+//                    if (!userSkillsMap.containsKey(userSkill.getUserId().getName())) {
+//                        userSkillsMap.put(userSkill.getUserId().getName(), new ArrayList<String>());
+//                        userSkillsMap.get(userSkill.getUserId().getName()).add(userSkill.getSkillId().getSkill());
+//                    } else {
+//                        userSkillsMap.get(userSkill.getUserId().getName()).add(userSkill.getSkillId().getSkill());
+//                    }
+//            }
+//        }
+//        UsersSkillsResponse usersSkillsResponse = new UsersSkillsResponse();
+//        usersSkillsResponse.setUsersSkills(userSkillsMap);
+//        return usersSkillsResponse;
+//    }
+
     @Override
     public UsersSkillsResponse getUsersFromSkills(UsersFromSkillsRequest usersFromSkillsRequest){
-        var list = usersFromSkillsRequest.getSkills();
-        HashMap<String, ArrayList<String>> userSkillsMap = new HashMap<String, ArrayList<String>>();
+        List<String> list = usersFromSkillsRequest.getSkills();
+        SortedMap<String, UserProfileSkillsResponse> userSkillsMap = new TreeMap<>();
+        LinkedHashMap<String, UserProfileSkillsResponse> userSkillsSortedMap = new LinkedHashMap<>();
 
         for(String skill: list){
             Optional<SkillsInfo> skillsInfo = skillsInfoRepository.findBySkill(skill);
@@ -147,17 +173,42 @@ public class UserProfileServiceImpl implements UserProfileService {
             if(skillsInfo.isPresent()) {
                 List<UserSkills> userSkills = userSkillsRepository.findAllBySkillId(skillsInfo.get());
 
-                for (UserSkills userSkill : userSkills)
+                for (UserSkills userSkill : userSkills) {
                     if (!userSkillsMap.containsKey(userSkill.getUserId().getName())) {
-                        userSkillsMap.put(userSkill.getUserId().getName(), new ArrayList<String>());
-                        userSkillsMap.get(userSkill.getUserId().getName()).add(userSkill.getSkillId().getSkill());
+                        UserProfileSkillsResponse userProfileSkillsResponse = new UserProfileSkillsResponse();
+                        userProfileSkillsResponse
+                                .setProfileAccessKey(userSkill.getUserId().getProfileAccessKey());
+                        userProfileSkillsResponse
+                                .getSkillsUpvote()
+                                .put(userSkill.getSkillId().getSkill(), userSkill.getSkillUpvoteCount());
+                        userSkillsMap.put(userSkill.getUserId().getName(), userProfileSkillsResponse);
                     } else {
-                        userSkillsMap.get(userSkill.getUserId().getName()).add(userSkill.getSkillId().getSkill());
+                        userSkillsMap
+                                .get(userSkill.getUserId().getName()).getSkillsUpvote()
+                                .put(userSkill.getSkillId().getSkill(), userSkill.getSkillUpvoteCount());
                     }
+                }
             }
         }
+        Comparator<UserProfileSkillsResponse> bySkillsUpvote = Comparator.
+                comparingInt((UserProfileSkillsResponse u) -> u.getSkillsUpvote().values().stream()
+                        .mapToInt(Integer::valueOf)
+                        .sum());
+
+        Comparator<UserProfileSkillsResponse> bySkillsSize =
+                Comparator.comparingInt((UserProfileSkillsResponse o) -> o.getSkillsUpvote().size())
+                        .thenComparing(bySkillsUpvote).reversed();
+
+        userSkillsMap
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(bySkillsSize))
+                .forEachOrdered(x ->
+                    userSkillsSortedMap.put(x.getKey(),x.getValue())
+                );
+
         UsersSkillsResponse usersSkillsResponse = new UsersSkillsResponse();
-        usersSkillsResponse.setUsersSkills(userSkillsMap);
+        usersSkillsResponse.setUsersSkills(userSkillsSortedMap);
         return usersSkillsResponse;
     }
 
