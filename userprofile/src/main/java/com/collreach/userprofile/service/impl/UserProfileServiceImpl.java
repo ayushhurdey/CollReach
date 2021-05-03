@@ -62,8 +62,6 @@ public class UserProfileServiceImpl implements UserProfileService {
             userPersonalInfo.setLinkedinLink(userSignupRequest.getLinkedinLink());
             userPersonalInfo.setDescription(userSignupRequest.getDescription());
             userPersonalInfo.setUserProfilePhoto(defaultProfilePhotoAddress);
-            userPersonalInfo.setProfileAccessKey(userSignupRequest.getName().replace(" ", "-") +
-                    userSignupRequest.getUserName().hashCode());
             userLogin.setUserPersonalInfo(userPersonalInfo);
         }
         userLogin.setPassword(userSignupRequest.getPassword());

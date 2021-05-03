@@ -49,11 +49,11 @@
             for (let [k, v] of Object.entries(skill)) {
               console.log(k, v);
               document.getElementById("skills").innerHTML +=
-                k.toString() + " :- " + v.toString() + "<br>";
+                `${JSON.stringify(k)}:- ${JSON.stringify(v)}` + "<br>";
             }
 
             localStorage.setItem(
-              "profilePhoto_general",
+              "profilePhoto",
               userInfo.userProfilePhoto
             );
 

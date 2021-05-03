@@ -72,14 +72,6 @@ public class UserPersonalInfo {
         this.name = name;
     }
 
-    public String getProfileAccessKey() {
-        return profileAccessKey;
-    }
-
-    public void setProfileAccessKey(String profileAccessKey) {
-        this.profileAccessKey = profileAccessKey;
-    }
-
     public String getAlternateEmail() {
         return alternateEmail;
     }
