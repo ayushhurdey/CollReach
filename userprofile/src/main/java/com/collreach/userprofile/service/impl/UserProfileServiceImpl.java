@@ -164,7 +164,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UsersSkillsResponse getUsersFromSkills(UsersFromSkillsRequest usersFromSkillsRequest){
         List<String> list = usersFromSkillsRequest.getSkills();
-        SortedMap<String, UserProfileSkillsResponse> userSkillsMap = new TreeMap<>();
+        LinkedHashMap<String, UserProfileSkillsResponse> userSkillsMap = new LinkedHashMap<>();
         LinkedHashMap<String, UserProfileSkillsResponse> userSkillsSortedMap = new LinkedHashMap<>();
 
         for(String skill: list){
@@ -207,8 +207,20 @@ public class UserProfileServiceImpl implements UserProfileService {
                     userSkillsSortedMap.put(x.getKey(),x.getValue())
                 );
 
+        for(Map.Entry<String, UserProfileSkillsResponse> userProfileSkills: userSkillsSortedMap.entrySet()){
+                var sortedSkillsMap =
+                        userProfileSkills.getValue().getSkillsUpvote()
+                        .entrySet()
+                        .stream()
+                        .sorted((i1, i2) -> i2.getValue().compareTo(i1.getValue()))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                                (e1, e2) -> e1, LinkedHashMap::new));
+                userProfileSkills.getValue().setSkillsUpvote(sortedSkillsMap);
+        }
+
         UsersSkillsResponse usersSkillsResponse = new UsersSkillsResponse();
         usersSkillsResponse.setUsersSkills(userSkillsSortedMap);
+        userSkillsMap = null;
         return usersSkillsResponse;
     }
 
