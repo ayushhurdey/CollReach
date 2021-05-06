@@ -7,10 +7,9 @@ import com.collreach.userprofile.model.repositories.UserLoginRepository;
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
 import com.collreach.userprofile.model.repositories.UserSkillsRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
+import com.collreach.userprofile.model.request.UsersFromNameRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
-import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
-import com.collreach.userprofile.model.response.UserProfileSkillsResponse;
-import com.collreach.userprofile.model.response.UsersSkillsResponse;
+import com.collreach.userprofile.model.response.*;
 import com.collreach.userprofile.service.UserProfileService;
 import com.collreach.userprofile.util.FtpUtil;
 import org.apache.logging.log4j.util.PropertySource;
@@ -222,6 +221,19 @@ public class UserProfileServiceImpl implements UserProfileService {
         usersSkillsResponse.setUsersSkills(userSkillsSortedMap);
         userSkillsMap = null;
         return usersSkillsResponse;
+    }
+
+    @Override
+    public UsersFromNameResponse getUsersFromName(UsersFromNameRequest usersFromNameRequest) {
+        String name = usersFromNameRequest.getUsers();
+        List<UserPersonalInfo> allUsersByName = userPersonalInfoRepository.findAllByNameStartsWith(name);
+        List<UsersInfo> usersByName = new ArrayList<UsersInfo>();
+
+        for(UserPersonalInfo userPersonalInfo:  allUsersByName){
+            usersByName.add(new UsersInfo(userPersonalInfo.getName(),userPersonalInfo.getProfileAccessKey()));
+        }
+
+        return new UsersFromNameResponse(usersByName);
     }
 
     @Override

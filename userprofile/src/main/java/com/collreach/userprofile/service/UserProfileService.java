@@ -2,12 +2,14 @@ package com.collreach.userprofile.service;
 
 import com.collreach.userprofile.model.bo.UserPersonalInfo;
 import com.collreach.userprofile.model.request.UserSignupRequest;
+import com.collreach.userprofile.model.request.UsersFromNameRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
 import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
+import com.collreach.userprofile.model.response.UsersFromNameResponse;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 
 import java.io.InputStream;
-import java.util.Optional;
+
 
 public interface UserProfileService {
     public String signup(UserSignupRequest userSignupRequest);
@@ -20,4 +22,5 @@ public interface UserProfileService {
     public String checkLinkedinLink(UserSignupRequest userSignupRequest);
     public String updateUserPersonalInfo(UserSignupRequest userSignupRequest);
     public UsersSkillsResponse getUsersFromSkills(UsersFromSkillsRequest usersFromSkillsRequest);
+    public UsersFromNameResponse getUsersFromName(UsersFromNameRequest usersFromNameRequest);
 }
