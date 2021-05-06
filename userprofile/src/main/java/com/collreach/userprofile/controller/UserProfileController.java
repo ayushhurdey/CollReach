@@ -2,13 +2,16 @@ package com.collreach.userprofile.controller;
 
 import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
+import com.collreach.userprofile.model.request.UsersFromNameRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
 import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
+import com.collreach.userprofile.model.response.UsersFromNameResponse;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -62,6 +65,18 @@ public class UserProfileController {
     @DeleteMapping(path = "/delete-user/{username}")
     public ResponseEntity<String> deleteUser(@PathVariable(value = "username") String userName){
         String msg = userProfileService.deleteUser(userName);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @PostMapping(path = "/search-users-by-name")
+    public ResponseEntity<UsersFromNameResponse> getUsersByName(@RequestBody UsersFromNameRequest usersFromNameRequest){
+        UsersFromNameResponse msg;
+        try {
+             msg = userProfileService.getUsersFromName(usersFromNameRequest);
+        }
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new UsersFromNameResponse());
+        }
         return ResponseEntity.ok().body(msg);
     }
 

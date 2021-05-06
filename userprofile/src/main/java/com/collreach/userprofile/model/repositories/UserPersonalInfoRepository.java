@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalInfo, Integer>{
@@ -18,6 +19,7 @@ public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalI
     Boolean existsByLinkedinLink(String linkedinLink);
     Optional<UserPersonalInfo> findByProfileAccessKey(String profileAccessKey);
     Boolean existsByProfileAccessKey(String profileAccessKey);
+    List<UserPersonalInfo> findAllByNameStartsWith(String name);
 
     @Modifying
     @Transactional
