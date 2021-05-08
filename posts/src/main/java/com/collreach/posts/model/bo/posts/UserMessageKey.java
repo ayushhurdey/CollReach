@@ -1,4 +1,4 @@
-package com.collreach.posts.model.bo;
+package com.collreach.posts.model.bo.posts;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -1,7 +1,7 @@
 package com.collreach.posts.service.impl;
 
-import com.collreach.posts.model.bo.Messages;
-import com.collreach.posts.model.repositories.MessagesRepository;
+import com.collreach.posts.model.bo.posts.Messages;
+import com.collreach.posts.model.repositories.posts.MessagesRepository;
 import com.collreach.posts.model.response.ImageResponse;
 import com.collreach.posts.model.response.ImagesResponse;
 import com.collreach.posts.service.PostService;

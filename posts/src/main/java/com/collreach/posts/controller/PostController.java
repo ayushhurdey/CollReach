@@ -1,7 +1,7 @@
 package com.collreach.posts.controller;
 
 
-import com.collreach.posts.model.repositories.MessagesRepository;
+import com.collreach.posts.model.repositories.posts.MessagesRepository;
 import com.collreach.posts.model.response.ImagesResponse;
 import com.collreach.posts.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
