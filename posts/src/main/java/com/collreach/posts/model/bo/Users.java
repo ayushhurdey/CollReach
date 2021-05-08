@@ -1,4 +1,4 @@
-package com.collreach.posts.model.bo.posts;
+package com.collreach.posts.model.bo;
 
 import javax.persistence.*;
 

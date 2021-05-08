@@ -1,5 +1,6 @@
 package com.collreach.posts.model.bo.posts;
 
+import com.collreach.posts.model.bo.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;

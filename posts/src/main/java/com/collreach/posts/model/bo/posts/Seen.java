@@ -1,5 +1,7 @@
 package com.collreach.posts.model.bo.posts;
 
+import com.collreach.posts.model.bo.Users;
+
 import javax.persistence.*;
 
 @Entity
