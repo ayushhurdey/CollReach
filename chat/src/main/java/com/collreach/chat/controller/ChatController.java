@@ -29,7 +29,8 @@ public class ChatController {
     public ResponseEntity<UserLoginResponse> getUserDetails() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setBearerAuth("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODIyY3MxMDQ5IiwiZXhwIjoxNjE5NzA4NjcxLCJpYXQiOjE2MTg4NDQ2NzF9.GBcuS0vHRObN2y_kbUs0eQcJdOqkq_1tno4Z3FiMTOpNGniujorRGPYuT6wn1V3B9OMaAurRRB6MS2J0a8geEw");
+        // token valid for 10 years. Created on 9/5/2021
+        headers.setBearerAuth("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODIyY3MxMDQ5IiwiZXhwIjoxOTM1OTM2MTU4LCJpYXQiOjE2MjA1NzYxNTh9.SPqXqwLGHXWl485jr_sojbseRkiYiMMKTL-9gjCVYzxO6mok4mnWaS_Sy9KPmT-dzHhjj_lj32wLyB8UKT5AGw");
         UserLoginRequest userLoginRequest = new UserLoginRequest();
         userLoginRequest.setUserName("1822cs1049");
         userLoginRequest.setPassword("Ayush@123");
