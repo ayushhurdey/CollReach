@@ -1,11 +1,15 @@
 server:
   port: 8082
+
 ops: window
+
 jwt:
   secret: secretKeyToBeChangedInFuture
+
 images:
   server-address: http://localhost:8081/images/
   default-image: http://localhost:8081/images/default.jpeg
+
 ftp:
   host: ftp.unaux.com
   user: unaux_27598440
@@ -13,6 +17,7 @@ ftp:
   host-dir: /htdocs/frontend/images/
   img-address-server: http://maybelater.unaux.com/frontend/images
   default-img: default.jpeg
+
 spring:
   application:
     name: userprofile
@@ -38,3 +43,6 @@ spring:
 eureka:
   instance:
     hostname: localhost
+
+posts:
+  url: http://posts/user/add-user

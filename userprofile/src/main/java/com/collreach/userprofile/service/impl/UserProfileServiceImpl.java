@@ -12,7 +12,7 @@ import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
 import com.collreach.userprofile.model.response.*;
 import com.collreach.userprofile.service.UserProfileService;
 import com.collreach.userprofile.util.FtpUtil;
-import org.apache.logging.log4j.util.PropertySource;
+import com.collreach.userprofile.util.HttpRequestUtil;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,6 +39,12 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Autowired
     private FtpUtil ftpUtil;
 
+    @Autowired
+    private HttpRequestUtil httpRequestUtil;
+
+    @Value("${posts.url}")
+    private String postsUrl;
+
     @Value("${ftp.host-dir}")
     private String hostDir;
 
@@ -54,19 +60,23 @@ public class UserProfileServiceImpl implements UserProfileService {
         if(userSignupRequest.getEmail() != null) {
             courseInfo.setCourseId(userSignupRequest.getCourseId());
             userPersonalInfo.setCourseInfo(courseInfo);
-            userPersonalInfo.setEmail(userSignupRequest.getEmail());
-            userPersonalInfo.setName(userSignupRequest.getName());
-            userPersonalInfo.setAlternateEmail(userSignupRequest.getAlternateEmail());
+            userPersonalInfo.setEmail(userSignupRequest.getEmail().toLowerCase());
+            userPersonalInfo.setName(userSignupRequest.getName().toLowerCase());
+            userPersonalInfo.setAlternateEmail(userSignupRequest.getAlternateEmail().toLowerCase());
             userPersonalInfo.setPhoneNo(userSignupRequest.getPhoneNo());
             userPersonalInfo.setLinkedinLink(userSignupRequest.getLinkedinLink());
             userPersonalInfo.setDescription(userSignupRequest.getDescription());
             userPersonalInfo.setUserProfilePhoto(defaultProfilePhotoAddress);
-            userPersonalInfo.setProfileAccessKey(userSignupRequest.getName().replace(" ", "-") +
+            userPersonalInfo.setProfileAccessKey(userSignupRequest.getName().toLowerCase().replace(" ", "-") +
                     userSignupRequest.getUserName().hashCode());
             userLogin.setUserPersonalInfo(userPersonalInfo);
         }
         userLogin.setPassword(userSignupRequest.getPassword());
         userLogin.setUserName(userSignupRequest.getUserName());
+        Boolean response = httpRequestUtil.setNewUserAtUrl(userSignupRequest.getUserName(), postsUrl);
+
+        if(!response)
+            return "Error Signing up.";
 
         userLoginRepository.save(userLogin);
         return "User Signed up successfully.";
