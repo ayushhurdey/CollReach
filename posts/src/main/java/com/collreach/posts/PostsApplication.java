@@ -2,6 +2,7 @@ package com.collreach.posts;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -14,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.Arrays;
 
 @SpringBootApplication
+@EnableEurekaClient
 @EnableSwagger2
 public class PostsApplication {
 
@@ -41,6 +43,7 @@ public class PostsApplication {
 	}
 
 	private ApiKey apiKey() {
-		return new ApiKey("apiKey", "Authorization", "header"); //`apiKey` is the name of the APIKey, `Authorization` is the key in the request header
+		return new ApiKey("apiKey", "Authorization", "header");
+		//`apiKey` is the name of the APIKey, `Authorization` is the key in the request header
 	}
 }

@@ -1,5 +1,10 @@
 server:
   port: 8083
+
+# token valid for 10 years. Created on 09/05/2021 (dd/mm/yyyy)
+auth:
+  token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODIyY3MxMDQ5IiwiZXhwIjoxOTM1OTM2MTU4LCJpYXQiOjE2MjA1NzYxNTh9.SPqXqwLGHXWl485jr_sojbseRkiYiMMKTL-9gjCVYzxO6mok4mnWaS_Sy9KPmT-dzHhjj_lj32wLyB8UKT5AGw
+
 spring:
   application:
     name: chat-app
