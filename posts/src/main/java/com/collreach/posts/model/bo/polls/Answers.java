@@ -22,6 +22,11 @@ public class Answers {
     @Column(name= "votes", nullable = false)
     private int votes;
 
+    @PrePersist
+    public void setVotesOnNewPoll(){
+        this.votes = 0;
+    }
+
     public int getAnswerId() {
         return answerId;
     }

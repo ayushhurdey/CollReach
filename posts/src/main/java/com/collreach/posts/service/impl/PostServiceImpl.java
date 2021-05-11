@@ -1,6 +1,6 @@
 package com.collreach.posts.service.impl;
 
-import com.collreach.posts.errors.ResponseMessage;
+import com.collreach.posts.responses.ResponseMessage;
 import com.collreach.posts.model.bo.Users;
 import com.collreach.posts.model.bo.posts.Messages;
 import com.collreach.posts.model.repositories.UsersRepository;
