@@ -12,4 +12,7 @@ public interface PostService {
     public ImagesResponse getRandomImage() throws IOException;
     public String uploadImage(MultipartFile file, String userName, String messageId);
     public String createPost(CreatePostRequest createPostRequest);
+    public ImagesResponse getAllPosts();
+    public ImagesResponse getPostsByPagination(Integer pageNo, Integer pageSize);
+    ImagesResponse getPostsPaginationFilteredByVisibility(Integer pageNo, Integer pageSize, String visibility);
 }

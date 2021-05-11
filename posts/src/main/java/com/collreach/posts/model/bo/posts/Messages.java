@@ -30,8 +30,8 @@ public class Messages {
     @JsonFormat(pattern = "HH:mm:ss")
     private Date uploadTime;
 
-    @Column(name = "visibility", nullable = false, length = 15)
-    private String visibility;
+    @Column(name = "visibility", nullable = false, columnDefinition = "varchar(15) default 'college'")
+    private String visibility;   // Specifies to Department or College level visibility
 
     @Column(name = "lifetime_in_weeks", nullable = false)
     private int lifetimeInWeeks;

@@ -5,9 +5,6 @@ import com.collreach.posts.model.repositories.posts.MessagesRepository;
 import com.collreach.posts.model.requests.CreatePostRequest;
 import com.collreach.posts.model.response.ImagesResponse;
 import com.collreach.posts.service.PostService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +22,7 @@ public class PostController {
     @Autowired
     PostService postService;
 
-    private ObjectMapper objectMapper;
+    //private ObjectMapper objectMapper;
 
     @GetMapping(path = "/get-images/{numberOfImages}")
     public ResponseEntity<ImagesResponse> getImages(@PathVariable(value = "numberOfImages") String numberOfImages) throws IOException {
@@ -52,5 +49,20 @@ public class PostController {
         //CreatePostRequest  createPostRequest = objectMapper.readValue(createPostReq, CreatePostRequest.class);
         String msg = postService.createPost(createPostRequest);
         return ResponseEntity.ok().body(msg);
+    }
+
+    @PostMapping(path = "/get-all-posts")
+    public ResponseEntity<ImagesResponse> getAllPosts(){
+        ImagesResponse imagesResponse = postService.getAllPosts();
+        return ResponseEntity.ok().body(imagesResponse);
+    }
+
+    @PostMapping(path = "/get-paged-posts")
+    public ResponseEntity<ImagesResponse> getPostsByPagination(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                               @RequestParam(defaultValue = "2") Integer pageSize,
+                                                               @RequestParam(defaultValue = "college") String visibility){
+        //ImagesResponse imagesResponse = postService.getPostsByPagination(pageNo, pageSize);
+        ImagesResponse imagesResponse = postService.getPostsPaginationFilteredByVisibility(pageNo, pageSize,visibility);
+        return ResponseEntity.ok().body(imagesResponse);
     }
 }

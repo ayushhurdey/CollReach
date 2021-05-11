@@ -10,13 +10,14 @@ import com.collreach.posts.model.response.ImageResponse;
 import com.collreach.posts.model.response.ImagesResponse;
 import com.collreach.posts.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -79,7 +80,9 @@ public class PostServiceImpl implements PostService {
                     //Messages messages = new Messages(file.getBytes(), file.getOriginalFilename(), extension);
                     //Messages messages = new Messages();
 
-                    if(message.isPresent() && message.get().getImage() == null) {
+                    if(message.isPresent() &&
+                            message.get().getUserName().getUserName().equals(userName) &&
+                            message.get().getImage() == null) {
                         message.get().setImage(file.getBytes());
                         message.get().setFilename(file.getOriginalFilename());
                         message.get().setFiletype(extension);
@@ -118,5 +121,57 @@ public class PostServiceImpl implements PostService {
                 }
         }
         return ResponseMessage.USER_NOT_FOUND;
+    }
+
+    @Override
+    public ImagesResponse getAllPosts() {
+        LinkedHashSet<ImageResponse> set = new LinkedHashSet<>();
+        messagesRepository.findAll().forEach(message -> {
+            set.add(new ImageResponse(message.getFilename(), message.getFiletype(),
+                                       message.getImage(), message.getVisibility(),
+                                       message.getLifetimeInWeeks(), message.getRecurrences(),
+                                       message.getLikes(), message.getViews(),message.getMessage(),
+                                       message.getCreateDate(),message.getUploadTime())
+            );
+        });
+        return new ImagesResponse(set);
+    }
+
+    @Override
+    public ImagesResponse getPostsByPagination(Integer pageNo, Integer pageSize) {
+        LinkedHashSet<ImageResponse> set = new LinkedHashSet<>();
+        Sort dateSort = Sort.by("createDate");
+        Sort timeSort = Sort.by("uploadTime");
+        Sort groupBySort = dateSort.and(timeSort);
+        Pageable paging = PageRequest.of(pageNo, pageSize, groupBySort);
+        messagesRepository.findAll(paging).forEach(message -> {
+            set.add(new ImageResponse(message.getFilename(), message.getFiletype(),
+                    message.getImage(), message.getVisibility(),
+                    message.getLifetimeInWeeks(), message.getRecurrences(),
+                    message.getLikes(), message.getViews(),message.getMessage(),
+                    message.getUploadTime(),message.getCreateDate())
+            );
+        });
+        return new ImagesResponse(set);
+    }
+
+    @Override
+    public ImagesResponse getPostsPaginationFilteredByVisibility(Integer pageNo, Integer pageSize, String visibility) {
+        LinkedHashSet<ImageResponse> set = new LinkedHashSet<>();
+        Sort dateSort = Sort.by("createDate").descending();
+        Sort timeSort = Sort.by("uploadTime").descending();
+        Sort groupBySort = dateSort.and(timeSort);
+        Pageable paging = PageRequest.of(pageNo, pageSize, groupBySort);
+
+        messagesRepository.findAllByVisibilityOrVisibility(visibility,"college", paging)
+                .forEach(message -> {
+                    set.add(new ImageResponse(message.getFilename(), message.getFiletype(),
+                            message.getImage(), message.getVisibility(),
+                            message.getLifetimeInWeeks(), message.getRecurrences(),
+                            message.getLikes(), message.getViews(), message.getMessage(),
+                            message.getUploadTime(), message.getCreateDate())
+                    );
+                });
+        return new ImagesResponse(set);
     }
 }

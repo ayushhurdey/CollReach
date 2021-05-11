@@ -90,7 +90,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     public String updateUserPersonalInfo(UserSignupRequest userSignupRequest){
         CourseInfo courseInfo = new CourseInfo();
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo();
-        String defaultProfilePhotoAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\default.jpeg";
+        //String defaultProfilePhotoAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\default.jpeg";
 
         courseInfo.setCourseId(userSignupRequest.getCourseId());
         userPersonalInfo.setCourseInfo(courseInfo);
