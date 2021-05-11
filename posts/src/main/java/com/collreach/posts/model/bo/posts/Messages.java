@@ -30,7 +30,7 @@ public class Messages {
     @JsonFormat(pattern = "HH:mm:ss")
     private Date uploadTime;
 
-    @Column(name = "visibility", nullable = false, length = 30)
+    @Column(name = "visibility", nullable = false, length = 15)
     private String visibility;
 
     @Column(name = "lifetime_in_weeks", nullable = false)
@@ -39,22 +39,22 @@ public class Messages {
     @Column(name = "recurrences", nullable = false)
     private int recurrences;
 
-    @Column(name = "likes", nullable = false)
-    private int likes;
+    @Column(name = "likes", columnDefinition = "integer default 0")
+    private Integer likes;
 
-    @Column(name = "views", nullable = false)
-    private int views;
+    @Column(name = "views", columnDefinition = "integer default 0")
+    private Integer views;
 
     @Column(name = "message", nullable = false)
     private String message;
 
-    @Column(name = "image", nullable = false, columnDefinition="mediumblob")
+    @Column(name = "image", columnDefinition="mediumblob")
     private byte[] image;
 
     @Column(name = "filename")
     private String filename;
 
-    @Column(name = "filetype", nullable = false,length = 10)
+    @Column(name = "filetype", length = 10)
     private String filetype;
 
 
@@ -84,6 +84,12 @@ public class Messages {
         this.image = image;
         this.filename = filename;
         this.filetype = filetype;
+    }
+
+    @PrePersist
+    public void setLikesAndViewsOnNewMessage(){
+        this.likes = 0;
+        this.views = 0;
     }
 
     public int getMessageId() {

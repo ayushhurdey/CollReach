@@ -48,6 +48,9 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Value("${ftp.host-dir}")
     private String hostDir;
 
+    @Value("${ftp.default-img}")
+    private String defaultProfilePhotoAddress;
+
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
     @Override
@@ -55,7 +58,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         CourseInfo courseInfo = new CourseInfo();
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo();
         UserLogin userLogin = new UserLogin();
-        String defaultProfilePhotoAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\default.jpeg";
+        //String defaultProfilePhotoAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\default.jpeg";
 
         if(userSignupRequest.getEmail() != null) {
             courseInfo.setCourseId(userSignupRequest.getCourseId());
