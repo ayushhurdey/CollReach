@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "answers")
-public class Answers {
+public class PollAnswers {
 
     @Id
     @Column(name= "answer_id", nullable = false)
@@ -14,7 +14,7 @@ public class Answers {
 
     @ManyToOne
     @JoinColumn(name = "poll_id", nullable = false)
-    private Polls poll_id;
+    private Polls pollId;
 
     @Column(name= "answer", nullable = false, length = 55)
     private String answer;
@@ -35,12 +35,12 @@ public class Answers {
         this.answerId = answerId;
     }
 
-    public Polls getPoll_id() {
-        return poll_id;
+    public Polls getPollId() {
+        return pollId;
     }
 
-    public void setPoll_id(Polls poll_id) {
-        this.poll_id = poll_id;
+    public void setPollId(Polls pollId) {
+        this.pollId = pollId;
     }
 
     public String getAnswer() {

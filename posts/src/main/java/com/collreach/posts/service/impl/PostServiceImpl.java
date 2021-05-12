@@ -6,8 +6,9 @@ import com.collreach.posts.model.bo.posts.Messages;
 import com.collreach.posts.model.repositories.UsersRepository;
 import com.collreach.posts.model.repositories.posts.MessagesRepository;
 import com.collreach.posts.model.requests.CreatePostRequest;
-import com.collreach.posts.model.response.ImageResponse;
-import com.collreach.posts.model.response.ImagesResponse;
+import com.collreach.posts.model.response.MessageResponse;
+import com.collreach.posts.model.response.MessagesResponse;
+import com.collreach.posts.service.PollsService;
 import com.collreach.posts.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -29,28 +30,31 @@ public class PostServiceImpl implements PostService {
     @Autowired
     UsersRepository usersRepository;
 
+    @Autowired
+    PollsService pollsService;
+
     @Override
-    public ImagesResponse getImages(String numberOfImages) throws IOException {
-        HashSet<ImageResponse> set = new HashSet<>();
+    public MessagesResponse getImages(String numberOfImages) throws IOException {
+        HashSet<MessageResponse> set = new HashSet<>();
         messagesRepository.findAll().forEach(message -> {
-            set.add(new ImageResponse(message.getFilename(), message.getFiletype(), message.getImage()));
+            set.add(new MessageResponse(message.getFilename(), message.getFiletype(), message.getImage()));
         });
-        return new ImagesResponse(set);
+        return new MessagesResponse(set);
     }
 
     @Override
-    public ImagesResponse getRandomImage() throws IOException {
-        HashSet<ImageResponse> set = new HashSet<>();
+    public MessagesResponse getRandomImage() throws IOException {
+        HashSet<MessageResponse> set = new HashSet<>();
 
         messagesRepository.findAll().forEach(message -> {
-            set.add(new ImageResponse(message.getFilename(), message.getFiletype(), message.getImage()));
+            set.add(new MessageResponse(message.getFilename(), message.getFiletype(), message.getImage()));
         });
 
         int random = new Random().nextInt(set.size());
         AtomicInteger i = new AtomicInteger();
 
-        return new ImagesResponse(
-                        set.parallelStream().filter(imageResponse -> {
+        return new MessagesResponse(
+                        set.parallelStream().filter(messageResponse -> {
                             return i.getAndIncrement() == random;
                         }).findFirst().get());
 
@@ -124,40 +128,40 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public ImagesResponse getAllPosts() {
-        LinkedHashSet<ImageResponse> set = new LinkedHashSet<>();
+    public MessagesResponse getAllPosts() {
+        LinkedHashSet<MessageResponse> set = new LinkedHashSet<>();
         messagesRepository.findAll().forEach(message -> {
-            set.add(new ImageResponse(message.getFilename(), message.getFiletype(),
+            set.add(new MessageResponse(message.getFilename(), message.getFiletype(),
                                        message.getImage(), message.getVisibility(),
                                        message.getLifetimeInWeeks(), message.getRecurrences(),
                                        message.getLikes(), message.getViews(),message.getMessage(),
                                        message.getCreateDate(),message.getUploadTime())
             );
         });
-        return new ImagesResponse(set);
+        return new MessagesResponse(set);
     }
 
     @Override
-    public ImagesResponse getPostsByPagination(Integer pageNo, Integer pageSize) {
-        LinkedHashSet<ImageResponse> set = new LinkedHashSet<>();
+    public MessagesResponse getPostsByPagination(Integer pageNo, Integer pageSize) {
+        LinkedHashSet<MessageResponse> set = new LinkedHashSet<>();
         Sort dateSort = Sort.by("createDate");
         Sort timeSort = Sort.by("uploadTime");
         Sort groupBySort = dateSort.and(timeSort);
         Pageable paging = PageRequest.of(pageNo, pageSize, groupBySort);
         messagesRepository.findAll(paging).forEach(message -> {
-            set.add(new ImageResponse(message.getFilename(), message.getFiletype(),
+            set.add(new MessageResponse(message.getFilename(), message.getFiletype(),
                     message.getImage(), message.getVisibility(),
                     message.getLifetimeInWeeks(), message.getRecurrences(),
                     message.getLikes(), message.getViews(),message.getMessage(),
                     message.getUploadTime(),message.getCreateDate())
             );
         });
-        return new ImagesResponse(set);
+        return new MessagesResponse(set);
     }
 
     @Override
-    public ImagesResponse getPostsPaginationFilteredByVisibility(Integer pageNo, Integer pageSize, String visibility) {
-        LinkedHashSet<ImageResponse> set = new LinkedHashSet<>();
+    public MessagesResponse getPostsAndPollsPaginationFilteredByVisibility(Integer pageNo, Integer pageSize, String visibility) {
+        LinkedHashSet<MessageResponse> posts = new LinkedHashSet<>();
         Sort dateSort = Sort.by("createDate").descending();
         Sort timeSort = Sort.by("uploadTime").descending();
         Sort groupBySort = dateSort.and(timeSort);
@@ -165,13 +169,78 @@ public class PostServiceImpl implements PostService {
 
         messagesRepository.findAllByVisibilityOrVisibility(visibility,"college", paging)
                 .forEach(message -> {
-                    set.add(new ImageResponse(message.getFilename(), message.getFiletype(),
+                    posts.add(new MessageResponse(message.getFilename(), message.getFiletype(),
                             message.getImage(), message.getVisibility(),
                             message.getLifetimeInWeeks(), message.getRecurrences(),
                             message.getLikes(), message.getViews(), message.getMessage(),
                             message.getUploadTime(), message.getCreateDate())
                     );
                 });
-        return new ImagesResponse(set);
+
+        LinkedHashSet<MessageResponse> polls = pollsService.getPolls(pageNo,pageSize,visibility);
+        //return new MessagesResponse(posts);
+        return new MessagesResponse(mergeSets(posts,polls));
+    }
+
+    @Override
+    public LinkedHashSet<MessageResponse> mergeSets(LinkedHashSet<MessageResponse> posts, LinkedHashSet<MessageResponse> polls){
+        LinkedHashSet<MessageResponse> mergedSets = new LinkedHashSet<>();
+        Iterator<MessageResponse> postItr = posts.iterator();
+        Iterator<MessageResponse> pollItr = polls.iterator();
+
+        MessageResponse postsValueCurrent = null;
+        MessageResponse postsValueNext = null;
+        MessageResponse pollsValueCurrent = null;
+        MessageResponse pollsValueNext = null;
+        int i = 0;
+
+        while(postItr.hasNext() && pollItr.hasNext()){
+            if(i++ == 0) {
+                postsValueNext = postItr.next();
+                pollsValueNext = pollItr.next();
+            }
+            if(postsValueCurrent != null){
+                if(postsValueCurrent.getCreateDate().compareTo(pollsValueCurrent.getCreateDate()) == 0){
+                    if(postsValueCurrent.getUploadTime().compareTo(pollsValueCurrent.getUploadTime()) > 0){
+                        mergedSets.add(postsValueCurrent);
+                        postsValueNext = postItr.next();
+                    }
+                    else{
+                        mergedSets.add(pollsValueCurrent);
+                        pollsValueNext = pollItr.next();
+                    }
+                }
+                else if(postsValueCurrent.getCreateDate().compareTo(pollsValueCurrent.getCreateDate()) > 0){
+                    mergedSets.add(postsValueCurrent);
+                    postsValueNext = postItr.next();
+                }
+                else {
+                    mergedSets.add(pollsValueCurrent);
+                    pollsValueNext = pollItr.next();
+                }
+            }
+            postsValueCurrent = postsValueNext;
+            pollsValueCurrent = pollsValueNext;
+
+        }
+
+        boolean pollSwitch = false;
+        assert postsValueCurrent != null;
+
+        if(postsValueCurrent.getCreateDate().compareTo(pollsValueCurrent.getCreateDate()) == 0){
+            if(postsValueCurrent.getUploadTime().compareTo(pollsValueCurrent.getUploadTime()) > 0){
+                mergedSets.add(postsValueCurrent);
+            }
+            else{
+                mergedSets.add(pollsValueCurrent);
+                pollSwitch = true;
+            }
+        }
+        mergedSets.add(pollSwitch ? postsValueCurrent : pollsValueCurrent);
+
+        postItr.forEachRemaining(mergedSets::add);
+        pollItr.forEachRemaining(mergedSets::add);
+
+        return mergedSets;
     }
 }

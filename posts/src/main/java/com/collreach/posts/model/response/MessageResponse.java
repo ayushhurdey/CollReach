@@ -1,31 +1,44 @@
 package com.collreach.posts.model.response;
 
-import java.util.Date;
+import com.collreach.posts.model.response.PollAnswersResponse;
 
-public class ImageResponse {
-    private String filename;
-    private String filetype;
-    private byte[] image;
+import java.util.Date;
+import java.util.List;
+
+public class MessageResponse {
+
     private String visibility;
     private int lifetimeInWeeks;
     private int recurrences;
-    private int likes;
-    private int views;
-    private String message;
     private Date uploadTime;
     private Date createDate;
 
-    public ImageResponse(String filename, String filetype, byte[] image) {
+    /*------Posts------*/
+    private String filename;
+    private String filetype;
+    private byte[] image;
+    private int likes;
+    private int views;
+    private String message;
+
+    /*------Polls------*/
+    private String question;
+    private List<PollAnswersResponse> answers;
+
+    public MessageResponse() {
+    }
+
+    public MessageResponse(String filename, String filetype, byte[] image) {
         this.filename = filename;
         this.filetype = filetype;
         this.image = image;
     }
 
-    public ImageResponse(String filename, String filetype,
-                         byte[] image, String visibility,
-                         int lifetimeInWeeks, int recurrences,
-                         int likes, int views, String message,
-                         Date uploadTime, Date createDate) {
+    public MessageResponse(String filename, String filetype,
+                           byte[] image, String visibility,
+                           int lifetimeInWeeks, int recurrences,
+                           int likes, int views, String message,
+                           Date uploadTime, Date createDate) {
         this.filename = filename;
         this.filetype = filetype;
         this.image = image;
@@ -125,5 +138,21 @@ public class ImageResponse {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public List<PollAnswersResponse> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<PollAnswersResponse> answers) {
+        this.answers = answers;
     }
 }
