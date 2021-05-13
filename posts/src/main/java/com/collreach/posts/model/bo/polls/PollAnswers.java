@@ -1,9 +1,12 @@
 package com.collreach.posts.model.bo.polls;
 
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 
 @Entity
+@DynamicUpdate
 @Table(name = "answers")
 public class PollAnswers {
 

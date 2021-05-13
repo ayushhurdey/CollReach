@@ -2,12 +2,14 @@ package com.collreach.posts.model.bo.posts;
 
 import com.collreach.posts.model.bo.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
 
 @Entity
+@DynamicUpdate
 @Table(name = "messages")
 public class Messages {
 
