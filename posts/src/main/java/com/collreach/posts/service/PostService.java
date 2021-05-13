@@ -18,4 +18,6 @@ public interface PostService {
     public MessagesResponse getPostsByPagination(Integer pageNo, Integer pageSize);
     public MessagesResponse getPostsAndPollsPaginationFilteredByVisibility(Integer pageNo, Integer pageSize, String visibility);
     public LinkedHashSet<MessageResponse> mergeSets(LinkedHashSet<MessageResponse> posts, LinkedHashSet<MessageResponse> polls);
-    }
+    String updatePostViews(String userName, int messageId);
+    String updatePostLikes(String userName, int messageId);
+}

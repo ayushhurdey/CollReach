@@ -14,6 +14,7 @@ public class MessageResponse {
     private Date createDate;
 
     /*------Posts------*/
+    private int messageId;
     private String filename;
     private String filetype;
     private byte[] image;
@@ -22,6 +23,7 @@ public class MessageResponse {
     private String message;
 
     /*------Polls------*/
+    private int pollId;
     private String question;
     private List<PollAnswersResponse> answers;
 
@@ -34,11 +36,12 @@ public class MessageResponse {
         this.image = image;
     }
 
-    public MessageResponse(String filename, String filetype,
+    public MessageResponse(int messageId, String filename, String filetype,
                            byte[] image, String visibility,
                            int lifetimeInWeeks, int recurrences,
                            int likes, int views, String message,
                            Date uploadTime, Date createDate) {
+        this.messageId = messageId;
         this.filename = filename;
         this.filetype = filetype;
         this.image = image;
@@ -154,5 +157,21 @@ public class MessageResponse {
 
     public void setAnswers(List<PollAnswersResponse> answers) {
         this.answers = answers;
+    }
+
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(int messageId) {
+        this.messageId = messageId;
+    }
+
+    public int getPollId() {
+        return pollId;
+    }
+
+    public void setPollId(int pollId) {
+        this.pollId = pollId;
     }
 }

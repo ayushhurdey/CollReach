@@ -4,6 +4,7 @@ package com.collreach.posts.controller;
 import com.collreach.posts.model.repositories.posts.MessagesRepository;
 import com.collreach.posts.model.requests.CreatePostRequest;
 import com.collreach.posts.model.response.MessagesResponse;
+import com.collreach.posts.responses.ResponseMessage;
 import com.collreach.posts.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -64,5 +65,19 @@ public class PostController {
         //ImagesResponse imagesResponse = postService.getPostsByPagination(pageNo, pageSize);
         MessagesResponse messagesResponse = postService.getPostsAndPollsPaginationFilteredByVisibility(pageNo, pageSize,visibility);
         return ResponseEntity.ok().body(messagesResponse);
+    }
+
+    @PutMapping(path = "/update-post-views/{username}/{messageId}")
+    public ResponseEntity<String> updatePostViews(@PathVariable(value = "username") String userName,
+                                                   @PathVariable(value = "messageId") Integer messageId){
+        String msg = postService.updatePostViews(userName, messageId);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @PutMapping(path = "/update-post-likes/{username}/{messageId}")
+    public ResponseEntity<String> updatePostLikes(@PathVariable(value = "username") String userName,
+                                                  @PathVariable(value = "messageId") Integer messageId){
+        String msg = postService.updatePostLikes(userName, messageId);
+        return ResponseEntity.ok().body(msg);
     }
 }

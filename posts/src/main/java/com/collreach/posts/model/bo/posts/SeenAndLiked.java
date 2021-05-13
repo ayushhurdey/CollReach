@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "seen")
 @IdClass(UserMessageKey.class)
-public class Seen {
+public class SeenAndLiked {
 
     @Id
     @ManyToOne
@@ -20,9 +20,12 @@ public class Seen {
     private Messages messageId;
 
     @Column(name = "seen")
-    private char seen;
+    private Character seen;
 
-    public Seen() {
+    @Column(name = "liked")
+    private Character liked;
+
+    public SeenAndLiked() {
     }
 
     public Users getUserId() {
@@ -41,11 +44,19 @@ public class Seen {
         this.messageId = messageId;
     }
 
-    public char getSeen() {
+    public Character getSeen() {
         return seen;
     }
 
-    public void setSeen(char seen) {
+    public void setSeen(Character seen) {
         this.seen = seen;
+    }
+
+    public Character getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Character liked) {
+        this.liked = liked;
     }
 }

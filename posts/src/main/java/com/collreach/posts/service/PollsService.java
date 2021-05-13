@@ -8,4 +8,5 @@ import java.util.LinkedHashSet;
 public interface PollsService {
     public String createPoll(CreatePollRequest createPollRequest);
     public LinkedHashSet<MessageResponse> getPolls(Integer pageNo, Integer pageSize, String visibility);
+    public String updatesAnswersVotes(String userName, int pollId, int answerId);
 }

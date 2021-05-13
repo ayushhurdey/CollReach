@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface AnswersRepository extends CrudRepository<PollAnswers, Integer> {
+public interface PollAnswersRepository extends CrudRepository<PollAnswers, Integer> {
     public List<PollAnswers> findAllByPollId(Polls pollId);
 }

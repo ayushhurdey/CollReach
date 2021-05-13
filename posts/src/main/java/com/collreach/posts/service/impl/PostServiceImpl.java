@@ -1,5 +1,8 @@
 package com.collreach.posts.service.impl;
 
+import com.collreach.posts.model.bo.posts.SeenAndLiked;
+import com.collreach.posts.model.bo.posts.UserMessageKey;
+import com.collreach.posts.model.repositories.posts.SeenAndLikedRepository;
 import com.collreach.posts.responses.ResponseMessage;
 import com.collreach.posts.model.bo.Users;
 import com.collreach.posts.model.bo.posts.Messages;
@@ -17,7 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,8 +35,11 @@ public class PostServiceImpl implements PostService {
     @Autowired
     PollsService pollsService;
 
+    @Autowired
+    SeenAndLikedRepository seenAndLikedRepository;
+
     @Override
-    public MessagesResponse getImages(String numberOfImages) throws IOException {
+    public MessagesResponse getImages(String numberOfImages) {
         HashSet<MessageResponse> set = new HashSet<>();
         messagesRepository.findAll().forEach(message -> {
             set.add(new MessageResponse(message.getFilename(), message.getFiletype(), message.getImage()));
@@ -43,7 +48,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public MessagesResponse getRandomImage() throws IOException {
+    public MessagesResponse getRandomImage() {
         HashSet<MessageResponse> set = new HashSet<>();
 
         messagesRepository.findAll().forEach(message -> {
@@ -131,7 +136,7 @@ public class PostServiceImpl implements PostService {
     public MessagesResponse getAllPosts() {
         LinkedHashSet<MessageResponse> set = new LinkedHashSet<>();
         messagesRepository.findAll().forEach(message -> {
-            set.add(new MessageResponse(message.getFilename(), message.getFiletype(),
+            set.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
                                        message.getImage(), message.getVisibility(),
                                        message.getLifetimeInWeeks(), message.getRecurrences(),
                                        message.getLikes(), message.getViews(),message.getMessage(),
@@ -149,7 +154,7 @@ public class PostServiceImpl implements PostService {
         Sort groupBySort = dateSort.and(timeSort);
         Pageable paging = PageRequest.of(pageNo, pageSize, groupBySort);
         messagesRepository.findAll(paging).forEach(message -> {
-            set.add(new MessageResponse(message.getFilename(), message.getFiletype(),
+            set.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
                     message.getImage(), message.getVisibility(),
                     message.getLifetimeInWeeks(), message.getRecurrences(),
                     message.getLikes(), message.getViews(),message.getMessage(),
@@ -169,7 +174,7 @@ public class PostServiceImpl implements PostService {
 
         messagesRepository.findAllByVisibilityOrVisibility(visibility,"college", paging)
                 .forEach(message -> {
-                    posts.add(new MessageResponse(message.getFilename(), message.getFiletype(),
+                    posts.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
                             message.getImage(), message.getVisibility(),
                             message.getLifetimeInWeeks(), message.getRecurrences(),
                             message.getLikes(), message.getViews(), message.getMessage(),
@@ -242,5 +247,70 @@ public class PostServiceImpl implements PostService {
         pollItr.forEachRemaining(mergedSets::add);
 
         return mergedSets;
+    }
+
+    @Override
+    public String updatePostViews(String userName, int messageId) {
+        Optional<Users> user = usersRepository.findByUserName(userName);
+        if(user.isPresent()){
+            Optional<Messages> message = messagesRepository.findById(messageId);
+            Optional<SeenAndLiked> userAlreadySeen = seenAndLikedRepository
+                    .findById(new UserMessageKey(user.get().getUserId(),messageId));
+
+            if((message.isPresent() && userAlreadySeen.isPresent() && userAlreadySeen.get().getSeen() != Character.valueOf('T')) ||
+                    (message.isPresent() && !userAlreadySeen.isPresent())){
+                try {
+                    int previousViews = message.get().getViews();
+                    message.get().setViews(previousViews + 1);
+                    SeenAndLiked seenAndLiked = new SeenAndLiked();
+                    seenAndLiked.setUserId(user.get());
+                    seenAndLiked.setMessageId(message.get());
+                    userAlreadySeen.ifPresent(andSeen -> seenAndLiked.setLiked(andSeen.getLiked()));
+                    seenAndLiked.setSeen('T');
+                    seenAndLikedRepository.save(seenAndLiked);
+                    messagesRepository.save(message.get());
+                    return "Success: "+ message.get().getViews();
+                }catch(Exception e){
+                    return ResponseMessage.PROCESSING_ERROR;
+                }
+            }
+            else {
+                return ResponseMessage.USER_ALREADY_SEEN;
+            }
+        }
+        return ResponseMessage.USER_NOT_FOUND;
+    }
+
+
+    @Override
+    public String updatePostLikes(String userName, int messageId) {
+        Optional<Users> user = usersRepository.findByUserName(userName);
+        if(user.isPresent()){
+            Optional<Messages> message = messagesRepository.findById(messageId);
+            Optional<SeenAndLiked> userAlreadyLiked = seenAndLikedRepository
+                    .findById(new UserMessageKey(user.get().getUserId(),messageId));
+
+            if((message.isPresent() && userAlreadyLiked.isPresent() && userAlreadyLiked.get().getLiked() != Character.valueOf('T')) ||
+                    (message.isPresent() && !userAlreadyLiked.isPresent())){
+                try {
+                    int previousLikes = message.get().getLikes();
+                    message.get().setLikes(previousLikes + 1);
+                    SeenAndLiked seenAndLiked = new SeenAndLiked();
+                    seenAndLiked.setUserId(user.get());
+                    seenAndLiked.setMessageId(message.get());
+                    userAlreadyLiked.ifPresent(andLiked -> seenAndLiked.setSeen(andLiked.getSeen()));
+                    seenAndLiked.setLiked('T');
+                    seenAndLikedRepository.save(seenAndLiked);
+                    messagesRepository.save(message.get());
+                    return "Success: "+ message.get().getLikes();
+                }catch(Exception e){
+                    return ResponseMessage.PROCESSING_ERROR;
+                }
+            }
+            else {
+                return ResponseMessage.USER_ALREADY_LIKED;
+            }
+        }
+        return ResponseMessage.USER_NOT_FOUND;
     }
 }
