@@ -1,90 +1,309 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            CollReachPosts
-        </title>
-        <link rel="icon" href="CollReach.PNG" type="image/x-icon">
-    </head>
-    <body>
-        
+<head>
+    <title>CollReachPosts</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="CollReach.PNG" type="image/x-icon">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    
+    
+  
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="script/collReachPost.css" />
+
+<script>
+    
+function myFunction(x) {
+  x.classList.toggle("fa-star");
+  x.classList.toggle("fa-star-o")
+}
+function ShowAndHide() {
+    var x = document.getElementById('postOverlay');
+    if (x.style.display == 'none') {
+        x.style.display = 'block';
+    } else {
+        x.style.display = 'none';
+    }
+}
+</script>
+</head>
+<body onload="load()">  
         <!--CollReach Header-->
+<nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
+    
+    <div class="container" id="navv">
 
-        <div class="header">
-        <p>CollReach</p>
-        <ul style="list-style-type:none;">
-           <li><button type="button">HOME</button></li>
-           <li><button type="button">INSTA</button></li>
-           <li><button type="button">Codeganak</button></li>
-           <li><button type="button">Profile</button></li>
+        <a href="" class="navbar-brand"><sapn style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#list">
+            <span class="navbar-toggler-icon"></span></button>
+
+        <div class="collapse navbar-collapse" id="list">
+
+        <ul class="navbar-nav text-center ml-auto">
+            <li class="nav-item"><a href="" class="nav-link"><i class="fas fa-home"></i><p id="info">Home</p></a></li>
+            <li class="nav-item"><a href="" class="nav-link"><i class="fab fa-instagram"></i><p id="info">Instagram</p></a></li>
+            <li class="nav-item"><a href="" class="nav-link"><i class="fas fa-code"></i><p id="info">CodeGanak</p></a></li>
+            <li class="nav-item"><a href="" class="nav-link"><i class="fas fa-user"></i><p id="info">Profile</p></a></li>
         </ul>
-        <button type="button">Search</button>
-        </div>
-
+        </div> 
+        <div >
+          <button class="nav-item btn btn-outline-primary" type="button" id="search">Search</button>
+          
+            </div>
+            
+    </div>
+</nav>
         <!--CollReach Profile-->
         
-        <div class="mid section">
-            <div class="profile">
-                <img src="static/profileimage.png" alt="Image not found">
-                <h3>Ayush Chaudhry</h3>
-                <p>Mail Icon+ayush.1822cs1038</p>
-                <p>url icon + http://collreach.com/profil....</p>
-                <button type="button">Edit Profile</button>
-                <p><b><h3>Course Info.</h3></b></p>
-                <p>B.Tech</p>
-                <p>CSE</p>
-                <p>SEM-5</p>
-
-                    <!--POSTS-->
-                    
-                    <div class="announcement">
-                    <img src="static/profileimage1-ConvertImage.ico" style="font-size:26px;">
-                    <button type="button">New Announcement</button>
+ <div class="container">
+    <div class="row">
+            <div class="col-md-3">
+                <div class="profile-row">
+                         <img src="static/profileimage.png" class="img-md rounded-circle" alt="Image not found" id="profile-pic">
+                          <div id="profile-name">Ayush Chaudhry
+                          </div>
+                    <div>
+                        <div id="profile-content">
+                       
+                            <div>
+                                <span ><i  class="fas fa-envelope"></i>&nbsp;ayush.1822cs1049@kiet.edu</span>
+                            </div>
+                            <div><span><i class="fas fa-user"></i>&nbsp;http://collreach.com/profil....</span></div>
+                        </div>
+                        
                     </div>
-                    <div class="posts">
-                        <img src="static/profileimage1-ConvertImage.ico" style="font-size:26px;"></img>
-                        <h5>Ayush Chaudhry</h5>
-                        <p>Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.</p>
-                        <img src="static/postDemo.png"style="width:400px;height:200px;"></img>
-                        <p>star-668</p>
-                        <p>Eye-2.3k</p>
-                        <img src="static/profileimage1-ConvertImage.ico" style="font-size:26px;"></img>
-                        <h5>Ayush Chaudhry</h5>
-                        <p>Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.</p>
-                        <p>star-668</p>
-                        <p>Eye-2.3k</p>
-                        <img src="static/profileimage1-ConvertImage.ico" style="font-size:26px;"></img>
-                        <h5>Ayush Chaudhry</h5>
-                        <h3>Whom do you support?</h3>
-                        <input type="button" value="option1" style="width:200px"><br><br>
-                        <input type="button" value="option2" style="width:200px"><br><br>
-                        <input type="button" value="option3" style="width:200px"><br><br>
-                        <input type="button" value="option4" style="width:200px"><br><br>
-                        <small>5 days left</small>
-                        <small>1.5k votes</small>
-                        <p>star-668</p>
-                        <p>Eye-2.3k</p>
-                        <img src="static/profileimage1-ConvertImage.ico" style="font-size:26px;"></img>
-                        <h5>Ayush Chaudhry</h5>
-                        <h3>Whom do you support?</h3>
-                        Option1:
-                        <progress id="file" value="20" max="100"> 20% </progress> 20% <br>
-                        Option2:
-                        <progress id="file" value="30" max="100"> 30% </progress> 30% <br>
-                        Option3:
-                        <progress id="file" value="45" max="100"> 45% </progress> 45% <br>
-                        Option4:
-                        <progress id="file" value="5" max="100"> 5% </progress> 5% <br>
-                        <small>5 days left</small>
-                        <small>1.5k votes</small>
-                        <p>star-668</p>
-                        <p>Eye-2.3k</p>
+                    <button type="button" class="btn btn-outline-primary" id="edit-profile-btn">Edit Profile</button>
+                    <div id="course-info-title">
+                                Course Info
                     </div>
-            </div>
+                    <div class="py-4">
+                        
+                        <div>B.Tech</div>
+                        <div>CSE</div>
+                        <div>6</div>
+                    </div>
+                </div>
+               
+            
         </div>
-        
+                    <!--POSTS-->
+            <div class="col-md-9"> 
+
+            <div class="profile-feed"> 
+                <div id="outer-post-box">
+                    <div class=" profile-feed-item">
+                        <div >
+                        <span>
+                        <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle"  id="announcement-pic">
+                        </span>
+                        <span>
+                        <button type="button" id="a-btn" class="btn btn-outline-primary" onclick="ShowAndHide()">New Announcement</button>
+                        </span>
+                        </div>
+                        
+                    </div>
+                </div>   
+
+                <div id="outer-post-box">
+                    <div id="post-header">
+                                <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
+                                <span id="name">Ayush Chaudhry</span>
+                    </div>
+                    <div class="d-flex align-items-start profile-feed-item" id="post-with-image">
+                        
+                    
+                        <div class="p-2">
+                            
+
+                            <div id="content">
+                                <div id="caption">
+                                    Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.
+                                </div>
+                                <div id="post-image">
+                                <img src="static/postDemo.png" id="post-img">
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between" id="reach">
+                                <div id="star">
+                                    <span id="icon">
+                                    <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
+                                    </span>
+                                    <span id="count">
+                                        668
+                                    </span>
+                                </div>
+
+
+                                <div id="eye">
+                                    <span id="count">2.3K</span>
+                                    &nbsp;
+                                    <span id="icon"> <i class="fas fa-eye"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="outer-post-box">
+                    <div id="post-header">
+                                <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
+                                <span id="name">Ayush Chaudhry</span>
+                    </div>
+
+                    <div class="d-flex align-items-start profile-feed-item" id="post-without-image">
+                    
+                        <div class="p-2">
+                            
+                            <div id="content">
+                                <div id="caption">
+                                Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.
+                                </div>
+                            </div>
+                              <div class="d-flex justify-content-between" id="reach">
+                                <div id="star">
+                                    <span id="icon">
+                                    <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
+                                    </span>
+                                    <span id="count">
+                                        668
+                                    </span>
+                                </div>
+
+
+                                <div id="eye">
+                                    <span id="count">2.3K</span>
+                                    &nbsp;
+                                    <span id="icon"> <i class="fas fa-eye"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="outer-post-box">
+                    <div id="post-header">
+                                <img src="static/profileimage1-ConvertImage.ico" class="img-sm rounded-circle">
+                                <span id="name">Ayush Chaudhry</span>
+                    </div>
+
+
+                    <div class="d-flex align-items-start profile-feed-item" id="post-poll">
+                    
+                        <div class="p-2">
+                            
+                            <div id="content">
+                                <div id="caption">
+                                    Whom do you support?
+                                </div>
+                                <div id="poll-options">
+                                    <div><input type="button" value="option1" class="btn btn-outline-primary"></div>
+                                    <div><input type="button" value="option2" class="btn btn-outline-primary" ></div>
+                                    <div><input type="button" value="option3" class="btn btn-outline-primary"></div>
+                                    <div><input type="button" value="option4" class="btn btn-outline-primary"></div>
+                                </div>
+                                <div id="poll-info">
+                                    <small>5 days left</small>
+                                    <small>1.5k votes</small>
+                                </div>
+                            </div>
+                              <div class="d-flex justify-content-between" id="reach">
+                                <div id="star">
+                                    <span id="icon">
+                                    <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
+                                    </span>
+                                    <span id="count">
+                                        668
+                                    </span>
+                                </div>
+
+
+                                <div id="eye">
+                                    <span id="count">2.3K</span>
+                                    &nbsp;
+                                    <span id="icon"> <i class="fas fa-eye"></i></span>
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+                </div>
+                <div id="outer-post-box">
+                    <div id="post-header">
+                                <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
+                                <span id="name">Ayush Chaudhry</span>
+                    </div>
+                    
+                    <div class="d-flex align-items-start profile-feed-item" id="post-poll-result">
+                    
+                        <div class="p-2">
+                            
+                            <div id="content">
+                                <div id="caption">
+                                    Whom do you support?<br>
+                                </div>
+                                <div id="poll-progress">
+
+
+                                    <h3 class="progress-title">Option 1 - 60%</h3>
+                                        <div class="progress red">
+                                            <div class="progress-bar" style="width:60%; background:#ef5b5b;"></div>
+                                        </div>
+                                    <h3 class="progress-title">Option 2 - 35%</h3>
+                                        <div class="progress yellow">
+                                            <div class="progress-bar" style="width:35%; background:#ffc116;"></div>
+                                        </div>
+                                    <h3 class="progress-title">Option 3 - 50%</h3>
+                                        <div class="progress blue">
+                                            <div class="progress-bar" style="width:50%; background:#20a39e;"></div>
+                                        </div>
+                                    <h3 class="progress-title">Option 4 - 40%</h3>
+                                        <div class="progress green">
+                                            <div class="progress-bar" style="width:40%; background:#7cb518;"></div>
+                                        </div>
+ 
+                                </div>
+                                <div id="poll-info">
+                                    <small>5 days left</small>
+                                    <small>1.5k votes</small>
+                                </div>
+                            </div>
+                              <div class="d-flex justify-content-between" id="reach">
+                                <div id="star">
+                                    <span id="icon">
+                                    <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
+                                    </span>
+                                    <span id="count">
+                                        668
+                                    </span>
+                                </div>
+
+
+                                <div id="eye">
+                                    <span id="count">2.3K</span>
+                                    &nbsp;
+                                    <span id="icon"> <i class="fas fa-eye"></i></span>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div> <!-- profile feed -->
+           
+    </div>
+</div>
         <!--POST OVERLAY-->
         
-        <div class="postOverlay">
+        <div class="card" id="postOverlay">
             <img src="static/profileimage1-ConvertImage.ico" style="font-size:26px;"></img>
             <h2>Ayush Chaudhry</h2>
             <select name="viewrestriction" id="viewrestriction">
@@ -117,7 +336,7 @@
         
         <!--POLL OVERLAY-->
         
-        <div class="pollOverlay">
+        <div class="card" id="pollOverlay">
             <img src="static/profileimage1-ConvertImage.ico" style="font-size:26px;"></img>
             <h2>Ayush Chaudhry</h2>
             <select name="viewrestriction" id="viewrestriction">
@@ -146,5 +365,6 @@
             <small>Max 50 words</small><br><br>
             <button type="button">POST</button>
         </div>
+    
         </body>
 </html>
