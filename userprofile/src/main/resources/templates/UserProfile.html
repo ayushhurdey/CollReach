@@ -84,12 +84,12 @@
       <div class="input-group">
         <div class="form-outline">
          
-          <input type="text" 
+          <!--input type="text" 
                  id="search-box" 
                  list = "skills-list" 
                  class="form-control" 
                  placeholder = "Type skills separated with comma" 
-          />
+          /-->
           <!--label class="form-label" for="form1">Search</label-->
          
           
@@ -98,9 +98,9 @@
           
         </div>
 
-        <div id = "search-items">
+        <!--div id = "search-items">
           <div class = "skill-item-cross" style = "display:hidden;"></div>
-        </div>
+        </div-->
 
        
                     
@@ -113,7 +113,7 @@
      
 
       <datalist id = "skills-list">
-        <option value = "java"></option>
+        <!--option value = "java"></option>
         <option value = "python"></option>
         <option value = "b"></option>
         <option value = "c programming"></option>
@@ -157,7 +157,7 @@
         <option value = "intellij"></option>
         <option value = "vs code"></option>
         <option value = "docker"></option>
-        <option value = "microservices"></option>
+        <option value = "microservices"></option-->
       </datalist>
     
   </section>
@@ -324,6 +324,35 @@
       </div>
     </div>
 
+
+    <div id="search-overlay">
+      <span id = "overlay-close">&#10006;</span>
+      <div id="overlay-content">
+           
+            <input type="text" 
+                   id="overlay-search-box" 
+                   list = "skills-list" 
+                   class="form-control" 
+                   placeholder = "Type skills separated with comma" 
+            />
+            
+            <input type="submit" id = "search-request-btn" class="btn btn-primary" value = "Search">
+            
+            <select  id="search-options">
+              <option value="search-by-name" selected>Search by Name</option>
+              <option value="search-by-skills">Search By Skills</option>
+            </select>
+          
+          <div id = "search-items">
+            <div class = "skill-item-cross" style = "display:hidden;"></div>
+          </div>
+
+          <div id = "items-output">
+
+          </div>
+      
+    </div>
+
     <!--script>
     const image = document.getElementById('img').files[0];
     //image = image.value.replace("C:\\fakepath\\", "");
@@ -360,13 +389,67 @@
     </script>
 
     <script>
-      let searchBox = document.getElementById("search-box");
-      let searchBtn = document.getElementById("search-btn");
+      let searchBox = document.getElementById("overlay-search-box");
+      //let searchBtn = document.getElementById("search-btn");
       let searchItems = document.getElementById('search-items');
 
-      searchBtn.addEventListener("click", search);
+      //searchBtn.addEventListener("click", search);
 
-      let ALL_SKILLS = ["java", "python", "c","c programming", "c++", "c/c++", "perl",
+      let ALL_SKILLS = [];
+      let finalSkills = [];
+      fetch("http://localhost:8082/user/get-all-skills", {
+                  method: "GET",
+                  headers: {
+                    Authorization: localStorage.getItem("auth"),
+                  }
+                })
+                  .then((response) => response.text())
+                  .then((ts) => {
+                      let skills = JSON.parse(ts);
+                      console.log("Skills-> " + skills);
+                      skillsList = document.getElementById('skills-list');
+                      for(skillKey in skills){
+                          ALL_SKILLS.push(skillKey.toLowerCase());
+                          var option = document.createElement("OPTION");
+                          option.setAttribute("value", skillKey.toLowerCase());
+                          option.setAttribute("skillId", skills[skillKey]);
+                          var text = document.createTextNode(skillKey.toString());
+                          option.appendChild(text);
+                          skillsList.appendChild(option);
+                      };
+                      
+                      console.log(ALL_SKILLS);
+
+                      searchBox.addEventListener('input', function(){
+                        skills = searchBox.value.trim().split(',');
+                        found = [];
+                        let current;
+                        for(let i = 0; i < ALL_SKILLS.length; i++){
+                          current = skills[skills.length -1].toLowerCase();
+                          console.log(current);
+                          if(current !== "" && ALL_SKILLS[i].toLowerCase().startsWith(current)){
+                            found.push(ALL_SKILLS[i]);
+                          }
+                        }
+
+                        console.log("FOUND: ", found);
+                        console.log(finalSkills.includes(current), " " , ALL_SKILLS.includes(current));
+                        if(!finalSkills.includes(current) && ALL_SKILLS.includes(current)){
+                          finalSkills.push(current);
+                          addSpan(searchItems, current);
+                          if(searchItems.value === "")
+                            searchItems.value = searchItems.value + current;
+                          else
+                            searchItems.value = searchItems.value + ("," + current);
+                          searchBox.value = "";
+                        }
+                        console.log("final skills ", finalSkills);
+                        found = [];
+                      });
+
+                  });
+
+      /*let ALL_SKILLS = ["java", "python", "c","c programming", "c++", "c/c++", "perl",
                     "spring", "spring-boot", "spring boot", "c#", "machine learning",
                     "deep learning", "ai", "big data", "hadoop","dbms", "database", 
                     "mysql", "oracle", "postgresql","sqlite","data analytics", "data mining",
@@ -374,36 +457,8 @@
                     "unit testing","seo", "photography","web analytics", "web automation",
                     "cms","hr", "ms office", "ms excel", "ms powerpoint", "git", "intellij",
                     "vs code", "docker", "microservices"];
+      */
       
-      let finalSkills = [];
-
-      searchBox.addEventListener('input', function(){
-        skills = searchBox.value.trim().split(',');
-        found = [];
-        let current;
-        for(let i = 0; i < ALL_SKILLS.length; i++){
-          current = skills[skills.length -1].toLowerCase();
-          console.log(current);
-          if(current !== "" && ALL_SKILLS[i].toLowerCase().startsWith(current)){
-            found.push(ALL_SKILLS[i]);
-          }
-        }
-
-        console.log("FOUND: ", found);
-        console.log(finalSkills.includes(current), " " , ALL_SKILLS.includes(current));
-        if(!finalSkills.includes(current) && ALL_SKILLS.includes(current)){
-          finalSkills.push(current);
-          addSpan(searchItems, current);
-          if(searchItems.value === "")
-            searchItems.value = searchItems.value + current;
-          else
-            searchItems.value = searchItems.value + ("," + current);
-          searchBox.value = "";
-        }
-        console.log("final skills ", finalSkills);
-        found = [];
-      });
-
       
       function addSpan(div,value){
         let newDiv = document.createElement('span');
@@ -425,13 +480,124 @@
         });
       }
 
-      function search(){
-        console.log("Searching...");
-        // API call to be made here
-        //incomplete........
-      }
       
       //autocomplete(document.getElementById("search-box"), skills);
+    </script>
+
+    <script>
+      /* --------------Overlay Effect functions---------*/
+      document.getElementById('search-btn').addEventListener("click", on);
+      document.getElementById('overlay-close').addEventListener("click", off);
+      document.getElementById('search-request-btn').addEventListener("click", search);
+
+      function on() {
+        document.getElementById("search-overlay").style.display = "block";
+      }
+      
+      function off() {
+        document.getElementById("search-overlay").style.display = "none";
+      }
+
+      function search(){
+          console.log("Searching...");
+          let searchOption = document.getElementById('search-options').value;
+          let itemsOutput = document.getElementById('items-output');
+          let searchQuery = document.getElementById('overlay-search-box').value.trim();
+
+          if(searchOption.localeCompare("search-by-name") === 0){
+            if(searchQuery == "" || searchQuery == null)
+              return;
+
+            fetch("http://localhost:8082/user/search-users-by-name", {
+                method: "POST",
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: localStorage.getItem("auth"),
+                },
+                body: JSON.stringify({
+                    "users": searchQuery
+                 })
+              })
+                .then((response) => {
+                  console.log(response); 
+                  return response.text()})
+                .then((res) => {
+                    let users = JSON.parse(res).usersByName;
+                    console.log("users-by-name -> " + users);
+                    itemsOutput.innerHTML = "";
+                    
+                    users.forEach(function(value, index, array){
+                        let div = document.createElement('div');
+                        div.setAttribute('class', 'names-list');
+                        let nameSpan = document.createElement('span');
+                        nameSpan.setAttribute('class', 'search-name');
+                        let nameText = document.createTextNode(value.name + " ");
+                        nameSpan.appendChild(nameText);
+
+                        let profileSpan = document.createElement('span');
+                        profileSpan.setAttribute('class', 'search-profile');
+                        let link = document.createElement('a');
+                        link.setAttribute('href', "http://localhost:8082/user/profile/" + value.profileAccessKey);
+                        let linkText = document.createTextNode('Visit Profile');
+                        link.appendChild(linkText);
+                        profileSpan.appendChild(link);
+
+                        div.appendChild(nameSpan);
+                        div.appendChild(document.createElement('br'));
+                        div.append(profileSpan);
+                        
+                        itemsOutput.appendChild(div);
+                    });
+                });
+          }
+          else{
+            let start = Date.now();
+            let searchInterval = setInterval(function(){
+                if(finalSkills.length !== 0){
+                    console.log("Searching skills....");
+                    fetch("http://localhost:8082/user/get-users-from-skills", {
+                        method: "POST",
+                        headers: {
+                          'Content-Type': 'application/json',
+                          Authorization: localStorage.getItem("auth"),
+                        },
+                        body: JSON.stringify({
+                            "skills": finalSkills
+                        })
+                      })
+                        .then((response) => response.text())
+                        .then((res) => {
+                            let usersSkills = JSON.parse(res).usersSkills;
+                            console.log("users-by-skills -> " + usersSkills);
+                            itemsOutput.innerHTML = "";
+                            for(key in usersSkills){
+                                console.log(key);
+                                for(key1 in usersSkills[key]){
+                                  console.log("    "+key1 + " : "+ usersSkills[key][key1]);
+                                  if(key1.localeCompare("skillsUpvote") === 0){
+                                    for(key2 in usersSkills[key][key1]){
+                                      console.log("                "+key2 +" : " + usersSkills[key][key1][key2]);
+                                    }
+                                  } 
+                                }
+                            }
+                            
+                        });
+                    clearInterval(searchInterval);
+                  }
+                  if((Date.now() - start)/1000 > 10){
+                      clearInterval(searchInterval);
+                      console.log("Search time out!!");
+                  }
+
+            }, 100);    
+          }
+
+          }
+
+          function makeSkillsDiv(name, profile, skills){
+              //......//
+          }
     </script>
 
     <script>

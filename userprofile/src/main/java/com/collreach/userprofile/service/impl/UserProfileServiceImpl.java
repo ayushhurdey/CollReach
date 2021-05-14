@@ -250,6 +250,14 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
+    public Map<String, Integer> getAllSkills() {
+        Iterable<SkillsInfo> skillsInfoList = skillsInfoRepository.findAll();
+        Map<String,Integer> allSkills =  new HashMap<>();
+        skillsInfoList.forEach(skillsInfo -> allSkills.put(skillsInfo.getSkill(), skillsInfo.getSkillId()));
+        return allSkills;
+    }
+
+    @Override
     public String checkUsername(UserSignupRequest userSignupRequest){
         try {
             boolean user = userLoginRepository.existsById(userSignupRequest.getUserName());

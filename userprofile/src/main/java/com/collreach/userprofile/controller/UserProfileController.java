@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path = "/user")
@@ -84,6 +86,12 @@ public class UserProfileController {
     public ResponseEntity<UsersSkillsResponse> getUserFromSkills(@RequestBody UsersFromSkillsRequest usersFromSkillsRequest){
         UsersSkillsResponse msg = userProfileService.getUsersFromSkills(usersFromSkillsRequest);
         return ResponseEntity.ok().body(msg);
+    }
+
+    @GetMapping(path = "/get-all-skills")
+    public ResponseEntity<Map<String, Integer>> getAllSkills(){
+        Map<String, Integer> allSkills = userProfileService.getAllSkills();
+        return ResponseEntity.ok().body(allSkills);
     }
 
     @PostMapping(path = "/check-username")
