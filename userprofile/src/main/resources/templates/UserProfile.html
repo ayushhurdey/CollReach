@@ -113,7 +113,7 @@
      
 
       <datalist id = "skills-list">
-        <option value = "java"></option>
+        <!--option value = "java"></option>
         <option value = "python"></option>
         <option value = "b"></option>
         <option value = "c programming"></option>
@@ -157,7 +157,7 @@
         <option value = "intellij"></option>
         <option value = "vs code"></option>
         <option value = "docker"></option>
-        <option value = "microservices"></option>
+        <option value = "microservices"></option-->
       </datalist>
     
   </section>
@@ -366,7 +366,61 @@
 
       searchBtn.addEventListener("click", search);
 
-      let ALL_SKILLS = ["java", "python", "c","c programming", "c++", "c/c++", "perl",
+      let ALL_SKILLS = [];
+      let finalSkills = [];
+      fetch("http://localhost:8082/user/get-all-skills", {
+                  method: "GET",
+                  headers: {
+                    Authorization: localStorage.getItem("auth"),
+                  }
+                })
+                  .then((response) => response.text())
+                  .then((ts) => {
+                      let skills = JSON.parse(ts);
+                      console.log("Skills-> " + skills);
+                      skillsList = document.getElementById('skills-list');
+                      for(skillKey in skills){
+                          ALL_SKILLS.push(skillKey.toLowerCase());
+                          var option = document.createElement("OPTION");
+                          option.setAttribute("value", skillKey.toLowerCase());
+                          option.setAttribute("skillId", skills[skillKey]);
+                          var text = document.createTextNode(skillKey.toString());
+                          option.appendChild(text);
+                          skillsList.appendChild(option);
+                      };
+                      
+                      console.log(ALL_SKILLS);
+
+                      searchBox.addEventListener('input', function(){
+                        skills = searchBox.value.trim().split(',');
+                        found = [];
+                        let current;
+                        for(let i = 0; i < ALL_SKILLS.length; i++){
+                          current = skills[skills.length -1].toLowerCase();
+                          console.log(current);
+                          if(current !== "" && ALL_SKILLS[i].toLowerCase().startsWith(current)){
+                            found.push(ALL_SKILLS[i]);
+                          }
+                        }
+
+                        console.log("FOUND: ", found);
+                        console.log(finalSkills.includes(current), " " , ALL_SKILLS.includes(current));
+                        if(!finalSkills.includes(current) && ALL_SKILLS.includes(current)){
+                          finalSkills.push(current);
+                          addSpan(searchItems, current);
+                          if(searchItems.value === "")
+                            searchItems.value = searchItems.value + current;
+                          else
+                            searchItems.value = searchItems.value + ("," + current);
+                          searchBox.value = "";
+                        }
+                        console.log("final skills ", finalSkills);
+                        found = [];
+                      });
+
+                  });
+
+      /*let ALL_SKILLS = ["java", "python", "c","c programming", "c++", "c/c++", "perl",
                     "spring", "spring-boot", "spring boot", "c#", "machine learning",
                     "deep learning", "ai", "big data", "hadoop","dbms", "database", 
                     "mysql", "oracle", "postgresql","sqlite","data analytics", "data mining",
@@ -374,36 +428,8 @@
                     "unit testing","seo", "photography","web analytics", "web automation",
                     "cms","hr", "ms office", "ms excel", "ms powerpoint", "git", "intellij",
                     "vs code", "docker", "microservices"];
+      */
       
-      let finalSkills = [];
-
-      searchBox.addEventListener('input', function(){
-        skills = searchBox.value.trim().split(',');
-        found = [];
-        let current;
-        for(let i = 0; i < ALL_SKILLS.length; i++){
-          current = skills[skills.length -1].toLowerCase();
-          console.log(current);
-          if(current !== "" && ALL_SKILLS[i].toLowerCase().startsWith(current)){
-            found.push(ALL_SKILLS[i]);
-          }
-        }
-
-        console.log("FOUND: ", found);
-        console.log(finalSkills.includes(current), " " , ALL_SKILLS.includes(current));
-        if(!finalSkills.includes(current) && ALL_SKILLS.includes(current)){
-          finalSkills.push(current);
-          addSpan(searchItems, current);
-          if(searchItems.value === "")
-            searchItems.value = searchItems.value + current;
-          else
-            searchItems.value = searchItems.value + ("," + current);
-          searchBox.value = "";
-        }
-        console.log("final skills ", finalSkills);
-        found = [];
-      });
-
       
       function addSpan(div,value){
         let newDiv = document.createElement('span');

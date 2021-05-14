@@ -9,6 +9,8 @@ import com.collreach.userprofile.model.response.UsersFromNameResponse;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
 
 public interface UserProfileService {
@@ -23,4 +25,5 @@ public interface UserProfileService {
     public String updateUserPersonalInfo(UserSignupRequest userSignupRequest);
     public UsersSkillsResponse getUsersFromSkills(UsersFromSkillsRequest usersFromSkillsRequest);
     public UsersFromNameResponse getUsersFromName(UsersFromNameRequest usersFromNameRequest);
+    Map<String, Integer> getAllSkills();
 }
