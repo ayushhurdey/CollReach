@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<link rel="icon" href="CollReach.PNG" type="image/x-icon">
+	<title>login</title>
+	  
+	<SCRIPT type="text/javascript">
+		function clicki() {
+		
+		
+		var x= document.getElementById('login');
+		if (x.style.display == 'none') {
+        x.style.display = 'block';
+        
+    } else {
+        x.style.display = 'none';
+    }
+	}
+	</SCRIPT>
+</head>
+<body>
+<style type="text/css">
+	#login{
+		position: absolute;
+		overflow:auto; 
+		border: 2px solid grey;
+		width: 25rem;
+		height: 30rem;
+		right: 8rem;
+		top:8rem;
+		border-radius: 20px;
+	}
+	#btn{
+		position: absolute;
+		left: 20rem;
+		top: 15rem;
+		font-size: 1.5rem;
+		border-radius: 10px;
+		padding: 1rem;
+	}
+	img{
+		width: 8rem;
+		border-radius: 80px;
+		border:1px solid grey;
+
+	}
+	div div{
+		margin: .3rem;
+		padding: .5rem;
+	}
+	div div div{
+		margin: auto;
+		padding-left: 5rem; 
+	}
+	div div div input{
+		font-size: 1.2em;
+		border: 0px;
+		border-bottom: 1px solid grey;
+	}
+	div div div:nth-child(1){
+		padding-left: 7rem;
+		background-color: #54E8D9;
+		border-radius: 20px;
+	}
+	div div div:nth-child(5) button{
+		width: 75%;
+	}
+</style>
+
+
+<button id="btn"  onclick="clicki()">Click Here to login!!</button>
+
+
+<div id="login" style="display: none;">
+	<div >
+		
+		<div>
+			<img src="static/profileimage.png"/>
+		</div>
+
+		<div>
+			<label for="username">Username</label><br>
+			<input type="text" name="username" id="username">
+		</div>
+		<div>
+			<label for="pass">Password</label><br>
+			<input type="password" name="username" id="pass">
+		</div>
+		<div>
+			
+			<input type="checkbox" id="check" name="remember-me" value="yes">
+			<label for="check">Remember me</label>
+		</div>
+		<div>
+			<button type="submit" name="submit" value="submit">Submit</button>
+		</div>
+		<div>New to CollReach? <a href="" >Sign up</a> </div>
+	</div>
+
+	
+</div>
+	
+
+
+
+</body>
+</html>

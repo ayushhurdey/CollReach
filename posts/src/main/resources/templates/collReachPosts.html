@@ -5,7 +5,10 @@
     <meta charset="utf-8">
     <link rel="icon" href="CollReach.PNG" type="image/x-icon">
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+
+
+    <link rel="stylesheet" href="style/css/bootstrap.min.css" />
     
     
   
@@ -15,31 +18,142 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="script/collReachPost.css" />
+    <link rel="stylesheet" href="style/collReachPost.css" />
 
 <script>
+    
+
+
     
 function myFunction(x) {
   x.classList.toggle("fa-star");
   x.classList.toggle("fa-star-o")
 }
-function ShowAndHide() {
-    var x = document.getElementById('postOverlay');
+function postOverlay() {
+    var x = document.getElementById('post-overlay');
+    var s = document.getElementById('feeds-section');
+    $('#a-btn').prop('disabled', true);
     if (x.style.display == 'none') {
         x.style.display = 'block';
+        s.style.opacity ='0.4';
     } else {
         x.style.display = 'none';
     }
 }
+function pollOverlay() {
+    var x = document.getElementById('post-overlay');
+    var s = document.getElementById('feeds-section');
+    var y = document.getElementById('poll-overlay');
+    $('.form-control').val('');
+    x.style.display='none'
+    if (y.style.display == 'none') {
+        y.style.display = 'block';
+        s.style.opacity ='0.4';
+    } else {
+        y.style.display = 'none';
+    }
+}
+function back(){
+       
+        $("#poll-overlay").css('display','none');
+        $("#post-overlay").css('display','block');
+}   
+function exit(){
+
+    $("#poll-overlay").css('display','none');
+    $("#post-overlay").css('display','none');
+    $("#feeds-section").css('opacity','1');
+    $('.form-control').val('');
+    $('#upload-img').val('');
+    $("#preview-box").css('display','none');
+    $('#upload-img-preview').attr('src','#');
+    $('#a-btn').prop('disabled', false);
+    
+}
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
+function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#preview-box").css('display','block');
+                    $('#upload-img-preview')
+                        .attr('src', e.target.result)
+                        .width('100%');
+                       
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+function addOption(){
+    var c = $('#overlay-poll-options .poll-option').length;
+    var v=c+1;
+    console.log(v);
+    $('#remove-option-btn').css('display','block');
+    
+    if(v<6){
+
+    
+        console.log(count);
+        var d = document.createElement("div");
+        
+        var i = document.createElement("input");
+        
+        d.setAttribute('class', 'poll-option');
+        
+        i.setAttribute('class', 'form-control');
+        i.setAttribute('type', 'text');
+        i.setAttribute('name', 'option'+v);
+        i.setAttribute('placeholder', 'Option '+v);
+        i.setAttribute('size', '40');
+        i.setAttribute('maxlength', '50');
+        i.setAttribute('id', 'op'+v);
+        
+        
+        d.appendChild(i);
+        poll=document.getElementById('overlay-poll-options');
+        poll.appendChild(d);
+    }
+    if(v==5) {
+        $('#add-option-btn').css('display','none');
+    }  
+}
+
+function removeOption(){
+    $('#add-option-btn').css('display','block');
+    var c = $('#overlay-poll-options .poll-option').length;
+    v=c;
+    console.log(v);
+    if (v>2){
+        var select = document.getElementById('overlay-poll-options');
+        select.removeChild(select.lastChild);
+    }
+    if(v==3){
+        $('#remove-option-btn').css('display','none');
+    }
+    
+    
+}
+
+
+
 </script>
 </head>
-<body onload="load()">  
+<body >  
         <!--CollReach Header-->
 <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
     
     <div class="container" id="navv">
 
-        <a href="" class="navbar-brand"><sapn style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
+        <a href="" class="navbar-brand "><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#list">
             <span class="navbar-toggler-icon"></span></button>
 
@@ -50,18 +164,17 @@ function ShowAndHide() {
             <li class="nav-item"><a href="" class="nav-link"><i class="fab fa-instagram"></i><p id="info">Instagram</p></a></li>
             <li class="nav-item"><a href="" class="nav-link"><i class="fas fa-code"></i><p id="info">CodeGanak</p></a></li>
             <li class="nav-item"><a href="" class="nav-link"><i class="fas fa-user"></i><p id="info">Profile</p></a></li>
+            <li> <button class="nav-item btn btn-outline-primary" type="button" id="search">Search</button></li>
         </ul>
         </div> 
-        <div >
-          <button class="nav-item btn btn-outline-primary" type="button" id="search">Search</button>
-          
-            </div>
+        
             
     </div>
+
 </nav>
         <!--CollReach Profile-->
         
- <div class="container">
+ <div class="container" id="feeds-section">
     <div class="row">
             <div class="col-md-3">
                 <div class="profile-row">
@@ -96,21 +209,21 @@ function ShowAndHide() {
             <div class="col-md-9"> 
 
             <div class="profile-feed"> 
-                <div id="outer-post-box">
+                <div id="outer-post-box-announcement">
                     <div class=" profile-feed-item">
                         <div >
                         <span>
                         <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle"  id="announcement-pic">
                         </span>
                         <span>
-                        <button type="button" id="a-btn" class="btn btn-outline-primary" onclick="ShowAndHide()">New Announcement</button>
+                        <button type="button" id="a-btn" class="btn btn-outline-primary" onclick="postOverlay()">New Announcement</button>
                         </span>
                         </div>
                         
                     </div>
                 </div>   
 
-                <div id="outer-post-box">
+                <div id="outer-post-box-with-image">
                     <div id="post-header">
                                 <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
                                 <span id="name">Ayush Chaudhry</span>
@@ -151,7 +264,7 @@ function ShowAndHide() {
                     </div>
                 </div>
 
-                <div id="outer-post-box">
+                <div id="outer-post-box-without-image">
                     <div id="post-header">
                                 <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
                                 <span id="name">Ayush Chaudhry</span>
@@ -186,7 +299,7 @@ function ShowAndHide() {
                         </div>
                     </div>
                 </div>
-                <div id="outer-post-box">
+                <div id="outer-poll-box-question">
                     <div id="post-header">
                                 <img src="static/profileimage1-ConvertImage.ico" class="img-sm rounded-circle">
                                 <span id="name">Ayush Chaudhry</span>
@@ -234,7 +347,7 @@ function ShowAndHide() {
                         </div>
                     </div>
                 </div>
-                <div id="outer-post-box">
+                <div id="outer-poll-box-answers">
                     <div id="post-header">
                                 <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
                                 <span id="name">Ayush Chaudhry</span>
@@ -302,69 +415,207 @@ function ShowAndHide() {
     </div>
 </div>
         <!--POST OVERLAY-->
+        <div class="container-overlays" id="post-overlay" style="display: none;">
+            <div class="overlay-row">
+                <div class="control-section">
+                        <div class="c-s-heading">
+                                Create post
+                        </div>
+                        <div  id="button">
+                            <button class="btn btn-outline-primary" id="cross-button" onclick="exit()" >
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                      
+                    </div>
+                <div id="post-inner-box" >
+                    
+                    <div class="form-group overlay-detail">
+                        <div class="overlay-header">
+                                    <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
+                                    <span id="name">Ayush Chaudhry</span>
+                        </div>
+                        <div class="restriction">
+                            <div class="restriction-item" >
+                                <select class="form-control" name="viewrestriction"  id="viewrestriction" >
+                                    <option value="" disabled selected >VIEW RESTRICTION</option>
+                                    <option value="department">Department</option>
+                                    <option value="college">College</option>
+                                </select>
+                                </div>
+                            
+                            <div class="restriction-item">
+                                <select class="form-control" name="validity"  id="validity">
+                                    <option value="" disabled selected hidden>VALIDITY PERIOD</option>
+                                    <option value="1week">1 week</option>
+                                    <option value="2week">2 weeks</option>
+                                    <option value="3week">3 weeks</option>
+                                    <option value="4week">4 weeks</option>
+                                </select>
+                            </div>
+                            <div class="restriction-item">
+                                <select class="form-control" name="frequency"  value="frequency" >
+                                    <option value="" disabled selected hidden>FREQUENCY</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>     
+                        </div>
+
+                        <div>
+                            <textarea class="form-control" placeholder="Type Something Here.."  id="post-textarea"></textarea>
+                            <div>
+                                <small class="float-right">Max 150 words</small>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label" for="upload-img" id="add-img-label">
+                                 <i class="far fa-images"></i>
+                                
+                            </label>&nbsp;Add image
+                            <input  type="file"  id="upload-img" name="filename" accept="" onchange="readURL(this);" hidden  />
+                            <div id="preview-box"  style="display: none;">
+                            <img id="upload-img-preview" src="#" alt="your image" /><!--CAN BE INPUT IMAGE-->
+                            </div>
+
+                        </div>
+                        <div >
+                            <button class="post-button btn btn-primary float-right " type="button" id="post-posting-btn">POST</button>
+                        </div>
+                        <div>
+                            
+                            <div style="clear: right;">
+                                <small>OR CREATE POLL</small>
+                            </div>
+                            <div>
+                                <button class="btn btn-info" type="button" onclick="pollOverlay()">Create Poll&nbsp;<i class="fas fa-poll"></i></button>
+                            </div>
+                            
+                            
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
         
-        <div class="card" id="postOverlay">
-            <img src="static/profileimage1-ConvertImage.ico" style="font-size:26px;"></img>
-            <h2>Ayush Chaudhry</h2>
-            <select name="viewrestriction" id="viewrestriction">
-                <option value="" disabled selected hidden>VIEW RESTRICTION</option>
-                <option value="department">Department</option>
-                <option value="college">College</option>
-            </select><br><br>
-            <select name="validity" id="validity">
-                <option value="" disabled selected hidden>VALIDITY PERIOD</option>
-                <option value="1week">1 week</option>
-                <option value="2week">2 weeks</option>
-                <option value="3week">3 weeks</option>
-                <option value="4week">4 weeks</option>
-            </select><br><br>
-            <select name="frequency" value="frequency">
-                <option value="" disabled selected hidden>FREQUENCY</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select><br><br>
-            <textarea id="caption" rows="4" cols="50" style="padding-left: 4px;" >
-                Type here...
-            </textarea><br><br>
-            <button type="button">ADD IMAGE ICON</button><br><!--CAN BE INPUT IMAGE-->
-            <p><small>OR CREATE POLL</small></p>
-            <button type="button">Create Poll</button>
-            <button type="button">POST</button>
-        </div><br><br>
+        
         
         <!--POLL OVERLAY-->
-        
-        <div class="card" id="pollOverlay">
-            <img src="static/profileimage1-ConvertImage.ico" style="font-size:26px;"></img>
-            <h2>Ayush Chaudhry</h2>
-            <select name="viewrestriction" id="viewrestriction">
-                <option value="" disabled selected hidden>VIEW RESTRICTION</option>
-                <option value="department">Department</option>
-                <option value="college">College</option>
-            </select><br><br>
-            <select name="validity" id="validity">
-                <option value="" disabled selected hidden>VALIDITY PERIOD</option>
-                <option value="1week">1 week</option>
-                <option value="2week">2 weeks</option>
-                <option value="3week">3 weeks</option>
-                <option value="4week">4 weeks</option>
-            </select><br><br>
-            Question:<br>
-            <input type="text" name="question" placeholder="What do you choose?" size="40" maxlength="150" required/><br>
-            <small>Max 150 words</small><br>
-            Option 1:<br>
-            <input type="text" name="option1" placeholder="java" size="40" maxlength="50" required/><br>
-            Option 2:<br>
-            <input type="text" name="option2" placeholder="python" size="40" maxlength="50" required/><br>
-            Option 3:<br>
-            <input type="text" name="option3" placeholder="c++" size="40" maxlength="50" required/><br>
-            Option 4:<br>
-            <input type="text" name="option4" placeholder="c" size="40" maxlength="50" required/><br>
-            <small>Max 50 words</small><br><br>
-            <button type="button">POST</button>
+  <div class="container-overlays" id="poll-overlay" style="display: none;">
+        <div class="overlay-row">
+            <div id="pollOverlay" >
+                
+                <div  class="control-section">
+                    <div >
+                        <button class="btn btn-outline-primary" id="back-button" onclick="back()">
+                            <i class="fas fa-chevron-left" ></i></button>
+                    </div>
+                    <div class="c-s-heading">
+                        Create poll
+                    </div>
+                    <div  id="button">
+                        <button class="btn btn-outline-primary" id="cross-button" onclick="exit()">
+                            <i class="fas fa-times" ></i>
+                        </button>
+                    </div>
+                  
+                </div>
+
+
+                <div id="poll-inner-box">
+                    <div class="form-group overlay-detail">
+                        <div class="overlay-header">
+                            <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
+                        <span id="name">Ayush Chaudhry</span>
+                        </div>
+                  
+                    <div class="restriction">
+                        <div class="restriction-item" >
+                            <select class="form-control" name="viewrestriction" id="viewrestriction" >
+                            <option value="" disabled selected hidden>VIEW RESTRICTION</option>
+                            <option value="department">Department</option>
+                            <option value="college">College</option>
+                        </select>
+                        </div>
+                        
+                        <div class="restriction-item">
+                            <select class="form-control" name="validity" id="validity">
+                            <option value="" disabled selected hidden>VALIDITY PERIOD</option>
+                            <option value="1week">1 week</option>
+                            <option value="2week">2 weeks</option>
+                            <option value="3week">3 weeks</option>
+                            <option value="4week">4 weeks</option>
+                        </select>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    <div>
+                        <label class="form-label" for="poll-question">Question</label>
+                        <input class="form-control" type="text" name="question" placeholder="Eg: What is your fav colour?" size="40" maxlength="150" id="poll-question" style="margin-bottom: .3rem;" required/>
+                        <div>
+                            <small class="float-right">Max 150 words</small>
+                        </div>
+                        
+                    </div>
+                    <div style="clear: right;">
+                        <label class="form-label" for="overlay-poll-options">Options (Max 5)</label>
+                    </div>
+                    <div class="poll-options" id="overlay-poll-options" style="clear: right;">
+                        <div class="poll-option">
+                            
+                            <input class="form-control" type="text" name="option1" placeholder="Option 1" size="40" maxlength="50" id="op1" />
+                        </div>
+                        <div class="poll-option">
+                            
+                            <input class="form-control" type="text" name="option2" placeholder="Option 2" size="40" maxlength="50" id="op2" />
+                        </div>
+                       
+                        
+
+                        
+                    </div>
+                    <div>
+                        <button type="button" class="btn float-left" id="remove-option-btn" onclick="removeOption()" style="display:none; "><i class="far fa-minus-square"></i>&nbsp;Remove options</button>
+                        
+                    </div>
+                    <div>
+
+                            <button type="button" class="btn float-right" id="add-option-btn" onclick="addOption(this)">Add more options&nbsp;<i class="far fa-plus-square"></i></button>
+                    </div>
+                    <div style="clear: both;">
+                        <button class="post-button btn btn-primary float-right " type="button" id="poll-posting-btn">POST</button>
+                    </div>
+                    
+                
+
+
+
+
+                    </div>
+                </div>
+                
+                
+                
+                
+            </div>
         </div>
-    
-        </body>
+    </div>
+    <script type="text/javascript">
+        if($(window).innerWidth() < 768){
+  // do your stuff
+
+  document.getElementById("searchh").remove();
+}
+
+    </script>
+</body>
 </html>
