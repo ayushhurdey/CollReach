@@ -2,12 +2,14 @@ package com.collreach.posts.model.bo.posts;
 
 import com.collreach.posts.model.bo.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
 
 @Entity
+@DynamicUpdate
 @Table(name = "messages")
 public class Messages {
 
@@ -30,8 +32,8 @@ public class Messages {
     @JsonFormat(pattern = "HH:mm:ss")
     private Date uploadTime;
 
-    @Column(name = "visibility", nullable = false, length = 30)
-    private String visibility;
+    @Column(name = "visibility", nullable = false, columnDefinition = "varchar(15) default 'college'")
+    private String visibility;   // Specifies to Department or College level visibility
 
     @Column(name = "lifetime_in_weeks", nullable = false)
     private int lifetimeInWeeks;
@@ -39,22 +41,22 @@ public class Messages {
     @Column(name = "recurrences", nullable = false)
     private int recurrences;
 
-    @Column(name = "likes", nullable = false)
-    private int likes;
+    @Column(name = "likes", columnDefinition = "integer default 0")
+    private Integer likes;
 
-    @Column(name = "views", nullable = false)
-    private int views;
+    @Column(name = "views", columnDefinition = "integer default 0")
+    private Integer views;
 
     @Column(name = "message", nullable = false)
     private String message;
 
-    @Column(name = "image", nullable = false, columnDefinition="mediumblob")
+    @Column(name = "image", columnDefinition="mediumblob")
     private byte[] image;
 
     @Column(name = "filename")
     private String filename;
 
-    @Column(name = "filetype", nullable = false,length = 10)
+    @Column(name = "filetype", length = 10)
     private String filetype;
 
 
@@ -84,6 +86,12 @@ public class Messages {
         this.image = image;
         this.filename = filename;
         this.filetype = filetype;
+    }
+
+    @PrePersist
+    public void setLikesAndViewsOnNewMessage(){
+        this.likes = 0;
+        this.views = 0;
     }
 
     public int getMessageId() {
