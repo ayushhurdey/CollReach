@@ -1,5 +1,6 @@
 package com.collreach.userprofile.util;
 
+import com.collreach.userprofile.model.request.AddNewUserRequest;
 import com.collreach.userprofile.model.request.UserLoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -14,12 +15,13 @@ public class HttpRequestUtil {
     @Autowired
     RestTemplate restTemplate;
 
-    public Boolean setNewUserAtUrl(String userName, String url) {
+    public Boolean setNewUserAtUrl(String userName, String name, String url) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        UserLoginRequest userLoginRequest = new UserLoginRequest();
-        userLoginRequest.setUserName(userName);
-        HttpEntity<UserLoginRequest> entity = new HttpEntity<>(userLoginRequest,headers);
+        AddNewUserRequest addNewUserRequest = new AddNewUserRequest();
+        addNewUserRequest.setUsername(userName);
+        addNewUserRequest.setName(name);
+        HttpEntity<AddNewUserRequest> entity = new HttpEntity<>(addNewUserRequest,headers);
 
         try {
             // "http://localhost:8084/user/add-user"

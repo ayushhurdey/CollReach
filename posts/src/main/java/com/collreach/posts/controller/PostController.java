@@ -52,13 +52,13 @@ public class PostController {
         return ResponseEntity.ok().body(msg);
     }
 
-    @PostMapping(path = "/get-all-posts")
+    @GetMapping(path = "/get-all-posts")
     public ResponseEntity<MessagesResponse> getAllPosts(){
         MessagesResponse messagesResponse = postService.getAllPosts();
         return ResponseEntity.ok().body(messagesResponse);
     }
 
-    @PostMapping(path = "/get-paged-posts")
+    @GetMapping(path = "/get-paged-posts")
     public ResponseEntity<MessagesResponse> getPostsByPagination(@RequestParam(defaultValue = "0") Integer pageNo,
                                                                  @RequestParam(defaultValue = "2") Integer pageSize,
                                                                  @RequestParam(defaultValue = "college") String visibility){

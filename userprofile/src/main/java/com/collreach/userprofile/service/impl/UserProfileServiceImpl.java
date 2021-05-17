@@ -9,6 +9,7 @@ import com.collreach.userprofile.model.repositories.UserSkillsRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.request.UsersFromNameRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
+import com.collreach.userprofile.model.request.UsersFromUsernameRequest;
 import com.collreach.userprofile.model.response.*;
 import com.collreach.userprofile.service.UserProfileService;
 import com.collreach.userprofile.util.FtpUtil;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -76,7 +78,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
         userLogin.setPassword(userSignupRequest.getPassword());
         userLogin.setUserName(userSignupRequest.getUserName());
-        Boolean response = httpRequestUtil.setNewUserAtUrl(userSignupRequest.getUserName(), postsUrl);
+        Boolean response = httpRequestUtil.setNewUserAtUrl(userSignupRequest.getUserName(),
+                                                                        userSignupRequest.getName(),postsUrl);
 
         if(!response)
             return "Error Signing up.";
@@ -115,6 +118,25 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public InputStream getImage(String filename) throws Exception {
         return ftpUtil.downloadFile(hostDir + filename);
+    }
+
+    @Override
+    public InputStream getProfileImageByUsername(String username) throws Exception {
+        Optional<UserLogin> user =  userLoginRepository.findByUserName(username);
+        Optional<UserPersonalInfo> userInfo;
+        if(user.isPresent()) {
+            userInfo = userPersonalInfoRepository.findById(user.get().getUserPersonalInfo().getUserId());
+            String userProfilePhoto = userInfo.get().getUserProfilePhoto();
+            return ftpUtil.downloadFile(hostDir + userProfilePhoto);
+        }
+        else {
+            return new InputStream() {
+                @Override
+                public int read() throws IOException {
+                    return 0;
+                }
+            };
+        }
     }
 
     @Override
@@ -255,6 +277,22 @@ public class UserProfileServiceImpl implements UserProfileService {
         Map<String,Integer> allSkills =  new HashMap<>();
         skillsInfoList.forEach(skillsInfo -> allSkills.put(skillsInfo.getSkill(), skillsInfo.getSkillId()));
         return allSkills;
+    }
+
+    @Override
+    public UserFromUsernameResponse getAllUsersFromUserNames(UsersFromUsernameRequest usersFromUsernameRequest) {
+        Map<String, String> usersMap = new HashMap<>();
+        usersFromUsernameRequest.getUsernames().forEach(username -> {
+            Optional<UserLogin> user = userLoginRepository.findByUserName(username);
+
+            user.ifPresent(u -> {
+                Optional<UserPersonalInfo> userInfo  = userPersonalInfoRepository
+                        .findById(u.getUserPersonalInfo().getUserId());
+                usersMap.put(u.getUserName() , userInfo.get().getName());
+            });
+
+        });
+        return new UserFromUsernameResponse(usersMap);
     }
 
     @Override

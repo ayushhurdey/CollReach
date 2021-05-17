@@ -90,7 +90,9 @@ public class PollsServiceImpl implements PollsService {
                     messageResponse.setCreateDate(poll.getDateCreated());
                     messageResponse.setUploadTime(poll.getTimeCreated());
                     messageResponse.setVisibility(poll.getVisibility());
+                    messageResponse.setUsername(poll.getUserId().getUserName());
                     messageResponse.setRecurrences(poll.getRecurrences());
+                    messageResponse.setName(poll.getUserId().getName());
                     List<PollAnswersResponse> pollAnswers = new ArrayList<>();
                     pollAnswersRepository.findAllByPollId(poll).forEach(answer -> {
                         PollAnswersResponse pollAnswersResponse = new PollAnswersResponse(

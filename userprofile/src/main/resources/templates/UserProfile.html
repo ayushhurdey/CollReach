@@ -351,6 +351,7 @@
 
           </div>
       
+      </div>
     </div>
 
     <!--script>
@@ -537,7 +538,7 @@
                         let profileSpan = document.createElement('span');
                         profileSpan.setAttribute('class', 'search-profile');
                         let link = document.createElement('a');
-                        link.setAttribute('href', "http://localhost:8082/user/profile/" + value.profileAccessKey);
+                        link.setAttribute('href', "http://localhost:8082/profile/" + value.profileAccessKey);
                         let linkText = document.createTextNode('Visit Profile');
                         link.appendChild(linkText);
                         profileSpan.appendChild(link);
@@ -611,12 +612,13 @@
         "change",
         (evt) => {
           const files = [...evt.target.files];
+          const miniImageVersion = getMiniImageVersion(files);
           compress
             .compress(files, {
               size: 4, // the max size in MB, defaults to 2MB
               quality: 0.75, // the quality of the image, max is 1,
-              maxWidth: 1920, // the max width of the output image, defaults to 1920px
-              maxHeight: 1920, // the max height of the output image, defaults to 1920px
+              maxWidth: 400, // the max width of the output image, defaults to 1920px
+              maxHeight: 400, // the max height of the output image, defaults to 1920px
               resize: true, // defaults to true, set false if you do not want to resize
                             // the image width and height
             })
@@ -702,6 +704,24 @@
         },
         false
       );
+
+      function getMiniImageVersion(files){
+          compress
+            .compress(files, {
+              size: 4, // the max size in MB, defaults to 2MB
+              quality: 0.85, // the quality of the image, max is 1,
+              maxWidth: 50, // the max width of the output image, defaults to 1920px
+              maxHeight: 50, // the max height of the output image, defaults to 1920px
+              resize: true, // defaults to true, set false if you do not want to resize
+                            // the image width and height
+            })
+            .then((images) => {
+              console.log("mini compressed-> ");
+              console.log(images[0]);
+              const img = images[0];
+              return img;
+            });
+      }
     </script>
   </body>
 </html>

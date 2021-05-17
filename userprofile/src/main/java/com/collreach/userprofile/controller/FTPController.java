@@ -66,6 +66,7 @@ public class FTPController {
     public ResponseEntity<byte[]> downloadImage(String filename) throws Exception {
         FTPUploader(host, user, pwd);
         var x = ftp.retrieveFileStream("/htdocs/frontend/images/" + filename);
+        //disconnect();
         return ResponseEntity.ok().body(IOUtils.toByteArray(x));
     }
 

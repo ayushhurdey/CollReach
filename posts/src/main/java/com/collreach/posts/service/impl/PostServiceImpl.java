@@ -137,8 +137,8 @@ public class PostServiceImpl implements PostService {
         LinkedHashSet<MessageResponse> set = new LinkedHashSet<>();
         messagesRepository.findAll().forEach(message -> {
             set.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
-                                       message.getImage(), message.getVisibility(),
-                                       message.getLifetimeInWeeks(), message.getRecurrences(),
+                                       message.getImage(), message.getVisibility(), message.getUserName().getUserName(),
+                                       message.getLifetimeInWeeks(), message.getRecurrences(), message.getUserName().getName(),
                                        message.getLikes(), message.getViews(),message.getMessage(),
                                        message.getCreateDate(),message.getUploadTime())
             );
@@ -155,8 +155,8 @@ public class PostServiceImpl implements PostService {
         Pageable paging = PageRequest.of(pageNo, pageSize, groupBySort);
         messagesRepository.findAll(paging).forEach(message -> {
             set.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
-                    message.getImage(), message.getVisibility(),
-                    message.getLifetimeInWeeks(), message.getRecurrences(),
+                    message.getImage(), message.getVisibility(), message.getUserName().getUserName(),
+                    message.getLifetimeInWeeks(), message.getRecurrences(), message.getUserName().getName(),
                     message.getLikes(), message.getViews(),message.getMessage(),
                     message.getUploadTime(),message.getCreateDate())
             );
@@ -175,8 +175,8 @@ public class PostServiceImpl implements PostService {
         messagesRepository.findAllByVisibilityOrVisibility(visibility,"college", paging)
                 .forEach(message -> {
                     posts.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
-                            message.getImage(), message.getVisibility(),
-                            message.getLifetimeInWeeks(), message.getRecurrences(),
+                            message.getImage(), message.getVisibility(),message.getUserName().getUserName(),
+                            message.getLifetimeInWeeks(), message.getRecurrences(), message.getUserName().getName(),
                             message.getLikes(), message.getViews(), message.getMessage(),
                             message.getUploadTime(), message.getCreateDate())
                     );

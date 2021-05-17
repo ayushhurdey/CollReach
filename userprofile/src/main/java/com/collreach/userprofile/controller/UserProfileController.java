@@ -4,11 +4,14 @@ import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
 import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.request.UsersFromNameRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
+import com.collreach.userprofile.model.request.UsersFromUsernameRequest;
+import com.collreach.userprofile.model.response.UserFromUsernameResponse;
 import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
 import com.collreach.userprofile.model.response.UsersFromNameResponse;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -32,6 +35,9 @@ public class UserProfileController {
     @Autowired
     UserPersonalInfoRepository userPersonalInfoRepository;
 
+    @Autowired
+    FTPClient ftp;
+
     @PostMapping(path = "/signup")
     public ResponseEntity<String> signup(@RequestBody UserSignupRequest userSignupRequest){
         try{
@@ -54,6 +60,16 @@ public class UserProfileController {
         InputStream inputStream = userProfileService.getImage(filename);
         byte[] bytes = IOUtils.toByteArray(inputStream);
         inputStream.close();
+        return ResponseEntity.ok().body(bytes);
+    }
+
+    @GetMapping(value = "/get-profile-img-by-username", produces = MediaType.IMAGE_JPEG_VALUE)
+    @Cacheable(value="profile-img-by-username")
+    public ResponseEntity<byte[]> getProfileImageByUsername(String username) throws Exception {
+        InputStream inputStream = userProfileService.getProfileImageByUsername(username);
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        inputStream.close();
+        ftp.disconnect();
         return ResponseEntity.ok().body(bytes);
     }
 
@@ -92,6 +108,12 @@ public class UserProfileController {
     public ResponseEntity<Map<String, Integer>> getAllSkills(){
         Map<String, Integer> allSkills = userProfileService.getAllSkills();
         return ResponseEntity.ok().body(allSkills);
+    }
+
+    @PostMapping(path = "/get-users-from-username")
+    public ResponseEntity<UserFromUsernameResponse> getUsersFromUsername(@RequestBody UsersFromUsernameRequest usersFromUsernameRequest){
+        UserFromUsernameResponse msg = userProfileService.getAllUsersFromUserNames(usersFromUsernameRequest);
+        return ResponseEntity.ok().body(msg);
     }
 
     @PostMapping(path = "/check-username")
