@@ -10,13 +10,22 @@ images:
   server-address: http://localhost:8081/images/
   default-image: http://localhost:8081/images/default.jpeg
 
+#ftp:
+#  host: ftp.unaux.com
+#  user: unaux_27598440
+#  pwd: 689j616h7yuiwu
+#  host-dir: /htdocs/frontend/images/
+#  img-address-server: http://maybelater.unaux.com/frontend/images
+#  default-img: default.jpeg
+
 ftp:
-  host: ftp.unaux.com
-  user: unaux_27598440
-  pwd: 689j616h7yuiwu
+  host: localhost
+  user: collreach
+  pwd: Sensitive@1
   host-dir: /htdocs/frontend/images/
-  img-address-server: http://maybelater.unaux.com/frontend/images
+  img-address-server: http://localhost/htdocs/frontend/images
   default-img: default.jpeg
+
 
 spring:
   application:

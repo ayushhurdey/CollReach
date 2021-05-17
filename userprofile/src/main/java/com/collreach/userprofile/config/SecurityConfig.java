@@ -43,9 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/*.jpg","/*.jpeg","/*.png","/*.PNG").permitAll()
                 .antMatchers("/ftp/upload","/ftp/*").permitAll()
                 .antMatchers("/user/check-username","/user/check-email","/user/get-image",
-                              "/user/check-phone-no","/user/check-linkedin-link","/user/profile/*").permitAll()
+                              "/user/check-phone-no","/user/check-linkedin-link","/user/profile/*",
+                             "/user/get-user-details/*").permitAll()             // this one to be removed later.
                 .antMatchers("/login","/signup","/profile","/profile/*","/profile-update").permitAll()
                 .antMatchers("/chat/*").permitAll()
+                .antMatchers("/user/get-users-from-username","/user/get-profile-img-by-username*").permitAll()  // to be removed later
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -4,6 +4,8 @@ import com.collreach.userprofile.model.bo.UserPersonalInfo;
 import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.request.UsersFromNameRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
+import com.collreach.userprofile.model.request.UsersFromUsernameRequest;
+import com.collreach.userprofile.model.response.UserFromUsernameResponse;
 import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
 import com.collreach.userprofile.model.response.UsersFromNameResponse;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
@@ -26,4 +28,6 @@ public interface UserProfileService {
     public UsersSkillsResponse getUsersFromSkills(UsersFromSkillsRequest usersFromSkillsRequest);
     public UsersFromNameResponse getUsersFromName(UsersFromNameRequest usersFromNameRequest);
     Map<String, Integer> getAllSkills();
+    UserFromUsernameResponse getAllUsersFromUserNames(UsersFromUsernameRequest usersFromUsernameRequest);
+    InputStream getProfileImageByUsername(String username) throws Exception;
 }

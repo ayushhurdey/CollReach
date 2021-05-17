@@ -12,6 +12,8 @@ public class MessageResponse {
     private int recurrences;
     private Date uploadTime;
     private Date createDate;
+    private String username;
+    private String name;
 
     /*------Posts------*/
     private int messageId;
@@ -37,8 +39,8 @@ public class MessageResponse {
     }
 
     public MessageResponse(int messageId, String filename, String filetype,
-                           byte[] image, String visibility,
-                           int lifetimeInWeeks, int recurrences,
+                           byte[] image, String visibility, String username,
+                           int lifetimeInWeeks, int recurrences, String name,
                            int likes, int views, String message,
                            Date uploadTime, Date createDate) {
         this.messageId = messageId;
@@ -46,6 +48,8 @@ public class MessageResponse {
         this.filetype = filetype;
         this.image = image;
         this.visibility = visibility;
+        this.username = username;
+        this.name = name;
         this.lifetimeInWeeks = lifetimeInWeeks;
         this.recurrences = recurrences;
         this.likes = likes;
@@ -143,6 +147,14 @@ public class MessageResponse {
         this.createDate = createDate;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getQuestion() {
         return question;
     }
@@ -173,5 +185,13 @@ public class MessageResponse {
 
     public void setPollId(int pollId) {
         this.pollId = pollId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
