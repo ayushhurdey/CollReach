@@ -88,6 +88,9 @@ public class FtpUtil {
         catch(Exception e){
             System.out.println("Could not connect: " + e);
         }
+        finally{
+            disconnect();
+        }
         return inputStream;
     }
 

@@ -17,6 +17,7 @@ images:
 #  host-dir: /htdocs/frontend/images/
 #  img-address-server: http://maybelater.unaux.com/frontend/images
 #  default-img: default.jpeg
+#  mini-default-img: mini_default.jpeg
 
 ftp:
   host: localhost
@@ -25,6 +26,7 @@ ftp:
   host-dir: /htdocs/frontend/images/
   img-address-server: http://localhost/htdocs/frontend/images
   default-img: default.jpeg
+  mini-default-img: mini_default.jpeg
 
 
 spring:

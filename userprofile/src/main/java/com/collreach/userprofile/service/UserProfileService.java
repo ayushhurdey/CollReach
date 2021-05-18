@@ -29,5 +29,5 @@ public interface UserProfileService {
     public UsersFromNameResponse getUsersFromName(UsersFromNameRequest usersFromNameRequest);
     Map<String, Integer> getAllSkills();
     UserFromUsernameResponse getAllUsersFromUserNames(UsersFromUsernameRequest usersFromUsernameRequest);
-    InputStream getProfileImageByUsername(String username) throws Exception;
+    InputStream getProfileImageByUsername(String username, Boolean ifMini) throws Exception;
 }

@@ -33,6 +33,9 @@ public class UserPersonalInfo {
     @Column(name = "user_profile_photo")
     private String userProfilePhoto;
 
+    @Column(name = "mini_user_profile_photo")
+    private String miniUserProfilePhoto;
+
     @OneToOne
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     private CourseInfo courseInfo;
@@ -126,5 +129,13 @@ public class UserPersonalInfo {
 
     public void setUserProfilePhoto(String userProfilePhoto) {
         this.userProfilePhoto = userProfilePhoto;
+    }
+
+    public String getMiniUserProfilePhoto() {
+        return miniUserProfilePhoto;
+    }
+
+    public void setMiniUserProfilePhoto(String miniUserProfilePhoto) {
+        this.miniUserProfilePhoto = miniUserProfilePhoto;
     }
 }

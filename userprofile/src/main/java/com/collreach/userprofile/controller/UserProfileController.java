@@ -10,6 +10,7 @@ import com.collreach.userprofile.model.response.UserPersonalInfoResponse;
 import com.collreach.userprofile.model.response.UsersFromNameResponse;
 import com.collreach.userprofile.model.response.UsersSkillsResponse;
 import com.collreach.userprofile.service.UserProfileService;
+import com.collreach.userprofile.util.FtpUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class UserProfileController {
     UserPersonalInfoRepository userPersonalInfoRepository;
 
     @Autowired
-    FTPClient ftp;
+    FtpUtil ftpUtil;
 
     @PostMapping(path = "/signup")
     public ResponseEntity<String> signup(@RequestBody UserSignupRequest userSignupRequest){
@@ -65,11 +66,11 @@ public class UserProfileController {
 
     @GetMapping(value = "/get-profile-img-by-username", produces = MediaType.IMAGE_JPEG_VALUE)
     @Cacheable(value="profile-img-by-username")
-    public ResponseEntity<byte[]> getProfileImageByUsername(String username) throws Exception {
-        InputStream inputStream = userProfileService.getProfileImageByUsername(username);
+    public ResponseEntity<byte[]> getProfileImageByUsername(String username, Boolean ifMini) throws Exception {
+        InputStream inputStream = userProfileService.getProfileImageByUsername(username,ifMini);
         byte[] bytes = IOUtils.toByteArray(inputStream);
         inputStream.close();
-        ftp.disconnect();
+        ftpUtil.disconnect();
         return ResponseEntity.ok().body(bytes);
     }
 

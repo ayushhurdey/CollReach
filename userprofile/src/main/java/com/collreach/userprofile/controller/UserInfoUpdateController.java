@@ -91,8 +91,10 @@ public class UserInfoUpdateController {
 
     @ApiOperation(value = "", authorizations = { @Authorization(value="apiKey") })
     @PutMapping(path = "/profile-photo")
-    public ResponseEntity<String> updateProfilePhoto(@RequestParam("file") MultipartFile file ,@RequestParam("userName") String userName) throws IOException {
-        String msg = userInfoUpdateService.updateProfilePhoto(file, userName);
+    public ResponseEntity<String> updateProfilePhoto(@RequestParam("file") MultipartFile file ,
+                                                     @RequestParam("miniFile") MultipartFile miniFile,
+                                                     @RequestParam("userName") String userName) throws IOException {
+        String msg = userInfoUpdateService.updateProfilePhoto(file, miniFile, userName);
         return ResponseEntity.ok().body(msg);
     }
 
