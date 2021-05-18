@@ -19,6 +19,6 @@ public interface UserInfoUpdateService {
     public String deleteUserSkills(UserSkillUpdateRequest userSkillUpdateRequest);
     public String updateLinkedinLink(UserInfoUpdateRequest userInfoUpdateRequest);
     public String updateDescription(UserInfoUpdateRequest userInfoUpdateRequest);
-    public String updateProfilePhoto(MultipartFile file, String userName) throws IOException;
+    public String updateProfilePhoto(MultipartFile file,MultipartFile miniFile, String userName) throws IOException;
     public String deleteUserProfilePhoto(String userName);
 }

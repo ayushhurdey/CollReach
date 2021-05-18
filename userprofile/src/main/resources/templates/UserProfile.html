@@ -608,99 +608,114 @@
 
       const upload = document.getElementById("img");
 
-      upload.addEventListener(
-        "change",
-        (evt) => {
-          const files = [...evt.target.files];
-          const miniImageVersion = getMiniImageVersion(files);
-          compress
-            .compress(files, {
-              size: 4, // the max size in MB, defaults to 2MB
-              quality: 0.75, // the quality of the image, max is 1,
-              maxWidth: 400, // the max width of the output image, defaults to 1920px
-              maxHeight: 400, // the max height of the output image, defaults to 1920px
-              resize: true, // defaults to true, set false if you do not want to resize
-                            // the image width and height
-            })
-            .then((images) => {
-              console.log(images);
-              const img = images[0];
-              const imgExt = img.ext.replace("image/", ".");
-              // returns an array of compressed images
-              //preview.src = `${img.prefix}${img.data}`;
-              var image = new Image();
-              image.src = `${img.prefix}${img.data}`;
-              console.log(img);
-              const file = Compress.convertBase64ToFile(img.data, img.ext);
-              console.log(file);
+      upload.addEventListener("change", (evt) => {
+        const files = [...evt.target.files];
 
-              console.log(image);
-              const setImage = document.getElementById("set-profile-photo");
-              const username = localStorage.getItem("username");
-              var timestamp;
-              setImage.addEventListener("click", (e) => {
-                e.preventDefault();
-                var formData = new FormData();
-                formData.append("file", file, "imageFile" + imgExt);
-                formData.append("userName", username);
-                fetch("http://localhost:8082/user/profile-photo", {
-                  method: "PUT",
-                  headers: {
-                    Authorization: localStorage.getItem("auth"),
-                  },
-                  body: formData,
-                })
-                  .then((response) => response.text())
-                  .then((ts) => {
-                    if (ts.includes("Profile picture updated successfully")) {
-                        timestamp = ts;
-                        console.log(ts);
-                        console.log(timestamp);
-                        timestamp = timestamp.substring(
-                            timestamp.indexOf("$") + 1
-                        );
-                        var profilePhoto = localStorage.getItem("profilePhoto");
-                        profilePhoto = profilePhoto.substring(0, profilePhoto.lastIndexOf("/") + 1);
-                        localStorage.setItem(
-                            "profilePhoto",
-                            profilePhoto + username + "$" + timestamp
-                        );
-                        console.log(
-                            "New Image Url: " +
-                            profilePhoto +
-                            username +
-                            "$" +
-                            timestamp
-                        );
+        compress.compress(files, {
+            size: 4, // the max size in MB, defaults to 2MB
+            quality: 0.85, // the quality of the image, max is 1,
+            maxWidth: 50, // the max width of the output image, defaults to 1920px
+            maxHeight: 50, // the max height of the output image, defaults to 1920px
+            resize: true, // defaults to true, set false if you do not want to resize
+                          // the image width and height
+          })
+          .then((images) => {
+            console.log("mini compressed-> ");
+            console.log(images[0]);
+            const miniImg = images[0];
+            return miniImg;
+          })
+          .then((miniImageVersion) => {
+              compress.compress(files, {
+                size: 4, // the max size in MB, defaults to 2MB
+                quality: 0.75, // the quality of the image, max is 1,
+                maxWidth: 400, // the max width of the output image, defaults to 1920px
+                maxHeight: 400, // the max height of the output image, defaults to 1920px
+                resize: true, // defaults to true, set false if you do not want to resize
+                              // the image width and height
+              })
+              .then((images) => {
+                console.log(images);
+                const img = images[0];
+                const imgExt = img.ext.replace("image/", ".");
+                // returns an array of compressed images
+                //preview.src = `${img.prefix}${img.data}`;
+                var image = new Image();
+                image.src = `${img.prefix}${img.data}`;
+                console.log(img);
+                const file = Compress.convertBase64ToFile(img.data, img.ext);
+                const miniFile = Compress.convertBase64ToFile(miniImageVersion.data, miniImageVersion.ext);
+                console.log(file);
 
-                        document.getElementById(
-                            "profile-photo"
-                        ).src = localStorage.getItem("profilePhoto");
-                        var ok = document.getElementById("ok-done");
-                        ok.classList.add("glyphicon");
-                        ok.classList.add("glyphicon-ok");
+                console.log(image);
+                const setImage = document.getElementById("set-profile-photo");
+                const username = localStorage.getItem("username");
+                var timestamp;
+                setImage.addEventListener("click", (e) => {
+                  e.preventDefault();
+                  var formData = new FormData();
+                  formData.append("file", file, "imageFile" + imgExt);
+                  formData.append("miniFile", miniFile, "imageFile2" + imgExt);
+                  formData.append("userName", username);
+                  fetch("http://localhost:8082/user/profile-photo", {
+                    method: "PUT",
+                    headers: {
+                      Authorization: localStorage.getItem("auth"),
+                    },
+                    body: formData,
+                  })
+                    .then((response) => response.text())
+                    .then((ts) => {
+                      if (ts.includes("Profile picture updated successfully")) {
+                          timestamp = ts;
+                          console.log(ts);
+                          console.log(timestamp);
+                          timestamp = timestamp.substring(
+                              timestamp.indexOf("$") + 1
+                          );
+                          var profilePhoto = localStorage.getItem("profilePhoto");
+                          profilePhoto = profilePhoto.substring(0, profilePhoto.lastIndexOf("/") + 1);
+                          localStorage.setItem(
+                              "profilePhoto",
+                              "http://localhost:8082/user/get-image?filename=" + username + "$" + timestamp
+                          );
+                          console.log(
+                              "New Image Url: " +
+                              profilePhoto +
+                              username +
+                              "$" +
+                              timestamp
+                          );
 
-                        setTimeout(function () {
-                            ok.classList.remove("glyphicon");
-                            ok.classList.remove("glyphicon-ok");
-                        }, 20000);
-                        
-                    }
-                  });
+                          document.getElementById(
+                              "profile-photo"
+                          ).src = localStorage.getItem("profilePhoto");
+                          var ok = document.getElementById("ok-done");
+                          ok.classList.add("glyphicon");
+                          ok.classList.add("glyphicon-ok");
+
+                          setTimeout(function () {
+                              ok.classList.remove("glyphicon");
+                              ok.classList.remove("glyphicon-ok");
+                          }, 20000);
+                          
+                      }
+                    });
+                });
+
+              //   const {
+              //     prefix,
+              //     data,
+              //     endSizeInMb,
+              //     initialSizeInMb,
+              //     iterations,
+              //     sizeReducedInPercent,
+              //     elapsedTimeInSeconds,
+              //     alt,
+              //   } = img;
+
               });
-
-            //   const {
-            //     prefix,
-            //     data,
-            //     endSizeInMb,
-            //     initialSizeInMb,
-            //     iterations,
-            //     sizeReducedInPercent,
-            //     elapsedTimeInSeconds,
-            //     alt,
-            //   } = img;
-
-            });
+          });
         },
         false
       );

@@ -54,6 +54,9 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
 
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
+    public UserInfoUpdateServiceImpl() {
+    }
+
     /*
     @Override
     public String updateSkills(UserInfoUpdateRequest userInfoUpdateRequest){
@@ -254,7 +257,7 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     }
 
     @Override
-    public String updateProfilePhoto(MultipartFile file, String userName) throws IOException{
+    public String updateProfilePhoto(MultipartFile file, MultipartFile miniFile, String userName) throws IOException{
         String fileName = file.getOriginalFilename();
         int index = fileName.lastIndexOf('.');
         boolean userNameExists = userLoginRepository.existsById(userName);
@@ -278,7 +281,9 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
                     String email = userPersonalInfo.getEmail();
                     deleteUserProfilePhoto(userName);
                     ftpUtil.ftpUpload(file, hostDir + filename);
-                    userPersonalInfoRepository.updateUserProfilePhoto(email, photoStorageAddress);
+                    ftpUtil.ftpUpload(miniFile, hostDir + "mini_" + filename);
+                    userPersonalInfoRepository.updateMiniUserProfilePhoto(email, "mini_" + filename);
+                    userPersonalInfoRepository.updateUserProfilePhoto(email, filename);
                 }
                 else return "Please update your personal info first.";
             }catch(Exception e){
@@ -297,12 +302,17 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
                 (y) -> {
                         String filename = y.getUserPersonalInfo().getUserProfilePhoto()
                                 .replace(imgAddressServer + "/","");
+                        String miniFilename = y.getUserPersonalInfo().getMiniUserProfilePhoto()
+                                .replace(imgAddressServer + "/","");
                         System.out.println(filename);
+                        System.out.println(miniFilename);
                         //address = defaultAddress.replace("default.jpeg",address);
                         //File imgFile = new File(address);
                         String message = "";
-                        if(!filename.contains(defaultImg))
+                        if(!filename.contains(defaultImg)) {
                             message = ftpUtil.deletingFile(filename);
+                            ftpUtil.deletingFile(miniFilename);
+                        }
                         if(message.contains("deleted Successfully"))
                             System.out.println(filename + "   File deleted");
                         else System.out.println("File " + message);

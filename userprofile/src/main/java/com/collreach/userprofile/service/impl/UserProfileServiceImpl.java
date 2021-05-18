@@ -53,6 +53,9 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Value("${ftp.default-img}")
     private String defaultProfilePhotoAddress;
 
+    @Value("${ftp.mini-default-img}")
+    private String defaultMiniProfilePhotoAddress;
+
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
     @Override
@@ -72,6 +75,7 @@ public class UserProfileServiceImpl implements UserProfileService {
             userPersonalInfo.setLinkedinLink(userSignupRequest.getLinkedinLink());
             userPersonalInfo.setDescription(userSignupRequest.getDescription());
             userPersonalInfo.setUserProfilePhoto(defaultProfilePhotoAddress);
+            userPersonalInfo.setMiniUserProfilePhoto(defaultMiniProfilePhotoAddress);
             userPersonalInfo.setProfileAccessKey(userSignupRequest.getName().toLowerCase().replace(" ", "-") +
                     userSignupRequest.getUserName().hashCode());
             userLogin.setUserPersonalInfo(userPersonalInfo);
@@ -121,12 +125,16 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public InputStream getProfileImageByUsername(String username) throws Exception {
+    public InputStream getProfileImageByUsername(String username, Boolean ifMini) throws Exception {
         Optional<UserLogin> user =  userLoginRepository.findByUserName(username);
         Optional<UserPersonalInfo> userInfo;
-        if(user.isPresent()) {
+        if(user.isPresent()){
             userInfo = userPersonalInfoRepository.findById(user.get().getUserPersonalInfo().getUserId());
-            String userProfilePhoto = userInfo.get().getUserProfilePhoto();
+            String userProfilePhoto;
+            if(ifMini)
+                userProfilePhoto = userInfo.get().getMiniUserProfilePhoto();
+            else
+                userProfilePhoto = userInfo.get().getUserProfilePhoto();
             return ftpUtil.downloadFile(hostDir + userProfilePhoto);
         }
         else {
