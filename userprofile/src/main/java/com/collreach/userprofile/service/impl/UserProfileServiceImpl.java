@@ -129,6 +129,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         Optional<UserLogin> user =  userLoginRepository.findByUserName(username);
         Optional<UserPersonalInfo> userInfo;
         if(user.isPresent()){
+            System.out.println("++++++++++++++++++++++++ " + user.get().getUserName() + " ++++++++++++++++++++++++++");
             userInfo = userPersonalInfoRepository.findById(user.get().getUserPersonalInfo().getUserId());
             String userProfilePhoto;
             if(ifMini)

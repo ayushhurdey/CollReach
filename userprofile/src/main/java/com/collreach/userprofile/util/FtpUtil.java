@@ -13,6 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 @Component
 public class FtpUtil {
@@ -33,7 +34,9 @@ public class FtpUtil {
     FTPClient ftp;
     // FTPClient ftp = null;
 
-    InputStream inputStream = null;
+    //InputStream inputStream = null;
+    private int downloadTryLimit = 10;
+    private int connectionTryLimit = 10;
 
     public String ftpUpload(MultipartFile file, String fileName) throws Exception{
         System.out.println("Start");
@@ -68,47 +71,71 @@ public class FtpUtil {
         //ftp = new FTPClient();
         ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
         int reply;
-        ftp.connect(host);
-        reply = ftp.getReplyCode();
-        if (!FTPReply.isPositiveCompletion(reply)) {
-            ftp.disconnect();
-            throw new Exception("Exception in connecting to FTP Server");
+        try {
+            ftp.connect(host);
+            reply = ftp.getReplyCode();
+            System.out.println("reply---------------------->   " + reply);
+            if (!FTPReply.isPositiveCompletion(reply)) {
+                ftp.disconnect();
+                throw new Exception("Exception in connecting to FTP Server");
+            }
+            boolean loginReply = ftp.login(user, pwd);
+            if(!loginReply)
+                retry();
+            ftp.setFileType(FTP.BINARY_FILE_TYPE);
+            ftp.enterLocalPassiveMode();
+        }catch(Exception e){
+            System.out.println("Exception: " +e);
+            retry();
         }
-        ftp.login(user, pwd);
-        ftp.setFileType(FTP.BINARY_FILE_TYPE);
-        ftp.enterLocalPassiveMode();
+    }
+
+    private void retry() throws Exception {
+        if(connectionTryLimit-- > 0){
+            disconnect();
+            FTPConnect(host,user,pwd);
+        }
     }
 
     public InputStream downloadFile(String path) throws Exception {
-        inputStream = new ByteArrayInputStream(new byte[0]);
+        //inputStream = new ByteArrayInputStream(new byte[0]);
         try{
             FTPConnect(host, user, pwd);
-            download(path);
+            System.out.println("Before Download");
+            return download(path);
         }
         catch(Exception e){
-            System.out.println("Could not connect: " + e);
+            System.out.println("Could not connect | download file: " + e);
+            System.out.println("Retrying.....");
+            if(downloadTryLimit-- > 0)
+                return downloadFile(path);
+            else
+                return new ByteArrayInputStream(new byte[0]);
         }
-        finally{
-            disconnect();
-        }
-        return inputStream;
+//        finally{
+//            disconnect();
+//        }
+        //return inputStream;
     }
 
-    public void download(String path) throws IOException {
-        inputStream =  this.ftp.retrieveFileStream(path);
+    public InputStream download(String path) throws IOException {
+        //inputStream =  ftp.retrieveFileStream(path);
+        return ftp.retrieveFileStream(path);
+        //System.out.println("Downloaded file for path: " + path);
+        //System.out.println(Arrays.toString(inputStream.readAllBytes()));
     }
 
     public void uploadFile(MultipartFile file, String fileName)
             throws Exception {
         try(InputStream input = file.getInputStream()){
-            this.ftp.storeFile(fileName, input);
+            ftp.storeFile(fileName, input);
         }
     }
 
     public boolean deleteFile(String fileName) {
         boolean deleted = false;
         try {
-            deleted = this.ftp.deleteFile(hostDir + fileName);
+            deleted = ftp.deleteFile(hostDir + fileName);
         }catch(Exception e){
             System.out.println("-> :" + e);
         }
@@ -116,10 +143,10 @@ public class FtpUtil {
     }
 
     public void disconnect(){
-        if (this.ftp.isConnected()) {
+        if (ftp.isConnected()) {
             try {
-                this.ftp.logout();
-                this.ftp.disconnect();
+                ftp.logout();
+                ftp.disconnect();
             } catch (IOException f) {
                 // do nothing as file is already saved to server
             }
