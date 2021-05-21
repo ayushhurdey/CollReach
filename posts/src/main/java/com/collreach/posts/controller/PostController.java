@@ -80,4 +80,10 @@ public class PostController {
         String msg = postService.updatePostLikes(userName, messageId);
         return ResponseEntity.ok().body(msg);
     }
+
+    @GetMapping(path = "/get-all-likes/posts/{messageId}")
+    public ResponseEntity<Integer> getAllLikes(@PathVariable(value = "messageId") int messageId){
+        int msg = postService.getTotalLikesOnMessage(messageId);
+        return ResponseEntity.ok().body(msg);
+    }
 }

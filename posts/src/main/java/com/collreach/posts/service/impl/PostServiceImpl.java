@@ -39,6 +39,7 @@ public class PostServiceImpl implements PostService {
     SeenAndLikedRepository seenAndLikedRepository;
 
     @Override
+    @Deprecated
     public MessagesResponse getImages(String numberOfImages) {
         HashSet<MessageResponse> set = new HashSet<>();
         messagesRepository.findAll().forEach(message -> {
@@ -48,6 +49,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Deprecated
     public MessagesResponse getRandomImage() {
         HashSet<MessageResponse> set = new HashSet<>();
 
@@ -312,5 +314,11 @@ public class PostServiceImpl implements PostService {
             }
         }
         return ResponseMessage.USER_NOT_FOUND;
+    }
+
+    @Override
+    public int getTotalLikesOnMessage(int messageId){
+        Optional<Messages> message = messagesRepository.findById(messageId);
+        return message.map(Messages::getLikes).orElse(ResponseMessage.POST_MESSAGE_NOT_FOUND);
     }
 }
