@@ -65,7 +65,7 @@ public class UserProfileController {
     }
 
     @GetMapping(value = "/get-profile-img-by-username", produces = MediaType.IMAGE_JPEG_VALUE)
-    //@Cacheable(value="profile-img-by-username")
+    @Cacheable(value="profile-img-by-username")
     public ResponseEntity<byte[]> getProfileImageByUsername(String username, Boolean ifMini) throws Exception {
         InputStream inputStream = userProfileService.getProfileImageByUsername(username,ifMini);
         if(inputStream == null)

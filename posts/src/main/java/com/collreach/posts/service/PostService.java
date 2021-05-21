@@ -20,4 +20,5 @@ public interface PostService {
     public LinkedHashSet<MessageResponse> mergeSets(LinkedHashSet<MessageResponse> posts, LinkedHashSet<MessageResponse> polls);
     String updatePostViews(String userName, int messageId);
     String updatePostLikes(String userName, int messageId);
+    int getTotalLikesOnMessage(int messageId);
 }

@@ -95,6 +95,8 @@ function renderPostTemplate(data) {
 
     let postsContainer = document.getElementById('posts-container');
     postsContainer.innerHTML += template;
+
+    triggerWhenInViewPort();
 }
 
 
@@ -151,6 +153,7 @@ function getUserDetails() {
         .then((res) => {
             console.log(JSON.parse(res));
             let data = JSON.parse(res);
+            localStorage.setItem('userDetails', res);
             let profileAccessKey = data.userPersonalInfoResponse.profileAccessKey;
 
             data.userPersonalInfoResponse.profileAccessKey = USER_PROFILE_URL + "/profile/" + profileAccessKey;
@@ -206,9 +209,59 @@ function hideLoading(loaderId) {
 }
 
 
-function like(x) {
-    x.classList.toggle("fa-star");
-    x.classList.toggle("fa-star-o");
+function like(element) {
+    let username = localStorage.getItem('username');
+    let messageId = element.dataset.mId;
+    if (username == null || messageId == null)
+        return;
+    
+    if (element.dataset.liked.localeCompare("false") === 0) {
+
+        let url = POSTS_URL + "/update-post-likes/" + username + "/" + messageId;
+        fetch(url, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: localStorage.getItem("auth"),
+            }
+        })
+            .then((response) => response.text())
+            .then((res) => {
+                console.log(res);
+                if (res.toLowerCase().includes("success")) {
+                    element.classList.toggle("fa-star");
+                    element.classList.toggle("fa-star-o");
+                    element.dataset.liked = "true";
+                }
+            });
+    }
+}
+
+function updateLikes() {
+    // ------------  incomplete ---------------//
+    likeNodes = document.querySelectorAll('.likes');
+    likeNodes.forEach(element => {
+        element.addEventListener('');
+    });
+}
+
+
+function getAllLikes(element) {
+    let messageId = element.dataset.messageId;
+    let url = POSTS_URL + "/get-all-likes/posts/" + messageId;
+
+    fetch(url, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("auth"),
+        }
+    })
+        .then((response) => response.text())
+        .then((totalLikes) => {
+            console.log(res);
+            element.innerText = totalLikes;
+        });
 }
 
 function postOverlay() {
@@ -260,10 +313,10 @@ function exit() {
 }
 
 
-$(".custom-file-input").on("change", function () {
-    var fileName = $(this).val().split("\\").pop();
-    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-});
+// $(".custom-file-input").on("change", function () {
+//     var fileName = $(this).val().split("\\").pop();
+//     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+// });
 
 
 function readURL(input) {
@@ -331,3 +384,131 @@ function removeOption() {
         $('#remove-option-btn').css('display', 'none');
     }
 }
+
+
+function isInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+function triggerWhenInViewPort() {
+    const box = document.querySelectorAll('.outer-post-box-with-image')[0];
+    //const message = document.querySelector('#message');
+
+    document.addEventListener('scroll', function () {
+        const messageText = isInViewport(box) ?
+            'The box is visible in the viewport' :
+            'The box is not visible in the viewport';
+        if (isInViewport(box)) {
+            console.log(messageText);
+        }
+
+    }, {
+        passive: true
+    });
+}
+
+function createPost() {
+    let url = POSTS_URL + "/create-post";
+    const USERNAME = localStorage.getItem('username');
+    let date = new Date();
+    const currentDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON();
+    let restriction = document.querySelector('#post-view-restriction').value;
+    const validity = Number(document.querySelector('#post-validity').value);
+    const frequency = Number(document.querySelector('#post-frequency').value);
+    const message = document.querySelector('#post-textarea').value;
+
+    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    if (restriction.toLowerCase().localeCompare("department") === 0) {
+        restriction = userDetails.userPersonalInfoResponse.courseInfoResponse.branch;
+    }
+
+    data = JSON.stringify({
+        createDate: currentDate,
+        lifetimeInWeeks: validity,
+        message: message,
+        recurrences: frequency,
+        uploadTime: currentDate,
+        userName: USERNAME,
+        visibility: restriction
+    });
+
+    fetch(url, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("auth"),
+        },
+        body: data,
+    })
+        .then((response) => response.text())
+        .then((messageId) => {
+            imgPostURL = POSTS_URL + "/upload-post-image";
+            img = JSON.parse(localStorage.getItem('compressedPostImage'));
+            const file = Compress.convertBase64ToFile(img.data, img.ext);
+            const imgExt = img.ext.replace("image/", ".");
+
+            var formData = new FormData();
+            formData.append("file", file, "imageFile" + imgExt);
+            formData.append("username", USERNAME);
+            formData.append("messageId", Number(messageId));
+
+            fetch(imgPostURL, {
+                method: "POST",
+                headers: {
+                    Authorization: localStorage.getItem("auth"),
+                },
+                body: formData,
+            }).then((resp) => {
+                console.log(resp);
+            })
+        })
+        .then((res) => {
+            console.log(res);
+        });
+}
+
+
+function createPoll() {
+
+}
+
+/*
+var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+        console.log(mutation)
+        if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+            // element added to DOM
+            var hasClass = [].some.call(mutation.addedNodes, function (el) {
+                return el.classList.contains('likes');
+            });
+            if (hasClass) {
+                // element has class `MyClass`
+                console.log('element ".likes" added');
+            }
+        }
+    });
+});
+
+
+function addObserverIfDesiredNodeAvailable() {
+    var composeBox = document.querySelectorAll(".outer-post-box-with-image")[0];
+    if (!composeBox) {
+        window.setTimeout(addObserverIfDesiredNodeAvailable, 500);
+        return;
+    }
+    var config = {
+        attributes: true,
+        childList: true,
+        characterData: true,
+        subtree: true
+    };
+    observer.observe(composeBox, config);
+}
+addObserverIfDesiredNodeAvailable();
+*/
