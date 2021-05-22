@@ -144,7 +144,7 @@ function getUserDetails() {
     const userDetailsTemplate = document.querySelector('#user-profile-template').innerHTML;
     let username = localStorage.getItem('username');
 
-    url = USER_PROFILE_URL + "/user/get-user-details/" + username;
+    const url = USER_PROFILE_URL + "/user/get-user-details/" + username;
     fetch(url, {
         method: "POST",
         headers: {
@@ -442,7 +442,7 @@ function updateViewsCount(messageId) {
 
 
 function createPost() {
-    let url = POSTS_URL + "/create-post";
+    const url = POSTS_URL + "/create-post";
     const USERNAME = localStorage.getItem('username');
     let date = new Date();
     const currentDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON();
@@ -508,8 +508,52 @@ function createPost() {
 }
 
 
-function createPoll() {
-    // to be implemented..
+function createPoll(element) {
+    const URL = POSTS_URL + "/create-poll";
+    const USERNAME = localStorage.getItem('username');
+    let date = new Date();
+    const currentDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON();
+    let restriction = document.querySelector('#poll-view-restriction').value;
+    const validity = Number(document.querySelector('#poll-validity').value);
+
+    let pollOptionsElementList = document.querySelectorAll('#overlay-poll-options .poll-option');
+    let pollQuestion = document.querySelector('#poll-question').value;
+    let optionsList = [];
+
+    pollOptionsElementList.forEach(elem => {
+        let inputElem = elem.children[0];
+        optionsList.push(inputElem.value);
+    });
+
+    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    if (restriction.toLowerCase().localeCompare("department") === 0) {
+        restriction = userDetails.userPersonalInfoResponse.courseInfoResponse.branch;
+    }
+
+    data = JSON.stringify({
+        dateCreated: currentDate,
+        validityInWeeks: validity,
+        timeCreated: currentDate,
+        userName: USERNAME,
+        recurrences: 1,
+        visibility: restriction,
+        answers: optionsList,
+        question: pollQuestion
+    });
+
+    fetch(URL, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("auth"),
+        },
+        body: data,
+    })
+        .then((response) => response.text())
+        .then((resp) => {
+            console.log(resp);
+            renderNotification(resp);
+        })
 }
 
 /*
