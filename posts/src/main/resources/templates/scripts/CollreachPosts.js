@@ -1,12 +1,15 @@
 const POSTS_URL = "http://localhost:8084";
 const USER_PROFILE_URL = "http://localhost:8082";
+let firstLoad = true;
 
 function load() {
-    getUserDetails();
-
-    const visibility = "CSE";
-    const pageNo = 0;
-    const pageSize = 10;
+    if (firstLoad) {
+        getUserDetails();
+        firstLoad = !firstLoad;
+    }
+    const visibility = "CSE";             // should come from already logged in user.
+    const pageNo = 0;                     // should change dynamically
+    const pageSize = 10;                  // fixed value -> for how many pages to be loaded in the DOM in each request.
 
     const template = document.getElementById('loading-anim-template').innerHTML;
     //displayLoading(template,'posts-loading-anim');
@@ -398,26 +401,30 @@ function countViews() {
     var intersectionObserver = new IntersectionObserver(function (entries) {
         // If intersectionRatio is 0, the target is out of view
         // and we do not need to do anything.
-        if (entries[0].target.attributes["data-seen"].nodeValue.localeCompare("true") === 0 || entries[0].intersectionRatio <= 0)
-            return;
+        entries.forEach(entry => {
+            if (entry.target.attributes["data-seen"].nodeValue.localeCompare("true") === 0 || entry.intersectionRatio <= 0)
+                return;
 
-        console.log(entries[0].target.attributes["data-m-id"]);
-        console.log('Counted 1 view..');
-        updateCount(entries[0].target.attributes["data-m-id"].nodeValue);
-        entries[0].target.attributes["data-seen"].nodeValue = "true";
+            console.log(entry.target.attributes["data-m-id"]);
+            console.log('Counted 1 view..');
+            updateViewsCount(entry.target.attributes["data-m-id"].nodeValue);
+            intersectionObserver.unobserve(entry.target);
+            entry.target.attributes["data-seen"].nodeValue = "true";
+        });
+
     }, observerConfig);
 
     document.querySelectorAll('.outer-post-box-with-image').forEach((elem) => {
         intersectionObserver.observe(elem);
-    })
+    });
 
     document.querySelectorAll('.outer-post-box-without-image').forEach((elem) => {
         intersectionObserver.observe(elem);
-    })
+    });
 }
 
 
-function updateCount(messageId) {
+function updateViewsCount(messageId) {
     const USERNAME = localStorage.getItem('username');
     const url = POSTS_URL + "/update-post-views/" + USERNAME + "/" + messageId;
     fetch(url, {
