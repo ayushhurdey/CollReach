@@ -1,12 +1,15 @@
 const POSTS_URL = "http://localhost:8084";
 const USER_PROFILE_URL = "http://localhost:8082";
+let firstLoad = true;
 
 function load() {
-    getUserDetails();
-
-    const visibility = "CSE";
-    const pageNo = 0;
-    const pageSize = 10;
+    if (firstLoad) {
+        getUserDetails();
+        firstLoad = !firstLoad;
+    }
+    const visibility = "CSE";             // should come from already logged in user.
+    const pageNo = 0;                     // should change dynamically
+    const pageSize = 10;                  // fixed value -> for how many pages to be loaded in the DOM in each request.
 
     const template = document.getElementById('loading-anim-template').innerHTML;
     //displayLoading(template,'posts-loading-anim');
@@ -96,7 +99,7 @@ function renderPostTemplate(data) {
     let postsContainer = document.getElementById('posts-container');
     postsContainer.innerHTML += template;
 
-    triggerWhenInViewPort();
+    countViews();
 }
 
 
@@ -214,7 +217,7 @@ function like(element) {
     let messageId = element.dataset.mId;
     if (username == null || messageId == null)
         return;
-    
+
     if (element.dataset.liked.localeCompare("false") === 0) {
 
         let url = POSTS_URL + "/update-post-likes/" + username + "/" + messageId;
@@ -385,33 +388,58 @@ function removeOption() {
     }
 }
 
-
-function isInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
+function renderNotification(message) {
+    // to be implemented
 }
 
-function triggerWhenInViewPort() {
-    const box = document.querySelectorAll('.outer-post-box-with-image')[0];
-    //const message = document.querySelector('#message');
+function countViews() {
+    let observerConfig = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.75
+    };
+    var intersectionObserver = new IntersectionObserver(function (entries) {
+        // If intersectionRatio is 0, the target is out of view
+        // and we do not need to do anything.
+        entries.forEach(entry => {
+            if (entry.target.attributes["data-seen"].nodeValue.localeCompare("true") === 0 || entry.intersectionRatio <= 0)
+                return;
 
-    document.addEventListener('scroll', function () {
-        const messageText = isInViewport(box) ?
-            'The box is visible in the viewport' :
-            'The box is not visible in the viewport';
-        if (isInViewport(box)) {
-            console.log(messageText);
-        }
+            console.log(entry.target.attributes["data-m-id"]);
+            console.log('Counted 1 view..');
+            updateViewsCount(entry.target.attributes["data-m-id"].nodeValue);
+            intersectionObserver.unobserve(entry.target);
+            entry.target.attributes["data-seen"].nodeValue = "true";
+        });
 
-    }, {
-        passive: true
+    }, observerConfig);
+
+    document.querySelectorAll('.outer-post-box-with-image').forEach((elem) => {
+        intersectionObserver.observe(elem);
+    });
+
+    document.querySelectorAll('.outer-post-box-without-image').forEach((elem) => {
+        intersectionObserver.observe(elem);
     });
 }
+
+
+function updateViewsCount(messageId) {
+    const USERNAME = localStorage.getItem('username');
+    const url = POSTS_URL + "/update-post-views/" + USERNAME + "/" + messageId;
+    fetch(url, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("auth"),
+        }
+    })
+        .then((response) => {
+            console.log(response);
+            //renderNotification(response);
+        })
+}
+
 
 function createPost() {
     let url = POSTS_URL + "/create-post";
@@ -448,8 +476,12 @@ function createPost() {
     })
         .then((response) => response.text())
         .then((messageId) => {
-            imgPostURL = POSTS_URL + "/upload-post-image";
-            img = JSON.parse(localStorage.getItem('compressedPostImage'));
+            let img = localStorage.getItem('compressedPostImage');
+            if (img === null || img === "" || img.localeCompare("") === 0)
+                return "Posted Successfully";
+
+            const imgPostURL = POSTS_URL + "/upload-post-image";
+            img = JSON.parse(img);
             const file = Compress.convertBase64ToFile(img.data, img.ext);
             const imgExt = img.ext.replace("image/", ".");
 
@@ -466,6 +498,8 @@ function createPost() {
                 body: formData,
             }).then((resp) => {
                 console.log(resp);
+                localStorage.removeItem('compressedPostImage');
+                renderNotification(resp);
             })
         })
         .then((res) => {
@@ -475,7 +509,7 @@ function createPost() {
 
 
 function createPoll() {
-
+    // to be implemented..
 }
 
 /*

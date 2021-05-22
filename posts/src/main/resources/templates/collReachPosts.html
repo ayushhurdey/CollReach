@@ -362,7 +362,7 @@
 
             <div id = "post-with-image-template" class = "hidden">
                 <article>
-                    <div class="outer-post-box-with-image" data-m-id = ${data.messageId}>
+                    <div class="outer-post-box-with-image" data-m-id = ${data.messageId} data-seen= "false">
                         <div class="post-header">
                                     <!--"static/profileimage1-ConvertImage.ico"-->
                                     <img src=${data.profilePhoto} class="img-sm rounded-circle">
@@ -413,7 +413,7 @@
 
             <div id = "post-without-image-template" class = "hidden">
                 <article>
-                    <div class="outer-post-box-without-image" data-m-id = ${data.messageId}>
+                    <div class="outer-post-box-without-image" data-m-id = ${data.messageId} data-seen= "false">
                         <div class="post-header">
                                     <img src=${data.profilePhoto}  class="img-sm rounded-circle">
                                     <span class="name">${data.name}</span>
