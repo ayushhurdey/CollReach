@@ -96,7 +96,6 @@ function renderPostTemplate(data) {
     let postsContainer = document.getElementById('posts-container');
     postsContainer.innerHTML += template;
 
-    //triggerWhenInViewPort();
     countViews();
 }
 
@@ -386,11 +385,16 @@ function removeOption() {
     }
 }
 
-renderNotification(message){
+function renderNotification(message) {
     // to be implemented
 }
 
 function countViews() {
+    let observerConfig = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.75
+    };
     var intersectionObserver = new IntersectionObserver(function (entries) {
         // If intersectionRatio is 0, the target is out of view
         // and we do not need to do anything.
@@ -401,7 +405,8 @@ function countViews() {
         console.log('Counted 1 view..');
         updateCount(entries[0].target.attributes["data-m-id"].nodeValue);
         entries[0].target.attributes["data-seen"].nodeValue = "true";
-    });
+    }, observerConfig);
+
     document.querySelectorAll('.outer-post-box-with-image').forEach((elem) => {
         intersectionObserver.observe(elem);
     })
