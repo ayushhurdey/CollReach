@@ -365,7 +365,7 @@
                     <div class="outer-post-box-with-image" data-m-id = ${data.messageId} data-seen= "false">
                         <div class="post-header">
                                     <!--"static/profileimage1-ConvertImage.ico"-->
-                                    <img src=${data.profilePhoto} class="img-sm rounded-circle">
+                                    <img src=${data.profilePhoto} class="img-sm rounded-circle" loading="lazy">
                                     <span class = "name">${data.name}</span>
                         </div>
                         <div class="d-flex align-items-start profile-feed-item">
@@ -415,7 +415,7 @@
                 <article>
                     <div class="outer-post-box-without-image" data-m-id = ${data.messageId} data-seen= "false">
                         <div class="post-header">
-                                    <img src=${data.profilePhoto}  class="img-sm rounded-circle">
+                                    <img src=${data.profilePhoto}  class="img-sm rounded-circle" loading="lazy">
                                     <span class="name">${data.name}</span>
                         </div>
 
@@ -457,7 +457,7 @@
                 <article>
                     <div class="outer-poll-box-question" data-p-id = ${data.pollId}>
                         <div class="post-header">
-                                    <img src=${data.profilePhoto} class="img-sm rounded-circle">
+                                    <img src=${data.profilePhoto} class="img-sm rounded-circle" loading="lazy">
                                     <span class="name">${data.name}</span>
                         </div>
 
@@ -505,12 +505,17 @@
             </div>
 
 
+            <div id = "poll-answers-template" hidden>
+                <div class="poll-progress">
+                    ${data.options}
+                </div>
+            </div>
 
-            <div id = "poll-answers-template" class = "hidden">
+            <!--div id = "poll-answers-template" class = "hidden">
                 <article>
                     <div class="outer-poll-box-answers">
                         <div class="post-header">
-                                    <img src=${data.profilePhoto}  class="img-sm rounded-circle">
+                                    <img src=${data.profilePhoto}  class="img-sm rounded-circle" loading="lazy">
                                     <span class="name">${data.name}</span>
                         </div>
                         
@@ -545,7 +550,7 @@
                                         <small>1.5k votes</small>
                                     </div>
                                 </div>
-                                <!--div class="d-flex justify-content-between" class="reach">
+                                <#--div class="d-flex justify-content-between" class="reach">
                                     <div class="star">
                                         <span class="icon">
                                         <i  class="fa fa-star-o" onclick="like(this)"></i>
@@ -561,14 +566,14 @@
                                         &nbsp;
                                         <span class="icon"> <i class="fas fa-eye"></i></span>
                                     </div>
-                                </div-->
+                                </div -#->
 
                         
                             </div>
                         </div>
                     </div>
                 </article>
-            </div>
+            </div-->
         </div>
 
 

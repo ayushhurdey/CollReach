@@ -48,8 +48,6 @@ function load() {
                     response[key].uploadTime,
                     response[key].lifetimeInWeeks);
 
-                //console.log(response[key].messageId + " -> " + response[key].visibility);
-                //console.log(response[key].messageId + " -> " + response[key].message);
                 response[key].profilePhoto = USER_PROFILE_URL +
                     "/user/get-profile-img-by-username?username=" +
                     username +
@@ -60,6 +58,9 @@ function load() {
                 renderPostTemplate(response[key]);         // renders conditionally according to posts or poll.
             });
 
+            document.querySelectorAll('.poll-option-btn').forEach(elem => {
+                elem.addEventListener('click', polled);
+            });
         });
 }
 
@@ -391,6 +392,7 @@ function removeOption() {
 
 function renderNotification(message) {
     // to be implemented
+    console.log(message);
 }
 
 function countViews() {
@@ -557,8 +559,59 @@ function createPoll(element) {
         })
 }
 
+function removeSiblingsEvents(element) {
+    let parent = element.parentElement.parentElement;
+    let childNodes = parent.children;
+    for (let div of childNodes) {
+        div.children[0].removeEventListener("click", polled);
+    };
+}
 
 function polled(element) {
+    console.log(element.target);
+    removeSiblingsEvents(element.target);
+    const USERNAME = localStorage.getItem('username');
+    const pollId = element.target.dataset.pId;
+    const answerId = element.target.dataset.aId;
+    const URL = POSTS_URL + "/update-answer-votes/" + USERNAME + "/" + pollId + "/" + answerId;
+    let answersResponse;
+    let totalVotesCount = 0;
+    let template;
+
+    fetch(URL, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("auth"),
+        },
+    })
+        .then((response) => response.text())
+        .then((resp) => {
+            if (resp === null || (typeof resp === 'undefined') || resp === "" || resp.localeCompare("") === 0) {
+                renderNotification("Already Voted.!!");
+                return;
+            }
+            data = JSON.parse(resp);
+            let optionsDiv = ``;
+            data.answers.forEach((value, key) => {
+                optionsDiv += `<div>
+                            <button value= ${data.answers[key].answer}
+                                    data-p-id=${data.messageId}
+                                    data-a-id=${data.answers[key].answerId}
+                                    data-percentage=${data.answers[key].percentage}%
+                                    class="btn btn-outline-primary poll-option-btn"
+                                    style = "background-image: linear-gradient(to left, #fff ${data.answers[key].percentage}%, #6c67fd 15%);">
+                                <span style = "float:left; color: white;">${data.answers[key].answer}</span> 
+                                <span style = "float:right;color:#6c67fd"> ${data.answers[key].percentage}%</span>
+                            </button>
+                    </div>`;
+            });
+            //data["options"] = optionsDiv;
+            template = eval('`' + optionsDiv + '`');
+            console.log(data);
+            element.target.parentElement.parentElement.innerHTML = template;
+        });
+
 
 }
 
