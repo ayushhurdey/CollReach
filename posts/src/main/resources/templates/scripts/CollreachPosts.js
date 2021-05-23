@@ -84,12 +84,13 @@ function renderPostTemplate(data) {
         let optionsDiv = ``;
         data.answers.forEach((value, key) => {
             optionsDiv += `<div>
-                                <input 
-                                    type="button" 
+                                <button
                                     value="${data.answers[key].answer}"
                                     data-p-id="${data.pollId}"
                                     data-a-id="${data.answers[key].answerId}" 
-                                    class="btn btn-outline-primary">
+                                    class="btn btn-outline-primary poll-option-btn">
+                                    ${data.answers[key].answer}
+                                </button>
                             </div>`;
         });
         data["options"] = optionsDiv;
@@ -554,6 +555,11 @@ function createPoll(element) {
             console.log(resp);
             renderNotification(resp);
         })
+}
+
+
+function polled(element) {
+
 }
 
 /*

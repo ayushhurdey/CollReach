@@ -12,6 +12,7 @@ import com.collreach.posts.model.repositories.polls.UsersPolledRepository;
 import com.collreach.posts.model.requests.CreatePollRequest;
 import com.collreach.posts.model.response.MessageResponse;
 import com.collreach.posts.model.response.PollAnswersResponse;
+import com.collreach.posts.model.response.UserPollsResponse;
 import com.collreach.posts.responses.ResponseMessage;
 import com.collreach.posts.service.PollsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -55,6 +57,7 @@ public class PollsServiceImpl implements PollsService {
                 polls.setRecurrences(createPollRequest.getRecurrences());
                 polls.setValidityInWeeks(createPollRequest.getValidityInWeeks());
                 polls.setVisibility(createPollRequest.getVisibility());
+                polls.setTotalVotes(0);
 
                 Polls savedPoll = pollsRepository.save(polls);
 
@@ -107,7 +110,7 @@ public class PollsServiceImpl implements PollsService {
     }
 
     @Override
-    public String updatesAnswersVotes(String userName, int pollId, int answerId) {
+    public UserPollsResponse updatesAnswersVotes(String userName, int pollId, int answerId) {
         Optional<Users> user = usersRepository.findByUserName(userName);
         if(user.isPresent()){
             Optional<Polls> poll = pollsRepository.findById(pollId);
@@ -117,22 +120,52 @@ public class PollsServiceImpl implements PollsService {
 
             if(poll.isPresent() && pollAnswer.isPresent() && !userAlreadyPolled.isPresent()){
                 try {
-                    int previousVotes = pollAnswer.get().getVotes();
-                    pollAnswer.get().setVotes(previousVotes+1);
+                    int previousVotesOfAnswer = pollAnswer.get().getVotes();
+                    long totalPreviousVotes = poll.get().getTotalVotes();
+                    poll.get().setTotalVotes(totalPreviousVotes + 1);
+                    long totalVotes = poll.get().getTotalVotes();
+                    pollAnswer.get().setVotes(previousVotesOfAnswer+1);
                     UsersPolled usersPolled = new UsersPolled();
                     usersPolled.setPollId(poll.get());
                     usersPolled.setUserId(user.get());
                     usersPolled.setIfVoted('T');
+                    pollsRepository.save(poll.get());
                     usersPolledRepository.save(usersPolled);
                     pollAnswersRepository.save(pollAnswer.get());
-                    return "Success: " + pollAnswer.get().getVotes();
+                    return getAllAnswersOfPoll(poll.get(),totalVotes);
                 }catch(Exception e){
-                    return ResponseMessage.PROCESSING_ERROR;
+                    return null;
                 }
             }else{
-                return ResponseMessage.USER_ALREADY_VOTED;
+                return null;
             }
         }
-        return ResponseMessage.USER_NOT_FOUND;
+        return null;
+    }
+
+    private UserPollsResponse getAllAnswersOfPoll(Polls pollId, long totalVotes){
+        UserPollsResponse userPollsResponse = new UserPollsResponse();
+        List<PollAnswers> pollAnswersList =  pollAnswersRepository.findAllByPollId(pollId);
+        List<PollAnswersResponse> listOfPollAnswers =  new ArrayList<>();
+        DecimalFormat df=new DecimalFormat("#.##");
+        pollAnswersList.forEach(pollAnswer -> {
+            float perct = ((float)pollAnswer.getVotes() / totalVotes * 100);
+            int percentage = 0;
+            if((perct - (int)perct) > 0.5){
+                percentage = (int) Math.ceil(perct);
+            }
+            else{
+                percentage = (int) Math.floor(perct);
+            }
+            listOfPollAnswers.add(
+                    new PollAnswersResponse(
+                            pollAnswer.getAnswerId(), pollAnswer.getAnswer(),pollAnswer.getVotes(), percentage
+                    ));
+        });
+        userPollsResponse.setMessageId(pollId.getPollId());
+        userPollsResponse.setTotalVotes(totalVotes);
+        userPollsResponse.setAnswers(listOfPollAnswers);
+
+        return userPollsResponse;
     }
 }

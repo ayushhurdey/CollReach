@@ -2,11 +2,13 @@ package com.collreach.posts.model.bo.polls;
 
 import com.collreach.posts.model.bo.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@DynamicUpdate
 @Table(name = "polls")
 public class Polls {
 
@@ -40,6 +42,9 @@ public class Polls {
 
     @Column(name = "recurrences", nullable = false)
     private int recurrences;
+
+    @Column(name = "total_votes", nullable = false)
+    private long totalVotes;
 
     public int getPollId() {
         return pollId;
@@ -103,5 +108,13 @@ public class Polls {
 
     public void setRecurrences(int recurrences) {
         this.recurrences = recurrences;
+    }
+
+    public long getTotalVotes() {
+        return totalVotes;
+    }
+
+    public void setTotalVotes(long totalVotes) {
+        this.totalVotes = totalVotes;
     }
 }
