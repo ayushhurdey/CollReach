@@ -245,10 +245,11 @@ i {
   width: 100%;
 }
 
-.poll-choices div input {
+.poll-option-btn, .polled-option-btn {
   margin: 2px;
   width: 98%;
 }
+
 .poll-info small:first-child {
   float: left;
 }

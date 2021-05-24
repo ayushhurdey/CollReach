@@ -4,6 +4,7 @@ public class PollAnswersResponse {
     private int answerId;
     private String answer;
     private int votes;
+    private int percentage;
 
     public PollAnswersResponse() {
     }
@@ -12,6 +13,13 @@ public class PollAnswersResponse {
         this.answerId = answerId;
         this.answer = answer;
         this.votes = votes;
+    }
+
+    public PollAnswersResponse(int answerId, String answer, int votes, int percentage) {
+        this.answerId = answerId;
+        this.answer = answer;
+        this.votes = votes;
+        this.percentage = percentage;
     }
 
     public int getAnswerId() {
@@ -36,5 +44,13 @@ public class PollAnswersResponse {
 
     public void setVotes(int votes) {
         this.votes = votes;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
     }
 }

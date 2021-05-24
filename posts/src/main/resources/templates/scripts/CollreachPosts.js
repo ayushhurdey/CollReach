@@ -44,12 +44,11 @@ function load() {
                 }
 
                 //counting days left
-                response[key].daysLeft = getDaysLeft(response[key].createDate,
+                let daysLeft = getDaysLeft(response[key].createDate,
                     response[key].uploadTime,
                     response[key].lifetimeInWeeks);
+                response[key].daysLeft = daysLeft === 0 ? "Poll closed" : daysLeft + "d left";
 
-                //console.log(response[key].messageId + " -> " + response[key].visibility);
-                //console.log(response[key].messageId + " -> " + response[key].message);
                 response[key].profilePhoto = USER_PROFILE_URL +
                     "/user/get-profile-img-by-username?username=" +
                     username +
@@ -60,6 +59,9 @@ function load() {
                 renderPostTemplate(response[key]);         // renders conditionally according to posts or poll.
             });
 
+            document.querySelectorAll('.poll-option-btn').forEach(elem => {
+                elem.addEventListener('click', polled);
+            });
         });
 }
 
@@ -84,12 +86,13 @@ function renderPostTemplate(data) {
         let optionsDiv = ``;
         data.answers.forEach((value, key) => {
             optionsDiv += `<div>
-                                <input 
-                                    type="button" 
+                                <button
                                     value="${data.answers[key].answer}"
                                     data-p-id="${data.pollId}"
                                     data-a-id="${data.answers[key].answerId}" 
-                                    class="btn btn-outline-primary">
+                                    class="btn btn-outline-primary poll-option-btn">
+                                    ${data.answers[key].answer}
+                                </button>
                             </div>`;
         });
         data["options"] = optionsDiv;
@@ -144,7 +147,7 @@ function getUserDetails() {
     const userDetailsTemplate = document.querySelector('#user-profile-template').innerHTML;
     let username = localStorage.getItem('username');
 
-    url = USER_PROFILE_URL + "/user/get-user-details/" + username;
+    const url = USER_PROFILE_URL + "/user/get-user-details/" + username;
     fetch(url, {
         method: "POST",
         headers: {
@@ -390,6 +393,7 @@ function removeOption() {
 
 function renderNotification(message) {
     // to be implemented
+    console.log(message);
 }
 
 function countViews() {
@@ -441,15 +445,24 @@ function updateViewsCount(messageId) {
 }
 
 
-function createPost() {
-    let url = POSTS_URL + "/create-post";
+function createPost(element) {
+    element.setAttribute("disabled", "");
+    const url = POSTS_URL + "/create-post";
     const USERNAME = localStorage.getItem('username');
-    let date = new Date();
+    const date = new Date();
     const currentDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON();
     let restriction = document.querySelector('#post-view-restriction').value;
     const validity = Number(document.querySelector('#post-validity').value);
     const frequency = Number(document.querySelector('#post-frequency').value);
     const message = document.querySelector('#post-textarea').value;
+
+    if (restriction === "" || restriction.localeCompare("") === 0 ||
+        validity === 0 || frequency === 0 ||
+        message === "" || message.localeCompare("") === 0 ||
+        message.length < 5) {
+        element.removeAttribute("disabled");
+        return;
+    }
 
     const userDetails = JSON.parse(localStorage.getItem('userDetails'));
     if (restriction.toLowerCase().localeCompare("department") === 0) {
@@ -496,11 +509,16 @@ function createPost() {
                     Authorization: localStorage.getItem("auth"),
                 },
                 body: formData,
-            }).then((resp) => {
-                console.log(resp);
-                localStorage.removeItem('compressedPostImage');
-                renderNotification(resp);
             })
+                .then((resp) => {
+                    console.log(resp);
+                    renderNotification(resp);
+                })
+                .catch(error => renderNotification("Some error occurred while posting."))
+                .finally(() => {
+                    localStorage.removeItem('compressedPostImage');
+                    element.removeAttribute("disabled");
+                })
         })
         .then((res) => {
             console.log(res);
@@ -508,8 +526,120 @@ function createPost() {
 }
 
 
-function createPoll() {
-    // to be implemented..
+function createPoll(element) {
+    element.setAttribute("disabled", "");
+    const URL = POSTS_URL + "/create-poll";
+    const USERNAME = localStorage.getItem('username');
+    let date = new Date();
+    const currentDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON();
+    let restriction = document.querySelector('#poll-view-restriction').value;
+    const validity = Number(document.querySelector('#poll-validity').value);
+
+    let pollOptionsElementList = document.querySelectorAll('#overlay-poll-options .poll-option');
+    let pollQuestion = document.querySelector('#poll-question').value;
+    let optionsList = [];
+
+    pollOptionsElementList.forEach(elem => {
+        let inputElem = elem.children[0];
+        optionsList.push(inputElem.value);
+    });
+
+    if (restriction === "" || restriction.localeCompare("") === 0 ||
+        validity === 0 ||
+        pollQuestion === "" || pollQuestion.localeCompare("") === 0 ||
+        optionsList.length < 2) {
+        element.removeAttribute("disabled");
+        return;
+    }
+
+    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    if (restriction.toLowerCase().localeCompare("department") === 0) {
+        restriction = userDetails.userPersonalInfoResponse.courseInfoResponse.branch;
+    }
+
+    data = JSON.stringify({
+        dateCreated: currentDate,
+        validityInWeeks: validity,
+        timeCreated: currentDate,
+        userName: USERNAME,
+        recurrences: 1,
+        visibility: restriction,
+        answers: optionsList,
+        question: pollQuestion
+    });
+
+    fetch(URL, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("auth"),
+        },
+        body: data,
+    })
+        .then((response) => response.text())
+        .then((resp) => {
+            console.log(resp);
+            renderNotification(resp);
+            element.removeAttribute("disabled");
+        })
+        .catch((error) => renderNotification("!!Seems like you have connectivity issues."))
+        .finally(() => element.removeAttribute("disabled"));
+}
+
+function removeSiblingsEvents(element) {
+    let parent = element.parentElement.parentElement;
+    let childNodes = parent.children;
+    for (let div of childNodes) {
+        div.children[0].removeEventListener("click", polled);
+    };
+}
+
+function polled(element) {
+    console.log(element.target);
+    removeSiblingsEvents(element.target);
+    const USERNAME = localStorage.getItem('username');
+    const pollId = element.target.dataset.pId;
+    const answerId = element.target.dataset.aId;
+    const URL = POSTS_URL + "/update-answer-votes/" + USERNAME + "/" + pollId + "/" + answerId;
+    let answersResponse;
+    let totalVotesCount = 0;
+    let template;
+
+    fetch(URL, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem("auth"),
+        },
+    })
+        .then((response) => response.text())
+        .then((resp) => {
+            if (resp === null || (typeof resp === 'undefined') || resp === "" || resp.localeCompare("") === 0) {
+                renderNotification("Already Voted.!!");
+                return;
+            }
+            data = JSON.parse(resp);
+            let optionsDiv = ``;
+            data.answers.forEach((value, key) => {
+                optionsDiv += `<div>
+                            <button value= ${data.answers[key].answer}
+                                    data-p-id=${data.messageId}
+                                    data-a-id=${data.answers[key].answerId}
+                                    data-percentage=${data.answers[key].percentage}%
+                                    class="btn btn-outline-primary polled-option-btn"
+                                    style = "background-image: linear-gradient(to left, #fff ${100 - data.answers[key].percentage}%, #6c67fd 15%);">
+                                <span style = "float:left; color: white;">${data.answers[key].answer}</span> 
+                                <span style = "float:right;color:#6c67fd"> ${data.answers[key].percentage}%</span>
+                            </button>
+                    </div>`;
+            });
+            //data["options"] = optionsDiv;
+            template = eval('`' + optionsDiv + '`');
+            console.log(data);
+            element.target.parentElement.parentElement.innerHTML = template;
+        });
+
+
 }
 
 /*
