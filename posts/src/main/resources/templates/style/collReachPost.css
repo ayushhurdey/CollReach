@@ -245,7 +245,7 @@ i {
   width: 100%;
 }
 
-.poll-option-btn {
+.poll-option-btn, .polled-option-btn {
   margin: 2px;
   width: 98%;
 }

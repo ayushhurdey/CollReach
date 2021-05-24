@@ -143,7 +143,7 @@
                     <div class="restriction">
                         <div class="restriction-item" >
                             <select class="form-control" name="viewrestriction"  id="post-view-restriction" >
-                                <option value="" disabled selected >VIEW RESTRICTION</option>
+                                <option value="" disabled selected hidden>VIEW RESTRICTION</option>
                                 <option value="department">Department</option>
                                 <option value="college">College</option>
                             </select>
@@ -170,7 +170,7 @@
                     </div>
 
                     <div>
-                        <textarea class="form-control" placeholder="Type Something Here.."  id="post-textarea"></textarea>
+                        <textarea class="form-control" placeholder="Type your message here.."  id="post-textarea"></textarea>
                         <div>
                             <small class="float-right">Max 150 words</small>
                         </div>
@@ -186,7 +186,7 @@
 
                     </div>
                     <div>
-                        <button class="post-button btn btn-primary float-right " type="button" id="post-posting-btn" onclick="createPost()">POST</button>
+                        <button class="post-button btn btn-primary float-right " type="button" id="post-posting-btn" onclick="createPost(this)">POST</button>
                     </div>
                     <div>
 
@@ -271,11 +271,11 @@
 
                     <div class="poll-options" id="overlay-poll-options" style="clear: right;">
                         <div class="poll-option">
-                            <input class="form-control" type="text" name="option1" placeholder="Option 1" size="40" maxlength="50" id="op1" />
+                            <input class="form-control" type="text" name="option1" placeholder="Option 1" size="40" maxlength="50" id="op1" required />
                         </div>
 
                         <div class="poll-option">
-                            <input class="form-control" type="text" name="option2" placeholder="Option 2" size="40" maxlength="50" id="op2" />
+                            <input class="form-control" type="text" name="option2" placeholder="Option 2" size="40" maxlength="50" id="op2" required/>
                         </div>
                     </div>
 
@@ -476,7 +476,7 @@
                                         ${data.options}
                                     </div>
                                     <div class="poll-info">
-                                        <small>${data.daysLeft} days left</small>
+                                        <small>${data.daysLeft}</small>
                                         <small>${data.totalPollVotes} votes</small>
                                     </div>
                                 </div>

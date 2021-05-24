@@ -44,9 +44,10 @@ function load() {
                 }
 
                 //counting days left
-                response[key].daysLeft = getDaysLeft(response[key].createDate,
+                let daysLeft = getDaysLeft(response[key].createDate,
                     response[key].uploadTime,
                     response[key].lifetimeInWeeks);
+                response[key].daysLeft = daysLeft === 0 ? "Poll closed" : daysLeft + "d left";
 
                 response[key].profilePhoto = USER_PROFILE_URL +
                     "/user/get-profile-img-by-username?username=" +
@@ -444,15 +445,24 @@ function updateViewsCount(messageId) {
 }
 
 
-function createPost() {
+function createPost(element) {
+    element.setAttribute("disabled", "");
     const url = POSTS_URL + "/create-post";
     const USERNAME = localStorage.getItem('username');
-    let date = new Date();
+    const date = new Date();
     const currentDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toJSON();
     let restriction = document.querySelector('#post-view-restriction').value;
     const validity = Number(document.querySelector('#post-validity').value);
     const frequency = Number(document.querySelector('#post-frequency').value);
     const message = document.querySelector('#post-textarea').value;
+
+    if (restriction === "" || restriction.localeCompare("") === 0 ||
+        validity === 0 || frequency === 0 ||
+        message === "" || message.localeCompare("") === 0 ||
+        message.length < 5) {
+        element.removeAttribute("disabled");
+        return;
+    }
 
     const userDetails = JSON.parse(localStorage.getItem('userDetails'));
     if (restriction.toLowerCase().localeCompare("department") === 0) {
@@ -499,11 +509,16 @@ function createPost() {
                     Authorization: localStorage.getItem("auth"),
                 },
                 body: formData,
-            }).then((resp) => {
-                console.log(resp);
-                localStorage.removeItem('compressedPostImage');
-                renderNotification(resp);
             })
+                .then((resp) => {
+                    console.log(resp);
+                    renderNotification(resp);
+                })
+                .catch(error => renderNotification("Some error occurred while posting."))
+                .finally(() => {
+                    localStorage.removeItem('compressedPostImage');
+                    element.removeAttribute("disabled");
+                })
         })
         .then((res) => {
             console.log(res);
@@ -512,6 +527,7 @@ function createPost() {
 
 
 function createPoll(element) {
+    element.setAttribute("disabled", "");
     const URL = POSTS_URL + "/create-poll";
     const USERNAME = localStorage.getItem('username');
     let date = new Date();
@@ -527,6 +543,14 @@ function createPoll(element) {
         let inputElem = elem.children[0];
         optionsList.push(inputElem.value);
     });
+
+    if (restriction === "" || restriction.localeCompare("") === 0 ||
+        validity === 0 ||
+        pollQuestion === "" || pollQuestion.localeCompare("") === 0 ||
+        optionsList.length < 2) {
+        element.removeAttribute("disabled");
+        return;
+    }
 
     const userDetails = JSON.parse(localStorage.getItem('userDetails'));
     if (restriction.toLowerCase().localeCompare("department") === 0) {
@@ -556,7 +580,10 @@ function createPoll(element) {
         .then((resp) => {
             console.log(resp);
             renderNotification(resp);
+            element.removeAttribute("disabled");
         })
+        .catch((error) => renderNotification("!!Seems like you have connectivity issues."))
+        .finally(() => element.removeAttribute("disabled"));
 }
 
 function removeSiblingsEvents(element) {
@@ -599,8 +626,8 @@ function polled(element) {
                                     data-p-id=${data.messageId}
                                     data-a-id=${data.answers[key].answerId}
                                     data-percentage=${data.answers[key].percentage}%
-                                    class="btn btn-outline-primary poll-option-btn"
-                                    style = "background-image: linear-gradient(to left, #fff ${data.answers[key].percentage}%, #6c67fd 15%);">
+                                    class="btn btn-outline-primary polled-option-btn"
+                                    style = "background-image: linear-gradient(to left, #fff ${100 - data.answers[key].percentage}%, #6c67fd 15%);">
                                 <span style = "float:left; color: white;">${data.answers[key].answer}</span> 
                                 <span style = "float:right;color:#6c67fd"> ${data.answers[key].percentage}%</span>
                             </button>
