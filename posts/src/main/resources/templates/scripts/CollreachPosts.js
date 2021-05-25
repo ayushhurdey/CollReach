@@ -2,7 +2,16 @@ const POSTS_URL = "http://localhost:8084";
 const USER_PROFILE_URL = "http://localhost:8082";
 let firstLoad = true;
 
+function login() {
+    const USERNAME = localStorage.getItem('username');
+    const AUTH = localStorage.getItem('auth');
+    if (USERNAME === null || AUTH === null)
+        window.location.replace(USER_PROFILE_URL + "/login");
+}
+
 function load() {
+    login();
+
     if (firstLoad) {
         getUserDetails();
         firstLoad = !firstLoad;
@@ -70,7 +79,6 @@ function renderPostTemplate(data) {
     const postWithImgTemplate = document.getElementById('post-with-image-template').innerHTML;
     const postWithoutImgTemplate = document.getElementById('post-without-image-template').innerHTML;
     const pollQuestionTemplate = document.getElementById('poll-question-template').innerHTML;
-    const pollAnswersTemplate = document.getElementById('poll-answers-template').innerHTML;
 
 
     let template;                                      // rendering posts with and without images.
@@ -323,17 +331,14 @@ function back() {
 
 
 function exit() {
-    let consent = confirm("Your work will be lost. Do you still want to go back?");
-    if (consent) {
-        $("#poll-overlay").css('display', 'none');
-        $("#post-overlay").css('display', 'none');
-        $("#feeds-section").css('opacity', '1');
-        $('.form-control').val('');
-        $('#upload-img').val('');
-        $("#preview-box").css('display', 'none');
-        $('#upload-img-preview').attr('src', '#');
-        $('#a-btn').prop('disabled', false);
-    }
+    $("#poll-overlay").css('display', 'none');
+    $("#post-overlay").css('display', 'none');
+    $("#feeds-section").css('opacity', '1');
+    $('.form-control').val('');
+    $('#upload-img').val('');
+    $("#preview-box").css('display', 'none');
+    $('#upload-img-preview').attr('src', '#');
+    $('#a-btn').prop('disabled', false);
 }
 
 
@@ -410,8 +415,12 @@ function removeOption() {
 }
 
 function renderNotification(message) {
-    // to be implemented
-    console.log(message);
+    let notifier = document.querySelector('.notifier');
+    notifier.children[1].innerText = message;
+    notifier.removeAttribute('hidden');
+    setTimeout(() => {
+        notifier.setAttribute('hidden', "");
+    }, 5000);
 }
 
 function countViews() {
@@ -528,8 +537,10 @@ function createPost(element) {
                 },
                 body: formData,
             })
+                .then(response => response.text())
                 .then((resp) => {
                     console.log(resp);
+                    exit();
                     renderNotification(resp);
                 })
                 .catch(error => renderNotification("Some error occurred while posting."))
@@ -597,6 +608,7 @@ function createPoll(element) {
         .then((response) => response.text())
         .then((resp) => {
             console.log(resp);
+            exit();
             renderNotification(resp);
             element.removeAttribute("disabled");
         })

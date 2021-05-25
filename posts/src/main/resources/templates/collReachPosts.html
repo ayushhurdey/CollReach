@@ -21,24 +21,24 @@
     <link rel="stylesheet" href="style/collReachPost.css" />
 
     <script>
-        
-        // function like(x) {
-        //     x.classList.toggle("fa-star");
-        //     x.classList.toggle("fa-star-o");
-        // }
+        function closeBtn(elem){
+            elem.parentElement.setAttribute('hidden',"");
+        }
 
-        // function ShowAndHide() {
-        //     var x = document.getElementById('postOverlay');
-        //     if (x.style.display == 'none') {
-        //         x.style.display = 'block';
-        //     } else {
-        //         x.style.display = 'none';
-        //     }
-        // }
+        document.addEventListener("DOMContentLoaded", () =>{
+            renderNotification("Welcome to CollReach Posts.");
+        })
     </script>
 
 </head>
 <body onload="load()">  
+
+        <!-----Notifier------>
+    <div class = "notifier" hidden>
+        <span class="closebtn" onclick = "closeBtn(this);">&times;</span> 
+        <p id = "notifier-msg"></p>
+    </div>
+
         <!--CollReach Header-->
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
         
@@ -505,11 +505,6 @@
             </div>
 
 
-            <div id = "poll-answers-template" hidden>
-                <div class="poll-progress">
-                    ${data.options}
-                </div>
-            </div>
 
             <!--div id = "poll-answers-template" class = "hidden">
                 <article>
