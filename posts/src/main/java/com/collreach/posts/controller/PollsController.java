@@ -1,6 +1,7 @@
 package com.collreach.posts.controller;
 
 import com.collreach.posts.model.requests.CreatePollRequest;
+import com.collreach.posts.model.response.PollAnswersResponse;
 import com.collreach.posts.model.response.UserPollsResponse;
 import com.collreach.posts.service.PollsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class PollsController {
                                                      @PathVariable(value = "answerId") int answerId){
 
         UserPollsResponse msg = pollsService.updatesAnswersVotes(userName, pollId, answerId);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @GetMapping(path = "/get-poll-answers/{pollId}")
+    public ResponseEntity<UserPollsResponse> getPollAnswers(@PathVariable(value = "pollId") int pollId){
+        UserPollsResponse msg = pollsService.getAllAnswersOfPoll(null,pollId);
         return ResponseEntity.ok().body(msg);
     }
 }

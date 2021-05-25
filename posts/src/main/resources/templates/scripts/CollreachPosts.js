@@ -84,17 +84,35 @@ function renderPostTemplate(data) {
     }
     else {                                           // rendering polls
         let optionsDiv = ``;
-        data.answers.forEach((value, key) => {
-            optionsDiv += `<div>
-                                <button
-                                    value="${data.answers[key].answer}"
-                                    data-p-id="${data.pollId}"
-                                    data-a-id="${data.answers[key].answerId}" 
-                                    class="btn btn-outline-primary poll-option-btn">
-                                    ${data.answers[key].answer}
-                                </button>
+        if (data.daysLeft.toLowerCase().localeCompare("poll closed") === 0) {
+            data.answers.forEach((value, key) => {
+                optionsDiv += `<div>
+                                    <button value= ${data.answers[key].answer}
+                                            data-p-id=${data.messageId}
+                                            data-a-id=${data.answers[key].answerId}
+                                            data-percentage=${data.answers[key].percentage}%
+                                            class="btn btn-outline-primary polled-option-btn"
+                                            style = "background-image: linear-gradient(to left, #fff ${100 - data.answers[key].percentage}%, #6c67fd 15%);">
+                                        <span style = "float:left; color: white;">${data.answers[key].answer}</span> 
+                                        <span style = "float:right;color:#6c67fd"> ${data.answers[key].percentage}%</span>
+                                    </button>
                             </div>`;
-        });
+            });
+        }
+        else {
+            data.answers.forEach((value, key) => {
+                optionsDiv += `<div>
+                                    <button
+                                        value="${data.answers[key].answer}"
+                                        data-p-id="${data.pollId}"
+                                        data-a-id="${data.answers[key].answerId}" 
+                                        class="btn btn-outline-primary poll-option-btn">
+                                        ${data.answers[key].answer}
+                                    </button>
+                                </div>`;
+            });
+        }
+
         data["options"] = optionsDiv;
         template = eval('`' + pollQuestionTemplate + '`');
     }

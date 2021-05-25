@@ -98,8 +98,9 @@ public class PollsServiceImpl implements PollsService {
                     messageResponse.setName(poll.getUserId().getName());
                     List<PollAnswersResponse> pollAnswers = new ArrayList<>();
                     pollAnswersRepository.findAllByPollId(poll).forEach(answer -> {
+                        int percentage = normalizePercentage(answer.getVotes(),  poll.getTotalVotes());
                         PollAnswersResponse pollAnswersResponse = new PollAnswersResponse(
-                                answer.getAnswerId(), answer.getAnswer(), answer.getVotes()
+                                answer.getAnswerId(), answer.getAnswer(), answer.getVotes(), percentage
                         );
                         pollAnswers.add(pollAnswersResponse);
                     });
@@ -123,7 +124,6 @@ public class PollsServiceImpl implements PollsService {
                     int previousVotesOfAnswer = pollAnswer.get().getVotes();
                     long totalPreviousVotes = poll.get().getTotalVotes();
                     poll.get().setTotalVotes(totalPreviousVotes + 1);
-                    long totalVotes = poll.get().getTotalVotes();
                     pollAnswer.get().setVotes(previousVotesOfAnswer+1);
                     UsersPolled usersPolled = new UsersPolled();
                     usersPolled.setPollId(poll.get());
@@ -132,7 +132,7 @@ public class PollsServiceImpl implements PollsService {
                     pollsRepository.save(poll.get());
                     usersPolledRepository.save(usersPolled);
                     pollAnswersRepository.save(pollAnswer.get());
-                    return getAllAnswersOfPoll(poll.get(),totalVotes);
+                    return getAllAnswersOfPoll(poll.get(), 0);
                 }catch(Exception e){
                     return null;
                 }
@@ -143,20 +143,20 @@ public class PollsServiceImpl implements PollsService {
         return null;
     }
 
-    private UserPollsResponse getAllAnswersOfPoll(Polls pollId, long totalVotes){
+    @Override
+    public UserPollsResponse getAllAnswersOfPoll(Polls pollId, int pollID){
+        if(pollId == null){
+            Optional<Polls> poll = pollsRepository.findById(pollID);
+            pollId = poll.get();
+        }
+
+        long totalVotes = pollId.getTotalVotes();
         UserPollsResponse userPollsResponse = new UserPollsResponse();
         List<PollAnswers> pollAnswersList =  pollAnswersRepository.findAllByPollId(pollId);
         List<PollAnswersResponse> listOfPollAnswers =  new ArrayList<>();
         DecimalFormat df=new DecimalFormat("#.##");
         pollAnswersList.forEach(pollAnswer -> {
-            float perct = ((float)pollAnswer.getVotes() / totalVotes * 100);
-            int percentage = 0;
-            if((perct - (int)perct) > 0.5){
-                percentage = (int) Math.ceil(perct);
-            }
-            else{
-                percentage = (int) Math.floor(perct);
-            }
+            int percentage = normalizePercentage(pollAnswer.getVotes(), totalVotes);
             listOfPollAnswers.add(
                     new PollAnswersResponse(
                             pollAnswer.getAnswerId(), pollAnswer.getAnswer(),pollAnswer.getVotes(), percentage
@@ -167,5 +167,17 @@ public class PollsServiceImpl implements PollsService {
         userPollsResponse.setAnswers(listOfPollAnswers);
 
         return userPollsResponse;
+    }
+
+    private int normalizePercentage(int votes, long totalVotes){
+        float percent = ((float)votes / totalVotes * 100);
+        int percentage = 0;
+        if((percent - (int)percent) > 0.5){
+            percentage = (int) Math.ceil(percent);
+        }
+        else{
+            percentage = (int) Math.floor(percent);
+        }
+        return percentage;
     }
 }
