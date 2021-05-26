@@ -94,6 +94,7 @@ function renderPostTemplate(data) {
         let optionsDiv = ``;
         if (data.daysLeft.toLowerCase().localeCompare("poll closed") === 0) {
             data.answers.forEach((value, key) => {
+                data.answers[key].answer = eliminateTagsFromString(data.answers[key].answer);
                 optionsDiv += `<div>
                                     <button value= ${data.answers[key].answer}
                                             data-p-id=${data.messageId}
@@ -109,6 +110,7 @@ function renderPostTemplate(data) {
         }
         else {
             data.answers.forEach((value, key) => {
+                data.answers[key].answer = eliminateTagsFromString(data.answers[key].answer);
                 optionsDiv += `<div>
                                     <button
                                         value="${data.answers[key].answer}"
@@ -651,6 +653,7 @@ function polled(element) {
             data = JSON.parse(resp);
             let optionsDiv = ``;
             data.answers.forEach((value, key) => {
+                data.answers[key].answer = eliminateTagsFromString(data.answers[key].answer);
                 optionsDiv += `<div>
                             <button value= ${data.answers[key].answer}
                                     data-p-id=${data.messageId}
@@ -670,6 +673,19 @@ function polled(element) {
         });
 
 
+}
+
+function eliminateTagsFromString(answer){
+    let preprocesedAnswer = "";
+    for(const c of answer){
+        if(c === '>')
+            preprocesedAnswer += "&gt;"
+        else if(c === '<')
+            preprocesedAnswer += "&lt;"
+        else
+            preprocesedAnswer += c;
+    }
+    return preprocesedAnswer;
 }
 
 /*
