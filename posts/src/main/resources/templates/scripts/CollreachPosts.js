@@ -1,12 +1,26 @@
 const POSTS_URL = "http://localhost:8084";
 const USER_PROFILE_URL = "http://localhost:8082";
 let firstLoad = true;
+let globalPageNumber = 0;
 
 function login() {
     const USERNAME = localStorage.getItem('username');
     const AUTH = localStorage.getItem('auth');
     if (USERNAME === null || AUTH === null)
         window.location.replace(USER_PROFILE_URL + "/login");
+}
+
+function getDeptFromCookie() {
+    let dept = "";
+    document.cookie.split(";").forEach(e => {
+        if (e.includes("dept=")) {
+            dept = e.substr(6);
+        }
+    })
+    if (dept === "")
+        login();
+    else
+        return dept;
 }
 
 function load() {
@@ -16,9 +30,16 @@ function load() {
         getUserDetails();
         firstLoad = !firstLoad;
     }
-    const visibility = "CSE";             // should come from already logged in user.
-    const pageNo = 0;                     // should change dynamically
-    const pageSize = 10;                  // fixed value -> for how many pages to be loaded in the DOM in each request.
+
+    if (navigator.cookieEnabled === false) {
+        alert("We use cookies to make this website functional. Please enable cookies in your browser.");
+        return;
+    }
+
+
+    const visibility = "CSE";    //getDeptFromCookie();  -> to be used later   // should come from already logged in user.
+    const pageNo = globalPageNumber;                                   // should change dynamically
+    const pageSize = 5;                                // fixed value -> for how many pages to be loaded in the DOM in each request.
 
     const template = document.getElementById('loading-anim-template').innerHTML;
     //displayLoading(template,'posts-loading-anim');
@@ -40,9 +61,16 @@ function load() {
             let response = JSON.parse(res).postsSet;
             console.log(response);
 
-            // preprocessing some data
+            if(response.length === 0){
+                console.log("No more posts......");
+                return;
+            }
+                
+
+            // preprocessing some data & rendering templates
             response.forEach((value, key) => {
                 let username = response[key].username;
+
                 // counting total votes 
                 let totalVotesCount = 0;
                 if (response[key].pollId !== 0) {
@@ -62,15 +90,24 @@ function load() {
                     "/user/get-profile-img-by-username?username=" +
                     username +
                     "&ifMini=true";
+
+                // checks if a post is with or without image & preprocesses it.
                 if (response[key].image !== null)
                     response[key].image = response[key].image.replace(/^/, 'data:image/' + response[key].filetype + ';base64,');
 
                 renderPostTemplate(response[key]);         // renders conditionally according to posts or poll.
             });
 
+
+            // activating the poll buttons by adding eventlistener on them
             document.querySelectorAll('.poll-option-btn').forEach(elem => {
                 elem.addEventListener('click', polled);
             });
+
+            let postsContainer = document.querySelector('#posts-container');
+            let nthElemNo = postsContainer.childElementCount - 4 + 1;
+            let nthElem = postsContainer.children[nthElemNo - 1];
+            lazyLoadPosts(nthElem);
         });
 }
 
@@ -79,7 +116,6 @@ function renderPostTemplate(data) {
     const postWithImgTemplate = document.getElementById('post-with-image-template').innerHTML;
     const postWithoutImgTemplate = document.getElementById('post-without-image-template').innerHTML;
     const pollQuestionTemplate = document.getElementById('poll-question-template').innerHTML;
-
 
     let template;                                      // rendering posts with and without images.
     if (data.messageId !== 0) {
@@ -133,6 +169,36 @@ function renderPostTemplate(data) {
     countViews();
 }
 
+function lazyLoadPosts(elemToObserve) {
+    let observerConfig = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.8
+    };
+    const intersectionObserverForLoad = new IntersectionObserver((entries) => {
+        // If intersectionRatio is 0, the target is out of view
+        // and we do not need to do anything.
+        entries.forEach(entry => {
+            if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                console.log('Loading more posts....');
+                console.log(entry);
+                globalPageNumber++;
+                load();
+                intersectionObserverForLoad.unobserve(entry.target);    
+            }
+            else{
+                console.log("Not intersecting..");
+                console.log(entry);
+                return;
+            }
+        });
+
+    }, observerConfig);
+
+    console.log(elemToObserve);
+    intersectionObserverForLoad.observe(elemToObserve);
+    console.log("Observing element...");
+}
 
 function buildURL(url, pageNo, pageSize, visibility) {
     return `${url}?pageNo=${pageNo}&pageSize=${pageSize}&visibility=${visibility}`;
@@ -675,12 +741,12 @@ function polled(element) {
 
 }
 
-function eliminateTagsFromString(answer){
+function eliminateTagsFromString(answer) {
     let preprocesedAnswer = "";
-    for(const c of answer){
-        if(c === '>')
+    for (const c of answer) {
+        if (c === '>')
             preprocesedAnswer += "&gt;"
-        else if(c === '<')
+        else if (c === '<')
             preprocesedAnswer += "&lt;"
         else
             preprocesedAnswer += c;
