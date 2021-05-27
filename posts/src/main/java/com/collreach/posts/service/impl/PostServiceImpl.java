@@ -192,6 +192,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public LinkedHashSet<MessageResponse> mergeSets(LinkedHashSet<MessageResponse> posts, LinkedHashSet<MessageResponse> polls){
         LinkedHashSet<MessageResponse> mergedSets = new LinkedHashSet<>();
+        if(posts.size() == 0 && polls.size() == 0)
+            return mergedSets;
+        else if(posts.size() == 0)
+            return polls;
+        else if(polls.size() == 0)
+            return posts;
+
         Iterator<MessageResponse> postItr = posts.iterator();
         Iterator<MessageResponse> pollItr = polls.iterator();
 
