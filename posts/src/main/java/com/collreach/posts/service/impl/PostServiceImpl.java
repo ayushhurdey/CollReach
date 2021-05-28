@@ -328,4 +328,19 @@ public class PostServiceImpl implements PostService {
         Optional<Messages> message = messagesRepository.findById(messageId);
         return message.map(Messages::getLikes).orElse(ResponseMessage.POST_MESSAGE_NOT_FOUND);
     }
+
+    @Override
+    public String deletePost(int messageId, String userName){
+        Optional<Users> user = usersRepository.findByUserName(userName);
+        Optional<Messages> message = messagesRepository.findById(messageId);
+        if(user.isPresent() &&
+                message.isPresent() &&
+                user.get().getUserName()
+                        .equals(message.get().getUserName().getUserName())) {
+                    seenAndLikedRepository.deleteAllByMessageId(message.get());
+                    messagesRepository.deleteById(messageId);
+                    return ResponseMessage.SUCCESSFULLY_DONE;
+        }
+        return ResponseMessage.RECEIVED_INVALID_DATA;
+    }
 }

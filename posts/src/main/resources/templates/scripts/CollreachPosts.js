@@ -61,11 +61,11 @@ function load() {
             let response = JSON.parse(res).postsSet;
             console.log(response);
 
-            if(response.length === 0){
+            if (response.length === 0) {
                 console.log("No more posts......");
                 return;
             }
-                
+
 
             // preprocessing some data & rendering templates
             response.forEach((value, key) => {
@@ -138,7 +138,7 @@ function renderPostTemplate(data) {
                                             data-percentage=${data.answers[key].percentage}%
                                             class="btn btn-outline-primary polled-option-btn"
                                             style = "background-image: linear-gradient(to left, #fff ${100 - data.answers[key].percentage}%, #6c67fd 15%);">
-                                        <span style = "float:left; color: white;">${data.answers[key].answer}</span> 
+                                        <span style = "float:left; color: black;">${data.answers[key].answer}</span> 
                                         <span style = "float:right;color:#6c67fd"> ${data.answers[key].percentage}%</span>
                                     </button>
                             </div>`;
@@ -184,9 +184,9 @@ function lazyLoadPosts(elemToObserve) {
                 console.log(entry);
                 globalPageNumber++;
                 load();
-                intersectionObserverForLoad.unobserve(entry.target);    
+                intersectionObserverForLoad.unobserve(entry.target);
             }
-            else{
+            else {
                 console.log("Not intersecting..");
                 console.log(entry);
                 return;
@@ -727,7 +727,7 @@ function polled(element) {
                                     data-percentage=${data.answers[key].percentage}%
                                     class="btn btn-outline-primary polled-option-btn"
                                     style = "background-image: linear-gradient(to left, #fff ${100 - data.answers[key].percentage}%, #6c67fd 15%);">
-                                <span style = "float:left; color: white;">${data.answers[key].answer}</span> 
+                                <span style = "float:left; color: black;">${data.answers[key].answer}</span> 
                                 <span style = "float:right;color:#6c67fd"> ${data.answers[key].percentage}%</span>
                             </button>
                     </div>`;

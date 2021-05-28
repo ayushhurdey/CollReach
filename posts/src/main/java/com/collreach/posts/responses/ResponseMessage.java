@@ -6,6 +6,7 @@ public class ResponseMessage {
     public static final String USER_ALREADY_VOTED = "Error: User already voted";
     public static final String USER_ALREADY_SEEN = "Error: User already seen";
     public static final String USER_ALREADY_LIKED = "Error: User already liked";
+    public static final String RECEIVED_INVALID_DATA = "Error: Invalid data received";
     public static final int POST_MESSAGE_NOT_FOUND = -1;
 
     public static final String SUCCESSFULLY_DONE = "Success: Done Successfully";

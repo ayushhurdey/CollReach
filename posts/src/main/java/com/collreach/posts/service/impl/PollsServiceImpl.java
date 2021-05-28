@@ -5,6 +5,7 @@ import com.collreach.posts.model.bo.polls.PollAnswers;
 import com.collreach.posts.model.bo.polls.Polls;
 import com.collreach.posts.model.bo.polls.UserPollKey;
 import com.collreach.posts.model.bo.polls.UsersPolled;
+import com.collreach.posts.model.bo.posts.Messages;
 import com.collreach.posts.model.repositories.UsersRepository;
 import com.collreach.posts.model.repositories.polls.PollAnswersRepository;
 import com.collreach.posts.model.repositories.polls.PollsRepository;
@@ -179,5 +180,21 @@ public class PollsServiceImpl implements PollsService {
             percentage = (int) Math.floor(percent);
         }
         return percentage;
+    }
+
+    @Override
+    public String deletePoll(int pollId, String userName){
+        Optional<Users> user = usersRepository.findByUserName(userName);
+        Optional<Polls> poll = pollsRepository.findById(pollId);
+        if(user.isPresent() &&
+                poll.isPresent() &&
+                user.get().getUserName()
+                        .equals(poll.get().getUserId().getUserName())) {
+            usersPolledRepository.deleteAllByPollId(poll.get());
+            pollAnswersRepository.deleteAllByPollId(poll.get());
+            pollsRepository.deleteById(pollId);
+            return ResponseMessage.SUCCESSFULLY_DONE;
+        }
+        return ResponseMessage.RECEIVED_INVALID_DATA;
     }
 }

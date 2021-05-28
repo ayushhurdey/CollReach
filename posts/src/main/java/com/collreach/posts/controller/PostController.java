@@ -86,4 +86,11 @@ public class PostController {
         int msg = postService.getTotalLikesOnMessage(messageId);
         return ResponseEntity.ok().body(msg);
     }
+
+    @DeleteMapping(path = "/posts/delete-post/{username}/{messageId}")
+    public ResponseEntity<String> deletePost(@PathVariable(value = "username") String userName,
+                                              @PathVariable(value = "messageId") int messageId){
+        String msg = postService.deletePost(messageId, userName);
+        return ResponseEntity.ok().body(msg);
+    }
 }
