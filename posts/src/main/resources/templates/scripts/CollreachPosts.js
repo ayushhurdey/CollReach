@@ -84,7 +84,10 @@ function load() {
                 let daysLeft = getDaysLeft(response[key].createDate,
                     response[key].uploadTime,
                     response[key].lifetimeInWeeks);
-                response[key].daysLeft = daysLeft === 0 ? "Poll closed" : daysLeft + "d left";
+                if (response[key].messageId === 0)                // i.e. it's a poll
+                    response[key].daysLeft = daysLeft === 0 ? "Poll closed" : daysLeft + "d left";
+                else                                            // it is a post message
+                    response[key].daysLeft = daysLeft;
 
                 response[key].profilePhoto = USER_PROFILE_URL +
                     "/user/get-profile-img-by-username?username=" +
@@ -117,8 +120,8 @@ function renderPostTemplate(data) {
     const postWithoutImgTemplate = document.getElementById('post-without-image-template').innerHTML;
     const pollQuestionTemplate = document.getElementById('poll-question-template').innerHTML;
 
-    let template;                                      // rendering posts with and without images.
-    if (data.messageId !== 0) {
+    let template = null;                                      // rendering posts with and without images.
+    if (data.messageId !== 0 && data.daysLeft !== 0) {
         if (data.image == null) {
             template = eval('`' + postWithoutImgTemplate + '`');
         }
@@ -126,7 +129,7 @@ function renderPostTemplate(data) {
             template = eval('`' + postWithImgTemplate + '`');
         }
     }
-    else {                                           // rendering polls
+    else if (data.messageId === 0) {                                           // rendering polls
         let optionsDiv = ``;
         if (data.daysLeft.toLowerCase().localeCompare("poll closed") === 0) {
             data.answers.forEach((value, key) => {
@@ -163,8 +166,10 @@ function renderPostTemplate(data) {
         template = eval('`' + pollQuestionTemplate + '`');
     }
 
-    let postsContainer = document.getElementById('posts-container');
-    postsContainer.innerHTML += template;
+    if (template !== null) {
+        let postsContainer = document.getElementById('posts-container');
+        postsContainer.innerHTML += template;
+    }
 
     countViews();
 }
