@@ -21,4 +21,6 @@ public interface PostService {
     String updatePostViews(String userName, int messageId);
     String updatePostLikes(String userName, int messageId);
     int getTotalLikesOnMessage(int messageId);
+    String deletePost(int messageId, String userName);
+    String deleteExpiredPosts(String username);
 }

@@ -35,4 +35,11 @@ public class PollsController {
         UserPollsResponse msg = pollsService.getAllAnswersOfPoll(null,pollId);
         return ResponseEntity.ok().body(msg);
     }
+
+    @DeleteMapping(path = "/polls/delete-poll/{username}/{pollId}")
+    public ResponseEntity<String> deletePoll(@PathVariable(value = "username") String userName,
+                                             @PathVariable(value = "pollId") int pollId){
+        String msg = pollsService.deletePoll(pollId, userName);
+        return ResponseEntity.ok().body(msg);
+    }
 }

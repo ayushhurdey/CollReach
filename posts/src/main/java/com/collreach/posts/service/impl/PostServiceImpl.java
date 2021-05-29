@@ -328,4 +328,53 @@ public class PostServiceImpl implements PostService {
         Optional<Messages> message = messagesRepository.findById(messageId);
         return message.map(Messages::getLikes).orElse(ResponseMessage.POST_MESSAGE_NOT_FOUND);
     }
+
+    @Override
+    public String deletePost(int messageId, String userName){
+        Optional<Users> user = usersRepository.findByUserName(userName);
+        Optional<Messages> message = messagesRepository.findById(messageId);
+        if(user.isPresent() &&
+                message.isPresent() &&
+                user.get().getUserName()
+                        .equals(message.get().getUserName().getUserName())) {
+                    seenAndLikedRepository.deleteAllByMessageId(message.get());
+                    messagesRepository.deleteById(messageId);
+                    return ResponseMessage.SUCCESSFULLY_DONE;
+        }
+        return ResponseMessage.RECEIVED_INVALID_DATA;
+    }
+
+    /**
+     * validityInDays is added with two extra days just to be on the
+     * safe side so that any post is not deleted before expiry date
+     * because of few hours conflict.
+     *
+     * @param username username of the Admin user who is validated
+     *                 to delete the posts that are expired.
+     * @return Successful message string if user is valid
+     *         else return Invalid user.
+     */
+    @Override
+    public String deleteExpiredPosts(String username){
+        Optional<Users> user = usersRepository.findByUserName(username);
+        Date today = new Date();
+        Iterable<Messages> messages = messagesRepository.findAll();
+        if(user.isPresent()){
+            for(Messages message : messages){
+                Date messageCreateDate = message.getCreateDate();
+                long validityInDays = (long)message.getLifetimeInWeeks() * 7 + 2;
+                long validityInMs = messageCreateDate.getTime() + validityInDays * 24 * 3600000;
+                Date expiryDate = new Date(validityInMs);
+
+                if(expiryDate.before(today)){
+                    System.out.println(message.getMessageId() + " to be deleted..");
+                    // working but to be uncommented later after production
+                    //seenAndLikedRepository.deleteAllByMessageId(message);
+                    //messagesRepository.deleteById(message.getMessageId());
+                }
+            }
+            return ResponseMessage.SUCCESSFULLY_DONE;
+        }
+        else return ResponseMessage.USER_NOT_FOUND;
+    }
 }
