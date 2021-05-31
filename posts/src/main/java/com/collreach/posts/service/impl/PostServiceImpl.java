@@ -330,6 +330,34 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public MessagesResponse getTodayFeed(String username){
+        LinkedHashSet<MessageResponse> posts = new LinkedHashSet<>();
+        Optional<Users> user = usersRepository.findByUserName(username);
+        Date today = new Date();
+        Iterable<Messages> messages = messagesRepository.findAll();
+        if(user.isPresent()){
+            for(Messages message : messages){
+                Date messageCreateDate = message.getCreateDate();
+                long validityInDays = (long)message.getRecurrences() * 7 + 2;
+                long validityInMs = messageCreateDate.getTime() + validityInDays * 24 * 3600000;
+                Date postValidUpto = new Date(validityInMs);
+
+                if(postValidUpto.after(today)){
+                    System.out.println(message.getMessageId() + " message to be shown today...");
+                    posts.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
+                            message.getImage(), message.getVisibility(),message.getUserName().getUserName(),
+                            message.getLifetimeInWeeks(), message.getRecurrences(), message.getUserName().getName(),
+                            message.getLikes(), message.getViews(), message.getMessage(),
+                            message.getUploadTime(), message.getCreateDate()));
+                }
+            }
+            return new MessagesResponse(posts);
+        }
+        else return null;
+    }
+
+
+    @Override
     public String deletePost(int messageId, String userName){
         Optional<Users> user = usersRepository.findByUserName(userName);
         Optional<Messages> message = messagesRepository.findById(messageId);
