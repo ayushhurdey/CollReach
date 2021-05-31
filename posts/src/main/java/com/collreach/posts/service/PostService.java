@@ -21,6 +21,8 @@ public interface PostService {
     String updatePostViews(String userName, int messageId);
     String updatePostLikes(String userName, int messageId);
     int getTotalLikesOnMessage(int messageId);
+    MessagesResponse getPostsByUsername(String username);
     String deletePost(int messageId, String userName);
+    MessagesResponse getTodayFeed(String username);
     String deleteExpiredPosts(String username);
 }

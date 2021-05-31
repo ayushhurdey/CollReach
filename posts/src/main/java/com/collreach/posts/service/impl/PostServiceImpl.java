@@ -13,6 +13,7 @@ import com.collreach.posts.model.response.MessageResponse;
 import com.collreach.posts.model.response.MessagesResponse;
 import com.collreach.posts.service.PollsService;
 import com.collreach.posts.service.PostService;
+import net.bytebuddy.dynamic.scaffold.MethodGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -327,6 +328,53 @@ public class PostServiceImpl implements PostService {
     public int getTotalLikesOnMessage(int messageId){
         Optional<Messages> message = messagesRepository.findById(messageId);
         return message.map(Messages::getLikes).orElse(ResponseMessage.POST_MESSAGE_NOT_FOUND);
+    }
+
+    @Override
+    public MessagesResponse getTodayFeed(String username){
+        LinkedHashSet<MessageResponse> posts = new LinkedHashSet<>();
+        Optional<Users> user = usersRepository.findByUserName(username);
+        Date today = new Date();
+        Iterable<Messages> messages = messagesRepository.findAll();
+        if(user.isPresent()){
+            for(Messages message : messages){
+                Date messageCreateDate = message.getCreateDate();
+                long validityInDays = (long)message.getRecurrences() * 7 + 2;
+                long validityInMs = messageCreateDate.getTime() + validityInDays * 24 * 3600000;
+                Date postValidUpto = new Date(validityInMs);
+
+                if(postValidUpto.after(today)){
+                    System.out.println(message.getMessageId() + " message to be shown today...");
+                    posts.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
+                            message.getImage(), message.getVisibility(),message.getUserName().getUserName(),
+                            message.getLifetimeInWeeks(), message.getRecurrences(), message.getUserName().getName(),
+                            message.getLikes(), message.getViews(), message.getMessage(),
+                            message.getUploadTime(), message.getCreateDate()));
+                }
+            }
+            return new MessagesResponse(posts);
+        }
+        else return null;
+    }
+
+    @Override
+    public MessagesResponse getPostsByUsername(String username){
+        LinkedHashSet<MessageResponse> posts = new LinkedHashSet<>();
+        Optional<Users> user = usersRepository.findByUserName(username);
+
+        if(user.isPresent()){
+            List<Messages> messages = messagesRepository.findAllByUserId(user.get());
+            messages.forEach( message -> {
+                posts.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
+                        message.getImage(), message.getVisibility(),message.getUserName().getUserName(),
+                        message.getLifetimeInWeeks(), message.getRecurrences(), message.getUserName().getName(),
+                        message.getLikes(), message.getViews(), message.getMessage(),
+                        message.getUploadTime(), message.getCreateDate())
+                );
+            });
+            return new MessagesResponse(posts);
+        }
+        return null;
     }
 
     @Override

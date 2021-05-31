@@ -59,6 +59,21 @@ public class MessageResponse {
         this.createDate = createDate;
     }
 
+    public MessageResponse(int pollId, String visibility, String username,
+                           int lifetimeInWeeks, int recurrences, String name,
+                           Date uploadTime, Date createDate, String question, List<PollAnswersResponse> answers) {
+        this.pollId = pollId;
+        this.visibility = visibility;
+        this.username = username;
+        this.name = name;
+        this.lifetimeInWeeks = lifetimeInWeeks;
+        this.recurrences = recurrences;
+        this.uploadTime = uploadTime;
+        this.createDate = createDate;
+        this.question = question;
+        this.answers = answers;
+    }
+
     public String getFilename() {
         return filename;
     }

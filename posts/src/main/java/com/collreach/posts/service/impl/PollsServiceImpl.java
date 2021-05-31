@@ -12,6 +12,7 @@ import com.collreach.posts.model.repositories.polls.PollsRepository;
 import com.collreach.posts.model.repositories.polls.UsersPolledRepository;
 import com.collreach.posts.model.requests.CreatePollRequest;
 import com.collreach.posts.model.response.MessageResponse;
+import com.collreach.posts.model.response.MessagesResponse;
 import com.collreach.posts.model.response.PollAnswersResponse;
 import com.collreach.posts.model.response.UserPollsResponse;
 import com.collreach.posts.responses.ResponseMessage;
@@ -97,18 +98,22 @@ public class PollsServiceImpl implements PollsService {
                     messageResponse.setUsername(poll.getUserId().getUserName());
                     messageResponse.setRecurrences(poll.getRecurrences());
                     messageResponse.setName(poll.getUserId().getName());
-                    List<PollAnswersResponse> pollAnswers = new ArrayList<>();
-                    pollAnswersRepository.findAllByPollId(poll).forEach(answer -> {
-                        int percentage = normalizePercentage(answer.getVotes(),  poll.getTotalVotes());
-                        PollAnswersResponse pollAnswersResponse = new PollAnswersResponse(
-                                answer.getAnswerId(), answer.getAnswer(), answer.getVotes(), percentage
-                        );
-                        pollAnswers.add(pollAnswersResponse);
-                    });
-                    messageResponse.setAnswers(pollAnswers);
+                    messageResponse.setAnswers(getAnswersOfPoll(poll));
                     set.add(messageResponse);
                 });
         return set;
+    }
+
+    private List<PollAnswersResponse> getAnswersOfPoll(Polls poll){
+        List<PollAnswersResponse> pollAnswers = new ArrayList<>();
+        pollAnswersRepository.findAllByPollId(poll).forEach(answer -> {
+            int percentage = normalizePercentage(answer.getVotes(),  poll.getTotalVotes());
+            PollAnswersResponse pollAnswersResponse = new PollAnswersResponse(
+                    answer.getAnswerId(), answer.getAnswer(), answer.getVotes(), percentage
+            );
+            pollAnswers.add(pollAnswersResponse);
+        });
+        return pollAnswers;
     }
 
     @Override
@@ -180,6 +185,25 @@ public class PollsServiceImpl implements PollsService {
             percentage = (int) Math.floor(percent);
         }
         return percentage;
+    }
+
+    @Override
+    public MessagesResponse getPollsByUsername(String username){
+        LinkedHashSet<MessageResponse> posts = new LinkedHashSet<>();
+        Optional<Users> user = usersRepository.findByUserName(username);
+
+        if(user.isPresent()){
+            List<Polls> polls = pollsRepository.findAllByUserId(user.get());
+            polls.forEach( poll -> {
+                posts.add(new MessageResponse(poll.getPollId(), poll.getVisibility(),
+                        poll.getUserId().getUserName(), poll.getValidityInWeeks(),
+                        poll.getRecurrences(), poll.getUserId().getName(), poll.getTimeCreated(),
+                        poll.getDateCreated(), poll.getQuestion(), getAnswersOfPoll(poll))
+                );
+            });
+            return new MessagesResponse(posts);
+        }
+        return null;
     }
 
     @Override

@@ -87,6 +87,18 @@ public class PostController {
         return ResponseEntity.ok().body(msg);
     }
 
+    @GetMapping(path = "/posts/get-today-feed/{username}")
+    public ResponseEntity<MessagesResponse> getTodayFeed(@PathVariable(value = "username") String userName){
+        MessagesResponse msg = postService.getTodayFeed(userName);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @GetMapping(path = "/posts/get-posts/{username}")
+    public ResponseEntity<MessagesResponse> getPostsByUsername(@PathVariable(value = "username") String userName){
+        MessagesResponse msg = postService.getPostsByUsername(userName);
+        return ResponseEntity.ok().body(msg);
+    }
+
     @DeleteMapping(path = "/posts/delete-post/{username}/{messageId}")
     public ResponseEntity<String> deletePost(@PathVariable(value = "username") String userName,
                                               @PathVariable(value = "messageId") int messageId){
