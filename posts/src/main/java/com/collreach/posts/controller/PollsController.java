@@ -1,6 +1,7 @@
 package com.collreach.posts.controller;
 
 import com.collreach.posts.model.requests.CreatePollRequest;
+import com.collreach.posts.model.response.MessagesResponse;
 import com.collreach.posts.model.response.PollAnswersResponse;
 import com.collreach.posts.model.response.UserPollsResponse;
 import com.collreach.posts.service.PollsService;
@@ -33,6 +34,12 @@ public class PollsController {
     @GetMapping(path = "/get-poll-answers/{pollId}")
     public ResponseEntity<UserPollsResponse> getPollAnswers(@PathVariable(value = "pollId") int pollId){
         UserPollsResponse msg = pollsService.getAllAnswersOfPoll(null,pollId);
+        return ResponseEntity.ok().body(msg);
+    }
+
+    @GetMapping(path = "/polls/get-polls/{username}")
+    public ResponseEntity<MessagesResponse> getPollsByUsername(@PathVariable(value = "username") String userName){
+        MessagesResponse msg = pollsService.getPollsByUsername(userName);
         return ResponseEntity.ok().body(msg);
     }
 

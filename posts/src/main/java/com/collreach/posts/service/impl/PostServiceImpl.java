@@ -13,6 +13,7 @@ import com.collreach.posts.model.response.MessageResponse;
 import com.collreach.posts.model.response.MessagesResponse;
 import com.collreach.posts.service.PollsService;
 import com.collreach.posts.service.PostService;
+import net.bytebuddy.dynamic.scaffold.MethodGraph;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -356,6 +357,25 @@ public class PostServiceImpl implements PostService {
         else return null;
     }
 
+    @Override
+    public MessagesResponse getPostsByUsername(String username){
+        LinkedHashSet<MessageResponse> posts = new LinkedHashSet<>();
+        Optional<Users> user = usersRepository.findByUserName(username);
+
+        if(user.isPresent()){
+            List<Messages> messages = messagesRepository.findAllByUserId(user.get());
+            messages.forEach( message -> {
+                posts.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
+                        message.getImage(), message.getVisibility(),message.getUserName().getUserName(),
+                        message.getLifetimeInWeeks(), message.getRecurrences(), message.getUserName().getName(),
+                        message.getLikes(), message.getViews(), message.getMessage(),
+                        message.getUploadTime(), message.getCreateDate())
+                );
+            });
+            return new MessagesResponse(posts);
+        }
+        return null;
+    }
 
     @Override
     public String deletePost(int messageId, String userName){
