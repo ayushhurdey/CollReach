@@ -80,6 +80,10 @@ function load() {
                     response[key]["totalPollVotes"] = totalVotesCount;
                 }
 
+                // preprocessing dates
+                response[key].beautifiedDate = beautifyDate(response[key].createDate, response[key].uploadTime);
+                response[key].beautifiedTime = beautifyTime(response[key].createDate, response[key].uploadTime);
+
                 //counting days left
                 let daysLeft = getDaysLeft(response[key].createDate,
                     response[key].uploadTime,
@@ -209,6 +213,15 @@ function buildURL(url, pageNo, pageSize, visibility) {
     return `${url}?pageNo=${pageNo}&pageSize=${pageSize}&visibility=${visibility}`;
 }
 
+function beautifyDate(date, time) {
+    let d = new Date(date + "T" + time);
+    return d.toDateString();
+}
+
+function beautifyTime(date, time) {
+    let d = new Date(date + "T" + time);
+    return d.toLocaleTimeString();
+}
 
 function getDaysLeft(dateCreated, uploadTime, lifetimeInWeeks) {
     let today = new Date();
