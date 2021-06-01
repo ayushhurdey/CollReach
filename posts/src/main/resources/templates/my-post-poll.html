@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CollReachPosts</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="script/css/bootstrap.min.css" />
+    
+    
+  
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="./scripts/compress.js"></script>
+    <script defer type="application/javascript" src="./scripts/compressUtil.js"></script>
+    <script src ="scripts/CollreachPosts.js"></script>
+    <link rel="stylesheet" href="style/collReachPost.css" />
+  
+
+    <script>
+        function closeBtn(elem){
+            elem.parentElement.setAttribute('hidden',"");
+        }
+
+        document.addEventListener("DOMContentLoaded", () =>{
+            renderNotification("Welcome to CollReach Posts.");
+        })
+    </script>
+    <script>
+        function postwindow(postbutton){
+            $(".outer-post-box-with-image").css('display', 'block');
+            $(".outer-post-box-without-image").css('display', 'block');
+            $(".outer-poll-box-question").css('display', 'none');
+            $(".outer-poll-box-answers").css('display', 'none');
+            $(".post-toggle-btn").css('background-color', '#6c67fd');
+            $(".post-toggle-btn").css('color', 'white');
+            $(".poll-toggle-btn").css('color', '#6c67fd');
+            $(".poll-toggle-btn").css('background-color', 'white');
+            
+
+            
+           
+        }
+        function pollwindow(pollbutton){
+            $(".outer-post-box-with-image").css('display', 'none');
+            $(".outer-post-box-without-image").css('display', 'none');
+            $(".outer-poll-box-question").css('display', 'block');
+            $(".outer-poll-box-answers").css('display', 'block');
+            $(".poll-toggle-btn").css('background-color', '#6c67fd');
+            $(".poll-toggle-btn").css('color', 'white');
+            $(".post-toggle-btn").css('color', '#6c67fd');
+            $(".post-toggle-btn").css('background-color', 'white');
+        }
+            
+    </script>
+</head>
+
+<!-- <body onload="load()">   -->  <!-- to be un-commented later -->
+
+<body>
+
+<style>
+    .post-toggle-btn, .poll-toggle-btn{
+    width: 100%;
+    height: 100%;
+    height: 3.5rem;
+    font-size: 1.1em;
+    border-radius: 0px;
+
+}
+.post-poll-toggle{
+    padding: 0px;
+    border: none;
+}
+
+
+.post-toggle-btn{
+    background-color: #6c67fd;
+    color: white;
+}
+</style>
+
+
+        <!-----Notifier------>
+    <div class = "notifier" hidden>
+        <span class="closebtn" onclick = "closeBtn(this);">&times;</span> 
+        <p id = "notifier-msg"></p>
+    </div>
+
+        <!--CollReach Header-->
+    <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
+        
+        <div class="container" id="navv">
+
+            <a href="" class="navbar-brand"><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#list">
+                <span class="navbar-toggler-icon"></span></button>
+
+            <div class="collapse navbar-collapse" id="list">
+
+            <ul class="navbar-nav text-center ml-auto">
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <p id="info">Home</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fab fa-instagram"></i>
+                        <p id="info">Instagram</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-code"></i>
+                        <p id="info">CodeGanak</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        <p id="info">Profile</p>
+                    </a>
+                </li>
+                <li>
+                    <button class="nav-item btn btn-outline-primary" type="button" id="search">
+                        Search
+                    </button>
+                </li>
+            </ul>
+            </div> 
+
+        </div>
+    </nav>
+
+        <!--CollReach Profile-->
+        
+    <div class="container" id="feeds-section">
+        <div class="row">
+                <div class="col-md-3" id = "user-profile-details-container">    
+                </div>
+
+                        <!--POSTS-->
+                <div class="col-md-9"> 
+                    <div class="profile-feed" id = "posts-container"> 
+                        <div id="outer-post-box-announcement">
+                            <div class=" profile-feed-item">
+                                <div>
+                                    <span>
+                                        <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle"  id="announcement-pic">
+                                    </span>
+                                    <span>
+                                        <button type="button" id="a-btn" class="btn btn-outline-primary" onclick="postOverlay()">New Announcement</button>
+                                    </span>
+                                </div>
+                                
+                            </div>
+                        </div>   
+                        <div class="d-flex align-items-start profile-feed-item post-poll-toggle">
+                            
+                            
+                                <button type="button" class="p-2 btn btn-outline-primary post-toggle-btn" onclick="postwindow(this)">My Posts</button>
+                            
+                            
+                           
+                                <button type="button" class="p-2 btn btn-outline-primary poll-toggle-btn" onclick="pollwindow(this)">My Polls</button>
+                            
+                            
+
+                        </div>
+                        <div id = "posts-loading-anim" style = "display:none;"></div>  
+
+
+
+                    <!-- SAMPLE POST FOR SIMULATION -->
+                        <div class="outer-post-box-with-image">
+                            <div class="post-header">
+                                        <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
+                                        <span id="name">Ayush Chaudhry</span>
+                            </div>
+                            <div class="d-flex align-items-start profile-feed-item" id="post-with-image">
+                                
+                            
+                                <div class="p-2">
+                                    
+        
+                                    <div class="content">
+                                        <div class="caption">
+                                            Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.
+                                        </div>
+                                        <div id="post-image">
+                                        <img src="static/postDemo.png" class="post-img">
+                                        </div>
+                                    </div>
+        
+                                    <div class="d-flex justify-content-between" id="reach">
+                                        <div id="star">
+                                            <span id="icon">
+                                            <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
+                                            </span>
+                                            <span id="count">
+                                                668
+                                            </span>
+                                        </div>
+        
+        
+                                        <div id="eye">
+                                            <span id="count">2.3K</span>
+                                            &nbsp;
+                                            <span id="icon"> <i class="fas fa-eye"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="outer-post-box-without-image">
+                            <div class="post-header">
+                                        <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
+                                        <span id="name">Ayush Chaudhry</span>
+                            </div>
+        
+                            <div class="d-flex align-items-start profile-feed-item" id="post-without-image">
+                            
+                                <div class="p-2">
+                                    
+                                    <div class="content">
+                                        <div class="caption">
+                                        Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.
+                                        </div>
+                                    </div>
+                                      <div class="d-flex justify-content-between" id="reach">
+                                        <div id="star">
+                                            <span id="icon">
+                                            <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
+                                            </span>
+                                            <span id="count">
+                                                668
+                                            </span>
+                                        </div>
+        
+        
+                                        <div id="eye">
+                                            <span id="count">2.3K</span>
+                                            &nbsp;
+                                            <span id="icon"> <i class="fas fa-eye"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outer-poll-box-question" style="display: none;">
+                            <div class="post-header">
+                                        <img src="static/profileimage1-ConvertImage.ico" class="img-sm rounded-circle">
+                                        <span id="name">Ayush Chaudhry</span>
+                            </div>
+        
+        
+                            <div class="d-flex align-items-start profile-feed-item" id="post-poll">
+                            
+                                <div class="p-2">
+                                    
+                                    <div class="content">
+                                        <div class="caption">
+                                            Whom do you support?
+                                        </div>
+                                        <div id="poll-options">
+                                            <div><input type="button" value="option1" class="btn btn-outline-primary"></div>
+                                            <div><input type="button" value="option2" class="btn btn-outline-primary" ></div>
+                                            <div><input type="button" value="option3" class="btn btn-outline-primary"></div>
+                                            <div><input type="button" value="option4" class="btn btn-outline-primary"></div>
+                                        </div>
+                                        <div id="poll-info">
+                                            <small>5 days left</small>
+                                            <small>1.5k votes</small>
+                                        </div>
+                                    </div>
+                                      <div class="d-flex justify-content-between" id="reach">
+                                        <div id="star">
+                                            <span id="icon">
+                                            <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
+                                            </span>
+                                            <span id="count">
+                                                668
+                                            </span>
+                                        </div>
+        
+        
+                                        <div id="eye">
+                                            <span id="count">2.3K</span>
+                                            &nbsp;
+                                            <span id="icon"> <i class="fas fa-eye"></i></span>
+                                        </div>
+                                    </div>
+                                    
+        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outer-poll-box-answers" style="display: none;">
+                            <div class="post-header">
+                                        <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
+                                        <span id="name">Ayush Chaudhry</span>
+                            </div>
+                            
+                            <div class="d-flex align-items-start profile-feed-item" id="post-poll-result">
+                            
+                                <div class="p-2">
+                                    
+                                    <div class="content">
+                                        <div class="caption">
+                                            Whom do you support?<br>
+                                        </div>
+                                        <div id="poll-progress">
+        
+        
+                                            <h3 class="progress-title">Option 1 - 60%</h3>
+                                                <div class="progress red">
+                                                    <div class="progress-bar" style="width:60%; background:#ef5b5b;"></div>
+                                                </div>
+                                            <h3 class="progress-title">Option 2 - 35%</h3>
+                                                <div class="progress yellow">
+                                                    <div class="progress-bar" style="width:35%; background:#ffc116;"></div>
+                                                </div>
+                                            <h3 class="progress-title">Option 3 - 50%</h3>
+                                                <div class="progress blue">
+                                                    <div class="progress-bar" style="width:50%; background:#20a39e;"></div>
+                                                </div>
+                                            <h3 class="progress-title">Option 4 - 40%</h3>
+                                                <div class="progress green">
+                                                    <div class="progress-bar" style="width:40%; background:#7cb518;"></div>
+                                                </div>
+         
+                                        </div>
+                                        <div id="poll-info">
+                                            <small>5 days left</small>
+                                            <small>1.5k votes</small>
+                                        </div>
+                                    </div>
+                                      <div class="d-flex justify-content-between" id="reach">
+                                        <div id="star">
+                                            <span id="icon">
+                                            <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
+                                            </span>
+                                            <span id="count">
+                                                668
+                                            </span>
+                                        </div>
+        
+        
+                                        <div id="eye">
+                                            <span id="count">2.3K</span>
+                                            &nbsp;
+                                            <span id="icon"> <i class="fas fa-eye"></i></span>
+                                        </div>
+                                    </div>
+        
+                                    
+                                </div>
+                            </div>
+                        </div>  
+                    <!-- SAMPLE POST END HERE -->
+                        
+
+
+                    </div>
+                </div> 
+                
+                <!-- profile feed -->
+            
+        </div>
+    </div>
+
+
+    <!--POST OVERLAY-->
+    <div class="container-overlays" id="post-overlay" style="display: none;">
+        <div class="overlay-row">
+            <div class="control-section">
+                    <div class="c-s-heading">
+                            Create post
+                    </div>
+                    <div  id="button">
+                        <button class="btn btn-outline-primary" id="cross-button" onclick="exit()" >
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+            </div>
+            <div id="post-inner-box" >
+
+                <div class="form-group overlay-detail">
+                    <div class="overlay-header">
+                                <img src="static/profileimage1-ConvertImage.ico" data-profile-img="" class="img-sm rounded-circle">
+                                <span id="name" data-profile-name=""></span>
+                    </div>
+                    <div class="restriction">
+                        <div class="restriction-item" >
+                            <select class="form-control" name="viewrestriction"  id="post-view-restriction" >
+                                <option value="" disabled selected hidden>VIEW RESTRICTION</option>
+                                <option value="department">Department</option>
+                                <option value="college">College</option>
+                            </select>
+                            </div>
+
+                        <div class="restriction-item">
+                            <select class="form-control" name="validity"  id="post-validity">
+                                <option value="" disabled selected hidden>VALIDITY PERIOD</option>
+                                <option value="1">1 week</option>
+                                <option value="2">2 weeks</option>
+                                <option value="3">3 weeks</option>
+                                <option value="4">4 weeks</option>
+                            </select>
+                        </div>
+                        <div class="restriction-item">
+                            <select class="form-control" name="frequency"  value="frequency" id = "post-frequency">
+                                <option value="" disabled selected hidden>FREQUENCY</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>     
+                    </div>
+
+                    <div>
+                        <textarea class="form-control" placeholder="Type your message here.."  id="post-textarea"></textarea>
+                        <div>
+                            <small class="float-right">Max 150 words</small>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="upload-img" id="add-img-label">
+                                <i class="far fa-images"></i>
+                        </label>&nbsp;Add image
+                        <input  type="file"  id="upload-img" name="filename" accept="image/png, image/jpeg"  hidden />    <!--onchange="readURL(this);"-->
+                        <div id="preview-box"  style="display: none;">
+                            <img id="upload-img-preview" src="#" alt="your image" />    <!--CAN BE INPUT IMAGE-->
+                        </div>
+
+                    </div>
+                    <div>
+                        <button class="post-button btn btn-primary float-right " type="button" id="post-posting-btn" onclick="createPost(this)">POST</button>
+                    </div>
+                    <div>
+
+                        <div style="clear: right;">
+                            <small>OR CREATE POLL</small>
+                        </div>
+                        <div>
+                            <button class="btn btn-info" type="button" onclick="pollOverlay()">Create Poll&nbsp;<i class="fas fa-poll"></i></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+
+          <!--POLL OVERLAY-->
+    <div class="container-overlays" id="poll-overlay" style="display: none;">
+        <div class="overlay-row">
+            <div id="pollOverlay" >
+
+                <div  class="control-section">
+                    <div >
+                        <button class="btn btn-outline-primary" id="back-button" onclick="back()">
+                            <i class="fas fa-chevron-left" ></i></button>
+                    </div>
+                    <div class="c-s-heading">
+                        Create poll
+                    </div>
+                    <div  id="button">
+                        <button class="btn btn-outline-primary" id="cross-button" onclick="exit()">
+                            <i class="fas fa-times" ></i>
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div id="poll-inner-box">
+                    <div class="form-group overlay-detail">
+                        <div class="overlay-header">
+                            <img src="static/profileimage1-ConvertImage.ico" data-profile-img=""  class="img-sm rounded-circle">
+                        <span id="name" data-profile-name=""></span>
+                        </div>
+
+                    <div class="restriction">
+                        <div class="restriction-item" >
+                            <select class="form-control" name="viewrestriction" id="poll-view-restriction" >
+                            <option value="" disabled selected hidden>VIEW RESTRICTION</option>
+                            <option value="department">Department</option>
+                            <option value="college">College</option>
+                        </select>
+                        </div>
+
+                        <div class="restriction-item">
+                            <select class="form-control" name="validity" id="poll-validity">
+                            <option value="" disabled selected hidden>VALIDITY PERIOD</option>
+                            <option value="1">1 week</option>
+                            <option value="2">2 weeks</option>
+                            <option value="3">3 weeks</option>
+                            <option value="4">4 weeks</option>
+                        </select>
+
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="form-label" for="poll-question">Question</label>
+                        <input class="form-control" type="text" name="question" placeholder="Eg: What is your fav colour?" size="40" maxlength="150" id="poll-question" style="margin-bottom: .3rem;" required/>
+                        <div>
+                            <small class="float-right">Max 150 words</small>
+                        </div>
+
+                    </div>
+
+                    <div style="clear: right;">
+                        <label class="form-label" for="overlay-poll-options">Options (Max 5)</label>
+                    </div>
+
+                    <div class="poll-options" id="overlay-poll-options" style="clear: right;">
+                        <div class="poll-option">
+                            <input class="form-control" type="text" name="option1" placeholder="Option 1" size="40" maxlength="50" id="op1" required />
+                        </div>
+
+                        <div class="poll-option">
+                            <input class="form-control" type="text" name="option2" placeholder="Option 2" size="40" maxlength="50" id="op2" required/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button 
+                            type="button" 
+                            class="btn float-left" 
+                            id="remove-option-btn" 
+                            onclick="removeOption()" 
+                            style="display:none; "
+                        ><i class="far fa-minus-square"></i>&nbsp;Remove options
+                        </button>
+                    </div>
+
+                    <div>
+                        <button type="button" 
+                                class="btn float-right" 
+                                id="add-option-btn" 
+                                onclick="addOption(this)">
+                                    Add more options&nbsp;<i class="far fa-plus-square"></i>
+                        </button>
+                    </div>
+
+                    <div style="clear: both;">
+                        <button 
+                            class="post-button btn btn-primary float-right " 
+                            type="button" onclick = "createPoll(this);"
+                            id="poll-posting-btn">
+                                POST
+                        </button>
+                    </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+        <!-- TEMPLATES : not to be directly rendered on page -->
+        <div id = "templates">
+            <div id = "user-profile-template"  class = "hidden">
+                <article>
+                    <div class="profile-row">
+                                <!--"static/profileimage.png"-->
+                                <img src= ${getImageURL} class="img-md rounded-circle" alt="Image not found" id="profile-pic">
+                                <div id="profile-name">${data.userPersonalInfoResponse.name}</div>
+
+                            <div>
+                                <div id="profile-content">
+                                    <div>
+                                        <span id = "user-profile-email">
+                                            <i  class="fas fa-envelope"></i>&nbsp;${data.userPersonalInfoResponse.email}
+                                        </span>
+                                    </div>
+
+                                    <div>
+                                        <span>
+                                            <i class="fas fa-user"></i>&nbsp;${data.userPersonalInfoResponse.profileAccessKey}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-outline-primary" id="edit-profile-btn">Edit Profile</button>
+                            <div id="course-info-title">
+                                        Course Info
+                            </div>
+
+                            <div class="py-4"> 
+                                <div>${data.userPersonalInfoResponse.courseInfoResponse.courseName}</div>
+                                <div>${data.userPersonalInfoResponse.courseInfoResponse.branch}</div>
+                                <div>${data.userPersonalInfoResponse.courseInfoResponse.semester}</div>
+                            </div>
+                    </div>
+                </article>
+            </div>
+                
+
+
+            <div id = "post-with-image-template" class = "hidden">
+                <article>
+                    <div class="outer-post-box-with-image" data-m-id = ${data.messageId} data-seen= "false">
+                        <div class="post-header">
+                                    <!--"static/profileimage1-ConvertImage.ico"-->
+                                    <img src=${data.profilePhoto} class="img-sm rounded-circle" loading="lazy">
+                                    <span class = "name">${data.name}</span>
+                        </div>
+                        <div class="d-flex align-items-start profile-feed-item">
+                            
+                        
+                            <div class="p-2">
+                                <div class="content">
+                                    <div class="caption">
+                                        <!--Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.-->
+                                        ${data.message}
+                                    </div>
+                                    <div class="post-image">
+                                        <!--"static/postDemo.png"-->
+                                        <img src=${data.image} class="post-img">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between" class="reach">
+                                    <div class="star">
+                                        <span class="icon">
+                                            <i data-m-id=${data.messageId} data-liked="false" class="rotate-on-hover fa fa-star-o" onclick="like(this)"></i>
+                                            <!--svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-m-id=${data.messageId} data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                                <path d="M19.46 11l-3.91-3.91a7 7 0 01-1.69-2.74l-.49-1.47A2.76 2.76 0 0010.76 1 2.75 2.75 0 008 3.74v1.12a9.19 9.19 0 00.46 2.85L8.89 9H4.12A2.12 2.12 0 002 11.12a2.16 2.16 0 00.92 1.76A2.11 2.11 0 002 14.62a2.14 2.14 0 001.28 2 2 2 0 00-.28 1 2.12 2.12 0 002 2.12v.14A2.12 2.12 0 007.12 22h7.49a8.08 8.08 0 003.58-.84l.31-.16H21V11zM19 19h-1l-.73.37a6.14 6.14 0 01-2.69.63H7.72a1 1 0 01-1-.72l-.25-.87-.85-.41A1 1 0 015 17l.17-1-.76-.74A1 1 0 014.27 14l.66-1.09-.73-1.1a.49.49 0 01.08-.7.48.48 0 01.34-.11h7.05l-1.31-3.92A7 7 0 0110 4.86V3.75a.77.77 0 01.75-.75.75.75 0 01.71.51L12 5a9 9 0 002.13 3.5l4.5 4.5H19z"></path>
+                                            </svg-->
+                                        </span>
+                                        <span class="likes count" data-m-id=${data.messageId}>
+                                            <!--668-->${data.likes}
+                                        </span>
+                                    </div>
+
+
+                                    <div class="eye">
+                                        <span class="count" data-m-id=${data.messageId}>${data.views}</span>
+                                        &nbsp;
+                                        <span class="icon"> <i class="fas fa-eye"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+
+
+            <div id = "post-without-image-template" class = "hidden">
+                <article>
+                    <div class="outer-post-box-without-image" data-m-id = ${data.messageId} data-seen= "false">
+                        <div class="post-header">
+                                    <img src=${data.profilePhoto}  class="img-sm rounded-circle" loading="lazy">
+                                    <span class="name">${data.name}</span>
+                        </div>
+
+                        <div class="d-flex align-items-start profile-feed-item" >
+                        
+                            <div class="p-2">
+                                
+                                <div class="content">
+                                    <div class="caption"> 
+                                    ${data.message}
+                                    <!--Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.-->
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between" class="reach">
+                                    <div class="star">
+                                        <span class="icon">
+                                            <i data-m-id = ${data.messageId} data-liked="false" class="rotate-on-hover fa fa-star-o" onclick="like(this)"></i>
+                                        </span>
+                                        <span class="likes count" data-m-id=${data.messageId}>
+                                            ${data.likes}
+                                        </span>
+                                    </div>
+
+                                    <div class="eye">
+                                        <span class="count" data-m-id=${data.messageId}>${data.views}</span>
+                                        &nbsp;
+                                        <span class="icon"> <i class="fas fa-eye"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+
+
+            <div id = "poll-question-template" class = "hidden">
+                <article>
+                    <div class="outer-poll-box-question" data-p-id = ${data.pollId}>
+                        <div class="post-header">
+                                    <img src=${data.profilePhoto} class="img-sm rounded-circle" loading="lazy">
+                                    <span class="name">${data.name}</span>
+                        </div>
+
+                        <div class="d-flex align-items-start profile-feed-item">
+                            <div class="p-2">
+                                <div class="content">
+                                    <div class="caption">
+                                        <!--Whom do you support?-->
+                                        ${data.question}
+                                    </div>
+                                    <div class="poll-choices">
+                                        <!--div><input type="button" value=${data.answers[0].answer} class="btn btn-outline-primary"></div>
+                                        <div><input type="button" value=${data.answers[1].answer} class="btn btn-outline-primary" ></div>
+                                        <div><input type="button" value=${data.answers[1].answer} class="btn btn-outline-primary"></div>
+                                        <div><input type="button" value=${data.answers[0].answer} class="btn btn-outline-primary"></div-->
+                                        ${data.options}
+                                    </div>
+                                    <div class="poll-info">
+                                        <small>${data.daysLeft}</small>
+                                        <small>${data.totalPollVotes} votes</small>
+                                    </div>
+                                </div>
+                                <!--div class="d-flex justify-content-between" class="reach">
+                                    <div class="star">
+                                        <span class="icon">
+                                        <i  class="fa fa-star-o" onclick="like(this)"></i>
+                                        </span>
+                                        <span class="likes count">
+                                            668
+                                        </span>
+                                    </div>
+
+
+                                    <div class="eye">
+                                        <span class="count">2.3K</span>
+                                        &nbsp;
+                                        <span class="icon"> <i class="fas fa-eye"></i></span>
+                                    </div>
+                                </div-->
+                                
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+
+
+            <!--div id = "poll-answers-template" class = "hidden">
+                <article>
+                    <div class="outer-poll-box-answers">
+                        <div class="post-header">
+                                    <img src=${data.profilePhoto}  class="img-sm rounded-circle" loading="lazy">
+                                    <span class="name">${data.name}</span>
+                        </div>
+                        
+                        <div class="d-flex align-items-start profile-feed-item">
+                            <div class="p-2">
+                                <div class="content">
+                                    <div class="caption">
+                                        Whom do you support?<br>
+                                    </div>
+
+                                    <div class="poll-progress">
+                                        <h3 class="progress-title">Option 1 - 60%</h3>
+                                            <div class="progress red">
+                                                <div class="progress-bar" style="width:60%; background:#ef5b5b;"></div>
+                                            </div>
+                                        <h3 class="progress-title">Option 2 - 35%</h3>
+                                            <div class="progress yellow">
+                                                <div class="progress-bar" style="width:35%; background:#ffc116;"></div>
+                                            </div>
+                                        <h3 class="progress-title">Option 3 - 50%</h3>
+                                            <div class="progress blue">
+                                                <div class="progress-bar" style="width:50%; background:#20a39e;"></div>
+                                            </div>
+                                        <h3 class="progress-title">Option 4 - 40%</h3>
+                                            <div class="progress green">
+                                                <div class="progress-bar" style="width:40%; background:#7cb518;"></div>
+                                            </div>
+                                    </div>
+
+                                    <div class="poll-info">
+                                        <small>5 days left</small>
+                                        <small>1.5k votes</small>
+                                    </div>
+                                </div>
+                                <#--div class="d-flex justify-content-between" class="reach">
+                                    <div class="star">
+                                        <span class="icon">
+                                        <i  class="fa fa-star-o" onclick="like(this)"></i>
+                                        </span>
+                                        <span class="likes count">
+                                            668
+                                        </span>
+                                    </div>
+
+
+                                    <div class="eye">
+                                        <span class="count">2.3K</span>
+                                        &nbsp;
+                                        <span class="icon"> <i class="fas fa-eye"></i></span>
+                                    </div>
+                                </div -#->
+
+                        
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div-->
+        </div>
+
+
+
+        <div id = "loading-anim-template" class = "hidden">
+            <div class="loader">
+                <div class="duo duo1">
+                <div class="dot dot-a"></div>
+                <div class="dot dot-b"></div>
+                </div>
+                <div class="duo duo2">
+                <div class="dot dot-a"></div>
+                <div class="dot dot-b"></div>
+                </div>
+            </div>
+        </div>
+
+        </body>
+</html>
