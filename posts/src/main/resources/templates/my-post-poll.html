@@ -30,7 +30,7 @@
             renderNotification("Welcome to CollReach Posts.");
         })
     </script>
-    <script>
+    <script type="text/javascript">
         function postwindow(postbutton){
             $(".outer-post-box-with-image").css('display', 'block');
             $(".outer-post-box-without-image").css('display', 'block');
@@ -40,6 +40,9 @@
             $(".post-toggle-btn").css('color', 'white');
             $(".poll-toggle-btn").css('color', '#6c67fd');
             $(".poll-toggle-btn").css('background-color', 'white');
+            $(".del-btn-box").addClass("none");
+            
+         
             
 
             
@@ -54,6 +57,24 @@
             $(".poll-toggle-btn").css('color', 'white');
             $(".post-toggle-btn").css('color', '#6c67fd');
             $(".post-toggle-btn").css('background-color', 'white');
+            $(".del-btn-box").addClass("none");
+        }
+
+
+//         $(document).ready(function(){
+//   $(".option-btn").click(function(){
+
+//     $(".option-btn").next().toggle();
+//   });
+// });
+
+
+        function showdelbtn(delbox){
+            
+            delbox.nextElementSibling.classList.toggle("none");
+            
+
+     
         }
             
     </script>
@@ -64,16 +85,19 @@
 <body>
 
 <style>
+   .none{
+       display: none;
+   }
+    
     .post-toggle-btn, .poll-toggle-btn{
-    width: 100%;
-    height: 100%;
-    height: 3.5rem;
-    font-size: 1.1em;
+
+   
     border-radius: 0px;
+   
 
 }
 .post-poll-toggle{
-    padding: 0px;
+   
     border: none;
 }
 
@@ -82,6 +106,38 @@
     background-color: #6c67fd;
     color: white;
 }
+
+.option-btn{ 
+  margin-left: auto;
+  border: none;
+  color: black;
+}
+.option-btn:hover{
+    background-color: grey;
+}
+.del-btn-box{
+    padding-top: 1.9rem;
+    
+}
+
+.del-btn{
+    display: flex;
+    position:absolute;
+    right: 2rem;
+    margin-left: auto;
+    color: white;
+    border: none;
+}
+/* .del-btn:hover{
+    background-color:rgb(77, 0, 0);
+}
+.del-btn:active{
+    background-color: rgb(77, 0, 0);
+} */
+.fa-trash{
+    margin: auto;
+}
+
 </style>
 
 
@@ -182,7 +238,19 @@
                             <div class="post-header">
                                         <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
                                         <span id="name">Ayush Chaudhry</span>
+                                        
+                                        <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
+                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                        </button>
+                                        
+                                        <div class="del-btn-box none" >
+                                            <button type="button" class="btn btn-danger del-btn ">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                            </button>
+                                        </div>
+                                       
                             </div>
+                            
                             <div class="d-flex align-items-start profile-feed-item" id="post-with-image">
                                 
                             
@@ -197,7 +265,9 @@
                                         <img src="static/postDemo.png" class="post-img">
                                         </div>
                                     </div>
-        
+                                    
+                                    
+
                                     <div class="d-flex justify-content-between" id="reach">
                                         <div id="star">
                                             <span id="icon">
@@ -223,6 +293,14 @@
                             <div class="post-header">
                                         <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
                                         <span id="name">Ayush Chaudhry</span>
+                                        <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
+                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                        </button>
+                                        <div class="del-btn-box none"   >
+                                            <button type="button" class="btn btn-danger del-btn">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                            </button>
+                                        </div>
                             </div>
         
                             <div class="d-flex align-items-start profile-feed-item" id="post-without-image">
@@ -258,6 +336,14 @@
                             <div class="post-header">
                                         <img src="static/profileimage1-ConvertImage.ico" class="img-sm rounded-circle">
                                         <span id="name">Ayush Chaudhry</span>
+                                        <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
+                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                        </button>
+                                        <div class="del-btn-box none" >
+                                            <button type="button" class="btn btn-danger del-btn">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                            </button>
+                                        </div>
                             </div>
         
         
@@ -306,6 +392,14 @@
                             <div class="post-header">
                                         <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
                                         <span id="name">Ayush Chaudhry</span>
+                                        <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
+                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                        </button>
+                                        <div class="del-btn-box none">
+                                            <button type="button" class="btn btn-danger del-btn">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                            </button>
+                                        </div>
                             </div>
                             
                             <div class="d-flex align-items-start profile-feed-item" id="post-poll-result">
