@@ -494,7 +494,7 @@
                                     </div>
                                     <div class="poll-info">
                                         <small>${data.daysLeft}</small>
-                                        <small>${data.totalPollVotes} votes</small>
+                                        <small data-p-id = ${data.pollId}>${data.totalPollVotes} votes</small>
                                     </div>
                                 </div>
                                 
@@ -610,6 +610,11 @@
                 </div>
             </div>
         </div>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script src="scripts/webSocket.js"></script>
 
         </body>
 </html>

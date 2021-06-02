@@ -11,16 +11,14 @@ import com.collreach.posts.model.repositories.polls.PollAnswersRepository;
 import com.collreach.posts.model.repositories.polls.PollsRepository;
 import com.collreach.posts.model.repositories.polls.UsersPolledRepository;
 import com.collreach.posts.model.requests.CreatePollRequest;
-import com.collreach.posts.model.response.MessageResponse;
-import com.collreach.posts.model.response.MessagesResponse;
-import com.collreach.posts.model.response.PollAnswersResponse;
-import com.collreach.posts.model.response.UserPollsResponse;
+import com.collreach.posts.model.response.*;
 import com.collreach.posts.responses.ResponseMessage;
 import com.collreach.posts.service.PollsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +42,9 @@ public class PollsServiceImpl implements PollsService {
 
     @Autowired
     UsersPolledRepository usersPolledRepository;
+
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
 
     @Override
     @Transactional
@@ -138,6 +139,9 @@ public class PollsServiceImpl implements PollsService {
                     pollsRepository.save(poll.get());
                     usersPolledRepository.save(usersPolled);
                     pollAnswersRepository.save(pollAnswer.get());
+                    simpMessagingTemplate.convertAndSend("/topic/votesUpdate", new LikesAndViewsUpdateResponse(
+                            poll.get().getPollId(), poll.get().getTotalVotes()
+                    ));
                     return getAllAnswersOfPoll(poll.get(), 0);
                 }catch(Exception e){
                     return null;

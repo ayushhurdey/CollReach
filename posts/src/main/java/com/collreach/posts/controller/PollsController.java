@@ -7,6 +7,7 @@ import com.collreach.posts.model.response.UserPollsResponse;
 import com.collreach.posts.service.PollsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,9 +17,13 @@ public class PollsController {
     @Autowired
     private PollsService pollsService;
 
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+
     @PostMapping(path = "/create-poll")
     public ResponseEntity<String> createPoll(@RequestBody CreatePollRequest createPollRequest){
         String msg = pollsService.createPoll(createPollRequest);
+        simpMessagingTemplate.convertAndSend("/topic/public", "New Poll Added.");
         return ResponseEntity.ok().body(msg);
     }
 
