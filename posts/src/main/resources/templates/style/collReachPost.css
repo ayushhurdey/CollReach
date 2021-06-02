@@ -198,6 +198,13 @@ i {
   padding: 0.5rem 0;
   border: 2px solid #8b8b8b;
 }
+
+.post-date,
+.post-time {
+  font-size: 0.8em;
+  color: gray;
+}
+
 .d-flex {
   margin: 1px;
 }
