@@ -8,6 +8,7 @@ import com.collreach.posts.responses.ResponseMessage;
 import com.collreach.posts.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,9 @@ public class PostController {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     //private ObjectMapper objectMapper;
 
@@ -49,6 +53,7 @@ public class PostController {
     public ResponseEntity<String> createPost(@RequestBody CreatePostRequest createPostRequest) {
         //CreatePostRequest  createPostRequest = objectMapper.readValue(createPostReq, CreatePostRequest.class);
         String msg = postService.createPost(createPostRequest);
+        simpMessagingTemplate.convertAndSend("/topic/public","New Posts available.");
         return ResponseEntity.ok().body(msg);
     }
 

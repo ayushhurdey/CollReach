@@ -3,6 +3,7 @@ package com.collreach.posts.service.impl;
 import com.collreach.posts.model.bo.posts.SeenAndLiked;
 import com.collreach.posts.model.bo.posts.UserMessageKey;
 import com.collreach.posts.model.repositories.posts.SeenAndLikedRepository;
+import com.collreach.posts.model.response.LikesAndViewsUpdateResponse;
 import com.collreach.posts.responses.ResponseMessage;
 import com.collreach.posts.model.bo.Users;
 import com.collreach.posts.model.bo.posts.Messages;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,6 +40,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     SeenAndLikedRepository seenAndLikedRepository;
+
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
 
     @Override
     @Deprecated
@@ -279,6 +284,9 @@ public class PostServiceImpl implements PostService {
                     seenAndLiked.setSeen('T');
                     seenAndLikedRepository.save(seenAndLiked);
                     messagesRepository.save(message.get());
+                    simpMessagingTemplate.convertAndSend("/topic/viewsUpdate", new LikesAndViewsUpdateResponse(
+                            message.get().getMessageId(),message.get().getLikes(), message.get().getViews()
+                    ));
                     return "Success: "+ message.get().getViews();
                 }catch(Exception e){
                     return ResponseMessage.PROCESSING_ERROR;
@@ -312,6 +320,9 @@ public class PostServiceImpl implements PostService {
                     seenAndLiked.setLiked('T');
                     seenAndLikedRepository.save(seenAndLiked);
                     messagesRepository.save(message.get());
+                    simpMessagingTemplate.convertAndSend("/topic/likesUpdate", new LikesAndViewsUpdateResponse(
+                            message.get().getMessageId(),message.get().getLikes(), message.get().getViews()
+                    ));
                     return "Success: "+ message.get().getLikes();
                 }catch(Exception e){
                     return ResponseMessage.PROCESSING_ERROR;
