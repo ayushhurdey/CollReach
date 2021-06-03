@@ -192,12 +192,16 @@ public class PollsServiceImpl implements PollsService {
     }
 
     @Override
-    public MessagesResponse getPollsByUsername(String username){
+    public MessagesResponse getPollsByUsername(String username,int pageNo, int pageSize){
         LinkedHashSet<MessageResponse> posts = new LinkedHashSet<>();
         Optional<Users> user = usersRepository.findByUserName(username);
+        Sort dateSort = Sort.by("dateCreated").descending();
+        Sort timeSort = Sort.by("timeCreated").descending();
+        Sort groupBySort = dateSort.and(timeSort);
+        Pageable paging = PageRequest.of(pageNo, pageSize, groupBySort);
 
         if(user.isPresent()){
-            List<Polls> polls = pollsRepository.findAllByUserId(user.get());
+            List<Polls> polls = pollsRepository.findAllByUserId(user.get(),paging);
             polls.forEach( poll -> {
                 posts.add(new MessageResponse(poll.getPollId(), poll.getVisibility(),
                         poll.getUserId().getUserName(), poll.getValidityInWeeks(),

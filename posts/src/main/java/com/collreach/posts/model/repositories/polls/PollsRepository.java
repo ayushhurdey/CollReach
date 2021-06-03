@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface PollsRepository extends PagingAndSortingRepository<Polls, Integer> {
     public List<Polls> findAllByVisibilityOrVisibility(String visibility, String vis, Pageable pageable);
-    public List<Polls> findAllByUserId(Users userId);
+    public List<Polls> findAllByUserId(Users userId, Pageable pageable);
 }

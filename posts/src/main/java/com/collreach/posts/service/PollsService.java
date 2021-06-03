@@ -13,6 +13,6 @@ public interface PollsService {
     public LinkedHashSet<MessageResponse> getPolls(Integer pageNo, Integer pageSize, String visibility);
     public UserPollsResponse updatesAnswersVotes(String userName, int pollId, int answerId);
     UserPollsResponse getAllAnswersOfPoll(Polls pollId, int pollID);
-    MessagesResponse getPollsByUsername(String username);
+    MessagesResponse getPollsByUsername(String username, int pageNo, int pageSize);
     String deletePoll(int pollId, String userName);
 }

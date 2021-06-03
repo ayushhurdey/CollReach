@@ -369,12 +369,17 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public MessagesResponse getPostsByUsername(String username){
+    public MessagesResponse getPostsByUsername(String username, int pageNo, int pageSize){
         LinkedHashSet<MessageResponse> posts = new LinkedHashSet<>();
         Optional<Users> user = usersRepository.findByUserName(username);
 
+        Sort dateSort = Sort.by("createDate").descending();
+        Sort timeSort = Sort.by("uploadTime").descending();
+        Sort groupBySort = dateSort.and(timeSort);
+        Pageable paging = PageRequest.of(pageNo, pageSize, groupBySort);
+
         if(user.isPresent()){
-            List<Messages> messages = messagesRepository.findAllByUserId(user.get());
+            List<Messages> messages = messagesRepository.findAllByUserId(user.get(), paging);
             messages.forEach( message -> {
                 posts.add(new MessageResponse(message.getMessageId(), message.getFilename(), message.getFiletype(),
                         message.getImage(), message.getVisibility(),message.getUserName().getUserName(),

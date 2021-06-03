@@ -99,8 +99,10 @@ public class PostController {
     }
 
     @GetMapping(path = "/posts/get-posts/{username}")
-    public ResponseEntity<MessagesResponse> getPostsByUsername(@PathVariable(value = "username") String userName){
-        MessagesResponse msg = postService.getPostsByUsername(userName);
+    public ResponseEntity<MessagesResponse> getPostsByUsername(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                               @RequestParam(defaultValue = "2") Integer pageSize,
+                                                               @PathVariable(value = "username") String userName){
+        MessagesResponse msg = postService.getPostsByUsername(userName,pageNo,pageSize);
         return ResponseEntity.ok().body(msg);
     }
 

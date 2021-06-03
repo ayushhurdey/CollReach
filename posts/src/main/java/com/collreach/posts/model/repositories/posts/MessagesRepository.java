@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface MessagesRepository extends PagingAndSortingRepository<Messages, Integer> {
     public List<Messages> findAllByVisibilityOrVisibility(String visibility, String vis, Pageable pageable);
-    public List<Messages> findAllByUserId(Users userId);
+    public List<Messages> findAllByUserId(Users userId, Pageable pageable);
 }
