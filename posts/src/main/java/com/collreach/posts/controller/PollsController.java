@@ -43,8 +43,10 @@ public class PollsController {
     }
 
     @GetMapping(path = "/polls/get-polls/{username}")
-    public ResponseEntity<MessagesResponse> getPollsByUsername(@PathVariable(value = "username") String userName){
-        MessagesResponse msg = pollsService.getPollsByUsername(userName);
+    public ResponseEntity<MessagesResponse> getPollsByUsername(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                               @RequestParam(defaultValue = "2") Integer pageSize,
+                                                               @PathVariable(value = "username") String userName){
+        MessagesResponse msg = pollsService.getPollsByUsername(userName,pageNo,pageSize);
         return ResponseEntity.ok().body(msg);
     }
 

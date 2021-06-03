@@ -18,6 +18,7 @@
     <script type="application/javascript" src="./scripts/compress.js"></script>
     <script defer type="application/javascript" src="./scripts/compressUtil.js"></script>
     <script src ="scripts/CollreachPosts.js"></script>
+    <script src ="scripts/my-post-poll.js"></script>            <!--Should only be loaded after CollreachPosts.js-->
     <link rel="stylesheet" href="style/collReachPost.css" />
   
 
@@ -30,74 +31,24 @@
             renderNotification("Welcome to CollReach Posts.");
         })
     </script>
-    <script type="text/javascript">
-        function postwindow(postbutton){
-            $(".outer-post-box-with-image").css('display', 'block');
-            $(".outer-post-box-without-image").css('display', 'block');
-            $(".outer-poll-box-question").css('display', 'none');
-            $(".outer-poll-box-answers").css('display', 'none');
-            $(".post-toggle-btn").css('background-color', '#6c67fd');
-            $(".post-toggle-btn").css('color', 'white');
-            $(".poll-toggle-btn").css('color', '#6c67fd');
-            $(".poll-toggle-btn").css('background-color', 'white');
-            $(".del-btn-box").addClass("none");
-            
-         
-            
-
-            
-           
-        }
-        function pollwindow(pollbutton){
-            $(".outer-post-box-with-image").css('display', 'none');
-            $(".outer-post-box-without-image").css('display', 'none');
-            $(".outer-poll-box-question").css('display', 'block');
-            $(".outer-poll-box-answers").css('display', 'block');
-            $(".poll-toggle-btn").css('background-color', '#6c67fd');
-            $(".poll-toggle-btn").css('color', 'white');
-            $(".post-toggle-btn").css('color', '#6c67fd');
-            $(".post-toggle-btn").css('background-color', 'white');
-            $(".del-btn-box").addClass("none");
-        }
-
-
-//         $(document).ready(function(){
-//   $(".option-btn").click(function(){
-
-//     $(".option-btn").next().toggle();
-//   });
-// });
-
-
-        function showdelbtn(delbox){
-            
-            delbox.nextElementSibling.classList.toggle("none");
-            
-
-     
-        }
-            
-    </script>
 </head>
 
-<!-- <body onload="load()">   -->  <!-- to be un-commented later -->
+<body onload="load(true)">   <!-- to be un-commented later -->
 
-<body>
+<!--body-->
 
 <style>
-   .none{
-       display: none;
-   }
+.none{
+    display: none;
+}
     
-    .post-toggle-btn, .poll-toggle-btn{
-
-   
+.post-toggle-btn, 
+.poll-toggle-btn{
     border-radius: 0px;
    
 
 }
-.post-poll-toggle{
-   
+.post-poll-toggle{  
     border: none;
 }
 
@@ -216,251 +167,19 @@
                                 </div>
                                 
                             </div>
-                        </div>   
-                        <div class="d-flex align-items-start profile-feed-item post-poll-toggle">
-                            
-                            
-                                <button type="button" class="p-2 btn btn-outline-primary post-toggle-btn" onclick="postwindow(this)">My Posts</button>
-                            
-                            
-                           
-                                <button type="button" class="p-2 btn btn-outline-primary poll-toggle-btn" onclick="pollwindow(this)">My Polls</button>
-                            
-                            
+                        </div> 
 
+                        <div class="d-flex align-items-start profile-feed-item post-poll-toggle">
+                                <button type="button" class="p-2 btn btn-outline-primary post-toggle-btn" onclick="postwindow(this)">My Posts</button>
+                                <button type="button" class="p-2 btn btn-outline-primary poll-toggle-btn" onclick="pollwindow(this)">My Polls</button>
                         </div>
+
                         <div id = "posts-loading-anim" style = "display:none;"></div>  
 
-
-
-                    <!-- SAMPLE POST FOR SIMULATION -->
-                        <div class="outer-post-box-with-image">
-                            <div class="post-header">
-                                        <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
-                                        <span id="name">Ayush Chaudhry</span>
-                                        
-                                        <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        
-                                        <div class="del-btn-box none" >
-                                            <button type="button" class="btn btn-danger del-btn ">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>Delete
-                                            </button>
-                                        </div>
-                                       
-                            </div>
-                            
-                            <div class="d-flex align-items-start profile-feed-item" id="post-with-image">
-                                
-                            
-                                <div class="p-2">
-                                    
-        
-                                    <div class="content">
-                                        <div class="caption">
-                                            Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.
-                                        </div>
-                                        <div id="post-image">
-                                        <img src="static/postDemo.png" class="post-img">
-                                        </div>
-                                    </div>
-                                    
-                                    
-
-                                    <div class="d-flex justify-content-between" id="reach">
-                                        <div id="star">
-                                            <span id="icon">
-                                            <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
-                                            </span>
-                                            <span id="count">
-                                                668
-                                            </span>
-                                        </div>
-        
-        
-                                        <div id="eye">
-                                            <span id="count">2.3K</span>
-                                            &nbsp;
-                                            <span id="icon"> <i class="fas fa-eye"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-        
-                        <div class="outer-post-box-without-image">
-                            <div class="post-header">
-                                        <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
-                                        <span id="name">Ayush Chaudhry</span>
-                                        <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <div class="del-btn-box none"   >
-                                            <button type="button" class="btn btn-danger del-btn">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>Delete
-                                            </button>
-                                        </div>
-                            </div>
-        
-                            <div class="d-flex align-items-start profile-feed-item" id="post-without-image">
-                            
-                                <div class="p-2">
-                                    
-                                    <div class="content">
-                                        <div class="caption">
-                                        Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.
-                                        </div>
-                                    </div>
-                                      <div class="d-flex justify-content-between" id="reach">
-                                        <div id="star">
-                                            <span id="icon">
-                                            <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
-                                            </span>
-                                            <span id="count">
-                                                668
-                                            </span>
-                                        </div>
-        
-        
-                                        <div id="eye">
-                                            <span id="count">2.3K</span>
-                                            &nbsp;
-                                            <span id="icon"> <i class="fas fa-eye"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="outer-poll-box-question" style="display: none;">
-                            <div class="post-header">
-                                        <img src="static/profileimage1-ConvertImage.ico" class="img-sm rounded-circle">
-                                        <span id="name">Ayush Chaudhry</span>
-                                        <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <div class="del-btn-box none" >
-                                            <button type="button" class="btn btn-danger del-btn">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>Delete
-                                            </button>
-                                        </div>
-                            </div>
-        
-        
-                            <div class="d-flex align-items-start profile-feed-item" id="post-poll">
-                            
-                                <div class="p-2">
-                                    
-                                    <div class="content">
-                                        <div class="caption">
-                                            Whom do you support?
-                                        </div>
-                                        <div id="poll-options">
-                                            <div><input type="button" value="option1" class="btn btn-outline-primary"></div>
-                                            <div><input type="button" value="option2" class="btn btn-outline-primary" ></div>
-                                            <div><input type="button" value="option3" class="btn btn-outline-primary"></div>
-                                            <div><input type="button" value="option4" class="btn btn-outline-primary"></div>
-                                        </div>
-                                        <div id="poll-info">
-                                            <small>5 days left</small>
-                                            <small>1.5k votes</small>
-                                        </div>
-                                    </div>
-                                      <div class="d-flex justify-content-between" id="reach">
-                                        <div id="star">
-                                            <span id="icon">
-                                            <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
-                                            </span>
-                                            <span id="count">
-                                                668
-                                            </span>
-                                        </div>
-        
-        
-                                        <div id="eye">
-                                            <span id="count">2.3K</span>
-                                            &nbsp;
-                                            <span id="icon"> <i class="fas fa-eye"></i></span>
-                                        </div>
-                                    </div>
-                                    
-        
-                                </div>
-                            </div>
-                        </div>
-                        <div class="outer-poll-box-answers" style="display: none;">
-                            <div class="post-header">
-                                        <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle">
-                                        <span id="name">Ayush Chaudhry</span>
-                                        <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
-                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                        </button>
-                                        <div class="del-btn-box none">
-                                            <button type="button" class="btn btn-danger del-btn">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>Delete
-                                            </button>
-                                        </div>
-                            </div>
-                            
-                            <div class="d-flex align-items-start profile-feed-item" id="post-poll-result">
-                            
-                                <div class="p-2">
-                                    
-                                    <div class="content">
-                                        <div class="caption">
-                                            Whom do you support?<br>
-                                        </div>
-                                        <div id="poll-progress">
-        
-        
-                                            <h3 class="progress-title">Option 1 - 60%</h3>
-                                                <div class="progress red">
-                                                    <div class="progress-bar" style="width:60%; background:#ef5b5b;"></div>
-                                                </div>
-                                            <h3 class="progress-title">Option 2 - 35%</h3>
-                                                <div class="progress yellow">
-                                                    <div class="progress-bar" style="width:35%; background:#ffc116;"></div>
-                                                </div>
-                                            <h3 class="progress-title">Option 3 - 50%</h3>
-                                                <div class="progress blue">
-                                                    <div class="progress-bar" style="width:50%; background:#20a39e;"></div>
-                                                </div>
-                                            <h3 class="progress-title">Option 4 - 40%</h3>
-                                                <div class="progress green">
-                                                    <div class="progress-bar" style="width:40%; background:#7cb518;"></div>
-                                                </div>
-         
-                                        </div>
-                                        <div id="poll-info">
-                                            <small>5 days left</small>
-                                            <small>1.5k votes</small>
-                                        </div>
-                                    </div>
-                                      <div class="d-flex justify-content-between" id="reach">
-                                        <div id="star">
-                                            <span id="icon">
-                                            <i  class="fa fa-star-o" onclick="myFunction(this)"></i>
-                                            </span>
-                                            <span id="count">
-                                                668
-                                            </span>
-                                        </div>
-        
-        
-                                        <div id="eye">
-                                            <span id="count">2.3K</span>
-                                            &nbsp;
-                                            <span id="icon"> <i class="fas fa-eye"></i></span>
-                                        </div>
-                                    </div>
-        
-                                    
-                                </div>
-                            </div>
-                        </div>  
-                    <!-- SAMPLE POST END HERE -->
-                        
-
+                        <!-- SAMPLE POST FOR SIMULATION -->
+                        <div class = "my-posts"> </div>
+                        <div class = "my-polls" style="display: none;"></div>   
+                        <!-- SAMPLE POST END HERE -->
 
                     </div>
                 </div> 
@@ -718,7 +437,17 @@
                         <div class="post-header">
                                     <!--"static/profileimage1-ConvertImage.ico"-->
                                     <img src=${data.profilePhoto} class="img-sm rounded-circle" loading="lazy">
-                                    <span class = "name">${data.name}</span>
+                                    <span class = "name">You</span>
+
+                                    <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
+                                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                    </button>
+                                    
+                                    <div class="del-btn-box none" >
+                                        <button type="button" class="btn btn-danger del-btn ">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                        </button>
+                                    </div>
                         </div>
                         <div class="d-flex align-items-start profile-feed-item">
                             
@@ -768,7 +497,17 @@
                     <div class="outer-post-box-without-image" data-m-id = ${data.messageId} data-seen= "false">
                         <div class="post-header">
                                     <img src=${data.profilePhoto}  class="img-sm rounded-circle" loading="lazy">
-                                    <span class="name">${data.name}</span>
+                                    <span class="name">You</span>
+
+                                    <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
+                                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                    </button>
+                                    
+                                    <div class="del-btn-box none" >
+                                        <button type="button" class="btn btn-danger del-btn ">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                        </button>
+                                    </div>
                         </div>
 
                         <div class="d-flex align-items-start profile-feed-item" >
@@ -810,7 +549,17 @@
                     <div class="outer-poll-box-question" data-p-id = ${data.pollId}>
                         <div class="post-header">
                                     <img src=${data.profilePhoto} class="img-sm rounded-circle" loading="lazy">
-                                    <span class="name">${data.name}</span>
+                                    <span class="name">You</span>
+
+                                    <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
+                                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                    </button>
+                                    
+                                    <div class="del-btn-box none" >
+                                        <button type="button" class="btn btn-danger del-btn ">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                        </button>
+                                    </div>
                         </div>
 
                         <div class="d-flex align-items-start profile-feed-item">
@@ -938,5 +687,9 @@
             </div>
         </div>
 
-        </body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script src="scripts/webSocket.js"></script>
+
+    </body>
 </html>
