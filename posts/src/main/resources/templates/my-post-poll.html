@@ -17,8 +17,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="application/javascript" src="./scripts/compress.js"></script>
     <script defer type="application/javascript" src="./scripts/compressUtil.js"></script>
-    <script src ="scripts/CollreachPosts.js"></script>
-    <script src ="scripts/my-post-poll.js"></script>            <!--Should only be loaded after CollreachPosts.js-->
+    <script defer src ="scripts/CollreachPosts.js"></script>
+    <script defer src ="scripts/my-post-poll.js"></script>            <!--Should only be loaded after CollreachPosts.js-->
     <link rel="stylesheet" href="style/collReachPost.css" />
   
 
@@ -439,12 +439,12 @@
                                     <img src=${data.profilePhoto} class="img-sm rounded-circle" loading="lazy">
                                     <span class = "name">You</span>
 
-                                    <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
+                                    <button type="button" class="btn btn-default option-btn del-btn-option" data-m-id = ${data.messageId} onclick="showdelbtn(this)">
                                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                     </button>
                                     
                                     <div class="del-btn-box none" >
-                                        <button type="button" class="btn btn-danger del-btn ">
+                                        <button type="button" class="btn btn-danger del-btn" data-m-id = ${data.messageId} onclick="deletePostAndPoll(this)">
                                             <i class="fa fa-trash" aria-hidden="true"></i>Delete
                                         </button>
                                     </div>
@@ -499,12 +499,12 @@
                                     <img src=${data.profilePhoto}  class="img-sm rounded-circle" loading="lazy">
                                     <span class="name">You</span>
 
-                                    <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
+                                    <button type="button" class="btn btn-default option-btn del-btn-option" data-m-id = ${data.messageId} onclick="showdelbtn(this)">
                                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                     </button>
                                     
                                     <div class="del-btn-box none" >
-                                        <button type="button" class="btn btn-danger del-btn ">
+                                        <button type="button" class="btn btn-danger del-btn " data-m-id = ${data.messageId} onclick="deletePostAndPoll(this)">
                                             <i class="fa fa-trash" aria-hidden="true"></i>Delete
                                         </button>
                                     </div>
@@ -551,12 +551,12 @@
                                     <img src=${data.profilePhoto} class="img-sm rounded-circle" loading="lazy">
                                     <span class="name">You</span>
 
-                                    <button type="button" class="btn btn-default option-btn" onclick="showdelbtn(this)">
+                                    <button type="button" class="btn btn-default option-btn del-btn-option" data-p-id = ${data.pollId} onclick="showdelbtn(this)">
                                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                     </button>
                                     
                                     <div class="del-btn-box none" >
-                                        <button type="button" class="btn btn-danger del-btn ">
+                                        <button type="button" class="btn btn-danger del-btn" data-poll-btn="true" data-p-id = ${data.pollId} onclick="deletePostAndPoll(this)">
                                             <i class="fa fa-trash" aria-hidden="true"></i>Delete
                                         </button>
                                     </div>

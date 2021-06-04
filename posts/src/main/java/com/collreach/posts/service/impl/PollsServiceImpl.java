@@ -222,9 +222,9 @@ public class PollsServiceImpl implements PollsService {
                 poll.isPresent() &&
                 user.get().getUserName()
                         .equals(poll.get().getUserId().getUserName())) {
-            usersPolledRepository.deleteAllByPollId(poll.get());
-            pollAnswersRepository.deleteAllByPollId(poll.get());
-            pollsRepository.deleteById(pollId);
+//            usersPolledRepository.deleteAllByPollId(poll.get());
+//            pollAnswersRepository.deleteAllByPollId(poll.get());
+//            pollsRepository.deleteById(pollId);
             return ResponseMessage.SUCCESSFULLY_DONE;
         }
         return ResponseMessage.RECEIVED_INVALID_DATA;

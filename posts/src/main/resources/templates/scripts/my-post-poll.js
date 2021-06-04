@@ -196,3 +196,56 @@ function pollwindow(pollbutton) {
 function showdelbtn(delbox) {
     delbox.nextElementSibling.classList.toggle("none");
 }
+
+console.log("Over delete function");
+
+function deletePostAndPoll(element) {
+    let isToDelete = confirm("Are you sure you want to delete this. This cannot be rollbacked.");
+    if (!isToDelete)
+        return;
+
+    let isPoll = element.dataset.pollBtn;
+    if (isPoll === "true") {
+        console.log("Poll id = " + element.dataset.pId);
+        deletePollWithId(element, element.dataset.pId);
+    }
+    else {
+        console.log("Post id = " + element.dataset.mId);
+        deletePostWithId(element, element.dataset.mId);
+    }
+}
+
+async function deletePostWithId(element, postId) {
+    let username = localStorage.getItem('username');
+    let url = POSTS_URL + `/posts/delete-post/${username}/${postId}`;
+
+    let response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+            Authorization: localStorage.getItem("auth"),
+        }
+    });
+
+    response = await response.text();
+    renderNotification(response);
+    document.querySelector(`div[data-m-id="${postId}"]`).setAttribute("hidden", "");
+    console.log("Post with Id : " + postId + " deleted.");
+}
+
+
+async function deletePollWithId(element, pollId) {
+    let username = localStorage.getItem('username');
+    let url = POSTS_URL + `/polls/delete-poll/${username}/${pollId}`;
+
+    let response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+            Authorization: localStorage.getItem("auth"),
+        }
+    });
+
+    response = await response.text();
+    renderNotification(response);
+    document.querySelector(`div[data-p-id="${pollId}"]`).setAttribute("hidden", "");
+    console.log("Poll with Id : " + pollId + " deleted.");
+}
