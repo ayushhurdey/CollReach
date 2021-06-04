@@ -401,8 +401,8 @@ public class PostServiceImpl implements PostService {
                 message.isPresent() &&
                 user.get().getUserName()
                         .equals(message.get().getUserName().getUserName())) {
-                    seenAndLikedRepository.deleteAllByMessageId(message.get());
-                    messagesRepository.deleteById(messageId);
+//                    seenAndLikedRepository.deleteAllByMessageId(message.get());
+//                    messagesRepository.deleteById(messageId);
                     return ResponseMessage.SUCCESSFULLY_DONE;
         }
         return ResponseMessage.RECEIVED_INVALID_DATA;
