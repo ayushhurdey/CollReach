@@ -795,6 +795,12 @@ function render(element) {
 }
 
 
+$(document).ready(function(){
+    $('.my-posts-btn').click(function(){
+        window.location.href = POSTS_URL + "/my-post-poll.html";
+    })
+}); 
+
 /*
 var observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
