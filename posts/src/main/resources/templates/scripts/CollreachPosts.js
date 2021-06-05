@@ -2,6 +2,7 @@ const POSTS_URL = "http://localhost:8084";
 const USER_PROFILE_URL = "http://localhost:8082";
 let firstLoad = true;
 let globalPageNumber = 0;
+let loadTodaysFeed = false;
 
 function login() {
     const USERNAME = localStorage.getItem('username');
@@ -44,8 +45,8 @@ function load() {
     const template = document.getElementById('loading-anim-template').innerHTML;
     //displayLoading(template,'posts-loading-anim');
 
-
-    let url = POSTS_URL + "/get-paged-posts";
+    const USERNAME = localStorage.getItem('username');
+    let url = POSTS_URL + (loadTodaysFeed ? `/posts/get-today-feed/${USERNAME}` : "/get-paged-posts");
     url = buildURL(url, pageNo, pageSize, visibility);
 
 
@@ -111,10 +112,12 @@ function load() {
                 elem.addEventListener('click', polled);
             });
 
-            let postsContainer = document.querySelector('#posts-container');
-            let nthElemNo = postsContainer.childElementCount - 4 + 1;
+            let postsContainer = document.querySelector('.posts-feed-container');
+            let childsCount = postsContainer.childElementCount;
+            let nthElemNo = childsCount - 4 + 1;
             let nthElem = postsContainer.children[nthElemNo - 1];
-            lazyLoadPosts(nthElem);
+            if (childsCount > 5)
+                lazyLoadPosts(nthElem);
         });
 }
 
@@ -171,7 +174,7 @@ function renderPostTemplate(data) {
     }
 
     if (template !== null) {
-        let postsContainer = document.getElementById('posts-container');
+        let postsContainer = document.querySelector('.posts-feed-container');
         postsContainer.innerHTML += template;
     }
 
@@ -771,6 +774,32 @@ function eliminateTagsFromString(answer) {
     }
     return preprocesedAnswer;
 }
+
+function render(element) {
+    let value = element.value;
+
+    if (value === "today") {
+        console.log(element.value);
+        document.querySelector('.posts-feed-container').innerHTML = "";
+        globalPageNumber = 0;
+        loadTodaysFeed = true;
+        load();
+    }
+    else {                                    // regular.
+        console.log(element.value);
+        document.querySelector('.posts-feed-container').innerHTML = "";
+        globalPageNumber = 0;
+        loadTodaysFeed = false;
+        load();
+    }
+}
+
+
+$(document).ready(function(){
+    $('.my-posts-btn').click(function(){
+        window.location.href = POSTS_URL + "/my-post-poll.html";
+    })
+}); 
 
 /*
 var observer = new MutationObserver(function (mutations) {

@@ -15,7 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script type="application/javascript" src="./scripts/compress.js"></script>
+    <script defer type="application/javascript" src="./scripts/compress.js"></script>
     <script defer type="application/javascript" src="./scripts/compressUtil.js"></script>
     <script src ="scripts/CollreachPosts.js"></script>
     <link rel="stylesheet" href="style/collReachPost.css" />
@@ -111,18 +111,28 @@
                         </div>   
                         <div id = "posts-loading-anim" style = "display:none;"></div>
 
-                        <div id="post-type-option"><hr>
-                            <div id="sort-options">Show by
-                              <select>
-                                <option>Today's Feed</option>
-                                <option>Regular Feed</option>
-                              </select>  
+                        <form>
+                            <div id="post-type-option"><hr>
+                                <div id="sort-options">Show by
+                                  <select class = "select-sort-options" onchange="render(this)">
+                                    <option value = "regular" selected>Regular Feed</option>
+                                    <option value = "today">Today's Feed</option>
+                                  </select>
+                                </div>
                             </div>
-                        </div>  
-                             <!-- profile feed -->
+                        </form>
+                        
+                        <div class = "posts-feed-container">
+                            <!------------- profile feed --------------->
+                        </div>
+                             
                     </div>
                 </div> 
                 
+                <!-- Side panel-->
+                <div>
+                    <button class = "btn btn-outline-primary my-posts-btn">My Posts</button>
+                </div>
             
         </div>
     </div>
