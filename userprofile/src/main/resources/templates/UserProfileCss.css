@@ -2,7 +2,33 @@
   box-sizing: border-box;
   
 }
-.container{
+
+#logout-btn{
+  position: relative;
+  
+  float:right;
+ 
+  
+  margin-left: .5rem;
+  
+}
+.card{
+  margin-bottom: .4rem;
+}
+.card-title{
+  font-size: 1.2em;
+}
+#updatebutton{
+  padding: 3px;
+
+  width: 100%;
+  background-color: white;
+  color: #6c67fd;
+}
+.footer{
+  text-align: center;  
+}
+/* .container{
   margin: auto;
 }
 .fixed{
@@ -39,7 +65,7 @@
 }
 .row:first-child{
   width: 68rem;
-}
+} */
 
 
 
@@ -346,15 +372,7 @@ float: left;
   font-size: 0.6em;
 }
 
-#logout-btn{
-  position: relative;
-  padding: 5px;
-  float:right;
-  width: 50px;
-  border-radius: 13px;
-  margin-right: 1%;
-  
-}
+
 @media (min-width: 721px){
   .custom-file{
   
