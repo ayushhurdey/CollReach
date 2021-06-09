@@ -1,5 +1,12 @@
 package com.collreach.chat.controller;
 
+import com.collreach.chat.model.bo.Message;
+import com.collreach.chat.model.bo.Room;
+import com.collreach.chat.model.bo.User;
+import com.collreach.chat.model.repository.MessageRepository;
+import com.collreach.chat.model.repository.RoomRepository;
+import com.collreach.chat.model.repository.UserRepository;
+import com.collreach.chat.model.request.MessageRequest;
 import com.collreach.chat.model.request.UserLoginRequest;
 import com.collreach.chat.model.response.TestResponse;
 import com.collreach.chat.model.response.UserLoginResponse;
@@ -11,12 +18,23 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class ChatController {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    RoomRepository roomRepository;
+
+    @Autowired
+    MessageRepository messageRepository;
 
 
     @GetMapping(path = "/test")
@@ -57,5 +75,47 @@ public class ChatController {
             System.out.println("Some Error occurred." + e);
             return ResponseEntity.ok().body(new UserLoginResponse());
         }
+    }
+
+    @GetMapping(path = "/add-user/{username}/{name}")
+    public List<User> addUser(@PathVariable(value = "username") String username,
+                            @PathVariable(value = "name") String name){
+        String userId = UUID.randomUUID().toString().replace("-", "");
+        userRepository.save(new User(userId, username, name));
+        return userRepository.findAll();
+    }
+
+    @GetMapping(path = "/add-room")
+    public List<Room> addRoom(@RequestParam(value = "senderId") String senderId,
+                                @RequestParam(value = "receiverId") String receiverId){
+        String roomId = UUID.randomUUID().toString().replace("-", "");
+        Optional<User> sender = userRepository.findById(senderId);
+        Optional<User> receiver = userRepository.findById(receiverId);
+        roomRepository.save(new Room(sender.get(), receiver.get()));
+        return roomRepository.findAll();
+    }
+
+    @PostMapping(path = "/add-message")
+    public List<Message> addMessage(@RequestBody MessageRequest messageRequest){
+        //String messageId = UUID.randomUUID().toString().replace("-", "");
+        String senderUsername = messageRequest.getSender();
+        String receiverUsername = messageRequest.getReceiver();
+
+        Optional<User> sender = userRepository.findByUsername(senderUsername);
+        sender.ifPresent(System.out::println);
+
+        Optional<User> receiver = userRepository.findByUsername(receiverUsername);
+        receiver.ifPresent(System.out::println);
+
+        Optional<Room> room = roomRepository.findBySenderAndReceiver(senderUsername, receiverUsername);
+        room.ifPresent(System.out::println);
+
+        Room room1;
+        room1 = room.orElseGet(() -> roomRepository.save(new Room(sender.get(), receiver.get())));
+
+        messageRepository.save(new Message(messageRequest.getMessage(), messageRequest.getDate(),
+                                            messageRequest.getTime(),room1));
+
+        return messageRepository.findAll();
     }
 }
