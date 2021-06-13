@@ -107,15 +107,25 @@ public class ChatController {
         Optional<User> receiver = userRepository.findByUsername(receiverUsername);
         receiver.ifPresent(System.out::println);
 
-        Optional<Room> room = roomRepository.findBySenderAndReceiver(senderUsername, receiverUsername);
+        Optional<Room> room = roomRepository.findByMemberOneAndMemberTwoOrMemberTwoAndMemberOne(sender.get(), receiver.get(), sender.get(), receiver.get());
         room.ifPresent(System.out::println);
 
         Room room1;
         room1 = room.orElseGet(() -> roomRepository.save(new Room(sender.get(), receiver.get())));
 
         messageRepository.save(new Message(messageRequest.getMessage(), messageRequest.getDate(),
-                                            messageRequest.getTime(),room1));
+                                            messageRequest.getTime(),room1,
+                                            messageRequest.getSender(),messageRequest.getReceiver()));
 
         return messageRepository.findAll();
+    }
+
+    @GetMapping(path = "/get-room-by-members")
+    public Room getRoomByMembers(@RequestParam(value = "memberOne") String memberOne,
+                                       @RequestParam(value = "memberTwo") String memberTwo){
+        Optional<User> member1 = userRepository.findByUsername(memberOne);
+        Optional<User> member2 = userRepository.findByUsername(memberTwo);
+        Optional<Room> room = roomRepository.findByMemberOneAndMemberTwoOrMemberTwoAndMemberOne(member1.get(), member2.get(), member1.get(), member2.get());
+        return room.orElse(null);
     }
 }

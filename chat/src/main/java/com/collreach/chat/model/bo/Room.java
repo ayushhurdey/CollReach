@@ -8,15 +8,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Room {
     @Id
     private String roomId;
-    private User sender;
-    private User receiver;
+    private User memberOne;
+    private User memberTwo;
 
     public Room() {
     }
 
-    public Room(User sender, User receiver) {
-        this.sender = sender;
-        this.receiver = receiver;
+    public Room(User memberOne, User memberTwo) {
+        this.memberOne = memberOne;
+        this.memberTwo = memberTwo;
     }
 
     public String getRoomId() {
@@ -27,19 +27,19 @@ public class Room {
         this.roomId = roomId;
     }
 
-    public User getSender() {
-        return sender;
+    public User getMemberOne() {
+        return memberOne;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setMemberOne(User memberOne) {
+        this.memberOne = memberOne;
     }
 
-    public User getReceiver() {
-        return receiver;
+    public User getMemberTwo() {
+        return memberTwo;
     }
 
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
+    public void setMemberTwo(User memberTwo) {
+        this.memberTwo = memberTwo;
     }
 }

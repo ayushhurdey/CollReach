@@ -20,17 +20,20 @@ public class Message {
 
     //@JsonFormat(pattern = "HH:mm:ss")
     private Date time;
-
     private Room roomId;
+    private String sender;
+    private String receiver;
 
     public Message() {
     }
 
-    public Message(String message, Date date, Date time, Room roomId) {
+    public Message(String message, Date date, Date time, Room roomId, String sender, String receiver) {
         this.message = message;
         this.date = date;
         this.time = time;
         this.roomId = roomId;
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
     public String getMessageId() {
@@ -71,5 +74,21 @@ public class Message {
 
     public void setRoomId(Room roomId) {
         this.roomId = roomId;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 }
