@@ -16,10 +16,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 public class ChatController {
@@ -96,28 +93,31 @@ public class ChatController {
     }
 
     @PostMapping(path = "/add-message")
-    public List<Message> addMessage(@RequestBody MessageRequest messageRequest){
+    public Boolean addMessage(@RequestBody MessageRequest messageRequest){
         //String messageId = UUID.randomUUID().toString().replace("-", "");
         String senderUsername = messageRequest.getSender();
         String receiverUsername = messageRequest.getReceiver();
+        try {
+            Optional<User> sender = userRepository.findByUsername(senderUsername);
+            sender.ifPresent(System.out::println);
 
-        Optional<User> sender = userRepository.findByUsername(senderUsername);
-        sender.ifPresent(System.out::println);
+            Optional<User> receiver = userRepository.findByUsername(receiverUsername);
+            receiver.ifPresent(System.out::println);
 
-        Optional<User> receiver = userRepository.findByUsername(receiverUsername);
-        receiver.ifPresent(System.out::println);
+            Optional<Room> room = roomRepository.findByMemberOneAndMemberTwoOrMemberTwoAndMemberOne(sender.get(), receiver.get(), sender.get(), receiver.get());
+            room.ifPresent(System.out::println);
 
-        Optional<Room> room = roomRepository.findByMemberOneAndMemberTwoOrMemberTwoAndMemberOne(sender.get(), receiver.get(), sender.get(), receiver.get());
-        room.ifPresent(System.out::println);
+            Room room1;
+            room1 = room.orElseGet(() -> roomRepository.save(new Room(sender.get(), receiver.get())));
 
-        Room room1;
-        room1 = room.orElseGet(() -> roomRepository.save(new Room(sender.get(), receiver.get())));
-
-        messageRepository.save(new Message(messageRequest.getMessage(), messageRequest.getDate(),
-                                            messageRequest.getTime(),room1,
-                                            messageRequest.getSender(),messageRequest.getReceiver()));
-
-        return messageRepository.findAll();
+            messageRepository.save(new Message(messageRequest.getMessage(), messageRequest.getDate(),
+            messageRequest.getTime(), room1,
+            messageRequest.getSender(), messageRequest.getReceiver()));
+        }
+        catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     @GetMapping(path = "/get-room-by-members")
@@ -127,5 +127,25 @@ public class ChatController {
         Optional<User> member2 = userRepository.findByUsername(memberTwo);
         Optional<Room> room = roomRepository.findByMemberOneAndMemberTwoOrMemberTwoAndMemberOne(member1.get(), member2.get(), member1.get(), member2.get());
         return room.orElse(null);
+    }
+
+    @GetMapping(path= "/get-all-contacts")
+    public List<User> getAllContactsOfUser(@RequestParam(value = "username") String username){
+        List<User> contacts = new ArrayList<>();
+        Optional<User> user = userRepository.findByUsername(username);
+        List<Room> room = roomRepository.findAllByMemberOneOrMemberTwo(user.get(), user.get());
+        if(room.size() > 0){
+            for(Room each: room){
+                User memberOne = each.getMemberOne();
+                User memberTwo = each.getMemberTwo();
+                if(memberOne.getUsername().equalsIgnoreCase(username)){
+                    contacts.add(memberTwo);
+                }
+                else{
+                    contacts.add(memberOne);
+                }
+            }
+        }
+        return contacts;
     }
 }
