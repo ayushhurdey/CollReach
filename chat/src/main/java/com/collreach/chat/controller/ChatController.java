@@ -12,6 +12,9 @@ import com.collreach.chat.model.response.TestResponse;
 import com.collreach.chat.model.response.UserLoginResponse;
 import com.collreach.chat.model.response.UserNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -88,7 +91,7 @@ public class ChatController {
         String roomId = UUID.randomUUID().toString().replace("-", "");
         Optional<User> sender = userRepository.findById(senderId);
         Optional<User> receiver = userRepository.findById(receiverId);
-        roomRepository.save(new Room(sender.get(), receiver.get()));
+        roomRepository.save(new Room(sender.get(), receiver.get(), new Date()));
         return roomRepository.findAll();
     }
 
@@ -108,11 +111,11 @@ public class ChatController {
             room.ifPresent(System.out::println);
 
             Room room1;
-            room1 = room.orElseGet(() -> roomRepository.save(new Room(sender.get(), receiver.get())));
+            room1 = room.orElseGet(() -> roomRepository.save(new Room(sender.get(), receiver.get(), messageRequest.getDate())));
 
             messageRepository.save(new Message(messageRequest.getMessage(), messageRequest.getDate(),
-            messageRequest.getTime(), room1,
-            messageRequest.getSender(), messageRequest.getReceiver()));
+                                                messageRequest.getTime(), room1,
+                                                messageRequest.getSender(), messageRequest.getReceiver()));
         }
         catch (Exception e){
             return false;
@@ -147,5 +150,27 @@ public class ChatController {
             }
         }
         return contacts;
+    }
+
+    @GetMapping(path = "/get-all-sorted-messages")
+    public List<Message> getAllSortedMessage(@RequestParam(value = "memberOne") String memberOne,
+                                             @RequestParam(value = "memberTwo") String memberTwo,
+                                             @RequestParam(value = "pageNo") int pageNo,
+                                             @RequestParam(value = "pageSize") int pageSize
+                                             ){
+        Sort dateSort = Sort.by("date").descending();
+        Sort timeSort = Sort.by("time").descending();
+        Sort groupBySort = dateSort.and(timeSort);
+        Pageable paging = PageRequest.of(pageNo, pageSize, groupBySort);
+
+        List<Message> messages = messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(memberOne, memberTwo, memberOne, memberTwo, paging);
+        return messages;
+    }
+
+    @GetMapping(path = "/get-all-messages")
+    public List<Message> getAllMessage(@RequestParam(value = "memberOne") String memberOne,
+                                       @RequestParam(value = "memberTwo") String memberTwo){
+        List<Message> messages = messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(memberOne, memberTwo, memberOne, memberTwo);
+        return messages;
     }
 }
