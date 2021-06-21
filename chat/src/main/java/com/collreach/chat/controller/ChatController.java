@@ -110,9 +110,16 @@ public class ChatController {
             Optional<Room> room = roomRepository.findByMemberOneAndMemberTwoOrMemberTwoAndMemberOne(sender.get(), receiver.get(), sender.get(), receiver.get());
             room.ifPresent(System.out::println);
 
-            Room room1;
-            room1 = room.orElseGet(() -> roomRepository.save(new Room(sender.get(), receiver.get(), messageRequest.getDate())));
-
+            Room room1 = null;
+            //room1 = room.orElseGet(() -> roomRepository.save(new Room(sender.get(), receiver.get(), messageRequest.getDate())));
+            if(room.isPresent()){
+                room.get().setLastContact(messageRequest.getDate());
+                room1 = room.get();
+                roomRepository.save(room1);
+            }
+            else{
+                room1 = roomRepository.save(new Room(sender.get(), receiver.get(), messageRequest.getDate()));
+            }
             messageRepository.save(new Message(messageRequest.getMessage(), messageRequest.getDate(),
                                                 messageRequest.getTime(), room1,
                                                 messageRequest.getSender(), messageRequest.getReceiver()));
@@ -133,10 +140,16 @@ public class ChatController {
     }
 
     @GetMapping(path= "/get-all-contacts")
-    public List<User> getAllContactsOfUser(@RequestParam(value = "username") String username){
+    public List<User> getAllContactsOfUser(@RequestParam(value = "username") String username,
+                                           @RequestParam(value = "pageNo") int pageNo,
+                                           @RequestParam(value = "pageSize") int pageSize
+                                        ){
         List<User> contacts = new ArrayList<>();
         Optional<User> user = userRepository.findByUsername(username);
-        List<Room> room = roomRepository.findAllByMemberOneOrMemberTwo(user.get(), user.get());
+
+        Sort dateSort = Sort.by("lastContact").descending();
+        Pageable paging = PageRequest.of(pageNo, pageSize, dateSort);
+        List<Room> room = roomRepository.findAllByMemberOneOrMemberTwo(user.get(), user.get(), paging);
         if(room.size() > 0){
             for(Room each: room){
                 User memberOne = each.getMemberOne();
@@ -159,9 +172,7 @@ public class ChatController {
                                              @RequestParam(value = "pageSize") int pageSize
                                              ){
         Sort dateSort = Sort.by("date").descending();
-        Sort timeSort = Sort.by("time").descending();
-        Sort groupBySort = dateSort.and(timeSort);
-        Pageable paging = PageRequest.of(pageNo, pageSize, groupBySort);
+        Pageable paging = PageRequest.of(pageNo, pageSize, dateSort);
 
         List<Message> messages = messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(memberOne, memberTwo, memberOne, memberTwo, paging);
         return messages;
