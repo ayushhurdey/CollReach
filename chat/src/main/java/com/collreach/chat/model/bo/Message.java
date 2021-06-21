@@ -20,7 +20,7 @@ public class Message {
 
     //@JsonFormat(pattern = "HH:mm:ss")
     private Date time;
-    private Room roomId;
+    private Room roomId;      // TODO: convert to to normal String roomId.
     private String sender;
     private String receiver;
 
