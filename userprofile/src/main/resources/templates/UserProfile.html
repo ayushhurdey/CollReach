@@ -36,8 +36,8 @@
               userInfo.userPersonalInfoResponse.name;
             document.getElementById("description").innerHTML =
               userInfo.userPersonalInfoResponse.description;
-            document.getElementById("year").innerHTML =
-              userInfo.userPersonalInfoResponse.courseInfoResponse.yearOfStudy;
+            //document.getElementById("year").innerHTML =
+            //  userInfo.userPersonalInfoResponse.courseInfoResponse.yearOfStudy;
             document.getElementById("sem").innerHTML =
               userInfo.userPersonalInfoResponse.courseInfoResponse.semester;
             document.getElementById("branch").innerHTML =
@@ -52,6 +52,10 @@
               userInfo.userPersonalInfoResponse.phoneNo;
             document.getElementById("linkedIn").innerHTML =
               userInfo.userPersonalInfoResponse.linkedinLink;
+            document.getElementById('general-profile').textContent = 
+              "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey;
+            document.getElementById('general-profile-link')
+                    .setAttribute('href', "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
 
             var skill = userInfo.userPersonalInfoResponse.skills;
             for (let [k, v] of Object.entries(skill)) {
@@ -85,46 +89,48 @@
 
 
 
-    (function($, viewport){
-    $(document).ready(function() {
+//     (function($, viewport){
+//     $(document).ready(function() {
 
-        // Executes only in XS breakpoint
-        if(viewport.is('xs')) {
-            // ...
-        }
+//         // Executes only in XS breakpoint
+//         if(viewport.is('xs')) {
+//             // ...
+//         }
 
-        // Executes in SM, MD and LG breakpoints
-        if(viewport.is('>=sm')) {
-            // ...
-        }
+//         // Executes in SM, MD and LG breakpoints
+//         if(viewport.is('>=sm')) {
+//             // ...
+//         }
 
-        // Executes in XS and SM breakpoints
-        if(viewport.is('<md')) {
-            // ...
-            jQuery("#cour").detach().appendTo('#profile-feed');
-        }
+//         // Executes in XS and SM breakpoints
+//         if(viewport.is('<md')) {
+//             // ...
+//             jQuery("#cour").detach().appendTo('#profile-feed');
+//         }
 
-        // Execute code each time window size changes
-        $(window).resize(
-            viewport.changed(function() {
-                if(viewport.is('xs')) {
-                    // ...
-                }
-            })
-        );
-    });
-})(jQuery, ResponsiveBootstrapToolkit);
+//         // Execute code each time window size changes
+//         $(window).resize(
+//             viewport.changed(function() {
+//                 if(viewport.is('xs')) {
+//                     // ...
+//                 }
+//             })
+//         );
+//     });
+// })(jQuery, ResponsiveBootstrapToolkit);
 
 
-if($(window).width() <= 767){
-  // do your stuff
+// if($(window).width() <= 767){
+//   // do your stuff
   
-}
+// }
+
     </script>
+
   </head>
 
-  <!-- <body onload="login()"> -->
-  <body>
+  <body onload="login()">
+  <!--body-->
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
         
       <div class="container" id="navv">
@@ -145,7 +151,7 @@ if($(window).width() <= 767){
               <li class="nav-item">
                   <a href="" class="nav-link">
                       <i class="fab fa-instagram"></i>
-                      <p id="info">Instagram</p>
+                      <p id="info">Posts</p>
                   </a>
               </li>
               <li class="nav-item">
@@ -163,9 +169,12 @@ if($(window).width() <= 767){
               
               
               <li>
-                  <button class="nav-item btn btn-outline-primary" type="button" id="search">
+                  <button class="nav-item btn btn-outline-primary" type="button" id="search-btn">
                       Search
                   </button>
+
+                  <datalist id = "skills-list"></datalist>
+                  
               </li>
               <li>
                 <button type="button" class="btn btn-outline-danger" id = "logout-btn"><i class="fa fa-sign-out"></i></button>
@@ -282,9 +291,9 @@ if($(window).width() <= 767){
               <div class="sticky-top">
              <!--Static -->
               <div class="pad-top" >
-                <img src="CollReach.PNG" class="img-md rounded-circle" alt="Image not found" id="profile-pic">
+                <img src="CollReach.PNG" class="img-md rounded-circle" alt="Image not found" id="profile-photo">
                 <div id="name">
-                  Ayush Chaudhry
+                  Ayush Choudhary
                 </div>
                 <div>
                     <div id="profile-content">
@@ -320,9 +329,9 @@ if($(window).width() <= 767){
                     </div>
                     <div class="py-4">
               
-                      <div>B.Tech</div>
-                      <div>CSE</div>
-                      <div>6</div>
+                      <div id = "course">B.Tech</div>
+                      <div id = "branch">CSE</div>
+                      <div id = "sem">6</div>
                     </div>
                   </div>
                   
@@ -413,7 +422,7 @@ if($(window).width() <= 767){
                    
                       <div class="card">
                         <div class="card-body">
-                        <div class="card-title">SKILLS:VOTES</div>
+                        <div class="card-title">SKILLS</div>
 
                           <div class="content">
                             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -487,7 +496,7 @@ if($(window).width() <= 767){
 
                               <tr>
                                 <td>GENERAL PROFILE LINK</td>
-                                <td><div id = "general-profile-link"></div></td>
+                                <td><a href = ""  target="_blank" rel="noopener noreferrer" id = "general-profile-link"><div id = "general-profile"></div></a></td>
                               </tr>
                             </table>
                           </div>
