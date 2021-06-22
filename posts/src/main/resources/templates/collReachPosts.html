@@ -31,8 +31,8 @@
     </script>
 
 </head>
-<body onload="load()">  
-
+<!-- <body onload="load()">   -->
+<body>
         <!-----Notifier------>
     <div class = "notifier" hidden>
         <span class="closebtn" onclick = "closeBtn(this);">&times;</span> 
@@ -90,11 +90,11 @@
         
     <div class="container" id="feeds-section">
         <div class="row">
-                <div class="col-md-3" id = "user-profile-details-container">    
+                <div class="col-md-3 side-profile-area" id = "user-profile-details-container">    
                 </div>
 
                         <!--POSTS-->
-                <div class="col-md-9"> 
+                <div class="col-md-7 post-area"> 
                     <div class="profile-feed" id = "posts-container"> 
                         <div id="outer-post-box-announcement">
                             <div class=" profile-feed-item">
@@ -111,13 +111,33 @@
                         </div>   
                         <div id = "posts-loading-anim" style = "display:none;"></div>
 
-                        <form>
-                            <div id="post-type-option"><hr>
-                                <div id="sort-options">Show by
-                                  <select class = "select-sort-options" onchange="render(this)">
-                                    <option value = "regular" selected>Regular Feed</option>
-                                    <option value = "today">Today's Feed</option>
-                                  </select>
+                        <form class="form-group ">
+                            <div class="" id="post-type-option">
+                                
+                                <div class="d-flex flex-row" id="sort-options ">
+                                    <div class="col-xl-8 col-lg-7 col-md-5 col-sm-5 col-xs-1"><hr class="flex-grow-1 mr2 mvA "></div>
+                                    
+                                    <div class="col-xl-4 col-lg-5 col-md-7 col-sm-7 col-xs-11 float-right">
+                                        <div class="float-right">
+                                            <span class="t-12 t-black--light t-normal small-text">
+                                                Sort by:
+                                            </span>
+
+                                            <span class=" t-12 t-black--light t-normal small-text" id="sortby-label">
+                                                Regular Feeds
+                                                
+                                            </span>
+                                            <span class="">
+                                                    <select class = "col-md-8 custom-select select-sort-options" id="sort-label" onchange="render(this)">
+                                                        <option value = "regular" selected>Regular Feed</option>
+                                                        <option value = "today">Today's Feed</option>
+                                                    </select>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                
                                 </div>
                             </div>
                         </form>
@@ -126,17 +146,38 @@
                             <!------------- profile feed --------------->
                         </div>
                              
-                    </div>
-                </div> 
+                   
+                    </div> 
+                </div>
                 
                 <!-- Side panel-->
-                <div>
-                    <button class = "btn btn-outline-primary my-posts-btn">My Posts</button>
+                <div class="col-md-2 my-post">
+                    <div class="border rounded">
+                        <div class="p-1">
+                            <button class = "btn btn-outline-primary my-posts-btn w-100 smm">My Posts</button>
+                        </div>
+                        <div class="my-posts-items smm" style="height: 9rem;">
+
+                        </div>
+                        <div class="p-1 mx-auto text-center smm">
+                            <span style="color:#6C67FD">Coll</span><span id="heading">Reach</span>
+                        </div>
+                    </div>
                 </div>
             
         </div>
     </div>
 
+
+
+    <footer class="fixed-bottom navbar-light bg-light">
+        <div class="d-flex flex-row-reverse pr-5">
+            <div class="shadow-sm p-1 mb-3 bg-white rounded">
+                <buttton class="btn  border-0 message-btn" type=button><i class="fas fa-comments "></i></buttton>
+            </div>
+            
+        </div>
+    </footer>
 
     <!--POST OVERLAY-->
     <div class="container-overlays" id="post-overlay" style="display: none;">

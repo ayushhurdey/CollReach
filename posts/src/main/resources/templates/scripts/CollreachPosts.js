@@ -777,21 +777,24 @@ function eliminateTagsFromString(answer) {
 
 function render(element) {
     let value = element.value;
-
+    var heading="";
     if (value === "today") {
+        heading="Today's Feeds";
         console.log(element.value);
         document.querySelector('.posts-feed-container').innerHTML = "";
         globalPageNumber = 0;
         loadTodaysFeed = true;
         load();
     }
-    else {                                    // regular.
+    else {              
+        heading="Regular Feeds";                      // regular.
         console.log(element.value);
         document.querySelector('.posts-feed-container').innerHTML = "";
         globalPageNumber = 0;
         loadTodaysFeed = false;
         load();
     }
+    document.querySelector("#sortby-label").innerHTML= heading;
 }
 
 

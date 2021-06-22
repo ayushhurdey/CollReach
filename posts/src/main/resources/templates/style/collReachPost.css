@@ -90,14 +90,15 @@ i {
   padding: 10px;
   overflow: auto;
 }
-.col-md-3 {
+.side-profile-area {
   padding-right: 1px;
 }
-.col-md-9 {
+.post-area {
   padding-left: 2px;
   width: 100%;
   padding-top: 4.5rem;
 }
+
 
 .profile-row {
   position: fixed;
@@ -269,6 +270,32 @@ i {
 .ml-4,
 .p-2 {
   width: 100%;
+}
+.sortby{
+  float: right;
+}
+.small-text{
+  font-size: .7rem;
+}
+.select-sort-options{
+  width:10px;
+  height: 5px;
+}
+.mr2 {
+  margin-right: 8px !important;
+}
+.mvA{
+  margin-bottom: auto !important;
+}
+.my-post{
+  padding-top:4.5rem;
+}
+
+.message-btn{
+  color: #09d4f8 ;
+}
+.message-btn:hover{
+  color: #0aa3be
 }
 .caption {
   font-size: 0.9em;
@@ -541,6 +568,7 @@ i {
 
 /*overlays ends*/
 
+
 /*media queries start*/
 @media (max-width: 360px) and (min-width: 0px) {
   .navbar-brand {
@@ -554,7 +582,7 @@ i {
   }
 }
 
-@media (max-width: 1199px) and (min-width: 991px) {
+@media (max-width: 1199.5px) and (min-width: 992px) {
   .profile-row {
     width: 13rem;
   }
@@ -567,7 +595,12 @@ i {
   }
 }
 
-@media (max-width: 990px) and (min-width: 768px) {
+@media (max-width: 991.5px) and (min-width: 768px){
+  .smm{
+    font-size: .7rem;
+  }
+}
+@media (max-width: 991.5px) and (min-width: 768px) {
   .profile-row {
     width: 10rem;
   }
@@ -578,6 +611,8 @@ i {
   #poll-overlay {
     width: 30rem;
   }
+
+  
 }
 
 .navbar-toggler {
@@ -595,11 +630,11 @@ i {
   }
 }
 /*For mobile*/
-@media (max-width: 767px) {
-  .col-md-3 {
+@media (max-width: 767.5px) {
+  .side-profile-area {
     display: none;
   }
-  .col-md-9 {
+  .post-area {
     padding-left: 1px;
     padding-right: 1px;
     padding-top: 5rem;
