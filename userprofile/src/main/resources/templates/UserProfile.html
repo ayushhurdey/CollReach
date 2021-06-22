@@ -101,7 +101,7 @@
         // Executes in XS and SM breakpoints
         if(viewport.is('<md')) {
             // ...
-            
+            jQuery("#cour").detach().appendTo('#profile-feed');
         }
 
         // Execute code each time window size changes
@@ -114,6 +114,12 @@
         );
     });
 })(jQuery, ResponsiveBootstrapToolkit);
+
+
+if($(window).width() <= 767){
+  // do your stuff
+  
+}
     </script>
   </head>
 
@@ -264,12 +270,18 @@
       </datalist> 
     
   </section> -->
-  <div class="container" id="feeds-section">
-    <div class="row">
-            <div class="col-md-3 col-sm-12" id = "user-profile-details-container">    
-            
+  <div class="container main" id="feeds-section">
+    <div class="row ">
+
+
+
+
+
+            <div class="col-md-3"id = "user-profile-details-container"  >   
+              <!-- <div class="col-sm-3 col-4 fixed-top one">  -->
+              <div class="sticky-top">
              <!--Static -->
-              <div class="profile-row">
+              <div class="pad-top" >
                 <img src="CollReach.PNG" class="img-md rounded-circle" alt="Image not found" id="profile-pic">
                 <div id="name">
                   Ayush Chaudhry
@@ -301,7 +313,7 @@
 
 
 
-                <div class="card">
+                <div class="card" id="cour">
                   <div class="card-body">
                     <div id="card-title">
                       Course Info
@@ -316,10 +328,13 @@
                   
                 </div>
               </div>
-
+            </div>
             </div>
 
-            <div class="col-md-9 col-sm-12"> 
+            <div class="col-md-9 main-content">
+            
+              <!-- <div class="col-sm-8 offset-sm-4 two"> -->
+              
               <div class="profile-feed">
                   <!-- <div class="col-md-12">
                     <div class="card" id="main-title">
@@ -447,7 +462,7 @@
                         </div>
                       </div> -->
                     
-
+                      
                     
                       <div class="card">
                         <div class="card-body">
@@ -492,6 +507,7 @@
 
 
             </div>
+         
             </div>
   </div>
 </div>
@@ -499,37 +515,37 @@
 
 
 <!-- Footer -->
-<footer class="page-footer font-small blue pt-4">
+<footer class="page-footer font-small blue pt-4 navbar-light bg-light">
 
- <div class="footer">
-  <div class="row">
+ <div class="footer ">
+  <div class="row navbar-light bg-light">
     <div class="col-md-3 col-sm-12">
-     <div>
+     
        <a href="#">
          <i class="fab fa-facebook"></i>
        </a>
-     </div>
+     
     </div>
     <div class="col-md-3 col-sm-12">
-     <div>
+     
        <a href="#">
          <i class="fab fa-linkedin"></i>
        </a>
-     </div>
+     
     </div>
     <div class="col-md-3 col-sm-12">
-     <div>
+     
        <a href="#">
          <i class="fab fa-instagram"></i>
        </a>
-     </div>
+    
     </div>
     <div class="col-md-3 col-sm-12">
-     <div>
+     
        <a href="#">
          <i class="fab fa-youtube"></i>
        </a>
-     </div>
+     
     </div>
   </div>
  </div>
@@ -548,7 +564,7 @@
 
 
 
-    <div id="search-overlay">
+    <div id="search-overlay" style="display: none;">
       <span id = "overlay-close">&#10006;</span>
       <div id="overlay-content">
            

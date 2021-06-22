@@ -2,6 +2,23 @@
   box-sizing: border-box;
   
 }
+.main-content {
+ 
+  padding-bottom: 8rem;
+ 
+  
+}
+/* .container {
+
+}
+.sidebar-outer {
+
+  position: relative;
+}
+.fixed {
+  position: fixed;
+} */
+
 
 #logout-btn{
   position: relative;
@@ -18,6 +35,10 @@
 .card-title{
   font-size: 1.2em;
 }
+
+.pad-top{
+  padding-top: 4.5rem;
+}
 #updatebutton{
   padding: 3px;
 
@@ -25,8 +46,28 @@
   background-color: white;
   color: #6c67fd;
 }
+
+footer{
+  position: fixed;
+  width: 100%;
+  bottom:0;
+
+}
 .footer{
-  text-align: center;  
+  text-align: center;
+    
+}
+.footer .row{
+  width: 50%;
+}
+
+@media (max-width: 768px)  { 
+  .footer .row{
+    width: 100%;
+  }
+  footer{
+    position: static;
+  }
 }
 /* .container{
   margin: auto;
