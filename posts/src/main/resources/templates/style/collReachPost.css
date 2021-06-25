@@ -136,14 +136,18 @@ i {
 /* Hide scrollbar for Chrome, Safari and Opera */
 #profile-content::-webkit-scrollbar,
 #post-overlay,
-#poll-overlay {
+#poll-overlay,
+.conversation,
+ {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 #profile-content,
 #post-overlay,
-#poll-overlay {
+#poll-overlay,
+.conversation,
+ {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
@@ -297,6 +301,90 @@ i {
 .message-btn:hover{
   color: #0aa3be
 }
+.message{
+  position: fixed;
+  right: 3rem; 
+  bottom:4.1rem;
+  border-radius:15px;
+}
+.width{
+  width: 300px;
+  
+}
+.chat{
+  position: fixed;
+  right: 22rem; 
+  bottom:4.5rem;
+  border-radius:15px;
+
+  width: 400px;
+}
+.contact-box{
+  
+  height: 27rem;
+  border-radius: 15px;
+}
+.contact-header{
+  height: 12%;
+}
+.hide{
+  display: none;
+}
+
+.m{
+  margin:.1rem;
+}
+.p{
+  padding: .45rem;
+}
+
+.medium-text{
+  font-size: .9em;
+}
+
+.individual-chat:hover{
+  box-shadow: inset 0px 0px 10px 0px rgba(123, 113, 255, 0.918);
+  
+}
+.chat-header{
+  margin: .45rem;
+}
+.message-width{
+   width: 80%;
+}
+.sended{
+  
+ 
+  text-align: right;
+}
+.received {
+  
+ 
+  text-align: left;
+}
+.conversation-side-profile{
+  width: 25px;
+}
+.shadow {
+  box-shadow: 0 .3rem 1rem rgba(0,0,0,.15) !important;
+}
+.send-btn{
+  background-color: #6c67fd;
+  color: white;
+
+}
+.fa-paper-plane{
+  color: white;
+}
+.send-btn:hover .fa-paper-plane {
+  color:white
+}
+.send-btn:hover{
+  color: white;
+}
+ss:active{
+  border: none;
+}
 .caption {
   font-size: 0.9em;
   padding: 1rem;
@@ -425,6 +513,7 @@ i {
   height: 35rem;
   overflow: overlay;
   color: black;
+  z-index: 6;
 }
 #poll-overlay {
   height: 38rem;
@@ -438,11 +527,11 @@ i {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 40rem;
+  
   transform: translate(-50%, -50%);
   background: #666666;
   opacity: 0.9;
-  z-index: 1000;
+  z-index: 2000;
   overflow: auto;
   position: fixed;
   background-color: white;
@@ -479,8 +568,9 @@ i {
   margin-left: 0rem;
 }
 
-#cross-button,
+.cross-button,
 #back-button {
+  background-color: white;
   border: none;
   color: red;
   font-size: 0.6em;
@@ -490,12 +580,13 @@ i {
 #back-button {
   color: black;
 }
-#cross-button:active,
+.cross-button:active,
 #back-button:active {
   background-color: none;
 }
-#cross-button:hover,
+.cross-button:hover,
 #back-button:hover {
+  color: red;
   border-radius: 3px;
   background-color: #c1c1c1;
 }
@@ -570,6 +661,20 @@ i {
 
 
 /*media queries start*/
+@media (max-width:788.5px) and (min-width: 496px){
+  .chat{
+    right: none;
+    left:44px;
+  }
+}
+@media (max-width: 495.5px) and (min-width: 0px){
+  .chat,.message{
+    right: 2.5%;
+    left:none;
+    width: 95%;
+  }
+
+}
 @media (max-width: 360px) and (min-width: 0px) {
   .navbar-brand {
     font-size: 1.1em;
