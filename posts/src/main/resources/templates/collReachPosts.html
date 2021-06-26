@@ -21,10 +21,13 @@
     <script defer type="application/javascript" src="./scripts/compress.js"></script>
     <script defer type="application/javascript" src="./scripts/compressUtil.js"></script>
     <script src ="scripts/CollreachPosts.js"></script>
+    <script src = "scripts/CollreachChat.js"></script>
     <link rel="stylesheet" href="style/collReachPost.css" />
 
     <script>
-         var flag=0; //global flag for chat window use
+        var flag=0; //global flag for chat window use
+
+
         function closeBtn(elem){
             elem.parentElement.setAttribute('hidden',"");
         }
@@ -33,42 +36,40 @@
             renderNotification("Welcome to CollReach Posts.");
         })
 
-        function message(){
-            
 
+        function message(){
             if (flag==0){
                 document.querySelector(".message").classList.toggle("hide");
             }
             else{
                 document.querySelector(".message").classList.toggle("hide");
-
                 document.querySelector(".chat").classList.toggle("hide");
-                flag=0;
-            
-            }
-            
+                flag=0; 
+            } 
         }
+
+
         function chatwindow(element){
             flag=1;
             $('.chat').removeClass('hide');
             // var name=element.$(".contact-name").text();
-            var name=element.querySelector('.contact-name')[0].text();
+            var name=element.querySelector('.contact-name').textContent;
             
             $('.chat-header').html(name);
             console.log(name);
         }
+
+
         function chatwindowclose(){
             flag=0;
             $('.chat').addClass('hide');
-        }
-
-        
+        }        
 
     </script>
 
 </head>
-<!-- <body onload="load()">   -->
-<body>
+<body onload="load()">  
+<!-- <body> -->
         <!-----Notifier------>
     <div class = "notifier" hidden>
         <span class="closebtn" onclick = "closeBtn(this);">&times;</span> 
@@ -224,27 +225,28 @@
                 
                 <!-- contact header -->
                 <div class="p-2">
-                <div class="p-2 contact-header">
-                    <div class=" d-flex flex-row">
-                        <div class="p-1 flex-shrink-1 m ">
-                            <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
-                        </div>
-                        <div class="p-1 flex-grow-1 m" style="margin:9px;">
-                            <div class="float-left " style="font-size: 1.1em;">
-                                Contacts    
+                    <div class="p-2 contact-header">
+                        <div class=" d-flex flex-row">
+                            <div class="p-1 flex-shrink-1 m ">
+                                <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
                             </div>
-                            
+                            <div class="p-1 flex-grow-1 m" style="margin:9px;">
+                                <div class="float-left " style="font-size: 1.1em;">
+                                    Contacts    
+                                </div>
+                                
+                            </div>
                         </div>
+                        
                     </div>
-                    
-                </div>
                 </div>
 
                 <!-- contact list -->
                 <div class="p-2 flex-grow-1 shadow overflow-auto  ">
-                    <div class="d-flex flex-column  ">
+                    <div class="d-flex flex-column contacts-list ">
 
-                        <!-- contact 1 -->
+                        <!-- 
+                        // contact 1
                         <div class="p-2 rounded individual-chat">
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
@@ -266,8 +268,8 @@
                             </div>
                         </div>
 
-                        <!-- SOME MORE SAMPLE CONTACTS -->
-                        <!-- contact 2 -->
+                        // SOME MORE SAMPLE CONTACTS
+                        // contact 2
                         <div class="p-2 rounded individual-chat">
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
@@ -288,7 +290,8 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- contact 3 -->
+
+                        // contact 3
                         <div class="p-2 rounded individual-chat">
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
@@ -309,7 +312,8 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- contact 4 -->
+
+                        // contact 4
                         <div class="p-2 rounded individual-chat">
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
@@ -330,7 +334,8 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- contact 5 -->
+
+                        // contact 5
                         <div class="p-2 rounded individual-chat">
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
@@ -351,7 +356,8 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- contact 6 -->
+
+                        // contact 6
                         <div class="p-2 rounded individual-chat">
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
@@ -371,7 +377,8 @@
                                     </div>
                                 </button>
                             </div>
-                        </div>
+                        </div> -->
+
                     </div>
                 </div>      
               </div>
@@ -392,36 +399,36 @@
             
             <!-- contact header -->
             <div class="p-0">
-            <div class="p-2 contact-header">
-                <div class=" d-flex flex-row">
-                    <div class="p-1 flex-shrink-1 m ">
-                        <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
-                    </div>
-                    <div class="p-1 flex-grow-1 m">
-                        <div class="float-left chat-header ">
-                            Contact Name    
+                <div class="p-2 contact-header">
+                    <div class=" d-flex flex-row">
+                        <div class="p-1 flex-shrink-1 m ">
+                            <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
                         </div>
-                        
-                        <div class="p-1 m mr-auto float-right">
-                            <button class="cross-button " onclick="chatwindowclose()"><i class="fas fa-times" ></i></button>
+                        <div class="p-1 flex-grow-1 m">
+                            <div class="float-left chat-header ">
+                                Contact Name    
+                            </div>
+                            
+                            <div class="p-1 m mr-auto float-right">
+                                <button class="cross-button " onclick="chatwindowclose()"><i class="fas fa-times" ></i></button>
+                            </div>
+                            
                         </div>
-                        
                     </div>
+                    
                 </div>
-                
-            </div>
             </div>
             
             <!--chatting -->
             <div class=" p-2 flex-grow-1 shadow overflow-auto">
-                <div class="conversation d-flex flex-column w-100 h-100 overflow-auto">
+                <div class="conversation d-flex flex-column w-100 h-100 overflow-auto chat-window">
 
                    
                  
-                    <div class='p-2 sended '>
+                    <!-- <div class='p-2 sended '>
                         <div class="message-width ml-auto">
                             <div class="d-flex flex-row">
-                                <!-- have extra class named order rest same as received-->
+                                 // have extra class named order rest same as received
                                 <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
                             </div>   
@@ -430,7 +437,7 @@
                     <div class='p-2 received '>
                         <div class="message-width mr-auto">
                             <div class="d-flex flex-row">
-                                <!-- no order class -->
+                                // no order class
                                 <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
                             </div>   
@@ -439,7 +446,7 @@
                      <div class='p-2 received '>
                         <div class="message-width mr-auto">
                             <div class="d-flex flex-row">
-                                <!-- no order class -->
+                                // no order class
                                 <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
                             </div>   
@@ -456,7 +463,7 @@
                     <div class='p-2 received '>
                         <div class="message-width mr-auto">
                             <div class="d-flex flex-row">
-                                <!-- no order class -->
+                                // no order class
                                 <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
                             </div>   
@@ -478,7 +485,7 @@
                                 <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
                             </div>   
                         </div>
-                    </div>
+                    </div> -->
                     
                 </div>
             </div>
@@ -925,6 +932,52 @@
                 </article>
             </div>
 
+            <template id = "chat-contacts-template">
+                <div class="p-2 rounded individual-chat">
+                    <div class="d-flex flex-row">
+                        <div class="p-1 flex-shrink-1 m">
+                            <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                            
+                        </div >
+                        <button class="w-100 bg-white border-0 ss " style = "outline: none;" onclick="chatwindow(this)">
+                            <div class="p-1 flex-grow-1 m chat-person ">
+                                <div class="d-flex flex-column ">
+                                    <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                        ${contactName}
+                                    </div>
+                                    <div class=" p-0 text-left small-text">
+                                        ${lastMessage}
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <template id = "sent-message">
+                <div class="p-2 sended ">
+                    <div class="message-width ml-auto">
+                        <div class="d-flex flex-row">
+                            <!-- have extra class named order rest same as received-->
+                            <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                            <div class="p-1 flex-grow-1 order-1">${messageSent}</div>
+                        </div>   
+                    </div>
+                </div>
+            </template>
+
+            <template id = "received-message">
+                <div class='p-2 received '>
+                    <div class="message-width mr-auto">
+                        <div class="d-flex flex-row">
+                            <!-- no order class -->
+                            <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                            <div class="p-1 flex-grow-1 ">${messageReceived}</div>
+                        </div>   
+                    </div>
+                </div>
+            </template>
 
 
             <!--div id = "poll-answers-template" class = "hidden">
