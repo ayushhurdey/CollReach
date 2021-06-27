@@ -223,6 +223,9 @@ function beautifyDate(date, time) {
 
 function beautifyTime(date, time) {
     let d = new Date(date + "T" + time);
+    // setting local time to Indian Standard time(GMT +5:30hrs)
+    d.setHours(d.getHours()-5);
+    d.setMinutes(d.getMinutes()-30);
     return d.toLocaleTimeString();
 }
 

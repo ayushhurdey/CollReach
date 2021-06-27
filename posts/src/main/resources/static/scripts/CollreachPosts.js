@@ -223,6 +223,9 @@ function beautifyDate(date, time) {
 
 function beautifyTime(date, time) {
     let d = new Date(date + "T" + time);
+    // setting local time to Indian Standard time(GMT +5:30hrs)
+    d.setHours(d.getHours()-5);
+    d.setMinutes(d.getMinutes()-30);
     return d.toLocaleTimeString();
 }
 
@@ -777,21 +780,24 @@ function eliminateTagsFromString(answer) {
 
 function render(element) {
     let value = element.value;
-
+    var heading="";
     if (value === "today") {
+        heading="Today's Feeds";
         console.log(element.value);
         document.querySelector('.posts-feed-container').innerHTML = "";
         globalPageNumber = 0;
         loadTodaysFeed = true;
         load();
     }
-    else {                                    // regular.
+    else {              
+        heading="Regular Feeds";                      // regular.
         console.log(element.value);
         document.querySelector('.posts-feed-container').innerHTML = "";
         globalPageNumber = 0;
         loadTodaysFeed = false;
         load();
     }
+    document.querySelector("#sortby-label").innerHTML= heading;
 }
 
 

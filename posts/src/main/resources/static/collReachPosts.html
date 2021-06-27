@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CollReach Posts</title>
+    <title>CollReachPosts</title>
     <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
+
     <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="script/css/bootstrap.min.css" />
@@ -18,6 +21,7 @@
     <script defer type="application/javascript" src="./scripts/compress.js"></script>
     <script defer type="application/javascript" src="./scripts/compressUtil.js"></script>
     <script src ="scripts/CollreachPosts.js"></script>
+    <script defer src = "scripts/CollreachChat.js"></script>
     <link rel="stylesheet" href="style/collReachPost.css" />
 
     <script>
@@ -28,11 +32,12 @@
         document.addEventListener("DOMContentLoaded", () =>{
             renderNotification("Welcome to CollReach Posts.");
         })
+
     </script>
 
 </head>
 <body onload="load()">  
-
+<!-- <body> -->
         <!-----Notifier------>
     <div class = "notifier" hidden>
         <span class="closebtn" onclick = "closeBtn(this);">&times;</span> 
@@ -90,11 +95,11 @@
         
     <div class="container" id="feeds-section">
         <div class="row">
-                <div class="col-md-3" id = "user-profile-details-container">    
+                <div class="col-md-3 side-profile-area" id = "user-profile-details-container">    
                 </div>
 
                         <!--POSTS-->
-                <div class="col-md-9"> 
+                <div class="col-md-7 post-area"> 
                     <div class="profile-feed" id = "posts-container"> 
                         <div id="outer-post-box-announcement">
                             <div class=" profile-feed-item">
@@ -111,13 +116,33 @@
                         </div>   
                         <div id = "posts-loading-anim" style = "display:none;"></div>
 
-                        <form>
-                            <div id="post-type-option"><hr>
-                                <div id="sort-options">Show by
-                                  <select class = "select-sort-options" onchange="render(this)">
-                                    <option value = "regular" selected>Regular Feed</option>
-                                    <option value = "today">Today's Feed</option>
-                                  </select>
+                        <form class="form-group ">
+                            <div class="" id="post-type-option">
+                                
+                                <div class="d-flex flex-row" id="sort-options ">
+                                    <div class="col-xl-8 col-lg-7 col-md-5 col-sm-5 col-xs-1"><hr class="flex-grow-1 mr2 mvA "></div>
+                                    
+                                    <div class="col-xl-4 col-lg-5 col-md-7 col-sm-7 col-xs-11 float-right">
+                                        <div class="float-right">
+                                            <span class="t-12 t-black--light t-normal small-text">
+                                                Sort by:
+                                            </span>
+
+                                            <span class=" t-12 t-black--light t-normal small-text" id="sortby-label">
+                                                Regular Feeds
+                                                
+                                            </span>
+                                            <span class="">
+                                                    <select class = "col-md-8 custom-select select-sort-options" id="sort-label" onchange="render(this)">
+                                                        <option value = "regular" selected>Regular Feed</option>
+                                                        <option value = "today">Today's Feed</option>
+                                                    </select>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                
                                 </div>
                             </div>
                         </form>
@@ -126,16 +151,340 @@
                             <!------------- profile feed --------------->
                         </div>
                              
-                    </div>
-                </div> 
+                   
+                    </div> 
+                </div>
                 
                 <!-- Side panel-->
-                <div>
-                    <button class = "btn btn-outline-primary my-posts-btn">My Posts</button>
+                <div class="col-md-2 my-post">
+                    <div class="border rounded">
+                        <div class="p-1">
+                            <button class = "btn btn-outline-primary my-posts-btn w-100 smm">My Posts</button>
+                        </div>
+                        <div class="my-posts-items smm" style="height: 9rem;">
+
+                        </div>
+                        <div class="p-1 mx-auto text-center smm">
+                            <span style="color:#6C67FD">Coll</span><span id="heading">Reach</span>
+                        </div>
+                    </div>
                 </div>
             
         </div>
     </div>
+
+
+    <!-- footer message btn -->
+    <footer class="fixed-bottom navbar-light bg-light">
+        <div class="d-flex flex-row-reverse pr-5">
+            <div class="shadow-sm p-1 mb-3 bg-white rounded">
+                <buttton class="btn  border-0 message-btn" type=button onclick="message()"><i class="fas fa-comments "></i></buttton>
+            </div>
+            
+        </div>
+    </footer>
+
+
+    <!-- Message Contact Overlay -->
+
+        <div class=" message p-0 width float-right shadow col-lg-6 bg-white float-right  hide " id="chat">
+            <div class="d-flex flex-column flex-shrink-2 border  bg-white contact-box">
+
+                
+                <!-- contact header -->
+                <div class="p-2">
+                    <div class="p-2 contact-header">
+                        <div class=" d-flex flex-row">
+                            <div class="p-1 flex-shrink-1 m ">
+                                <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle message-contact-profile-photo"></a>
+                            </div>
+                            <div class="p-1 flex-grow-1 m" style="margin:9px;">
+                                <div class="float-left " style="font-size: 1.1em;">
+                                    Contacts    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- contact list -->
+                <div class="p-2 flex-grow-1 shadow overflow-auto  ">
+                    <div class="d-flex flex-column contacts-list ">
+
+                        <!-- 
+                        // contact 1
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        // SOME MORE SAMPLE CONTACTS
+                        // contact 2
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        // contact 3
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        // contact 4
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        // contact 5
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        // contact 6
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div> -->
+
+                    </div>
+                </div>      
+              </div>
+        </div>
+    
+
+
+
+
+
+
+
+    <!-- chat window overlay -->
+    <!-- <div class=" chat p-0 w-xl-25 w-lg-25  w-md-50 w-sm-75 w-xs-75 float-right shadow col-lg-6 bg-white float-right  " id="chat"> -->
+    <div class=" m-0 chat p-0 width float-right shadow col-lg-6 bg-white float-right hide chat-window-container" id="chat" data-contacting-username = "">
+        <div class="d-flex flex-column flex-shrink-2 border  bg-white contact-box">
+
+            
+            <!-- contact header -->
+            <div class="p-0">
+                <div class="p-2 contact-header">
+                    <div class=" d-flex flex-row">
+                        <div class="p-1 flex-shrink-1 m ">
+                            <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle current-contact-profile-photo" ></a>
+                        </div>
+                        <div class="p-1 flex-grow-1 m">
+                            <div class="float-left chat-header ">
+                                Contact Name    
+                            </div>
+                            
+                            <div class="p-1 m mr-auto float-right">
+                                <button class="cross-button " onclick="chatwindowclose()"><i class="fas fa-times" ></i></button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!--chatting window -->
+            <div class=" p-2 flex-grow-1 shadow overflow-auto">
+                <div class="conversation d-flex flex-column w-100 h-100 overflow-auto chat-window">
+
+                   
+                 
+                    <!-- <div class='p-2 sended '>
+                        <div class="message-width ml-auto">
+                            <div class="d-flex flex-row">
+                                 // have extra class named order rest same as received
+                                <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class='p-2 received '>
+                        <div class="message-width mr-auto">
+                            <div class="d-flex flex-row">
+                                // no order class
+                                <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+                     <div class='p-2 received '>
+                        <div class="message-width mr-auto">
+                            <div class="d-flex flex-row">
+                                // no order class
+                                <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class='p-2 sended '>
+                        <div class="message-width ml-auto">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class='p-2 received '>
+                        <div class="message-width mr-auto">
+                            <div class="d-flex flex-row">
+                                // no order class
+                                <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+
+                    <div class='p-2 sended '>
+                        <div class="message-width ml-auto">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class='p-2 sended '>
+                        <div class="message-width ml-auto">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div> -->
+                    
+                </div>
+            </div>
+
+            <div class="p-2 flex-shrink-2" style="height: 4rem;">
+                <div class="p-0 contact-header">
+                    <div class=" d-flex flex-row">
+                        <div class="p-1 flex-grow-1 m">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control chat-input-box" placeholder="Type here" >
+                                    <div class="input-group-append chat-send-btn">
+                                      <button class="btn send-btn "> <i class="fas fa-paper-plane small"></i></button>
+                                    </div>
+                                  </div>
+                        </div>
+                        <!-- <div class="p-1  m " style="margin: 5px;">
+                            <button class="send rounded">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                            
+                        </div> -->
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
 
 
     <!--POST OVERLAY-->
@@ -146,7 +495,7 @@
                             Create post
                     </div>
                     <div  id="button">
-                        <button class="btn btn-outline-primary" id="cross-button" onclick="exit()" >
+                        <button class="btn btn-outline-primary cross-button" id="" onclick="exit()" >
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
@@ -238,7 +587,7 @@
                         Create poll
                     </div>
                     <div  id="button">
-                        <button class="btn btn-outline-primary" id="cross-button" onclick="exit()">
+                        <button class="btn btn-outline-primary cross-button" id="" onclick="exit()">
                             <i class="fas fa-times" ></i>
                         </button>
                     </div>
@@ -548,6 +897,70 @@
                 </article>
             </div>
 
+
+
+            <!--CHAT TEMPLATES-->
+
+            <template id = "chat-contacts-template">
+                <div class="p-2 rounded individual-chat">
+                    <div class="d-flex flex-row">
+                        <div class="p-1 flex-shrink-1 m">
+                            <!-- "static/profileimage1-ConvertImage.ico" -->
+                            <a href=""><img src=${profilePic}  class="img-sm rounded-circle" ></a>
+                            
+                        </div >
+                        <button class="w-100 bg-white border-0 ss " style = "outline: none;" data-contact-username = ${username} onclick="chatwindow(this)">
+                            <div class="p-1 flex-grow-1 m chat-person ">
+                                <div class="d-flex flex-column ">
+                                    <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                        ${contactName}
+                                    </div>
+                                    <div class=" p-0 text-left small-text">
+                                        ${lastMessage}
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <template id = "sent-message">
+                <div class="p-2 sended ">
+                    <div class="message-width ml-auto">
+                        <div class="d-flex flex-row">
+                            <!-- have extra class named order rest same as received-->
+                            <div class="p-1 order-2"><a href=""><img src=${profilePic} class="conversation-side-profile rounded-circle" ></a></div>
+                            <div class="p-1 flex-grow-1 order-1">
+                                <div>${message}</div>
+
+                                <div class = "date-time-display">
+                                    <small style = "font-size: 0.6em;" class = "message-date">${date}</small>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+            </template>
+
+            <template id = "received-message">
+                <div class='p-2 received '>
+                    <div class="message-width mr-auto">
+                        <div class="d-flex flex-row">
+                            <!-- no order class -->
+                            <div class="p-1 "><a href=""><img src=${profilePic}  class="conversation-side-profile rounded-circle" ></a></div>
+                            <div class="p-1 flex-grow-1 ">
+                                <div>${message}</div>
+
+                                <div class = "date-time-display">
+                                    <small style = "font-size: 0.6em;" class = "message-date">${date}</small>
+                                </div>
+                            </div>
+                            
+                        </div>   
+                    </div>
+                </div>
+            </template>
 
 
             <!--div id = "poll-answers-template" class = "hidden">

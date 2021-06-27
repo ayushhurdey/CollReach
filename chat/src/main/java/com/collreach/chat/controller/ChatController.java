@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 
 @RestController
+@CrossOrigin("*")
 public class ChatController {
 
     @Autowired
@@ -171,7 +172,7 @@ public class ChatController {
                                              @RequestParam(value = "pageNo") int pageNo,
                                              @RequestParam(value = "pageSize") int pageSize
                                              ){
-        Sort dateSort = Sort.by("date").descending();
+        Sort dateSort = Sort.by("date").ascending();
         Pageable paging = PageRequest.of(pageNo, pageSize, dateSort);
 
         List<Message> messages = messageRepository.findAllBySenderAndReceiverOrReceiverAndSender(memberOne, memberTwo, memberOne, memberTwo, paging);
