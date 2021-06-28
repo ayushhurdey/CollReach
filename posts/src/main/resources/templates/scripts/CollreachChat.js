@@ -49,6 +49,7 @@ function addMessage(message, isSent, date, username){
 }
 
 async function addMessages(memberTwo, pageNo, pageSize){
+    // MEMBER_ONE is current user's username
     const MEMBER_ONE = localStorage.getItem('username');
     let messages = await getAllSortedMessages(MEMBER_ONE, memberTwo, pageNo, pageSize);
     console.log(messages);

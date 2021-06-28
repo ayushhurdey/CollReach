@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,6 +38,8 @@ public class ChatController {
     @Autowired
     MessageRepository messageRepository;
 
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
 
     @GetMapping(path = "/test")
     public List<String> test(){
@@ -92,7 +95,7 @@ public class ChatController {
         String roomId = UUID.randomUUID().toString().replace("-", "");
         Optional<User> sender = userRepository.findById(senderId);
         Optional<User> receiver = userRepository.findById(receiverId);
-        roomRepository.save(new Room(sender.get(), receiver.get(), new Date()));
+        roomRepository.save(new Room(sender.get(), receiver.get(), new Date(), null));
         return roomRepository.findAll();
     }
 
@@ -115,15 +118,18 @@ public class ChatController {
             //room1 = room.orElseGet(() -> roomRepository.save(new Room(sender.get(), receiver.get(), messageRequest.getDate())));
             if(room.isPresent()){
                 room.get().setLastContact(messageRequest.getDate());
+                room.get().setLastMessage(messageRequest.getMessage());
                 room1 = room.get();
                 roomRepository.save(room1);
             }
             else{
-                room1 = roomRepository.save(new Room(sender.get(), receiver.get(), messageRequest.getDate()));
+                room1 = roomRepository.save(new Room(sender.get(), receiver.get(), messageRequest.getDate(), messageRequest.getMessage()));
             }
-            messageRepository.save(new Message(messageRequest.getMessage(), messageRequest.getDate(),
-                                                messageRequest.getTime(), room1,
-                                                messageRequest.getSender(), messageRequest.getReceiver()));
+            final Message message = new Message(messageRequest.getMessage(), messageRequest.getDate(),
+                    messageRequest.getTime(), room1,
+                    messageRequest.getSender(), messageRequest.getReceiver());
+            messageRepository.save(message);
+            simpMessagingTemplate.convertAndSend("/topic/" + messageRequest.getReceiver(), message);
         }
         catch (Exception e){
             return false;

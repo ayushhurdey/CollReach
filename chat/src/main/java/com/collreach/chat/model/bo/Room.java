@@ -13,14 +13,16 @@ public class Room {
     private User memberOne;
     private User memberTwo;
     private Date lastContact;
+    private String lastMessage;
 
     public Room() {
     }
 
-    public Room(User memberOne, User memberTwo, Date lastContact) {
+    public Room(User memberOne, User memberTwo, Date lastContact, String lastMessage) {
         this.memberOne = memberOne;
         this.memberTwo = memberTwo;
         this.lastContact = lastContact;
+        this.lastMessage = lastMessage;
     }
 
     public String getRoomId() {
@@ -53,5 +55,13 @@ public class Room {
 
     public void setLastContact(Date lastContact) {
         this.lastContact = lastContact;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
     }
 }
