@@ -33,7 +33,7 @@ function onConnected() {
     stompClient.subscribe('/topic/votesUpdate', onVotesUpdate);
 }
 
-function onConnectedToChat(){
+function onConnectedToChat() {
     const USERNAME = localStorage.getItem('username');
     chatStompClient.subscribe('/topic/' + USERNAME, onNewMessage);
 }
@@ -43,7 +43,15 @@ function onError(error) {
     renderNotification('!! Some connection issues.')
 }
 
-function onNewMessage(payload){
+function onNewMessage(payload) {
+    let message = JSON.parse(payload.body);
+    let chatWindow = document.querySelector('.chat-window-container');
+    let currentReceiver = chatWindow.dataset.contactingUsername;
+    if (currentReceiver === message.sender) {
+        addMessage(message.message, false, formatDate(message.date), message.sender);
+        console.log("Message added to window.")
+    }
+    console.log("current window is not receiver..");
     console.log(JSON.parse(payload.body));
 }
 

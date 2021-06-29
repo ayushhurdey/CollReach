@@ -10,6 +10,7 @@ function addContact(contactName, lastMessage, username){
 
 async function addContacts(){
     const USERNAME = localStorage.getItem('username');
+    let contactsList = document.querySelector('.contacts-list').innerHTML = "";
     let contacts = await getContacts(USERNAME, 0, 10);
     console.log(contacts);
     contacts.forEach((value, key) => {
@@ -168,12 +169,15 @@ function buildProfilePhotoURL(username){
             "&ifMini=true";
 }
 
-
+/**
+ * Responsible fro opening chats: Opens when chat button is clicked.
+ */
 function message(){
     if (flag==0){
         document.querySelector(".message").classList.toggle("hide");
     }
     else{
+        addContacts();
         document.querySelector(".message").classList.toggle("hide");
         document.querySelector(".chat").classList.toggle("hide");
         flag=0; 
