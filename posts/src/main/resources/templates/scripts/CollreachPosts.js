@@ -37,7 +37,7 @@ function load() {
         return;
     }
 
-
+    // TODO: this visibility has to be made dynamic 
     const visibility = "CSE";    //getDeptFromCookie();  -> to be used later   // should come from already logged in user.
     const pageNo = globalPageNumber;                                   // should change dynamically
     const pageSize = 5;                                // fixed value -> for how many pages to be loaded in the DOM in each request.
