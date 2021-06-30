@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="UserProfileCss.css" />
     <script type="application/javascript" src="./scripts/compress.js"></script>
     <link rel="icon" href="CollReach.PNG" type="image/x-icon" />
-
+    <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
    
   <script>
       function login() {
@@ -125,12 +125,20 @@
   
 // }
 
+
+      function searchstudent(){
+        document.querySelector(".search-o").classList.toggle('hide');
+      }
+
+
+
+      
     </script>
 
   </head>
 
-  <body onload="login()">
-  <!--body-->
+  <!-- <body onload="login()"> -->
+  <body>
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
         
       <div class="container" id="navv">
@@ -168,16 +176,20 @@
               </li>
               
               
-              <li>
-                  <button class="nav-item btn btn-outline-primary" type="button" id="search-btn">
+              <li class="navbar-btn">
+                  <button class="nav-item btn btn-outline-primary" type="button" id="search-btn" onclick="searchstudent()">
                       Search
                   </button>
 
                   <datalist id = "skills-list"></datalist>
                   
               </li>
-              <li>
-                <button type="button" class="btn btn-outline-danger" id = "logout-btn"><i class="fa fa-sign-out"></i></button>
+              <li class="navbar-btn">
+                <button type="button" class="btn btn-outline-danger" id = "logout-btn">
+                  
+                  <i class="fa fa-sign-out"></i>
+                  <span class="logout-header">Logout</span>
+                </button>
               </li>
           </ul>
           </div> 
@@ -190,9 +202,9 @@
 
 
 
-  <!-- <section class="shadow p-3 mb-5 bg-white" id="heading">
-      <h2>COLLREACH</h2>
-      <br>
+  <!-- <div class="shadow p-3 mb-5 bg-white" id="heading">
+     
+      
       <div class="input-group">
         <div class="form-outline">
          
@@ -205,7 +217,7 @@
                  placeholder = "Type skills separated with comma" 
           />
          
-         double comment end
+          double comment end
           
           <input type="submit" id = "search-btn" class="btn btn-primary" value = "Search">
          
@@ -218,67 +230,68 @@
           <div class = "skill-item-cross" style = "display:hidden;"></div>
         </div>
 
-        <input type="submit" id = "search-btn" class="btn btn-primary" value = "Search"/> 
-      double comment end
-      </div>
-      <br>
+        <div>
+           <input type="submit" id = "search-btn" class="btn btn-primary" value = "Search"/> 
+            double comment end
+        </div>
+        
      
 
-      <datalist id = "skills-list">
+        <datalist id = "skills-list">
 
-        double comment
-        <option value = "java"></option>
-        <option value = "python"></option>
-        <option value = "b"></option>
-        <option value = "c programming"></option>
-        <option value = "c#"></option>
-        <option value = "perl"></option>
-        <option value = "html"></option>
-        <option value = "css"></option>
-        <option value = "javascript"></option>
-        <option value = "machine learning"></option>
-        <option value = "deep learning"></option>
-        <option value = "ai"></option>
-        <option value = "big data"></option>
-        <option value = "hadoop"></option>
-        <option value = "c/c++"></option>
-        <option value = "dbms"></option>
-        <option value = "database"></option>
-        <option value = "operating system"></option>
-        <option value = "spring"></option>
-        <option value = "spring boot"></option>
-        <option value = "spring-boot"></option>
-        <option value = "mysql"></option>
-        <option value = "oracle"></option>
-        <option value = "postgresql"></option>
-        <option value = "sqlite"></option>
-        <option value = "data analytics"></option>
-        <option value = "data mining"></option>
-        <option value = "php"></option>
-        <option value = "rust"></option>
-        <option value = "networking"></option>
-        <option value = "unit testing"></option>
-        <option value = "seo"></option>
-        <option value = "photography"></option>
-        <option value = "web analytics"></option>
-        <option value = "web automation"></option>
-        <option value = "cms"></option>
-        <option value = "hr"></option>
-        <option value = "git"></option>
-        <option value = "ms office"></option>
-        <option value = "ms excel"></option>
-        <option value = "ms powerpoint"></option>
-        <option value = "intellij"></option>
-        <option value = "vs code"></option>
-        <option value = "docker"></option>
-        <option value = "microservices"></option> 
-        
-        double comment end
+          double comment
+          <option value = "java"></option>
+          <option value = "python"></option>
+          <option value = "b"></option>
+          <option value = "c programming"></option>
+          <option value = "c#"></option>
+          <option value = "perl"></option>
+          <option value = "html"></option>
+          <option value = "css"></option>
+          <option value = "javascript"></option>
+          <option value = "machine learning"></option>
+          <option value = "deep learning"></option>
+          <option value = "ai"></option>
+          <option value = "big data"></option>
+          <option value = "hadoop"></option>
+          <option value = "c/c++"></option>
+          <option value = "dbms"></option>
+          <option value = "database"></option>
+          <option value = "operating system"></option>
+          <option value = "spring"></option>
+          <option value = "spring boot"></option>
+          <option value = "spring-boot"></option>
+          <option value = "mysql"></option>
+          <option value = "oracle"></option>
+          <option value = "postgresql"></option>
+          <option value = "sqlite"></option>
+          <option value = "data analytics"></option>
+          <option value = "data mining"></option>
+          <option value = "php"></option>
+          <option value = "rust"></option>
+          <option value = "networking"></option>
+          <option value = "unit testing"></option>
+          <option value = "seo"></option>
+          <option value = "photography"></option>
+          <option value = "web analytics"></option>
+          <option value = "web automation"></option>
+          <option value = "cms"></option>
+          <option value = "hr"></option>
+          <option value = "git"></option>
+          <option value = "ms office"></option>
+          <option value = "ms excel"></option>
+          <option value = "ms powerpoint"></option>
+          <option value = "intellij"></option>
+          <option value = "vs code"></option>
+          <option value = "docker"></option>
+          <option value = "microservices"></option> 
+          
+          double comment end
 
-        
-      </datalist> 
-    
-  </section> -->
+          
+        </datalist> 
+      </div>
+  </div> -->
   <div class="container main" id="feeds-section">
     <div class="row ">
 
@@ -524,7 +537,7 @@
 
 
 <!-- Footer -->
-<footer class="page-footer font-small blue pt-4 navbar-light bg-light">
+<footer class="page-footer font-small blue pt-4 navbar-light bg-light" >
 
  <div class="footer ">
   <div class="row navbar-light bg-light">
@@ -573,35 +586,253 @@
 
 
 
-    <div id="search-overlay" style="display: none;">
-      <span id = "overlay-close">&#10006;</span>
-      <div id="overlay-content">
-           
+    <!-- <div id="search-overlay" style="display: none;"> -->
+    <div class="p-2  search-o w-75 w-lg-50 w-xl-50 .animated .zoomIn shadow  fast overflow-auto hide">
+      <div id="search-overlay ">
+
+        <div >
+          <!-- <span id = "overlay-close">&#10006;</span> -->
+          <div id = "overlay-close"><i class="fas fa-times"></i></div>
+        </div>
+
+        <form >
+        <div class="search-details d-flex p-2 flex-row justify-content-center w-75" > 
+          <div class="p-1 flex-grow-1 form-group" id="overlay-content">
+            
             <input type="text" 
-                   id="overlay-search-box" 
-                   list = "skills-list" 
-                   class="form-control" 
-                   placeholder = "Type skills separated with comma" 
+                    id="overlay-search-box" 
+                    list = "skills-list" 
+                    class="form-control text-sm" 
+                    placeholder = "Type skills separated with comma" 
             />
-            
-            <input type="submit" id = "search-request-btn" class="btn btn-primary" value = "Search">
-            
-            <select  id="search-options">
+          </div>
+
+          <div class="p-1 form-group">
+            <input class="form-control btn btn-primary text-sm" type="submit" id = "search-request-btn" class="btn btn-primary" value = "Search">
+          </div>
+          
+          <div class="p-1 form-group">
+            <select class="form-control text-sm" id="search-options">
               <option value="search-by-name" selected>Search by Name</option>
               <option value="search-by-skills">Search By Skills</option>
-            </select>
-          
-          <div id = "search-items">
-            <div class = "skill-item-cross" style = "display:hidden;"></div>
+          </select>
+          </div>    
+        </div>
+        </form>
+
+          <!-- <div id = "search-items">
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" style = ""> &#10005;</div>
+            </div>
+          </div> -->
+          <script>
+              function removeskill(elem){
+                $(elem).parent('div.skill-item').remove();
+              }
+          </script>
+          <div class="d-flex flex-wrap overflow-auto search-overlay-boxes" id="search-items">
+            <!-- demo input -->
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
+            </div>
+            <!-- demo input ends -->
           </div>
 
-          <div id = "items-output">
+          <div class="overflow-auto search-overlay-boxes" id = "items-output">
+            <div style="text-align: center;margin-top: 5px;"><h5><b> Search Result</b></h5></div>
+            <!-- demo input -->
 
+            <!-- search res 1 -->
+            <div class="name-list">
+              <div class="search-name">
+                Ayush
+              </div>
+              <div class="search-profile">
+                
+                <!-- WARNING javascript code has to be write for this part -->
+                <div class="d-flex flex-row flex-wrap skill-box">
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                
+                </div>
+
+                <div class="search-profile-message">
+                  <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
+                </div>
+                <!-- warning end -->
+
+                <a href="">Visit Profile</a>
+              </div>
+            </div>
+
+
+            <!-- search res 2 -->
+            <div class="name-list">
+              <div class="search-name">
+                Ayush
+              </div>
+              <div class="search-profile">
+                <!-- WARNING javascript code has to be write for this part -->
+                <div class="d-flex flex-row flex-wrap skill-box">
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                
+                </div>
+
+                <div class="search-profile-message">
+                  <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
+                </div>
+                <!-- warning end -->
+                <a href="">Visit Profile</a>
+              </div>
+            </div>
+
+
+            <!-- search res 3 -->
+            <div class="name-list">
+              <div class="search-name">
+                Ayush
+              </div>
+              <div class="search-profile">
+                <!-- WARNING javascript code has to be write for this part -->
+                <div class="d-flex flex-row flex-wrap skill-box">
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                
+                </div>
+
+                <div class="search-profile-message">
+                  <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
+                </div>
+                <!-- warning end -->
+                <a href="">Visit Profile</a>
+              </div>
+            </div>
+            <div class="name-list">
+              <div class="search-name">
+                Ayush
+              </div>
+              <div class="search-profile">
+                <!-- WARNING javascript code has to be write for this part -->
+                <div class="d-flex flex-row flex-wrap skill-box">
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                  <div class="search-profile-skill d-flex">
+                    <div class="skill-name">Python</div>
+                    <div class="upskill-votes">5</div>
+                  </div>
+                
+                </div>
+
+                <div class="search-profile-message">
+                  <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
+                </div>
+                <!-- warning end -->
+                <a href="">Visit Profile</a>
+              </div>
+            </div>
+
+           
+            <!-- demo input ends -->
           </div>
+         
+        </div>
       
-      </div>
     </div>
-
     <!--script>
     const image = document.getElementById('img').files[0];
     //image = image.value.replace("C:\\fakepath\\", "");
@@ -710,10 +941,11 @@
       
       
       function addSpan(div,value){
-        let newDiv = document.createElement('span');
-        let cross = document.createElement('span');
+        let newDiv = document.createElement('div'); //CHANGE span changes into div
+        let cross = document.createElement('div'); //CHANGE span changes into div
         newDiv.setAttribute("class", "skill-item");
         cross.setAttribute("class", "skill-item-cross");
+        cross.setAttribute('onclick','removeskill(this)');
         cross.innerHTML = "   &#10005;";
         newDiv.innerHTML = value;
         newDiv.appendChild(cross);
@@ -744,7 +976,8 @@
       }
       
       function off() {
-        document.getElementById("search-overlay").style.display = "none";
+        // document.getElementById("search-overlay").style.display = "none";
+        document.querySelector(".search-o").classList.add("hide");
       }
 
       function search(){
@@ -776,9 +1009,9 @@
                     itemsOutput.innerHTML = "";
                     
                     users.forEach(function(value, index, array){
-                        let div = document.createElement('div');
+                       let div = document.createElement('div'); //CHANGE span changes into div
                         div.setAttribute('class', 'names-list');
-                        let nameSpan = document.createElement('span');
+                        let nameSpan = document.createElement('div'); //CHANGE span changes into div
                         nameSpan.setAttribute('class', 'search-name');
                         let nameText = document.createTextNode(value.name + " ");
                         nameSpan.appendChild(nameText);
@@ -792,7 +1025,7 @@
                         profileSpan.appendChild(link);
 
                         div.appendChild(nameSpan);
-                        div.appendChild(document.createElement('br'));
+                                                            //CHANGE <br> deleted
                         div.append(profileSpan);
                         
                         itemsOutput.appendChild(div);
