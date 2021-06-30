@@ -47,6 +47,9 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Value("${posts.url}")
     private String postsUrl;
 
+    @Value("${chat.url}")
+    private String chatAppUrl;
+
     @Value("${ftp.host-dir}")
     private String hostDir;
 
@@ -82,10 +85,12 @@ public class UserProfileServiceImpl implements UserProfileService {
         }
         userLogin.setPassword(userSignupRequest.getPassword());
         userLogin.setUserName(userSignupRequest.getUserName());
-        Boolean response = httpRequestUtil.setNewUserAtUrl(userSignupRequest.getUserName(),
+        Boolean userAddedInPosts = httpRequestUtil.setNewUserAtUrl(userSignupRequest.getUserName(),
                                                                         userSignupRequest.getName(),postsUrl);
+        Boolean userAddedInChat = httpRequestUtil.setNewUserAtUrl(userSignupRequest.getUserName(),
+                userSignupRequest.getName(), chatAppUrl);
 
-        if(!response)
+        if(!userAddedInChat || !userAddedInPosts)
             return "Error Signing up.";
 
         userLoginRepository.save(userLogin);

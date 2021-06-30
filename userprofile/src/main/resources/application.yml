@@ -60,3 +60,6 @@ eureka:
 
 posts:
   url: http://posts/user/add-user
+
+chat:
+  url: http://chat-app/user/add-user

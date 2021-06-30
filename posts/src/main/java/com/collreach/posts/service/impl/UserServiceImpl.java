@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
         try {
             Users users = new Users();
             users.setUserName(userRequest.getUserName());
+            users.setName(userRequest.getName());
             usersRepository.save(users);
             return true;
         }catch(Exception e){

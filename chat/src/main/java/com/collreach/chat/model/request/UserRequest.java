@@ -1,4 +1,4 @@
-package com.collreach.posts.model.requests;
+package com.collreach.chat.model.request;
 
 public class UserRequest {
     private String userName;

@@ -14,7 +14,7 @@ async function addContacts(){
     let contacts = await getContacts(USERNAME, 0, 10);
     console.log(contacts);
     contacts.forEach((value, key) => {
-        addContact(contacts[key].name, "", contacts[key].username);
+        addContact(contacts[key].name, contacts[key].lastMessage, contacts[key].username);
     });
 }
 
@@ -169,15 +169,16 @@ function buildProfilePhotoURL(username){
             "&ifMini=true";
 }
 
+
 /**
- * Responsible fro opening chats: Opens when chat button is clicked.
+ * Responsible for opening chats: Opens when chat button is clicked.
  */
 function message(){
     if (flag==0){
+        addContacts();
         document.querySelector(".message").classList.toggle("hide");
     }
     else{
-        addContacts();
         document.querySelector(".message").classList.toggle("hide");
         document.querySelector(".chat").classList.toggle("hide");
         flag=0; 
