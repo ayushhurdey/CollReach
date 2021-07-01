@@ -21,8 +21,8 @@
   <script>
       function login() {
         var username = localStorage.getItem("username");
-        if(username == null)
-          window.location.href = "http://localhost:8082/login";
+        // if(username == null)
+        //   window.location.href = "http://localhost:8082/login";
         var xhr = new XMLHttpRequest();
         var url = "http://localhost:8082/user/get-user-details/" + username;
         xhr.open("POST", url, true);
@@ -55,6 +55,8 @@
             document.getElementById('general-profile').textContent = 
               "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey;
             document.getElementById('general-profile-link')
+                    .setAttribute('href', "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
+            document.getElementById('profile-link')
                     .setAttribute('href', "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
 
             var skill = userInfo.userPersonalInfoResponse.skills;
@@ -137,8 +139,8 @@
 
   </head>
 
-  <!-- <body onload="login()"> -->
-  <body>
+  <body onload="login()">
+  <!-- <body> -->
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
         
       <div class="container" id="navv">
@@ -292,12 +294,9 @@
         </datalist> 
       </div>
   </div> -->
+
   <div class="container main" id="feeds-section">
     <div class="row ">
-
-
-
-
 
             <div class="col-md-3"id = "user-profile-details-container"  >   
               <!-- <div class="col-sm-3 col-4 fixed-top one">  -->
@@ -305,35 +304,37 @@
              <!--Static -->
               <div class="pad-top" >
                 <img src="CollReach.PNG" class="img-md rounded-circle" alt="Image not found" id="profile-photo">
+                
+                <small class="small-bullet">
+                  <strong>Edit
+                    <input hidden type="file" class="custom-file-input" id="img" name="img" accept="image/*" multiple="multiple">
+                  </strong>
+                </small> 
+        
                 <div id="name">
-                  Ayush Choudhary
+                  <!-- Name of the user here -->
                 </div>
+
                 <div>
                     <div id="profile-content">
-                    
                         <div>
-                            <span ><i  class="fas fa-envelope"></i>&nbsp; <span id="kietEmail">ayush.1822cs1049@kiet.edu</span></span>
+                            <span ><i  class="fas fa-envelope"></i>&nbsp; <span id="kietEmail"><!-- Email of the user here--></span></span>
                         </div>
-                        <div><span><i class="fas fa-user"></i>&nbsp;http://collreach.com/profil....</span></div>
-                    </div>
-                    
+                        <div>
+                          <span>
+                            <i class="fas fa-user"></i>&nbsp;
+                            <a id = "profile-link" target = "_blank">General Profile<span class = "redirect"></span></a>
+                          </span>
+                        </div>
+                    </div>  
                 </div>
                
 
                 
-                  <button
-                    type="button"
-                    id="updatebutton"
-                    class="btn btn-outline-primary"
-                    onclick='window.location.href="http://localhost:8082/profile-update";'
-                  >
+                <button type="button" id="updatebutton" class="btn btn-outline-primary" onclick='window.location.href="http://localhost:8082/profile-update";'>
                   Edit Profile
-                  </button>
-                
-
-
-
-
+                </button>
+  
 
                 <div class="card" id="cour">
                   <div class="card-body">
@@ -342,9 +343,9 @@
                     </div>
                     <div class="py-4">
               
-                      <div id = "course">B.Tech</div>
-                      <div id = "branch">CSE</div>
-                      <div id = "sem">6</div>
+                      <div id = "course"><!--B.Tech--></div>
+                      <div id = "branch"><!--CSE--></div>
+                      <div id = "sem"><!--6--></div>
                     </div>
                   </div>
                   
@@ -483,9 +484,8 @@
                           </div>
                         </div>
                       </div> -->
-                    
-                      
-                    
+
+
                       <div class="card">
                         <div class="card-body">
                           <div class="card-title">CONTACT DETAILS</div>
@@ -509,7 +509,10 @@
 
                               <tr>
                                 <td>GENERAL PROFILE LINK</td>
-                                <td><a href = ""  target="_blank" rel="noopener noreferrer" id = "general-profile-link"><div id = "general-profile"></div></a></td>
+                                <td><a href = ""  target="_blank" rel="noopener noreferrer" id = "general-profile-link">
+                                      <div id = "general-profile"></div>
+                                    </a>
+                                </td>
                               </tr>
                             </table>
                           </div>
@@ -530,7 +533,7 @@
 
             </div>
          
-            </div>
+          </div>
   </div>
 </div>
 
@@ -592,10 +595,10 @@
 
         <div >
           <!-- <span id = "overlay-close">&#10006;</span> -->
-          <div id = "overlay-close"><i class="fas fa-times"></i></div>
+          <div id = "overlay-close"><i class="fa fa-times"></i></div>
         </div>
 
-        <form >
+        
         <div class="search-details d-flex p-2 flex-row justify-content-center w-75" > 
           <div class="p-1 flex-grow-1 form-group" id="overlay-content">
             
@@ -608,17 +611,17 @@
           </div>
 
           <div class="p-1 form-group">
-            <input class="form-control btn btn-primary text-sm" type="submit" id = "search-request-btn" class="btn btn-primary" value = "Search">
+            <input class="form-control btn btn-primary text-sm btn btn-primary" type="submit" id = "search-request-btn" value = "Search">
           </div>
           
           <div class="p-1 form-group">
             <select class="form-control text-sm" id="search-options">
               <option value="search-by-name" selected>Search by Name</option>
               <option value="search-by-skills">Search By Skills</option>
-          </select>
+            </select>
           </div>    
         </div>
-        </form>
+      
 
           <!-- <div id = "search-items">
             <div class="skill-item">
@@ -631,228 +634,61 @@
                 $(elem).parent('div.skill-item').remove();
               }
           </script>
+
           <div class="d-flex flex-wrap overflow-auto search-overlay-boxes" id="search-items">
-            <!-- demo input -->
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <div class="skill-item">
-              Python
-              <div class = "skill-item-cross" onclick='removeskill(this)' style = ""> &#10005;</div>
-            </div>
-            <!-- demo input ends -->
           </div>
 
           <div class="overflow-auto search-overlay-boxes" id = "items-output">
             <div style="text-align: center;margin-top: 5px;"><h5><b> Search Result</b></h5></div>
-            <!-- demo input -->
-
-            <!-- search res 1 -->
-            <div class="name-list">
-              <div class="search-name">
-                Ayush
-              </div>
-              <div class="search-profile">
-                
-                <!-- WARNING javascript code has to be write for this part -->
-                <div class="d-flex flex-row flex-wrap skill-box">
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                
-                </div>
-
-                <div class="search-profile-message">
-                  <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
-                </div>
-                <!-- warning end -->
-
-                <a href="">Visit Profile</a>
-              </div>
-            </div>
-
-
-            <!-- search res 2 -->
-            <div class="name-list">
-              <div class="search-name">
-                Ayush
-              </div>
-              <div class="search-profile">
-                <!-- WARNING javascript code has to be write for this part -->
-                <div class="d-flex flex-row flex-wrap skill-box">
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                
-                </div>
-
-                <div class="search-profile-message">
-                  <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
-                </div>
-                <!-- warning end -->
-                <a href="">Visit Profile</a>
-              </div>
-            </div>
-
-
-            <!-- search res 3 -->
-            <div class="name-list">
-              <div class="search-name">
-                Ayush
-              </div>
-              <div class="search-profile">
-                <!-- WARNING javascript code has to be write for this part -->
-                <div class="d-flex flex-row flex-wrap skill-box">
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                
-                </div>
-
-                <div class="search-profile-message">
-                  <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
-                </div>
-                <!-- warning end -->
-                <a href="">Visit Profile</a>
-              </div>
-            </div>
-            <div class="name-list">
-              <div class="search-name">
-                Ayush
-              </div>
-              <div class="search-profile">
-                <!-- WARNING javascript code has to be write for this part -->
-                <div class="d-flex flex-row flex-wrap skill-box">
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                  <div class="search-profile-skill d-flex">
-                    <div class="skill-name">Python</div>
-                    <div class="upskill-votes">5</div>
-                  </div>
-                
-                </div>
-
-                <div class="search-profile-message">
-                  <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
-                </div>
-                <!-- warning end -->
-                <a href="">Visit Profile</a>
-              </div>
-            </div>
-
-           
-            <!-- demo input ends -->
+            <div id = "search-results-display-area"></div>
           </div>
-         
+
         </div>
       
     </div>
-    <!--script>
-    const image = document.getElementById('img').files[0];
-    //image = image.value.replace("C:\\fakepath\\", "");
-    console.log(image);
-    const setImage = document.getElementById('set-profile-photo');
-    const username = localStorage.getItem('username');
-    setImage.addEventListener('click', (e) => {
-      e.preventDefault();
-      var formData = new FormData();
-      formData.append("file", image);
-      formData.append("userName", username);
-      fetch("http://localhost:8082/user/profile-photo", {
-            method: 'PUT',
-            headers: {
-                'Authorization': localStorage.getItem('auth'),
-            },
-            body: formData
-      });
-    });
-</script-->
+
+    <!---------- TEMPLATES ----------->
+
+    <template id = "skill-search-bullet-template">
+      <div class="skill-item">
+        <span class = "skill-item-name">{skillName}</span>
+        <div class = "skill-item-cross" onclick='removeskill(this)'> &#10005;</div>
+      </div>
+    </template>
+
+
+    <template id = "search-output-display">
+        <div class="name-list">
+          <div class="search-name">
+            ${name}
+          </div>
+          <div class="search-profile">
+            
+            <!-- SKILLS LIST -->
+            <div class="d-flex flex-row flex-wrap skill-box">
+              ${skillsList}
+            </div>
+
+            <div class="search-profile-message">
+              <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
+            </div>
+            
+            <a href = ${profileUrl}>Visit Profile</a>
+          </div>
+        </div>
+    </template>
+
+
+    <template id = "skills-list-output-display">
+      <div class="search-profile-skill d-flex">
+        <div class="skill-name">${skill}</div>
+        <div class="upskill-votes">${skillUpvotes}</div>
+      </div>
+    </template>
+
+
+
+
     <script>
       let logoutButton = document.getElementById("logout-btn");
       logoutButton.addEventListener("click", logout);
@@ -967,13 +803,13 @@
 
     <script>
       /* --------------Overlay Effect functions---------*/
-      document.getElementById('search-btn').addEventListener("click", on);
+      //document.getElementById('search-btn').addEventListener("click", on);
       document.getElementById('overlay-close').addEventListener("click", off);
       document.getElementById('search-request-btn').addEventListener("click", search);
 
-      function on() {
-        document.getElementById("search-overlay").style.display = "block";
-      }
+      // function on() {
+      //   //document.getElementById("search-overlay").style.display = "block";
+      // }
       
       function off() {
         // document.getElementById("search-overlay").style.display = "none";
@@ -983,8 +819,10 @@
       function search(){
           console.log("Searching...");
           let searchOption = document.getElementById('search-options').value;
-          let itemsOutput = document.getElementById('items-output');
+          let itemsOutput = document.getElementById('search-results-display-area');
           let searchQuery = document.getElementById('overlay-search-box').value.trim();
+          let searchOutputTemplate = document.querySelector('#search-output-display').innerHTML;
+          let skillsListOutputTemplate = document.querySelector('#skills-list-output-display').innerHTML;
 
           if(searchOption.localeCompare("search-by-name") === 0){
             if(searchQuery == "" || searchQuery == null)
@@ -1009,26 +847,34 @@
                     itemsOutput.innerHTML = "";
                     
                     users.forEach(function(value, index, array){
-                       let div = document.createElement('div'); //CHANGE span changes into div
-                        div.setAttribute('class', 'names-list');
-                        let nameSpan = document.createElement('div'); //CHANGE span changes into div
-                        nameSpan.setAttribute('class', 'search-name');
-                        let nameText = document.createTextNode(value.name + " ");
-                        nameSpan.appendChild(nameText);
+                      //  let div = document.createElement('div'); //CHANGE span changes into div
+                      //   div.setAttribute('class', 'names-list');
+                      //   let nameSpan = document.createElement('div'); //CHANGE span changes into div
+                      //   nameSpan.setAttribute('class', 'search-name');
+                      //   let nameText = document.createTextNode(value.name + " ");
+                      //   nameSpan.appendChild(nameText);
 
-                        let profileSpan = document.createElement('span');
-                        profileSpan.setAttribute('class', 'search-profile');
-                        let link = document.createElement('a');
-                        link.setAttribute('href', "http://localhost:8082/profile/" + value.profileAccessKey);
-                        let linkText = document.createTextNode('Visit Profile');
-                        link.appendChild(linkText);
-                        profileSpan.appendChild(link);
+                      //   let profileSpan = document.createElement('span');
+                      //   profileSpan.setAttribute('class', 'search-profile');
+                      //   let link = document.createElement('a');
+                      //   link.setAttribute('href', "http://localhost:8082/profile/" + value.profileAccessKey);
+                      //   let linkText = document.createTextNode('Visit Profile');
+                      //   link.appendChild(linkText);
+                      //   profileSpan.appendChild(link);
 
-                        div.appendChild(nameSpan);
-                                                            //CHANGE <br> deleted
-                        div.append(profileSpan);
+                      //   div.appendChild(nameSpan);
+                      //                                       //CHANGE <br> deleted
+                      //   div.append(profileSpan);
                         
-                        itemsOutput.appendChild(div);
+                      //   itemsOutput.appendChild(div);
+                      let name = value.name;
+                      let profileUrl = "#";
+                      if(value.profileAccessKey !== "" && value.profileAccessKey !== null)
+                        profileUrl = "http://localhost:8082/profile/" + value.profileAccessKey;
+
+                      let skillsList = "";
+                      itemsOutput.innerHTML += eval('`' + searchOutputTemplate + '`');
+
                     });
                 });
           }
@@ -1051,17 +897,31 @@
                         .then((res) => {
                             let usersSkills = JSON.parse(res).usersSkills;
                             console.log("users-by-skills -> " + usersSkills);
-                            itemsOutput.innerHTML = "";
+                            itemsOutput.innerHTML = "";                                // TODO: It has to be changed.
+                            // searchOutputTemplate
+                            
+                            // for printing purpose only
                             for(key in usersSkills){
                                 console.log(key);
+                                let name = key;
+                                let profileUrl = "";
+                                let skillsList = "";
                                 for(key1 in usersSkills[key]){
+                                  let eachSearchOutput = "";
                                   console.log("    "+key1 + " : "+ usersSkills[key][key1]);
-                                  if(key1.localeCompare("skillsUpvote") === 0){
+                                  if(key1.localeCompare("profileAccessKey") === 0){
+                                    profileUrl = usersSkills[key][key1];
+                                  }
+                                  else if(key1.localeCompare("skillsUpvote") === 0){
                                     for(key2 in usersSkills[key][key1]){
                                       console.log("                "+key2 +" : " + usersSkills[key][key1][key2]);
+                                      let skill = key2;
+                                      let skillUpvotes = usersSkills[key][key1][key2];
+                                      skillsList += eval('`' + skillsListOutputTemplate + '`');
                                     }
                                   } 
                                 }
+                                itemsOutput.innerHTML += eval('`' + searchOutputTemplate + '`');
                             }
                             
                         });
@@ -1076,13 +936,18 @@
           }
 
           }
-
-          function makeSkillsDiv(name, profile, skills){
-              //......//
-          }
     </script>
 
     <script>
+      // Triggering hidden input button for #img
+      document.querySelector('.small-bullet').onclick = () => {
+        document.getElementById("img").click();
+      }
+    </script>
+
+    <script>
+
+      // profile image change script
       "use strict";
 
       const compress = new Compress();

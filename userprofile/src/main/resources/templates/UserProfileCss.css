@@ -19,6 +19,39 @@
   position: fixed;
 } */
 
+.small-bullet{
+  font-size: 0.5em;
+  background-color: #6c67fd;
+  color: white;
+  border-radius: 30%;
+  display: block;
+  padding: 1px;
+  padding-left: 3px;
+  padding-right: 3px;
+  text-align: center;
+  float: right;
+  cursor: pointer;
+}
+
+a{
+  color: #212529;
+  text-decoration: none;
+}
+
+a:hover{
+  text-decoration: none;
+  color: #212529;
+}
+
+/* a[target="_blank"]::after {
+  font-family: 'FontAwesome';
+  content: " \f08e";
+} */
+
+.redirect::after{
+  font-family: 'FontAwesome';
+  content: " \f08e";
+}
 
 #logout-btn{
   position: relative;
@@ -222,8 +255,8 @@ ul.cloud a:hover::before {
   height: 30px;
   padding-left: 3px;
   padding-right: 3px;
-  background-color: rgba(38, 143, 38, 0.993);
-  border: 1px solid green;
+  background-color: #6c67fd;
+  border: 1px solid #6c67fd;
   color: white;
   border-radius: 30px;
 }

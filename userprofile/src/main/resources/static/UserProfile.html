@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="UserProfileCss.css" />
     <script type="application/javascript" src="./scripts/compress.js"></script>
     <link rel="icon" href="CollReach.PNG" type="image/x-icon" />
-
+    <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
    
   <script>
       function login() {
         var username = localStorage.getItem("username");
-        if(username == null)
-          window.location.href = "http://localhost:8082/login";
+        // if(username == null)
+        //   window.location.href = "http://localhost:8082/login";
         var xhr = new XMLHttpRequest();
         var url = "http://localhost:8082/user/get-user-details/" + username;
         xhr.open("POST", url, true);
@@ -55,6 +55,8 @@
             document.getElementById('general-profile').textContent = 
               "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey;
             document.getElementById('general-profile-link')
+                    .setAttribute('href', "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
+            document.getElementById('profile-link')
                     .setAttribute('href', "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
 
             var skill = userInfo.userPersonalInfoResponse.skills;
@@ -125,12 +127,20 @@
   
 // }
 
+
+      function searchstudent(){
+        document.querySelector(".search-o").classList.toggle('hide');
+      }
+
+
+
+      
     </script>
 
   </head>
 
   <body onload="login()">
-  <!--body-->
+  <!-- <body> -->
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
         
       <div class="container" id="navv">
@@ -166,15 +176,22 @@
                       <p id="info">Profile</p>
                   </a>
               </li>
-              <li>
-                  <button class="nav-item btn btn-outline-primary" type="button" id="search-btn">
+              
+              
+              <li class="navbar-btn">
+                  <button class="nav-item btn btn-outline-primary" type="button" id="search-btn" onclick="searchstudent()">
                       Search
                   </button>
 
                   <datalist id = "skills-list"></datalist>
+                  
               </li>
-              <li>
-                <button type="button" class="btn btn-outline-danger" id = "logout-btn"><i class="fa fa-sign-out"></i></button>
+              <li class="navbar-btn">
+                <button type="button" class="btn btn-outline-danger" id = "logout-btn">
+                  
+                  <i class="fa fa-sign-out"></i>
+                  <span class="logout-header">Logout</span>
+                </button>
               </li>
           </ul>
           </div> 
@@ -187,9 +204,9 @@
 
 
 
-  <!-- <section class="shadow p-3 mb-5 bg-white" id="heading">
-      <h2>COLLREACH</h2>
-      <br>
+  <!-- <div class="shadow p-3 mb-5 bg-white" id="heading">
+     
+      
       <div class="input-group">
         <div class="form-outline">
          
@@ -202,7 +219,7 @@
                  placeholder = "Type skills separated with comma" 
           />
          
-         double comment end
+          double comment end
           
           <input type="submit" id = "search-btn" class="btn btn-primary" value = "Search">
          
@@ -215,67 +232,69 @@
           <div class = "skill-item-cross" style = "display:hidden;"></div>
         </div>
 
-        <input type="submit" id = "search-btn" class="btn btn-primary" value = "Search"/> 
-      double comment end
-      </div>
-      <br>
+        <div>
+           <input type="submit" id = "search-btn" class="btn btn-primary" value = "Search"/> 
+            double comment end
+        </div>
+        
      
 
-      <datalist id = "skills-list">
+        <datalist id = "skills-list">
 
-        double comment
-        <option value = "java"></option>
-        <option value = "python"></option>
-        <option value = "b"></option>
-        <option value = "c programming"></option>
-        <option value = "c#"></option>
-        <option value = "perl"></option>
-        <option value = "html"></option>
-        <option value = "css"></option>
-        <option value = "javascript"></option>
-        <option value = "machine learning"></option>
-        <option value = "deep learning"></option>
-        <option value = "ai"></option>
-        <option value = "big data"></option>
-        <option value = "hadoop"></option>
-        <option value = "c/c++"></option>
-        <option value = "dbms"></option>
-        <option value = "database"></option>
-        <option value = "operating system"></option>
-        <option value = "spring"></option>
-        <option value = "spring boot"></option>
-        <option value = "spring-boot"></option>
-        <option value = "mysql"></option>
-        <option value = "oracle"></option>
-        <option value = "postgresql"></option>
-        <option value = "sqlite"></option>
-        <option value = "data analytics"></option>
-        <option value = "data mining"></option>
-        <option value = "php"></option>
-        <option value = "rust"></option>
-        <option value = "networking"></option>
-        <option value = "unit testing"></option>
-        <option value = "seo"></option>
-        <option value = "photography"></option>
-        <option value = "web analytics"></option>
-        <option value = "web automation"></option>
-        <option value = "cms"></option>
-        <option value = "hr"></option>
-        <option value = "git"></option>
-        <option value = "ms office"></option>
-        <option value = "ms excel"></option>
-        <option value = "ms powerpoint"></option>
-        <option value = "intellij"></option>
-        <option value = "vs code"></option>
-        <option value = "docker"></option>
-        <option value = "microservices"></option> 
-        
-        double comment end
+          double comment
+          <option value = "java"></option>
+          <option value = "python"></option>
+          <option value = "b"></option>
+          <option value = "c programming"></option>
+          <option value = "c#"></option>
+          <option value = "perl"></option>
+          <option value = "html"></option>
+          <option value = "css"></option>
+          <option value = "javascript"></option>
+          <option value = "machine learning"></option>
+          <option value = "deep learning"></option>
+          <option value = "ai"></option>
+          <option value = "big data"></option>
+          <option value = "hadoop"></option>
+          <option value = "c/c++"></option>
+          <option value = "dbms"></option>
+          <option value = "database"></option>
+          <option value = "operating system"></option>
+          <option value = "spring"></option>
+          <option value = "spring boot"></option>
+          <option value = "spring-boot"></option>
+          <option value = "mysql"></option>
+          <option value = "oracle"></option>
+          <option value = "postgresql"></option>
+          <option value = "sqlite"></option>
+          <option value = "data analytics"></option>
+          <option value = "data mining"></option>
+          <option value = "php"></option>
+          <option value = "rust"></option>
+          <option value = "networking"></option>
+          <option value = "unit testing"></option>
+          <option value = "seo"></option>
+          <option value = "photography"></option>
+          <option value = "web analytics"></option>
+          <option value = "web automation"></option>
+          <option value = "cms"></option>
+          <option value = "hr"></option>
+          <option value = "git"></option>
+          <option value = "ms office"></option>
+          <option value = "ms excel"></option>
+          <option value = "ms powerpoint"></option>
+          <option value = "intellij"></option>
+          <option value = "vs code"></option>
+          <option value = "docker"></option>
+          <option value = "microservices"></option> 
+          
+          double comment end
 
-        
-      </datalist> 
-    
-  </section> -->
+          
+        </datalist> 
+      </div>
+  </div> -->
+
   <div class="container main" id="feeds-section">
     <div class="row ">
 
@@ -285,35 +304,37 @@
              <!--Static -->
               <div class="pad-top" >
                 <img src="CollReach.PNG" class="img-md rounded-circle" alt="Image not found" id="profile-photo">
+                
+                <small class="small-bullet">
+                  <strong>Edit
+                    <input hidden type="file" class="custom-file-input" id="img" name="img" accept="image/*" multiple="multiple">
+                  </strong>
+                </small> 
+        
                 <div id="name">
-                  Ayush Choudhary
+                  <!-- Name of the user here -->
                 </div>
+
                 <div>
                     <div id="profile-content">
-                    
                         <div>
-                            <span ><i  class="fas fa-envelope"></i>&nbsp; <span id="kietEmail">ayush.1822cs1049@kiet.edu</span></span>
+                            <span ><i  class="fas fa-envelope"></i>&nbsp; <span id="kietEmail"><!-- Email of the user here--></span></span>
                         </div>
-                        <div><span><i class="fas fa-user"></i>&nbsp;http://collreach.com/profil....</span></div>
-                    </div>
-                    
+                        <div>
+                          <span>
+                            <i class="fas fa-user"></i>&nbsp;
+                            <a id = "profile-link" target = "_blank">General Profile<span class = "redirect"></span></a>
+                          </span>
+                        </div>
+                    </div>  
                 </div>
                
 
                 
-                  <button
-                    type="button"
-                    id="updatebutton"
-                    class="btn btn-outline-primary"
-                    onclick='window.location.href="http://localhost:8082/profile-update";'
-                  >
+                <button type="button" id="updatebutton" class="btn btn-outline-primary" onclick='window.location.href="http://localhost:8082/profile-update";'>
                   Edit Profile
-                  </button>
-                
-
-
-
-
+                </button>
+  
 
                 <div class="card" id="cour">
                   <div class="card-body">
@@ -322,9 +343,9 @@
                     </div>
                     <div class="py-4">
               
-                      <div id = "course">B.Tech</div>
-                      <div id = "branch">CSE</div>
-                      <div id = "sem">6</div>
+                      <div id = "course"><!--B.Tech--></div>
+                      <div id = "branch"><!--CSE--></div>
+                      <div id = "sem"><!--6--></div>
                     </div>
                   </div>
                   
@@ -463,9 +484,8 @@
                           </div>
                         </div>
                       </div> -->
-                    
-                      
-                    
+
+
                       <div class="card">
                         <div class="card-body">
                           <div class="card-title">CONTACT DETAILS</div>
@@ -490,7 +510,7 @@
                               <tr>
                                 <td>GENERAL PROFILE LINK</td>
                                 <td><a href = ""  target="_blank" rel="noopener noreferrer" id = "general-profile-link">
-                                        <div id = "general-profile"></div>
+                                      <div id = "general-profile"></div>
                                     </a>
                                 </td>
                               </tr>
@@ -512,14 +532,15 @@
 
 
             </div>
-        </div>
+         
+          </div>
   </div>
 </div>
 
 
 
 <!-- Footer -->
-<footer class="page-footer font-small blue pt-4 navbar-light bg-light">
+<footer class="page-footer font-small blue pt-4 navbar-light bg-light" >
 
  <div class="footer ">
   <div class="row navbar-light bg-light">
@@ -568,55 +589,106 @@
 
 
 
-    <div id="search-overlay" style="display: none;">
-      <span id = "overlay-close">&#10006;</span>
-      <div id="overlay-content">
-           
+    <!-- <div id="search-overlay" style="display: none;"> -->
+    <div class="p-2  search-o w-75 w-lg-50 w-xl-50 .animated .zoomIn shadow  fast overflow-auto hide">
+      <div id="search-overlay ">
+
+        <div >
+          <!-- <span id = "overlay-close">&#10006;</span> -->
+          <div id = "overlay-close"><i class="fa fa-times"></i></div>
+        </div>
+
+        
+        <div class="search-details d-flex p-2 flex-row justify-content-center w-75" > 
+          <div class="p-1 flex-grow-1 form-group" id="overlay-content">
+            
             <input type="text" 
-                   id="overlay-search-box" 
-                   list = "skills-list" 
-                   class="form-control" 
-                   placeholder = "Type skills separated with comma" 
+                    id="overlay-search-box" 
+                    list = "skills-list" 
+                    class="form-control text-sm" 
+                    placeholder = "Type skills separated with comma" 
             />
-            
-            <input type="submit" id = "search-request-btn" class="btn btn-primary" value = "Search">
-            
-            <select  id="search-options">
+          </div>
+
+          <div class="p-1 form-group">
+            <input class="form-control btn btn-primary text-sm btn btn-primary" type="submit" id = "search-request-btn" value = "Search">
+          </div>
+          
+          <div class="p-1 form-group">
+            <select class="form-control text-sm" id="search-options">
               <option value="search-by-name" selected>Search by Name</option>
               <option value="search-by-skills">Search By Skills</option>
             </select>
-          
-          <div id = "search-items">
-            <div class = "skill-item-cross" style = "display:hidden;"></div>
-          </div>
-
-          <div id = "items-output">
-
-          </div>
+          </div>    
+        </div>
       
-      </div>
+
+          <!-- <div id = "search-items">
+            <div class="skill-item">
+              Python
+              <div class = "skill-item-cross" style = ""> &#10005;</div>
+            </div>
+          </div> -->
+          <script>
+              function removeskill(elem){
+                $(elem).parent('div.skill-item').remove();
+              }
+          </script>
+
+          <div class="d-flex flex-wrap overflow-auto search-overlay-boxes" id="search-items">
+          </div>
+
+          <div class="overflow-auto search-overlay-boxes" id = "items-output">
+            <div style="text-align: center;margin-top: 5px;"><h5><b> Search Result</b></h5></div>
+            <div id = "search-results-display-area"></div>
+          </div>
+
+        </div>
+      
     </div>
 
-    <!--script>
-    const image = document.getElementById('img').files[0];
-    //image = image.value.replace("C:\\fakepath\\", "");
-    console.log(image);
-    const setImage = document.getElementById('set-profile-photo');
-    const username = localStorage.getItem('username');
-    setImage.addEventListener('click', (e) => {
-      e.preventDefault();
-      var formData = new FormData();
-      formData.append("file", image);
-      formData.append("userName", username);
-      fetch("http://localhost:8082/user/profile-photo", {
-            method: 'PUT',
-            headers: {
-                'Authorization': localStorage.getItem('auth'),
-            },
-            body: formData
-      });
-    });
-</script-->
+    <!---------- TEMPLATES ----------->
+
+    <template id = "skill-search-bullet-template">
+      <div class="skill-item">
+        <span class = "skill-item-name">{skillName}</span>
+        <div class = "skill-item-cross" onclick='removeskill(this)'> &#10005;</div>
+      </div>
+    </template>
+
+
+    <template id = "search-output-display">
+        <div class="name-list">
+          <div class="search-name">
+            ${name}
+          </div>
+          <div class="search-profile">
+            
+            <!-- SKILLS LIST -->
+            <div class="d-flex flex-row flex-wrap skill-box">
+              ${skillsList}
+            </div>
+
+            <div class="search-profile-message">
+              <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
+            </div>
+            
+            <a href = ${profileUrl}>Visit Profile</a>
+          </div>
+        </div>
+    </template>
+
+
+    <template id = "skills-list-output-display">
+      <div class="search-profile-skill d-flex">
+        <div class="skill-name">${skill}</div>
+        <div class="upskill-votes">${skillUpvotes}</div>
+      </div>
+    </template>
+
+
+
+
     <script>
       let logoutButton = document.getElementById("logout-btn");
       logoutButton.addEventListener("click", logout);
@@ -705,10 +777,11 @@
       
       
       function addSpan(div,value){
-        let newDiv = document.createElement('span');
-        let cross = document.createElement('span');
+        let newDiv = document.createElement('div'); //CHANGE span changes into div
+        let cross = document.createElement('div'); //CHANGE span changes into div
         newDiv.setAttribute("class", "skill-item");
         cross.setAttribute("class", "skill-item-cross");
+        cross.setAttribute('onclick','removeskill(this)');
         cross.innerHTML = "   &#10005;";
         newDiv.innerHTML = value;
         newDiv.appendChild(cross);
@@ -730,23 +803,26 @@
 
     <script>
       /* --------------Overlay Effect functions---------*/
-      document.getElementById('search-btn').addEventListener("click", on);
+      //document.getElementById('search-btn').addEventListener("click", on);
       document.getElementById('overlay-close').addEventListener("click", off);
       document.getElementById('search-request-btn').addEventListener("click", search);
 
-      function on() {
-        document.getElementById("search-overlay").style.display = "block";
-      }
+      // function on() {
+      //   //document.getElementById("search-overlay").style.display = "block";
+      // }
       
       function off() {
-        document.getElementById("search-overlay").style.display = "none";
+        // document.getElementById("search-overlay").style.display = "none";
+        document.querySelector(".search-o").classList.add("hide");
       }
 
       function search(){
           console.log("Searching...");
           let searchOption = document.getElementById('search-options').value;
-          let itemsOutput = document.getElementById('items-output');
+          let itemsOutput = document.getElementById('search-results-display-area');
           let searchQuery = document.getElementById('overlay-search-box').value.trim();
+          let searchOutputTemplate = document.querySelector('#search-output-display').innerHTML;
+          let skillsListOutputTemplate = document.querySelector('#skills-list-output-display').innerHTML;
 
           if(searchOption.localeCompare("search-by-name") === 0){
             if(searchQuery == "" || searchQuery == null)
@@ -771,26 +847,34 @@
                     itemsOutput.innerHTML = "";
                     
                     users.forEach(function(value, index, array){
-                        let div = document.createElement('div');
-                        div.setAttribute('class', 'names-list');
-                        let nameSpan = document.createElement('span');
-                        nameSpan.setAttribute('class', 'search-name');
-                        let nameText = document.createTextNode(value.name + " ");
-                        nameSpan.appendChild(nameText);
+                      //  let div = document.createElement('div'); //CHANGE span changes into div
+                      //   div.setAttribute('class', 'names-list');
+                      //   let nameSpan = document.createElement('div'); //CHANGE span changes into div
+                      //   nameSpan.setAttribute('class', 'search-name');
+                      //   let nameText = document.createTextNode(value.name + " ");
+                      //   nameSpan.appendChild(nameText);
 
-                        let profileSpan = document.createElement('span');
-                        profileSpan.setAttribute('class', 'search-profile');
-                        let link = document.createElement('a');
-                        link.setAttribute('href', "http://localhost:8082/profile/" + value.profileAccessKey);
-                        let linkText = document.createTextNode('Visit Profile');
-                        link.appendChild(linkText);
-                        profileSpan.appendChild(link);
+                      //   let profileSpan = document.createElement('span');
+                      //   profileSpan.setAttribute('class', 'search-profile');
+                      //   let link = document.createElement('a');
+                      //   link.setAttribute('href', "http://localhost:8082/profile/" + value.profileAccessKey);
+                      //   let linkText = document.createTextNode('Visit Profile');
+                      //   link.appendChild(linkText);
+                      //   profileSpan.appendChild(link);
 
-                        div.appendChild(nameSpan);
-                        div.appendChild(document.createElement('br'));
-                        div.append(profileSpan);
+                      //   div.appendChild(nameSpan);
+                      //                                       //CHANGE <br> deleted
+                      //   div.append(profileSpan);
                         
-                        itemsOutput.appendChild(div);
+                      //   itemsOutput.appendChild(div);
+                      let name = value.name;
+                      let profileUrl = "#";
+                      if(value.profileAccessKey !== "" && value.profileAccessKey !== null)
+                        profileUrl = "http://localhost:8082/profile/" + value.profileAccessKey;
+
+                      let skillsList = "";
+                      itemsOutput.innerHTML += eval('`' + searchOutputTemplate + '`');
+
                     });
                 });
           }
@@ -813,17 +897,31 @@
                         .then((res) => {
                             let usersSkills = JSON.parse(res).usersSkills;
                             console.log("users-by-skills -> " + usersSkills);
-                            itemsOutput.innerHTML = "";
+                            itemsOutput.innerHTML = "";                                // TODO: It has to be changed.
+                            // searchOutputTemplate
+                            
+                            // for printing purpose only
                             for(key in usersSkills){
                                 console.log(key);
+                                let name = key;
+                                let profileUrl = "";
+                                let skillsList = "";
                                 for(key1 in usersSkills[key]){
+                                  let eachSearchOutput = "";
                                   console.log("    "+key1 + " : "+ usersSkills[key][key1]);
-                                  if(key1.localeCompare("skillsUpvote") === 0){
+                                  if(key1.localeCompare("profileAccessKey") === 0){
+                                    profileUrl = usersSkills[key][key1];
+                                  }
+                                  else if(key1.localeCompare("skillsUpvote") === 0){
                                     for(key2 in usersSkills[key][key1]){
                                       console.log("                "+key2 +" : " + usersSkills[key][key1][key2]);
+                                      let skill = key2;
+                                      let skillUpvotes = usersSkills[key][key1][key2];
+                                      skillsList += eval('`' + skillsListOutputTemplate + '`');
                                     }
                                   } 
                                 }
+                                itemsOutput.innerHTML += eval('`' + searchOutputTemplate + '`');
                             }
                             
                         });
@@ -838,13 +936,18 @@
           }
 
           }
-
-          function makeSkillsDiv(name, profile, skills){
-              //......//
-          }
     </script>
 
     <script>
+      // Triggering hidden input button for #img
+      document.querySelector('.small-bullet').onclick = () => {
+        document.getElementById("img").click();
+      }
+    </script>
+
+    <script>
+
+      // profile image change script
       "use strict";
 
       const compress = new Compress();
