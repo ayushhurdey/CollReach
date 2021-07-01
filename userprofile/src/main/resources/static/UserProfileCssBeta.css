@@ -6,8 +6,14 @@
   color: #6c67fd;
   border: 1px solid #6c67fd;
 }
+
 .btn-outline-primary:hover {
   background-color: #6c67fd;
+  border-color: #6c67fd ;
+}
+.btn-outline-primary{
+  color:#6c67fd ;
+  border-color: #6c67fd ;
 }
 #outer-nav-container {
 }
@@ -106,7 +112,7 @@ i {
 }
 
 /*side profile*/
-#profile-pic, #profile-photo  {
+#profile-pic, #profile-photo {
   margin-left: 20%;
   width: 60%;
 }
