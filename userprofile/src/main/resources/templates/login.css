@@ -2,25 +2,162 @@
   box-sizing: border-box;
   font-family: trebuchet ms, Arial, helvetica;
 }
-body {
-  background-color: #dacaca;
+.btn-primary{
+  border: 1px solid #6c67fd;
+  background-color: #6c67fd;
+  color: white;
+}
+.btn-primary:hover{
+  background-color: #5955c7;
+  border: 1px solid #5955c7;
+}
+.btn-outline-primary{
+  border: 1px solid #6c67fd;
+  color: #6c67fd;
+}
+.btn-outline-primary:hover{
+  background-color: #6c67fd;
+  border: 1px solid #6c67fd ;
+  
+}
+.navbar-btn{
+  margin-left: 10px;
+}
+#navv {
+  width: 68rem;
 }
 
+.nav-bar {
+  overflow: hidden;
+
+  top: 0;
+  width: 100%;
+}
+.navbar-expand-md .navbar-nav .nav-link {
+  display: block;
+  padding-right: 2rem;
+}
+
+.navbar-brand {
+  font-size: 2em;
+  font-family: Verdana;
+  font-weight: bold;
+}
+i {
+  font-size: 1.6em;
+}
+#heading {
+  background-color: #6c67fd;
+  color: white;
+  border-radius: 15px;
+  padding: 5px;
+}
+.row{
+  padding-top: 8rem;
+}
+.collreach{
+  order: 1;
+}
+.login-buttons{
+  order: 2;
+}
+#msg{
+  
+}
+
+.interface-pic{
+  width: 100%;
+}
+.error-msg{
+ 
+}
+
+.pic{
+  padding-top: 3rem;
+}
+.login-area{
+  padding-top: 3rem;
+}
+.main-area{
+  padding-top: 4rem;
+}
+.login-form-area{
+  
+  border: 1px solid gray;
+}
+.form-control{
+  border-radius: 0rem;
+  border: none;
+  border-bottom: 1px solid rgb(80, 80, 80)
+}
+
+.form-control:focus
+{
+ 
+ border: none; 
+ border-radius: none; 
+ -webkit-box-shadow: 0 8px 6px -6px #6c67fd;
+ -moz-box-shadow: 0 8px 6px -6px #6c67fd;
+      box-shadow: 0 8px 6px -6px #6c67fd;
+ border-bottom: 1px solid #6c67fd;
+}
+.profile-icon{
+  margin-left: 40%;
+  width:20%;
+
+  border-radius: 50px;
+
+}
+.form-check{
+  margin-left: 1.2rem;
+}
+@media (max-width: 767.5px){
+  #navv{
+    flex-direction: column !important;
+  }
+  .collreach{
+    order: 2;
+  }
+  .login-buttons{
+    order: 1;
+    width: 100%;
+  }
+  .navbar-nav{
+    
+    justify-content: end;
+  }
+  .pic{
+    display: none;
+  }
+  .error-msg{
+    float: none;
+    padding-top:6rem ;
+    text-align: center;
+    margin-top: -2rem;
+  }
+  .main-area{
+    padding-top: 3rem;
+  }
+}
+/* body {
+  background-color: #dacaca;
+} */
+
 /*registtration heading*/
-h2 {
+/* h2 {
   font-family: Goudy Stout;
   text-align: center;
   text-shadow: 0 0 3px #1dadca;
   border-radius: 0px;
 
-}
-#signin{
+} */
+/* #signin{
   font-size: 1.5em;
   margin-left: 3%;
 }
 .col-lg-12{
   margin-bottom: 10px; 
-}
+} */
 
 /* Registration heading*/
 /*#heading {
@@ -34,37 +171,36 @@ h2 {
 }
 */
 /*Main Form */
-#form {
+/* #form {
   margin: 0px;
   border: 1px solid black;
   border-left: 10px solid #0077ff;
   background-color: #bcf7f5;
-}
+} */
 
 /* red asteric for mandatory filed */
-.required::after {
+/* .required::after {
   content: "*";
   color: red;
-}
+} */
 
 /*All the labes of form (eg Name email...) */
-label {
+/* label {
   font-size: 1em;
-}
+} */
 
 /* All the inputs of form*/
-input {
+/* input {
   font-weight: 1.4em;
-}
+} */
 
-#remember-me-label {
+/* #remember-me-label {
   margin-left: 25px;
-}
+} */
 
 /* Form main div for styling*/
-.row {
- /* margin-left: 34%;
-  margin-right: 34%;*/
+/* .row {
+ 
   margin-top: 30px;
   margin: auto;
   width: 360px;
@@ -77,42 +213,42 @@ input {
   border-radius: 30px;
   box-shadow: 0px 0px 10px 10px #838383;
   border-left: 10px solid #0077ff;
-}
+} */
 /*Icon styling */
-.glyphicon {
+/* .glyphicon {
   position: relative;
   border: 1px solid black;
   padding: 5px;
   background: rgba(178, 176, 172, 0.8);
-}
+} */
 
 /*Main section div (parent of .row)*/
-.container-fluid {
+/* .container-fluid {
   margin-left: 0px;
   padding: 0px;
   margin-right: 0px;
-}
+} */
 
 /* Text in the form*/
-.form-text {
+/* .form-text {
   font-weight: bold;
-}
+} */
 
 /* Label of every .row div*/
-.row label {
+/* .row label {
   position: relative;
   font-weight: bold;
   color: #000000;
   opacity: none;
-}
+} */
 
 /*Blue highlight around inputs when in focus */
-.form-control:focus {
+/* .form-control:focus {
   box-shadow: 0px 0px 5px 5px #7ee4f9;
-}
+} */
 
 /*Submit button styling */
-#submit-button {
+/* #submit-button {
   border: 0px;
   margin: 5px;
   width: 100%;
@@ -140,13 +276,11 @@ input {
 }
 .btn-primary {
   background-color: #0077ff;
-}
+} */
 /* make submit button green when hover over it*/
-.btn-primary:hover {
-  background-color: #77e161;
-}
 
-#submit-button:hover {
+
+/* #submit-button:hover {
   padding: 0px;
   font-size: 1.2em;
 }
@@ -174,22 +308,19 @@ p a:hover:after {
 #msg {
   color: red;
   font-size: 0.9em;
-}
+} */
 
 /*media queries for responsiveness */
 /*1st */
-@media (max-width: 720px) and (min-width: 0px) {
+/* @media (max-width: 720px) and (min-width: 0px) {
   .row {
     border-left: 10px solid #0077ff;
     padding: 3px;
-   /* margin-right: 3%;
-    margin-left: 3%;*/
+
   }
   form {
     margin-right: 0px;
     margin-left: 0px;
   }
-}
+} */
 /*2nd */
-@media (max-width: 970px) and (min-width: 361px) {
-}
