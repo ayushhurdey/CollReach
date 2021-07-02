@@ -22,7 +22,9 @@
     <script defer type="application/javascript" src="./scripts/compressUtil.js"></script>
     <script src ="scripts/CollreachPosts.js"></script>
     <script defer src = "scripts/CollreachChat.js"></script>
+    <script src = "scripts/Search.js"></script>
     <link rel="stylesheet" href="style/collReachPost.css" />
+    <link rel="stylesheet" href="style/UserProfileCss.css" />
 
     <script>
         function closeBtn(elem){
@@ -57,13 +59,13 @@
 
             <ul class="navbar-nav text-center ml-auto">
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
                         <i class="fas fa-home"></i>
                         <p id="info">Home</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
                         <i class="fab fa-instagram"></i>
                         <p id="info">Instagram</p>
                     </a>
@@ -75,15 +77,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="http://localhost:8082/profile" class="nav-link">
                         <i class="fas fa-user"></i>
                         <p id="info">Profile</p>
                     </a>
                 </li>
-                <li>
-                    <button class="nav-item btn btn-outline-primary" type="button" id="search">
+                <li class="navbar-btn">
+                    <button class="nav-item btn btn-outline-primary" type="button" id="search-btn" onclick="searchstudent()">
                         Search
                     </button>
+  
+                    <datalist id = "skills-list"></datalist>
+                    
                 </li>
             </ul>
             </div> 
@@ -685,6 +690,66 @@
 
 
 
+        <!--SEARCH OVERLAY-->
+        <div class="p-2  search-o w-75 w-lg-50 w-xl-50 .animated .zoomIn shadow  fast overflow-auto hide">
+            <div id="search-overlay ">
+      
+              <div >
+                <!-- <span id = "overlay-close">&#10006;</span> -->
+                <div id = "overlay-close"><i class="fa fa-times"></i></div>
+              </div>
+      
+              
+              <div class="search-details d-flex p-2 flex-row justify-content-center w-75" > 
+                <div class="p-1 flex-grow-1 form-group" id="overlay-content">
+                  
+                  <input type="text" 
+                          id="overlay-search-box" 
+                          list = "skills-list" 
+                          class="form-control text-sm" 
+                          placeholder = "Type skills separated with comma" 
+                  />
+                </div>
+      
+                <div class="p-1 form-group">
+                  <input class="form-control btn btn-primary text-sm btn btn-primary" type="submit" id = "search-request-btn" value = "Search">
+                </div>
+                
+                <div class="p-1 form-group">
+                  <select class="form-control text-sm" id="search-options">
+                    <option value="search-by-name" selected>Search by Name</option>
+                    <option value="search-by-skills">Search By Skills</option>
+                  </select>
+                </div>    
+              </div>
+            
+      
+                <!-- <div id = "search-items">
+                  <div class="skill-item">
+                    Python
+                    <div class = "skill-item-cross" style = ""> &#10005;</div>
+                  </div>
+                </div> -->
+                <script>
+                    function removeskill(elem){
+                      $(elem).parent('div.skill-item').remove();
+                    }
+                </script>
+      
+                <div class="d-flex flex-wrap overflow-auto search-overlay-boxes" id="search-items">
+                </div>
+      
+                <div class="overflow-auto search-overlay-boxes" id = "items-output">
+                  <div style="text-align: center;margin-top: 5px;"><h5><b> Search Result</b></h5></div>
+                  <div id = "search-results-display-area"></div>
+                </div>
+      
+              </div>
+            
+          </div>
+
+
+
 
 
         <!-- TEMPLATES : not to be directly rendered on page -->
@@ -896,6 +961,49 @@
                     </div>
                 </article>
             </div>
+            
+
+            <!--SEARCH OUTPUT DISPLAY TEMPLATES-->
+            <template id = "skill-search-bullet-template">
+                <div class="skill-item">
+                  <span class = "skill-item-name">{skillName}</span>
+                  <div class = "skill-item-cross" onclick='removeskill(this)'> &#10005;</div>
+                </div>
+            </template>
+          
+          
+            <template id = "search-output-display">
+                <div class="name-list">
+                <div class="search-name">
+                    ${name}
+                </div>
+                <div class="search-profile">
+                    
+                    <!-- SKILLS LIST -->
+                    <div class="d-flex flex-row flex-wrap skill-box">
+                    ${skillsList}
+                    </div>
+        
+                    <div class="search-profile-message">
+                    <button type="button" class="btn btn-primary search-profile-message-button" 
+                            onclick = "addEventToMessages(this)" 
+                            data-contact-username=${username}
+                            data-contact-name = ${name}>Message</button>
+                    </div>
+                    
+                    <a href = ${profileUrl}>Visit Profile</a>
+                </div>
+                </div>
+            </template>
+        
+        
+            <template id = "skills-list-output-display">
+            <div class="search-profile-skill d-flex">
+                <div class="skill-name">${skill}</div>
+                <div class="upskill-votes">${skillUpvotes}</div>
+            </div>
+            </template>
+
 
 
 

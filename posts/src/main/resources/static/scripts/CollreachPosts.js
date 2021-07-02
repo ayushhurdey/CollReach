@@ -4,7 +4,7 @@ let firstLoad = true;
 let globalPageNumber = 0;
 let loadTodaysFeed = false;
 
-function login() {
+async function login() {
     const USERNAME = localStorage.getItem('username');
     const AUTH = localStorage.getItem('auth');
     if (USERNAME === null || AUTH === null)
@@ -15,8 +15,12 @@ function getDeptFromCookie() {
     let dept = "";
     document.cookie.split(";").forEach(e => {
         if (e.includes("dept=")) {
-            dept = e.substr(6);
+            dept = e.trim().substr(5);
         }
+        if (e.includes("user=")) {
+            localStorage.setItem('username', e.trim().substr(5));
+        }
+        console.log(e);
     })
     if (dept === "")
         login();
@@ -24,23 +28,25 @@ function getDeptFromCookie() {
         return dept;
 }
 
-function load() {
-    login();
-
-    if (firstLoad) {
-        getUserDetails();
-        firstLoad = !firstLoad;
-    }
+async function load() {
+    // await login();
 
     if (navigator.cookieEnabled === false) {
         alert("We use cookies to make this website functional. Please enable cookies in your browser.");
         return;
     }
 
-
-    const visibility = "CSE";    //getDeptFromCookie();  -> to be used later   // should come from already logged in user.
+    // TODO: this visibility has to be made dynamic 
+    const visibility =  getDeptFromCookie();  //-> to be used later   // should come from already logged in user.
     const pageNo = globalPageNumber;                                   // should change dynamically
     const pageSize = 5;                                // fixed value -> for how many pages to be loaded in the DOM in each request.
+
+    await login();
+
+    if (firstLoad) {
+        getUserDetails();
+        firstLoad = !firstLoad;
+    }
 
     const template = document.getElementById('loading-anim-template').innerHTML;
     //displayLoading(template,'posts-loading-anim');

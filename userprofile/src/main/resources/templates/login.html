@@ -108,7 +108,8 @@
                 let responseMsg = JSON.parse(xhr.responseText);
                 let deptOfCurrentLoggedInUser = responseMsg.userPersonalInfoResponse.courseInfoResponse.branch;
                 document.cookie = "dept=" + deptOfCurrentLoggedInUser;
-                console.log("dept cookie set");
+                document.cookie = "user=" + responseMsg.userName;
+                console.log("dept & user cookie set");
                 var msg = document.getElementById("msg");
                 msg.innerHTML = "Login Successfull.";
                 msg.style.color = "green";
