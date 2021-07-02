@@ -64,7 +64,10 @@ i {
 #msg{
   
 }
-
+#msg span{
+  font-size: .8em;
+  cursor: pointer;
+}
 .interface-pic{
   width: 100%;
 }

@@ -70,9 +70,12 @@
                 }
                 else{
                     var errorMsg = document.getElementById("msg");
-                    errorMsg.innerHTML = "</br>" + "Either username or password or both are incorrect.";
+                    errorMsg.innerHTML = "*"+"Either username or password or both are incorrect.";
+
                     errorMsg.style.color = "red";
                     errorMsg.style.display = "block";
+                    $('.main-area').css('margin-top','-1.5rem');
+                    $('.pic').css('margin-top','1.5rem');
                 }
             };
             var data = JSON.stringify({
@@ -82,6 +85,7 @@
             xhr.send(data);
     }
     
+
     function getDetails(){
         var libid = document.reg.libid.value;
         var pass  = document.reg.pass.value;
@@ -109,11 +113,13 @@
             }
             else{
                 var errorMsg = document.getElementById("msg");
-                errorMsg.innerHTML = "</br>" + "Either username or password or both are incorrect.";
+                errorMsg.innerHTML ="*"+ "Either username or password or both are incorrect.";
+                
                 errorMsg.style.color = "red";
                 errorMsg.style.display = "block";
                 $('.main-area').css('margin-top','-1.5rem');
                 $('.pic').css('margin-top','1.5rem');
+                
             }
         };
         //var data = JSON.stringify({});
