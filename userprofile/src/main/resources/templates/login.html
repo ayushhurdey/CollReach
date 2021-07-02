@@ -58,14 +58,18 @@
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     console.log(xhr.responseText);
                     var rememberMe = document.getElementById('remember-me-check').checked
-                    if(rememberMe){
-                        localStorage.setItem('username',libid);
-                        localStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
-                    }
-                    else{
-                        sessionStorage.setItem('username',libid);
-                        sessionStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
-                    }
+
+                    localStorage.setItem('username',libid);
+                    localStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
+
+                    // if(rememberMe){
+                    //     localStorage.setItem('username',libid);
+                    //     localStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
+                    // }
+                    // else{
+                    //     sessionStorage.setItem('username',libid);
+                    //     sessionStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
+                    // }
                     getDetails();
                 }
                 else{
@@ -135,14 +139,23 @@
             return false;
         }
     }
+
+
+    function redirectToSignup(){
+        window.location.href = "http://localhost:8082/signup";
+    }
 </script>
-<body onload = "getDetails()">
-<!-- <section class="shadow p-3 mb-5 bg-white" id="heading">
-  
-    <h2>
-        COLLREACH
-    </h2>
-</section> -->
+
+
+<!-- <body onload = "getDetails()"> -->
+<body>
+
+        <!-- <section class="shadow p-3 mb-5 bg-white" id="heading">
+        
+            <h2>
+                COLLREACH
+            </h2>
+        </section> -->
 
 
 <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
@@ -159,8 +172,8 @@
 
             <div class="d-flex flex-row ml-auto navbar-nav text-center ml-auto">
                 <div class="navbar-btn">
-                    <button class="nav-item btn btn-outline-primary" type="button" id="" >
-                    <span>Signup</span>
+                    <button class="nav-item btn btn-outline-primary" type="button" id="" onclick = "redirectToSignup()">
+                        <span>Signup</span>
                     </button>      
                 </div>
                 <div class="navbar-btn">
