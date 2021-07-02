@@ -226,6 +226,8 @@ public class UserProfileServiceImpl implements UserProfileService {
                         UserProfileSkillsResponse userProfileSkillsResponse = new UserProfileSkillsResponse();
                         userProfileSkillsResponse
                                 .setProfileAccessKey(userSkill.getUserId().getProfileAccessKey());
+                        String username = userLoginRepository.findByUserPersonalInfo(userSkill.getUserId()).get().getUserName();
+                        userProfileSkillsResponse.setUsername(username);
                         userProfileSkillsResponse
                                 .getSkillsUpvote()
                                 .put(userSkill.getSkillId().getSkill(), userSkill.getSkillUpvoteCount());
@@ -279,7 +281,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         List<UsersInfo> usersByName = new ArrayList<UsersInfo>();
 
         for(UserPersonalInfo userPersonalInfo:  allUsersByName){
-            usersByName.add(new UsersInfo(userPersonalInfo.getName(),userPersonalInfo.getProfileAccessKey()));
+            String username = userLoginRepository.findByUserPersonalInfo(userPersonalInfo).get().getUserName();
+            usersByName.add(new UsersInfo(userPersonalInfo.getName(),userPersonalInfo.getProfileAccessKey(), username));
         }
 
         return new UsersFromNameResponse(usersByName);

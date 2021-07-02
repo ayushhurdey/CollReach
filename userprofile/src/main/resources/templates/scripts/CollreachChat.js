@@ -1,4 +1,5 @@
 const CHAT_URL = "http://localhost:8083";
+const USER_PROFILE_URL = "http://localhost:8082";
 
 function addContact(contactName, lastMessage, username){
     let chatContactsTemplate = document.querySelector('#chat-contacts-template').innerHTML;
@@ -126,6 +127,15 @@ async function sendMessage(){
 
 }
 
+
+function renderNotification(message) {
+    let notifier = document.querySelector('.notifier');
+    notifier.children[1].innerText = message;
+    notifier.removeAttribute('hidden');
+    setTimeout(() => {
+        notifier.setAttribute('hidden', "");
+    }, 5000);
+}
 
 /**
  * 

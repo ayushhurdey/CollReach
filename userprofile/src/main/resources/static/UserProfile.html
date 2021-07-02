@@ -12,9 +12,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> -->
+    <link rel="stylesheet" href="collReachPost.css" />
     <link rel="stylesheet" href="UserProfileCssBeta.css" />
     <link rel="stylesheet" href="UserProfileCss.css" />
     <script type="application/javascript" src="./scripts/compress.js"></script>
+    <script defer type="application/javascript" src="./scripts/CollreachChat.js"></script>
     <link rel="icon" href="CollReach.PNG" type="image/x-icon" />
     <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
    
@@ -132,7 +134,13 @@
         document.querySelector(".search-o").classList.toggle('hide');
       }
 
+      function closeBtn(elem){
+            elem.parentElement.setAttribute('hidden',"");
+      }
 
+      document.addEventListener("DOMContentLoaded", () =>{
+          renderNotification("Welcome to CollReach.");
+      })
 
       
     </script>
@@ -141,6 +149,12 @@
 
   <body onload="login()">
   <!-- <body> -->
+
+    <div class = "notifier" hidden>
+      <span class="closebtn" onclick = "closeBtn(this);">&times;</span> 
+      <p id = "notifier-msg"></p>
+  </div>
+
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
         
       <div class="container" id="navv">
@@ -153,13 +167,13 @@
 
           <ul class="navbar-nav text-center ml-auto">
               <li class="nav-item">
-                  <a href="" class="nav-link">
+                  <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
                       <i class="fas fa-home"></i>
                       <p id="info">Home</p>
                   </a>
               </li>
               <li class="nav-item">
-                  <a href="" class="nav-link">
+                  <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
                       <i class="fab fa-instagram"></i>
                       <p id="info">Posts</p>
                   </a>
@@ -171,7 +185,7 @@
                   </a>
               </li>
               <li class="nav-item">
-                  <a href="" class="nav-link">
+                  <a href="http://localhost:8082/profile" class="nav-link">
                       <i class="fas fa-user"></i>
                       <p id="info">Profile</p>
                   </a>
@@ -575,6 +589,7 @@
   </div>
  </div>
  
+
   <!-- Copyright -->
   <div class="footer-copyright text-center py-3">&copy;
     
@@ -647,6 +662,113 @@
       
     </div>
 
+
+    <!-- footer message btn -->
+    <footer class="fixed-bottom navbar-light bg-light">
+      <div class="d-flex flex-row-reverse pr-5">
+          <div class="shadow-sm p-1 mb-3 bg-white rounded">
+              <buttton class="btn  border-0 message-btn" type=button onclick="message()"><i class="fas fa-comments "></i></buttton>
+          </div>
+          
+      </div>
+  </footer>
+
+
+    <!-- Message Contact Overlay -->
+
+    <div class=" message p-0 width float-right shadow col-lg-6 bg-white float-right  hide " id="chat">
+      <div class="d-flex flex-column flex-shrink-2 border  bg-white contact-box">
+
+          
+          <!-- contact header -->
+          <div class="p-2">
+              <div class="p-2 contact-header">
+                  <div class=" d-flex flex-row">
+                      <div class="p-1 flex-shrink-1 m ">
+                          <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle message-contact-profile-photo"></a>
+                      </div>
+                      <div class="p-1 flex-grow-1 m" style="margin:9px;">
+                          <div class="float-left " style="font-size: 1.1em;">
+                              Contacts    
+                          </div>
+                          
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+
+          <!-- contact list -->
+          <div class="p-2 flex-grow-1 shadow overflow-auto  ">
+              <div class="d-flex flex-column contacts-list ">
+
+
+              </div>
+          </div>      
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+  <!-- chat window overlay -->
+  <!-- <div class=" chat p-0 w-xl-25 w-lg-25  w-md-50 w-sm-75 w-xs-75 float-right shadow col-lg-6 bg-white float-right  " id="chat"> -->
+  <div class=" m-0 chat p-0 width float-right shadow col-lg-6 bg-white float-right hide chat-window-container" id="chat" data-contacting-username = "">
+    <div class="d-flex flex-column flex-shrink-2 border  bg-white contact-box">
+
+        
+        <!-- contact header -->
+        <div class="p-0">
+            <div class="p-2 contact-header">
+                <div class=" d-flex flex-row">
+                    <div class="p-1 flex-shrink-1 m ">
+                        <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle current-contact-profile-photo" ></a>
+                    </div>
+                    <div class="p-1 flex-grow-1 m">
+                        <div class="float-left chat-header ">
+                            Contact Name    
+                        </div>
+                        
+                        <div class="p-1 m mr-auto float-right">
+                            <button class="cross-button " onclick="chatwindowclose()"><i class="fas fa-times" ></i></button>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!--chatting window -->
+        <div class=" p-2 flex-grow-1 shadow overflow-auto">
+            <div class="conversation d-flex flex-column w-100 h-100 overflow-auto chat-window" data-contact-username="">
+
+              
+          </div>
+      </div>
+
+      <div class="p-2 flex-shrink-2" style="height: 4rem;">
+          <div class="p-0 contact-header">
+              <div class=" d-flex flex-row">
+                  <div class="p-1 flex-grow-1 m">
+                          <div class="input-group mb-3">
+                              <input type="text" class="form-control chat-input-box" placeholder="Type here" >
+                              <div class="input-group-append chat-send-btn">
+                                <button class="btn send-btn "> <i class="fas fa-paper-plane small"></i></button>
+                              </div>
+                            </div>
+                  </div>
+               </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
     <!---------- TEMPLATES ----------->
 
     <template id = "skill-search-bullet-template">
@@ -670,7 +792,10 @@
             </div>
 
             <div class="search-profile-message">
-              <button type="button" class="btn btn-primary search-profile-message-button">Message</button>
+              <button type="button" class="btn btn-primary search-profile-message-button" 
+                      onclick = "addEventToMessages(this)" 
+                      data-contact-username=${username}
+                      data-contact-name = ${name}>Message</button>
             </div>
             
             <a href = ${profileUrl}>Visit Profile</a>
@@ -685,6 +810,71 @@
         <div class="upskill-votes">${skillUpvotes}</div>
       </div>
     </template>
+
+
+
+    <!--CHAT TEMPLATES-->
+
+    <template id = "chat-contacts-template">
+      <div class="p-2 rounded individual-chat">
+          <div class="d-flex flex-row">
+              <div class="p-1 flex-shrink-1 m">
+                  <!-- "static/profileimage1-ConvertImage.ico" -->
+                  <a href=""><img src=${profilePic}  class="img-sm rounded-circle" ></a>
+                  
+              </div >
+              <button class="w-100 bg-white border-0 ss " style = "outline: none;" data-contact-username = ${username} onclick="chatwindow(this)">
+                  <div class="p-1 flex-grow-1 m chat-person ">
+                      <div class="d-flex flex-column ">
+                          <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                              ${contactName}
+                          </div>
+                          <div class=" p-0 text-left small-text">
+                              ${lastMessage}
+                          </div>
+                      </div>
+                  </div>
+              </button>
+          </div>
+      </div>
+  </template>
+
+  <template id = "sent-message">
+      <div class="p-2 sended ">
+          <div class="message-width ml-auto">
+              <div class="d-flex flex-row">
+                  <!-- have extra class named order rest same as received-->
+                  <div class="p-1 order-2"><a href=""><img src=${profilePic} class="conversation-side-profile rounded-circle" ></a></div>
+                  <div class="p-1 flex-grow-1 order-1">
+                      <div>${message}</div>
+
+                      <div class = "date-time-display">
+                          <small style = "font-size: 0.6em;" class = "message-date">${date}</small>
+                      </div>
+                  </div>
+              </div>   
+          </div>
+      </div>
+  </template>
+
+  <template id = "received-message">
+      <div class='p-2 received '>
+          <div class="message-width mr-auto">
+              <div class="d-flex flex-row">
+                  <!-- no order class -->
+                  <div class="p-1 "><a href=""><img src=${profilePic}  class="conversation-side-profile rounded-circle" ></a></div>
+                  <div class="p-1 flex-grow-1 ">
+                      <div>${message}</div>
+
+                      <div class = "date-time-display">
+                          <small style = "font-size: 0.6em;" class = "message-date">${date}</small>
+                      </div>
+                  </div>
+                  
+              </div>   
+          </div>
+      </div>
+  </template>
 
 
 
@@ -868,6 +1058,7 @@
                         
                       //   itemsOutput.appendChild(div);
                       let name = value.name;
+                      let username = value.username;
                       let profileUrl = "#";
                       if(value.profileAccessKey !== "" && value.profileAccessKey !== null)
                         profileUrl = "http://localhost:8082/profile/" + value.profileAccessKey;
@@ -897,13 +1088,14 @@
                         .then((res) => {
                             let usersSkills = JSON.parse(res).usersSkills;
                             console.log("users-by-skills -> " + usersSkills);
-                            itemsOutput.innerHTML = "";                                // TODO: It has to be changed.
+                            itemsOutput.innerHTML = "";                               
                             // searchOutputTemplate
                             
                             // for printing purpose only
                             for(key in usersSkills){
                                 console.log(key);
                                 let name = key;
+                                let username = "";
                                 let profileUrl = "";
                                 let skillsList = "";
                                 for(key1 in usersSkills[key]){
@@ -911,6 +1103,9 @@
                                   console.log("    "+key1 + " : "+ usersSkills[key][key1]);
                                   if(key1.localeCompare("profileAccessKey") === 0){
                                     profileUrl = usersSkills[key][key1];
+                                  }
+                                  else if(key1.localeCompare("username") === 0){
+                                      username = usersSkills[key][key1];
                                   }
                                   else if(key1.localeCompare("skillsUpvote") === 0){
                                     for(key2 in usersSkills[key][key1]){
@@ -935,6 +1130,16 @@
             }, 100);    
           }
 
+          } // search function ends
+
+
+          function addEventToMessages(searchProfileMessageButton){
+              message();
+              let username = searchProfileMessageButton.dataset.contactUsername;
+              let name = searchProfileMessageButton.dataset.contactName;
+              addContact(name , "", username);
+
+              
           }
     </script>
 

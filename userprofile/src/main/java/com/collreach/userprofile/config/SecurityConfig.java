@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login","/signup","/profile","/profile/*","/profile-update").permitAll()
                 .antMatchers("/chat/*").permitAll()
                 .antMatchers("/user/get-users-from-username","/user/get-profile-img-by-username*").permitAll()  // to be removed later
+                .antMatchers("/user/search-users-by-name", "/user/get-users-from-skills", "/user/get-all-skills").permitAll() // to be allowed with specific origins(with port: 8082,8084) only
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
