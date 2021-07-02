@@ -169,6 +169,7 @@ function buildProfilePhotoURL(username){
             "&ifMini=true";
 }
 
+
 /**
  * Responsible for opening chats: Opens when chat button is clicked.
  */
