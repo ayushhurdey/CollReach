@@ -3,9 +3,25 @@
 <!--USER_PROFILE_UPDATE FRONT_END-->
 
 <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Profile Update</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+     
+    <script type="application/javascript" src="./scripts/compress.js"></script>
+    <link rel="icon" href="CollReach.PNG" type="image/x-icon" />
+    <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
+    
+    <link rel="icon" href="CollReach.PNG" type="image/x-icon">
+    <link rel="icon" href="profileimage.webp" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="projectcss.css"> -->
+    <link rel="icon" href="CollReach.PNG" type="image/x-icon">
     <link rel="stylesheet" href="UserProfileUpdateCss.css">
     <link rel="icon" href="CollReach.PNG" type="image/x-icon">
     
@@ -479,19 +495,306 @@
     </script>
 </head>
 <body>
-    <section class="shadow p-3 mb-5 bg-white" id="heading">
-        <h2>
-            Profile Update
-        </h2>
-    </section>
+    <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
+        
+        <div class="d-flex container" id="navv">
+            <div class="collreach">
+                <a href="" class="navbar-brand"><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
+            </div>
+            <div class="login-buttons">
 
 
-    <div class="container-fluid">
+
+                <ul class="navbar-nav text-center ml-auto">
+                    <li class="nav-item">
+                        <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <img src="profileimage.webp" class="img-sm rounded-circle user-profile-photo-icon" alt="img not found">
+                        </a>
+                    </li>
+
+                </ul>
+                <!-- <div class="d-flex flex-row ml-auto navbar-nav text-center ml-auto">
+                    <div class="navbar-btn">
+                        <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <p id="info">Home</p>
+                        </a>     
+                    </div>
+                    <div class="navbar-btn">
+                    
+                    </div>
+                </div> -->
+            </div> 
+    
+        </div>
+    </nav>
+    
+<div class='main-area'>
+    <div class="container">
+        <div class="d-flex flex-row">
+            <div class="p-2">
+                <a href="" >
+                    <img src="profileimage.webp" class="img-md rounded-circle " alt="img not found">
+                </a>
+            </div>
+            <div class="p-2 flex-grow-1">
+                <div class='font-big'>
+                    Ayush Kumar
+                </div>
+                <div class="small-text text-muted">
+                    Your Personal Account
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- heading -->
+    <div class="container">
+        <div class="d-flex flex-column">
+            <div class="p-2 font-big header">
+                Personal Details
+            </div>
+
+            <div class="p-2 d-flex flex-row updation-area">
+                <div class="flex-grow-1 input-field">
+                    
+                    <form name="personalEmailUpdate" method="post" action="#">
+                        <label for="personalEmail">Personal Email</label>
+                        
+
+                        <!-- Main input area -->
+                        <input class="form-control normal-box" type="text" id="personalEmail" name="personalEmail"
+                                placeholder="mail ID" onkeyup="validateEmail()">
+
+                        
+
+                        <p id="validateEmail" style="display: none;">aa</p>
+
+                        <p id="msg"></p>
+                    </form>
+
+                </div>
+                <div class="update-btn">
+                    <input class="btn btn-secondary" type="button" value="Update" onclick="sendEmailData()">
+                </div>
+            </div>
+
+            <div class="p-2 d-flex flex-row updation-area">
+                <div class="flex-grow-1 input-field">
+                    
+                    <form name="phoneNoUpdate" method="post" action="#">
+                        <label for="phoneNo">Phone Number</label>
+
+                        
+
+                            <!-- Main input area -->
+                            <input class="form-control normal-box" type="text" id="phoneNo" name="phoneNo" placeholder="Phone No."
+                                onkeyup="validatePhoneNo()">
+              
+
+                 
+                        <p id="PhoneNovalidation" style="display:none;"></p>
+
+                        <p id="msg1"></p>
+                    </form>
+                </div>
+                <div class="update-btn">
+                    <input class="btn btn-secondary" type="button" value="Update" onclick="phonenoUpdate()">
+                </div>
+            </div>
+
+            <div class="p-2 d-flex flex-row updation-area">
+                <div class="flex-grow-1 input-field">
+                    
+                    <form name="linkedInUpdate" method="post" action="#">
+                        <label for="linkedIn">LinkedIn Link</label>
+
+                        
+                            <input class="form-control normal-box" type="text" id="linkedIn" placeholder="LinkedIn ID"
+                                name="linkedIn" onkeyup="validatelinkedInlink()">
+                   
+                        
+
+                        <p id="linkedInvalidation" style="display:none;"></p>
+
+                        <p id="msg3"></p>
+                    </form>
+                </div>
+                <div class="update-btn">
+                    <input id="lin-button" class="btn btn-secondary" type="button" value="Update"
+                            onclick="linkedInDataSend()">
+                </div>
+            </div>
+
+
+            <div class="p-2 d-flex flex-row updation-area">
+                <div class="flex-grow-1 input-field">
+                    
+                    <form name="descriptionUpdate" method="post" action="#">
+                        <label for="description">Description</label>
+
+                        
+
+                            <!-- Main input area -->
+                            <textarea class="form-control" id="description" placeholder="About me" name="description"
+                                maxlength="200"></textarea>
+
+                       
+
+                        <p id="msg2"></p>
+                    </form>
+                </div>
+                <div class="update-btn">
+                    <input class="btn btn-secondary" type="button" value="Update" onclick="DescriptionUpdate()">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- heading -->
+    <div class="container">
+        <div class="d-flex flex-column">
+            <div class="p-2 font-big header">
+               Password Update
+            </div>
+
+            <div class="p-2 d-flex flex-column ">
+                <form name="passwordUpdate" method="post" action="#" class="w-100">
+                    <div class=" input-field updation-area pass">
+                    
+                        <label for="password">CURRENT PASSWORD</label>
+                        <!-- Main input area -->
+                        <input class="form-control normal-box" type="text" placeholder="Current Password" id="password"
+                            name="password">
+                            
+    
+                    </div>
+                    <div class="input-field updation-area pass">
+                        
+                        <label for="newPassword">NEW PASSWORD</label>
+                        <!-- Main input area -->
+                        <input class="form-control normal-box" type="text" placeholder="New Password" id="newPassword"
+                            name="newPassword">
+                     </div>
+                     <div class="float-right updation-area">
+                        <input class="btn btn-secondary" type="button" value="Confirm" id="password-button"
+                        onclick="sendPasswordData()">
+                    
+                     </div>
+                     <p id="msg6"></p>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!-- heading -->
+    <div class="container">
+        <div class="d-flex flex-column">
+            <div class="p-2 font-big header">
+                College Details
+            </div>
+
+            <div class="p-2 d-flex flex-row updation-area">
+                <div class="flex-grow-1 input-field">
+                    
+                    <form name="yearsemUpdate" method="post" action="#">
+                        <label for="sem">Semester</label>
+
+
+                            <!-- Main input area -->
+                        <select class="form-control normal-box" id="sem" name="sem">
+                            <option value="none">Select semester</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
+
+                        
+
+                        <p id="msg4"></p>
+                    </form>
+
+                </div>
+                <div class="update-btn">
+                    <input id="sem-button" class="btn btn-secondary" type="button" value="Update"
+                    onclick="YearsemUpdate()">
+                </div>
+            </div>
+
+            <div class="p-2 d-flex flex-row updation-area">
+                <div class="flex-grow-1 input-field">
+                    
+                    <form name="skillupdate" method="post" action="#">
+                        <label for="skill">Skills</label>
+
+                   
+
+                            <!-- Main input area -->
+                            <select class="form-control normal-box" id="skill" name="skill" onchange="addSkill()">
+                                <option value="AI">AI</option>
+                                <option value="Web Development">Web Developement</option>
+                                <option value="ML">ML</option>
+                                <option value="Deep Learning">Deep Learning</option>
+                                <option value="Android">Android</option>
+                            </select>
+
+                        <p id="skill-box">Selected skill will show here..</p>
+                        <div id="skillset"></div>
+              
+                        <p id="msg5"></p>
+                    </form>
+                </div>
+                <div class="update-btn">
+                    <input class="btn btn-secondary" type="button" value="Update" onclick="skillUpdate()">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+    <div class="container">
         <div class="row">
             <div class="col-md-12" id="titles">
                 <h3>PERSONAL DETAILS</h3>
-            </div>
-
+            </div> -->
+<!-- 
             <div class="col-md-6">
                 <div class="card">
                     <form name="personalEmailUpdate" method="post" action="#">
@@ -499,7 +802,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 
-                            <!-- Main input area -->
+                           
                             <input class="form-control" type="text" id="personalEmail" name="personalEmail"
                                 placeholder="mail ID" onkeyup="validateEmail()">
 
@@ -511,10 +814,10 @@
                         <p id="msg"></p>
                     </form>
                 </div>
-            </div>
+            </div> -->
 
 
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div class="card">
                     <form name="phoneNoUpdate" method="post" action="#">
                         <label for="phoneNo">Phone Number</label>
@@ -522,7 +825,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 
-                            <!-- Main input area -->
+                  
                             <input class="form-control" type="text" id="phoneNo" name="phoneNo" placeholder="Phone No."
                                 onkeyup="validatePhoneNo()">
                         </div>
@@ -533,8 +836,8 @@
                         <p id="msg1"></p>
                     </form>
                 </div>
-            </div>
-
+            </div> -->
+<!-- 
 
             <div class="col-md-6" id="grid-adjust">
                 <div class="card" id="des-card">
@@ -544,7 +847,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
 
-                            <!-- Main input area -->
+                    
                             <textarea class="form-control" id="description" placeholder="About me" name="description"
                                 maxlength="200"></textarea>
 
@@ -554,10 +857,10 @@
                         <p id="msg2"></p>
                     </form>
                 </div>
-            </div>
+            </div> -->
 
 
-            <div class="col-md-6" id="grid-adjust1">
+            <!-- <div class="col-md-6" id="grid-adjust1">
                 <div class="card" id="lin-card">
                     <form name="linkedInUpdate" method="post" action="#">
                         <label for="linkedIn">LinkedIn Link</label>
@@ -565,7 +868,6 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
 
-                            <!-- Main input area -->
                             <input class="form-control" type="text" id="linkedIn" placeholder="LinkedIn ID"
                                 name="linkedIn" onkeyup="validatelinkedInlink()">
                         </div>
@@ -577,14 +879,14 @@
                         <p id="msg3"></p>
                     </form>
                 </div>
-            </div>
+            </div> -->
 
 
 
 
 
 
-            <div class="col-md-12" id="titles">
+            <!-- <div class="col-md-12" id="titles">
                 <h3>UPDATE COLLEGE DETAILS</h3>
             </div>
 
@@ -596,7 +898,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
 
-                            <!-- Main input area -->
+            
                             <select class="form-control" id="sem" name="sem">
                                 <option value="none">Select semester</option>
                                 <option value="1">1</option>
@@ -616,9 +918,9 @@
                         <p id="msg4"></p>
                     </form>
                 </div>
-            </div>
+            </div> -->
 
-
+<!-- 
             <div class="col-md-6">
                 <div class="card">
                     <form name="skillupdate" method="post" action="#">
@@ -627,7 +929,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-education"></i></span>
 
-                            <!-- Main input area -->
+                             
                             <select class="form-control" id="skill" name="skill" onchange="addSkill()">
                                 <option value="AI">AI</option>
                                 <option value="Web Development">Web Developement</option>
@@ -644,17 +946,17 @@
                     </form>
                 </div>
                 <br>
-            </div>
+            </div> -->
 
 
 
 
 
-            <div class="col-md-12" id="titles">
+            <!-- <div class="col-md-12" id="titles">
                 <h3>UPDATE PASSWORD</h3>
-            </div>
+            </div> -->
 
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
                 <div class="card" id=up-pass>
                     <form name="passwordUpdate" method="post" action="#">
                         <label for="password">CURRENT PASSWORD</label>
@@ -663,7 +965,7 @@
 
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 
-                            <!-- Main input area -->
+                          
                             <input class="form-control" type="text" placeholder="Current Password" id="password"
                                 name="password">
                         </div>
@@ -674,7 +976,6 @@
 
                             <span class="input-group-addon"><i class="glyphicon glyphicon-ok"></i></span>
 
-                            <!-- Main input area -->
                             <input class="form-control" type="text" placeholder="New Password" id="newPassword"
                                 name="newPassword">
                         </div>
@@ -684,9 +985,9 @@
                         <p id="msg6"></p>
                     </form>
                 </div>
-            </div>
-        </div>
-    </div>
+            </div> -->
+        <!-- </div>
+    </div> -->
 
 </body>
 </html>
