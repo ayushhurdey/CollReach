@@ -90,7 +90,7 @@ i {
   font-size: 1.4em;
 }
 .header{
-  border-bottom: 1px solid gray;
+  border-bottom: 3px solid gray;
 
 }
 .input-field{
@@ -114,7 +114,7 @@ label{
 }
 
 .main-area .container{
-  box-shadow: 0px 0px 10px #6f6aff;
+  /* box-shadow: 0px 0px 10px #6f6aff; */
   margin-bottom: 3rem;
 }
 .header{
