@@ -387,7 +387,7 @@ ul.cloud a:hover::before {
     left:25% ;
   }
 }
-@media (max-width: 767.5px)  { 
+@media (max-width: 767.98px)  { 
   .footer .row{
     width: 100%;
   }
