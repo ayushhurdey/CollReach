@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign in</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="script/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> -->
+    <!-- <link rel="stylesheet" href="UserProfileCssBeta.css" /> -->
+     
+    <script type="application/javascript" src="./scripts/compress.js"></script>
+    <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
+    <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
+    <link rel="stylesheet" href="style/login.css">
+    <link rel="icon" href="static/CollReach.PNG" type="image/x-icon">
+    <link rel="icon" href="static/profileimage.webp" type="image/x-icon">
+</head>
+<script type="text/javascript">
+    function loginValidation() {
+        libidv = /^[0-9]{4}[a-z]{2}[0-9]{4}$/;
+        var pass = document.reg.pass.value;
+        var libid = document.reg.libid.value;
+        if (libid == "") {
+            alert("library id field required");
+            return false;
+        }
+        if (libidv.test(libid) == false) {
+            alert("library id is invalid");
+            return false;
+        }
+        if (pass.length == 0) {
+            alert("password is required");
+            return false;
+        }
+        if(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(reg.pass.value)!=true){
+                alert("Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+                return false;
+        }
+
+        return true;
+    }
+    
+    
+    function submitForm(){
+        var libid = document.reg.libid.value;
+        var pass  = document.reg.pass.value;
+        var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/token";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var rememberMe = document.getElementById('remember-me-check').checked
+
+                    localStorage.setItem('username',libid);
+                    localStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
+
+                    // if(rememberMe){
+                    //     localStorage.setItem('username',libid);
+                    //     localStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
+                    // }
+                    // else{
+                    //     sessionStorage.setItem('username',libid);
+                    //     sessionStorage.setItem('auth',"Bearer " + JSON.parse(xhr.responseText).token);
+                    // }
+                    getDetails();
+                }
+                else{
+                    var errorMsg = document.getElementById("msg");
+                    errorMsg.innerHTML = "*"+"Either username or password or both are incorrect.";
+
+                    errorMsg.style.color = "red";
+                    errorMsg.style.display = "block";
+                    $('.main-area').css('margin-top','-1.5rem');
+                    $('.pic').css('margin-top','1.5rem');
+                }
+            };
+            var data = JSON.stringify({
+                    "password": pass,
+                    "userName": libid
+                 });
+            xhr.send(data);
+    }
+    
+
+    function getDetails(){
+        var libid = document.reg.libid.value;
+        var pass  = document.reg.pass.value;
+        console.log("id: " + libid);
+
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:8082/user/get-user-details/" + 
+            (localStorage.getItem('username') || sessionStorage.getItem('username'));
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Authorization",
+            (localStorage.getItem('auth') || sessionStorage.getItem('auth')));
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);
+                let responseMsg = JSON.parse(xhr.responseText);
+                let deptOfCurrentLoggedInUser = responseMsg.userPersonalInfoResponse.courseInfoResponse.branch;
+                document.cookie = "dept=" + deptOfCurrentLoggedInUser;
+                document.cookie = "user=" + responseMsg.userName;
+                console.log("dept & user cookie set");
+                var msg = document.getElementById("msg");
+                msg.innerHTML = "Login Successfull.";
+                msg.style.color = "green";
+                window.location.href = "http://localhost:8082/profile";
+                //msg.style.display = "none";
+            }
+            else{
+                var errorMsg = document.getElementById("msg");
+                errorMsg.innerHTML ="*"+ "Either username or password or both are incorrect.";
+                
+                errorMsg.style.color = "red";
+                errorMsg.style.display = "block";
+                $('.main-area').css('margin-top','-1.5rem');
+                $('.pic').css('margin-top','1.5rem');
+                
+            }
+        };
+        //var data = JSON.stringify({});
+        xhr.send();
+    }
+
+    function check(){
+        if(loginValidation() == true){
+            submitForm();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+    function redirectToSignup(){
+        window.location.href = "http://localhost:8082/signup";
+    }
+</script>
+
+
+<!-- <body onload = "getDetails()"> -->
+<body>
+
+        <!-- <section class="shadow p-3 mb-5 bg-white" id="heading">
+        
+            <h2>
+                COLLREACH
+            </h2>
+        </section> -->
+
+
+<nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
+        
+    <div class="d-flex container" id="navv">
+        <div class="collreach">
+            <a href="" class="navbar-brand"><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
+        </div>
+        
+        <!-- <button class="navbar-toggler" data-toggle="collapse" data-target="#list">
+            <span class="navbar-toggler-icon"></span></button> -->
+
+        <div class="login-buttons">
+
+            <div class="d-flex flex-row ml-auto navbar-nav text-center ml-auto">
+                <div class="navbar-btn">
+                    <button class="nav-item btn btn-outline-primary" type="button" id="" onclick = "redirectToSignup()">
+                        <span>Signup</span>
+                    </button>      
+                </div>
+                <div class="navbar-btn">
+                <button type="button" class="btn btn-primary" id = "">
+                    <span>Login</span>
+                </button>
+                </div>
+            </div>
+        </div> 
+
+    </div>
+</nav>
+
+
+<div class="d-flex flex-row main-area container">
+
+    <div class="col-lg-8 col-md-7 pic">
+        <img class="interface-pic" src = "undraw_Login_re_4vu2.svg" alt="Login pic"/>
+
+    </div>
+
+
+
+    <div class="d-flex flex-column col-lg-4 col-md-5 col-sm-12 col-xs-12 login-area">
+        <div class="w-100 error-msg">
+            <div class="" id="msg"></div>
+        </div>
+
+
+        
+            <div class=" p-2 login-form-area">
+                <div class="d-flex flex-column p-2 justify-content-center">
+                    <form name=reg action="#" method="post">
+                        <div class="p-2 ">
+                            <img class="profile-icon" src="profileimage.webp" alt="icon">
+                        </div>
+        
+                        <!-- <div id="centering"> -->
+                            <!-- parent of all div-->
+                        <!-- <div class=""> -->
+                            
+                            <!-- Bootstrap grinding-->
+         
+                        <div class="p-2 form-group">
+                                <label  for="libid" >Username</label>
+                                <input class="form-control" type="text" id="libid" name="libid"
+                                    title="Please fill your registered library id" placeholder="LIBRARY ID">
+                                    
+                        </div>
+        
+        
+                        <div class="p-2 form-group">
+                            
+                            <!-- <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span> -->
+                                <label  for="pass" >Password</label>
+                                <input class="form-control" type="password" id="pass" name="pass" placeholder="PASSWORD" >
+                                
+                            
+                        </div>
+        
+                        <!-- <div class='p-2' id="clear">
+                            <button type="reset" class="btn btn-secondary" id="clear-button"
+                                value="reset">Clear</button>
+                        </div> -->
+        
+        
+                        <div class="p-2  form-check">
+                            <input type="checkbox" class="form-check-input" id="remember-me-check" checked>
+                            <label class="form-check-label" for="remember-me-check" 
+                                id = "remember-me-label">Remember Me</label>
+                        </div>
+                        
+                        <div class="p-2">
+                            <div>
+                            <input type="button" id="submit-button" class="btn btn-primary w-100" value="Login" onclick="check()">
+                            </div>
+                            <br>
+        
+                            <!-- <p>
+                                <a href="CollReach.html" data-toggle="tooltip" data-placement="bottom"
+                                    title="Take you to the CollReach Homepage">Home</a>
+                            
+                            <br><br>
+                            </p> -->
+                        </div>
+                        <div class="p-2 text-center font-small">
+                            New to Collreach ? <a href="">Signup</a>
+                        </div>
+                        
+                        
+                        
+                        
+                    </form>
+                </div>
+            </div>
+        
+    </div>
+
+
+  
+</div>
+
+</body>
+</html>

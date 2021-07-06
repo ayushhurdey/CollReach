@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: userprofile
+
+eureka:
+  instance:
+    hostname: localhost
+
+posts:
+  url: http://posts/user/add-user
+
+chat:
+  url: http://chat-app/user/add-user

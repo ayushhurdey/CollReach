@@ -1,0 +1,329 @@
+* {
+  box-sizing: border-box;
+  font-family: trebuchet ms, Arial, helvetica;
+}
+.btn-primary{
+  border: 1px solid #6c67fd;
+  background-color: #6c67fd;
+  color: white;
+}
+.btn-primary:hover{
+  background-color: #5955c7;
+  border: 1px solid #5955c7;
+}
+.btn-outline-primary{
+  border: 1px solid #6c67fd;
+  color: #6c67fd;
+}
+.btn-outline-primary:hover{
+  background-color: #6c67fd;
+  border: 1px solid #6c67fd ;
+  
+}
+.navbar-btn{
+  margin-left: 10px;
+}
+#navv {
+  width: 68rem;
+}
+
+.nav-bar {
+  overflow: hidden;
+
+  top: 0;
+  width: 100%;
+}
+.navbar-expand-md .navbar-nav .nav-link {
+  display: block;
+  padding-right: 2rem;
+}
+
+.navbar-brand {
+  font-size: 2em;
+  font-family: Verdana;
+  font-weight: bold;
+}
+i {
+  font-size: 1.6em;
+}
+#heading {
+  background-color: #6c67fd;
+  color: white;
+  border-radius: 15px;
+  padding: 5px;
+}
+.row{
+  padding-top: 8rem;
+}
+.collreach{
+  order: 1;
+}
+.login-buttons{
+  order: 2;
+}
+#msg{
+  
+}
+#msg span{
+  font-size: .8em;
+  cursor: pointer;
+}
+.interface-pic{
+  width: 100%;
+}
+.error-msg{
+ 
+}
+
+.pic{
+  padding-top: 3rem;
+}
+.login-area{
+  padding-top: 3rem;
+}
+.main-area{
+  padding-top: 4rem;
+}
+.login-form-area{
+  
+  border: 1px solid gray;
+}
+.form-control{
+  border-radius: 0rem;
+  border: none;
+  border-bottom: 1px solid rgb(80, 80, 80)
+}
+
+.form-control:focus
+{
+ 
+ border: none; 
+ border-radius: none; 
+ -webkit-box-shadow: 0 8px 6px -6px #6c67fd;
+ -moz-box-shadow: 0 8px 6px -6px #6c67fd;
+      box-shadow: 0 8px 6px -6px #6c67fd;
+ border-bottom: 1px solid #6c67fd;
+}
+.profile-icon{
+  margin-left: 40%;
+  width:20%;
+
+  border-radius: 50px;
+
+}
+.form-check{
+  margin-left: 1.2rem;
+}
+@media (max-width: 767.98px){
+  #navv{
+    flex-direction: column !important;
+  }
+  .collreach{
+    order: 2;
+  }
+  .login-buttons{
+    order: 1;
+    width: 100%;
+  }
+  .navbar-nav{
+    
+    justify-content: end;
+  }
+  .pic{
+    display: none;
+  }
+  .error-msg{
+    float: none;
+    padding-top:6rem ;
+    text-align: center;
+    margin-top: -2rem;
+  }
+  .main-area{
+    padding-top: 3rem;
+  }
+}
+/* body {
+  background-color: #dacaca;
+} */
+
+/*registtration heading*/
+/* h2 {
+  font-family: Goudy Stout;
+  text-align: center;
+  text-shadow: 0 0 3px #1dadca;
+  border-radius: 0px;
+
+} */
+/* #signin{
+  font-size: 1.5em;
+  margin-left: 3%;
+}
+.col-lg-12{
+  margin-bottom: 10px; 
+} */
+
+/* Registration heading*/
+/*#heading {
+  margin: 10px;
+  border-left: 10px solid #0077ff;
+  border-right: 10px solid #0077ff;
+  padding: 10px;
+  text-shadow: 0 0 3px #1dadca;
+  border-radius: 30px;
+  font-size: 2.5em;
+}
+*/
+/*Main Form */
+/* #form {
+  margin: 0px;
+  border: 1px solid black;
+  border-left: 10px solid #0077ff;
+  background-color: #bcf7f5;
+} */
+
+/* red asteric for mandatory filed */
+/* .required::after {
+  content: "*";
+  color: red;
+} */
+
+/*All the labes of form (eg Name email...) */
+/* label {
+  font-size: 1em;
+} */
+
+/* All the inputs of form*/
+/* input {
+  font-weight: 1.4em;
+} */
+
+/* #remember-me-label {
+  margin-left: 25px;
+} */
+
+/* Form main div for styling*/
+/* .row {
+ 
+  margin-top: 30px;
+  margin: auto;
+  width: 360px;
+  background: rgba(255, 255, 255);
+  align-content: center;
+  font-size: 1.6em;
+  padding: 10px;
+  overflow: auto;
+  background-color: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px 10px #838383;
+  border-left: 10px solid #0077ff;
+} */
+/*Icon styling */
+/* .glyphicon {
+  position: relative;
+  border: 1px solid black;
+  padding: 5px;
+  background: rgba(178, 176, 172, 0.8);
+} */
+
+/*Main section div (parent of .row)*/
+/* .container-fluid {
+  margin-left: 0px;
+  padding: 0px;
+  margin-right: 0px;
+} */
+
+/* Text in the form*/
+/* .form-text {
+  font-weight: bold;
+} */
+
+/* Label of every .row div*/
+/* .row label {
+  position: relative;
+  font-weight: bold;
+  color: #000000;
+  opacity: none;
+} */
+
+/*Blue highlight around inputs when in focus */
+/* .form-control:focus {
+  box-shadow: 0px 0px 5px 5px #7ee4f9;
+} */
+
+/*Submit button styling */
+/* #submit-button {
+  border: 0px;
+  margin: 5px;
+  width: 100%;
+  font-size: 1em;
+  font-weight: bold;
+  height: 40px;
+  border-radius: 60px;
+  padding: 3px;
+}
+#clear
+{
+  width: 100%;
+  margin: auto;
+}
+#clear-button{
+  border: 0px;
+  margin:auto;
+  float: right;
+  width:15%;
+  font-size: 0.8em;
+  height: 30px;
+  border-radius: 60px;
+  padding: 3px;
+
+}
+.btn-primary {
+  background-color: #0077ff;
+} */
+/* make submit button green when hover over it*/
+
+
+/* #submit-button:hover {
+  padding: 0px;
+  font-size: 1.2em;
+}
+#clear-button:hover{
+  background-color: red;
+}
+p a {
+  padding: 5px;
+  background-color: #32ceb9;
+  color: white;
+  border-radius: 30px;
+  text-decoration: none;
+
+}
+p a:hover {
+  text-decoration: none;
+  color: white;
+  background-color: #2bd5a2;
+}
+
+p a:hover:after {
+  content: " take you to home page";
+}
+
+#msg {
+  color: red;
+  font-size: 0.9em;
+} */
+
+/*media queries for responsiveness */
+/*1st */
+/* @media (max-width: 720px) and (min-width: 0px) {
+  .row {
+    border-left: 10px solid #0077ff;
+    padding: 3px;
+
+  }
+  form {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+} */
+/*2nd */

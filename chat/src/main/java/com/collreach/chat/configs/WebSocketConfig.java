@@ -18,9 +18,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Value("${userprofile.url}")
     private String userprofileUrl;
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").setAllowedOrigins(postsUrl, userprofileUrl).withSockJS();
+        registry.addEndpoint("/ws").setAllowedOrigins(postsUrl, userprofileUrl, frontendUrl).withSockJS();
     }
 
     @Override
