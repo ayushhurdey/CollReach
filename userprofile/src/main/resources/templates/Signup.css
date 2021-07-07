@@ -136,6 +136,24 @@ i {
 .btn-primary:active{
   background-color: #6f6aff;
 }
+::-webkit-input-placeholder  { /* Chrome/Opera/Safari */
+  font-size: 0.8em !important;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  font-size: 0.8em !important;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  font-size: 0.8em !important;
+}
+:-moz-placeholder { /* Firefox 18- */
+  font-size: 0.8em !important ;
+}
+
+
+
+
+
+
 @media (max-width: 767.98px){
   #navv{
     flex-direction: column !important;
