@@ -137,7 +137,7 @@
       function closeBtn(elem){
             elem.parentElement.setAttribute('hidden',"");
       }
-
+      
       document.addEventListener("DOMContentLoaded", () =>{
           renderNotification("Welcome to CollReach.");
       })
@@ -319,11 +319,13 @@
               <div class="pad-top" >
                 <img src="CollReach.PNG" class="img-md rounded-circle" alt="Image not found" id="profile-photo">
                 
-                <small class="small-bullet">
-                  <strong>Edit
-                    <input hidden type="file" class="custom-file-input" id="img" name="img" accept="image/*" multiple="multiple">
-                  </strong>
-                </small> 
+                
+                    <div  class="btn btn-primary small-bullet" id='edit-btn'>
+                      Edit
+                  </div>
+                  <span id="ok-done"></span>
+                   
+                
         
                 <div id="name">
                   <!-- Name of the user here -->
@@ -553,7 +555,7 @@
 
 
 
-<!-- Footer -->
+<!-- FOOTER----------------------------------------------------------------------------------------------------------------------->
 <footer class="page-footer font-small blue pt-4 navbar-light bg-light" >
 
  <div class="footer ">
@@ -600,10 +602,70 @@
 </footer>
 <!-- Footer -->
 
+<!-- EDIT PROFILE PIC SMALL BUTTON------------------------------------------------------------------------------------------------ -->
+
+
+<div class="p-2 pic-o  hide"  >
+  <div class="d-flex flex-column justify-content-center">
+    <div class="d-flex flex-row w-100">
+      <div class="flex-grow-1" style="color: red;">*Try to upload only square images</span></div>
+      <div class="" id="pic-overlay-close"><i class="fa fa-times"></i></div>
+    </div>
+    <div class='p-2' style="height: 30em;overflow: auto;">
+      <div class='d-flex justify-content-center'>
+        <img src="undraw_Login_re_4vu2.svg" alt="img not available" id='intial-pic' class="intial-pic" >
+      </div>
+     
+    </div>
+
+    <div class='p-2 d-flex flex row justify-content-center' style="background-color: rgb(179, 179, 179);">
+      <div >
+        <button class="btn btn-primary" style="padding-top: .41rem; margin-top: .98rem;">
+          <label for="img" style="margin: 0px;">Change</label>
+          <input hidden type="file" class="custom-file-input pic-o-btn" id="img" name="img" accept="image/*" onchange="readURL(this)">
+        </button>
+          
+          
+       
+      </div>
+      <div>
+        <button type="button" class="btn btn-primary pic-o-btn" id = "image-set-btn">Set image</button>
+      </div>
+      
+    </div>
+  </div>
+
+
+</div>
+<script>
+  function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+         
+        reader.onload = function (e) {
+          
+            $('#intial-pic')
+                .attr('src', e.target.result)
+                ;
+        };
+        // var h=document.getElementById('intial-pic');
+        // height = h.height;
+        // width = h.width;
+        // if (height<'29rem'){
+        //   $('#intial-pic').height='29rem';
+        // }
+        // else{
+        //   $('#intial-pic').width='100%';
+        // }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 
 
 
-
+<!-- SEARCH OVERLAY------------------------------------------------------------------------------------------------------- -->
     <!-- <div id="search-overlay" style="display: none;"> -->
     <div class="p-2  search-o w-75 w-lg-50 w-xl-50 .animated .zoomIn shadow  fast overflow-auto hide">
       <div id="search-overlay ">
@@ -995,17 +1057,22 @@
       /* --------------Overlay Effect functions---------*/
       //document.getElementById('search-btn').addEventListener("click", on);
       document.getElementById('overlay-close').addEventListener("click", off);
+      document.getElementById('pic-overlay-close').addEventListener("click", hide);
       document.getElementById('search-request-btn').addEventListener("click", search);
-
+      document.getElementById('edit-btn').addEventListener("click", showPicO);
       // function on() {
       //   //document.getElementById("search-overlay").style.display = "block";
       // }
-      
+      function hide(){
+        document.querySelector(".pic-o").classList.add("hide");
+      }
       function off() {
         // document.getElementById("search-overlay").style.display = "none";
         document.querySelector(".search-o").classList.add("hide");
       }
-
+      function showPicO(){
+        document.querySelector(".pic-o").classList.remove("hide");
+      }
       function search(){
           console.log("Searching...");
           let searchOption = document.getElementById('search-options').value;
@@ -1145,9 +1212,9 @@
 
     <script>
       // Triggering hidden input button for #img
-      document.querySelector('.small-bullet').onclick = () => {
-        document.getElementById("img").click();
-      }
+      // document.querySelector('.small-bullet').onclick = () => {
+      //   document.getElementById("img").click();
+      // }
     </script>
 
     <script>
@@ -1199,11 +1266,15 @@
                 console.log(file);
 
                 console.log(image);
-                const setImage = document.getElementById("set-profile-photo");
+                const setImage = document.getElementById("intial-pic");
+                setImage.src = `${img.prefix}${img.data}`;
                 const username = localStorage.getItem("username");
                 var timestamp;
-                setImage.addEventListener("click", (e) => {
+
+                const setImageBtn = document.getElementById("image-set-btn");
+                setImageBtn.addEventListener("click", (e) => {
                   e.preventDefault();
+                  setImageBtn.replaceWith(setImageBtn.cloneNode(true));
                   var formData = new FormData();
                   formData.append("file", file, "imageFile" + imgExt);
                   formData.append("miniFile", miniFile, "imageFile2" + imgExt);
@@ -1220,7 +1291,7 @@
                       if (ts.includes("Profile picture updated successfully")) {
                           timestamp = ts;
                           console.log(ts);
-                          console.log(timestamp);
+                          //console.log(timestamp);
                           timestamp = timestamp.substring(
                               timestamp.indexOf("$") + 1
                           );

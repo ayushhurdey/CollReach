@@ -18,9 +18,17 @@
 .fixed {
   position: fixed;
 } */
-
+.btn-primary{
+  border: 1px solid #6c67fd;
+  background-color: #6c67fd;
+  color: white;
+}
+.btn-primary:hover{
+  background-color: #5955c7;
+  border: 1px solid #5955c7;
+}
 .small-bullet{
-  font-size: 0.5em;
+  font-size: 0.8em;
   background-color: #6c67fd;
   color: white;
   border-radius: 30%;
@@ -206,6 +214,36 @@ ul.cloud a:hover::before {
   background-color: rgb(238, 238, 238);
   
 }
+.pic-o{
+ 
+  top:4rem;
+  /* margin: auto;
+  width: 45rem ; */
+  border: 1px solid rgb(194, 194, 194);
+  
+  background-color: rgb(179, 179, 179);
+  z-index: 1900;
+  position: fixed;
+}
+/* .intial-pic{
+  margin-left: 15%;
+  width: 70%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+} */
+.intial-pic{
+  width: 28rem;
+}
+
+.pic-o-btn{
+  margin: 1rem;
+}
+.pic-div{
+  width: 400px;
+  height: 400px;
+  overflow: auto;
+}
+
 .search-details{
   
   height: 45px;
@@ -350,7 +388,56 @@ ul.cloud a:hover::before {
 
 /*------Skills cloud ends*/
 
-@media (max-width: 767.5px) {
+
+
+
+
+
+
+@media (max-width: 575.98px) {
+  .pic-o{
+  margin-left:0%;
+  width: 100%;
+  } 
+  .intial-pic{
+    width: 100%;
+  }
+}
+
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+  .pic-o{
+    margin-left:12.5%;
+    width: 75%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) { 
+  .pic-o{
+  margin-left:12.5%;
+  width: 75%;
+  }
+ }
+
+
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+  .pic-o{
+    margin-left:12.5%;
+  width: 75%;
+  }
+ }
+@media (min-width: 1200px) { 
+  .pic-o{
+    margin-left:25%;
+    width: 50%;
+  }
+ }
+
+
+
+
+
+@media (max-width: 767.98px) {
   .search-details div.form-group{
     flex-shrink: 0;
   }
@@ -380,14 +467,6 @@ ul.cloud a:hover::before {
   .nav-item:hover::after{
     width:100%;
   }
-}
-
-@media (min-width: 991px){
-  .search-o{
-    left:25% ;
-  }
-}
-@media (max-width: 767.98px)  { 
   .footer .row{
     width: 100%;
   }
@@ -430,6 +509,20 @@ input,select{
   #profile-content{
     text-align: center
   }
+  /* .pic-o{
+    left: 0px;
+  width: 100%;
+  height: 100%;
+  } */
+}
+
+@media (min-width: 991px){
+  .search-o{
+    left:25% ;
+  }
+}
+@media (max-width: 767.98px)  { 
+  
 }
 /* .container{
   margin: auto;
