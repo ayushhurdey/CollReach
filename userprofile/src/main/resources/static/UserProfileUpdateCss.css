@@ -1,4 +1,154 @@
-* {
+*{
+  box-sizing: border-box;
+}
+.navbar-btn{
+  margin-left: 10px;
+}
+#navv {
+  width: 68rem;
+}
+
+.nav-bar {
+  overflow: hidden;
+
+  top: 0;
+  width: 100%;
+}
+.navbar-expand-md .navbar-nav .nav-link {
+  display: block;
+  padding-right: 2rem;
+}
+
+.navbar-brand {
+  font-size: 2em;
+  font-family: Verdana;
+  font-weight: bold;
+}
+i {
+  font-size: 1.6em;
+}
+#heading {
+  background-color: #6c67fd;
+  color: white;
+  border-radius: 15px;
+  padding: 5px;
+}
+.row{
+  padding-top: 8rem;
+}
+.collreach{
+  order: 1;
+}
+.login-buttons{
+  order: 2;
+}
+.main-area{
+  padding-top: 4rem;
+}
+.normal-box{
+  border-radius: 0rem;
+  border: none;
+  border-bottom: 1px solid rgb(80, 80, 80);
+}
+
+.normal-box:focus
+{
+ 
+ border: none; 
+ border-radius: none; 
+ -webkit-box-shadow: 0 8px 6px -6px #6c67fd;
+ -moz-box-shadow: 0 8px 6px -6px #6c67fd;
+      box-shadow: 0 8px 6px -6px #6c67fd;
+ border-bottom: 1px solid #6c67fd;
+}
+
+
+/* red box shadow for the error  */
+.error-box{
+  border-radius: 0rem;
+  border: none;
+  -webkit-box-shadow: 0 8px 6px -6px #ff0000;
+  -moz-box-shadow: 0 8px 6px -6px #fd0000;
+   box-shadow: 0 8px 6px -6px #ff0000;
+  border-bottom: 1px solid #ff0000;
+
+}
+
+.btn-secondary{
+  background-color:  #6f6aff;
+}
+.user-profile-photo-icon{
+  width: 2.5rem;
+}
+.nav-item:first-child{
+  margin-top: .5rem;
+}
+.img-md{
+  width: 4rem;
+}
+.font-big{
+  font-size: 1.4em;
+}
+.header{
+  border-bottom: 3px solid gray;
+
+}
+.input-field{
+  margin-right: 4rem;
+}
+.updation-area{
+  margin-top: 1rem;
+}
+
+label{
+  font-size: 1.1em;
+}
+.update-btn{
+  margin-top: 2.2rem;
+}
+.main-area{
+  margin-top: 2rem;
+}
+.pass{
+  margin-right: 8.9rem;
+}
+
+.main-area .container{
+  /* box-shadow: 0px 0px 10px #6f6aff; */
+  margin-bottom: 3rem;
+}
+.header{
+  padding-top: 1rem !important;
+}
+
+
+
+
+@media (max-width: 767.98px) { 
+  .updation-area{
+    flex-direction: column !important;
+  }
+  .input-field{
+    margin-right: 0rem;
+  }
+  .update-btn{
+    margin-top: 0rem;
+  }
+  .main-area{
+    margin-top: 8.2rem;
+  }
+  
+ }
+
+
+
+
+
+
+
+
+
+/* * {
   box-sizing: border-box;
   font-family: trebuchet ms;
 }
@@ -166,4 +316,4 @@ form p:last-child {
     margin-right: 2%;
   }
 }
-
+ */

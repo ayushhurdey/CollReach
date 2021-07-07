@@ -78,15 +78,14 @@ i {
 .pic{
   padding-top: 3rem;
 }
-.login-area{
-  padding-top: 3rem;
-}
+
 .main-area{
   padding-top: 4rem;
 }
-.login-form-area{
-  
-  border: 1px solid gray;
+.signup-form-area{
+  margin-top: 3rem;
+ 
+  box-shadow: 0px 0px 10px #6c67fd;
 }
 .form-control{
   border-radius: 0rem;
@@ -105,15 +104,56 @@ i {
  border-bottom: 1px solid #6c67fd;
 }
 .profile-icon{
-  margin-left: 40%;
-  width:20%;
+  text-align: center;
+  font-size: 1.2em;
 
-  border-radius: 50px;
 
+}
+.confirmation-msg div:first-child{
+  font-size: .9em;
+  color: green;
+}
+.confirmation-msg div:last-child{
+  padding-bottom: .4rem;
 }
 .form-check{
   margin-left: 1.2rem;
 }
+
+.hide{
+  display: none !important;
+}
+/* .back-arrow{
+  margin-left: -1.2rem;
+  margin-top: -.3rem;
+} */
+.back-arrow button{
+  padding: 0px;
+}
+.back-arrow button:active{
+  box-shadow: none !important;
+}
+.btn-primary:active{
+  background-color: #6f6aff;
+}
+::-webkit-input-placeholder  { /* Chrome/Opera/Safari */
+  font-size: 0.8em !important;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  font-size: 0.8em !important;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  font-size: 0.8em !important;
+}
+:-moz-placeholder { /* Firefox 18- */
+  font-size: 0.8em !important ;
+}
+
+
+
+
+
+
 @media (max-width: 767.98px){
   #navv{
     flex-direction: column !important;
@@ -141,8 +181,81 @@ i {
   .main-area{
     padding-top: 3rem;
   }
+  .signup-form-area{
+    margin-top: 5rem;
+    
+
+  }
 }
-/* body {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* * {
+  box-sizing: border-box;
+  font-family: trebuchet ms, Arial, helvetica;
+}
+body {
   background-color: #dacaca;
 } */
 
@@ -150,27 +263,33 @@ i {
 /* h2 {
   font-family: Goudy Stout;
   text-align: center;
+
   text-shadow: 0 0 3px #1dadca;
   border-radius: 0px;
-
-} */
-/* #signin{
-  font-size: 1.5em;
-  margin-left: 3%;
 }
-.col-lg-12{
-  margin-bottom: 10px; 
+#signup{
+  font-size: 1.9em;
+  font-weight: bold;
+ 
+  margin-bottom: 1%;
+  
 } */
+
+/*collreach logo */
+/*img {
+  position: relative;
+  width: 10%;
+  float: left;
+}*/
 
 /* Registration heading*/
 /*#heading {
   margin: 10px;
+  border-radius: 30px;
   border-left: 10px solid #0077ff;
   border-right: 10px solid #0077ff;
   padding: 10px;
   text-shadow: 0 0 3px #1dadca;
-  border-radius: 30px;
-  font-size: 2.5em;
 }
 */
 /*Main Form */
@@ -189,7 +308,7 @@ i {
 
 /*All the labes of form (eg Name email...) */
 /* label {
-  font-size: 1em;
+  font-size: 1.2em;
 } */
 
 /* All the inputs of form*/
@@ -197,19 +316,13 @@ i {
   font-weight: 1.4em;
 } */
 
-/* #remember-me-label {
-  margin-left: 25px;
-} */
-
 /* Form main div for styling*/
 /* .row {
- 
-  margin-top: 30px;
-  margin: auto;
-  width: 360px;
+  margin: 30px;
+  margin-right:8.5%; 
+  margin-left:8.5%;
   background: rgba(255, 255, 255);
   align-content: center;
-  font-size: 1.6em;
   padding: 10px;
   overflow: auto;
   background-color: #ffffff;
@@ -217,6 +330,7 @@ i {
   box-shadow: 0px 0px 10px 10px #838383;
   border-left: 10px solid #0077ff;
 } */
+
 /*Icon styling */
 /* .glyphicon {
   position: relative;
@@ -240,6 +354,7 @@ i {
 /* Label of every .row div*/
 /* .row label {
   position: relative;
+
   font-weight: bold;
   color: #000000;
   opacity: none;
@@ -253,77 +368,38 @@ i {
 /*Submit button styling */
 /* #submit-button {
   border: 0px;
-  margin: 5px;
-  width: 100%;
-  font-size: 1em;
+  width: 100px;
+  float: right;
+  font-size: 1.3em;
   font-weight: bold;
   height: 40px;
   border-radius: 60px;
-  padding: 3px;
-}
-#clear
-{
-  width: 100%;
-  margin: auto;
-}
-#clear-button{
-  border: 0px;
-  margin:auto;
-  float: right;
-  width:15%;
-  font-size: 0.8em;
-  height: 30px;
-  border-radius: 60px;
-  padding: 3px;
-
-}
-.btn-primary {
   background-color: #0077ff;
 } */
-/* make submit button green when hover over it*/
-
-
+/*hovering*/
 /* #submit-button:hover {
   padding: 0px;
-  font-size: 1.2em;
-}
-#clear-button:hover{
-  background-color: red;
-}
-p a {
-  padding: 5px;
-  background-color: #32ceb9;
-  color: white;
-  border-radius: 30px;
-  text-decoration: none;
-
-}
-p a:hover {
-  text-decoration: none;
-  color: white;
-  background-color: #2bd5a2;
-}
-
-p a:hover:after {
-  content: " take you to home page";
+  font-size: 1.6em;
+  background-color: #77e161;
 }
 
 #msg {
+  text-align: center;
+
   color: red;
-  font-size: 0.9em;
 } */
 
 /*media queries for responsiveness */
 /*1st */
-/* @media (max-width: 720px) and (min-width: 0px) {
+/* @media (max-width: 360px) and (min-width: 0px) {
   .row {
     border-left: 10px solid #0077ff;
     padding: 3px;
-
+    margin-right: 14px;
+    margin-left: 14px;
   }
   form {
     margin-right: 0px;
     margin-left: 0px;
   }
 } */
-/*2nd */

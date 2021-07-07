@@ -323,6 +323,7 @@
                     <div  class="btn btn-primary small-bullet" id='edit-btn'>
                       Edit
                   </div>
+                  <span id="ok-done"></span>
                    
                 
         
@@ -608,7 +609,7 @@
   <div class="d-flex flex-column justify-content-center">
     <div class="d-flex flex-row w-100">
       <div class="flex-grow-1" style="color: red;">*Try to upload only square images</span></div>
-      <div class="" id="pic-overlay-close" style=""><i class="fa fa-times"></i></div>
+      <div class="" id="pic-overlay-close"><i class="fa fa-times"></i></div>
     </div>
     <div class='p-2' style="height: 30em;overflow: auto;">
       <div class='d-flex justify-content-center'>
@@ -628,7 +629,7 @@
        
       </div>
       <div>
-        <button type="button" class="btn btn-primary pic-o-btn">Set image</button>
+        <button type="button" class="btn btn-primary pic-o-btn" id = "image-set-btn">Set image</button>
       </div>
       
     </div>
@@ -1265,11 +1266,15 @@
                 console.log(file);
 
                 console.log(image);
-                const setImage = document.getElementById("set-profile-photo");
+                const setImage = document.getElementById("intial-pic");
+                setImage.src = `${img.prefix}${img.data}`;
                 const username = localStorage.getItem("username");
                 var timestamp;
-                setImage.addEventListener("click", (e) => {
+
+                const setImageBtn = document.getElementById("image-set-btn");
+                setImageBtn.addEventListener("click", (e) => {
                   e.preventDefault();
+                  setImageBtn.replaceWith(setImageBtn.cloneNode(true));
                   var formData = new FormData();
                   formData.append("file", file, "imageFile" + imgExt);
                   formData.append("miniFile", miniFile, "imageFile2" + imgExt);
@@ -1286,7 +1291,7 @@
                       if (ts.includes("Profile picture updated successfully")) {
                           timestamp = ts;
                           console.log(ts);
-                          console.log(timestamp);
+                          //console.log(timestamp);
                           timestamp = timestamp.substring(
                               timestamp.indexOf("$") + 1
                           );
