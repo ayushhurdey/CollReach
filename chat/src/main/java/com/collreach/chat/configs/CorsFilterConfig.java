@@ -1,5 +1,4 @@
-package com.collreach.posts.configs;
-
+package com.collreach.chat.configs;
 
 
 import org.springframework.beans.factory.annotation.Value;

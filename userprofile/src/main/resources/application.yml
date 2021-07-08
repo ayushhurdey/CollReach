@@ -63,3 +63,6 @@ posts:
 
 chat:
   url: http://chat-app/user/add-user
+
+frontend:
+  url: http://localhost:8081
