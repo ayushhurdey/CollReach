@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  
+
+    <title> Sign Up </title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="script/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+     
+    <script type="application/javascript" src="./scripts/compress.js"></script>
+    <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
+    <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
+    
+    <link rel="icon" href="static/CollReach.PNG" type="image/x-icon">
+    <link rel="icon" href="static/profileimage.webp" type="image/x-icon">
+    <link rel="stylesheet" href="style/Signup.css">
+    <link rel="icon" href="static/CollReach.PNG" type="image/x-icon">
+    
+</head>
+
+<body>
+    <script type="text/javascript">
+    function validation() {
+            var name = document.reg.name.value;
+            var libid = document.reg.libid.value;
+            var pass = document.reg.pass.value;
+            var confirm = document.reg.confirm.value;
+            var email = document.reg.email.value;
+            var oemail = document.reg.oemail.value;
+            var phone = document.reg.phone.value;
+            var course = document.reg.course.value;
+            var branch = document.reg.branch.value;
+            var year = document.reg.year.value;
+            var sem = document.reg.sem.value;
+            letters = /^[A-Za-z ]+$/;
+            libidv = /^[0-9]{4}[a-z]{2}[0-9]{4}$/;
+            if (name == "") {
+                alert("Name field required");
+                return false;
+            }
+            if (letters.test(name) == false) {
+                alert("name is invalid");
+                return false;
+            }
+            if (libid == "") {
+                alert("library id field required");
+                return false;
+            }
+            if (libidv.test(libid) == false) {
+                alert("library id is invalid");
+                return false;
+            }
+            if (email == "") {
+                alert("email field required");
+                return false;
+            }
+            if (/^[a-z].+[0-9]{4}[a-z]{2}[0-9]{4}@kiet\.edu$/.test(reg.email.value) != true) {
+                alert("Invalid KIET email");
+                return false;
+            }
+
+            if (document.reg.course.selectedIndex == 0) {
+                document.reg.course.focus();
+                alert("Course field is required");
+                return false;
+            }
+            if (document.reg.branch.selectedIndex == 0) {
+                document.reg.branch.focus();
+                alert("Branch field is required");
+                return false;
+            }
+            if (document.reg.year.selectedIndex == 0) {
+                document.reg.year.focus();
+                alert("Year of study is required");
+                return false;
+            }
+            if (document.reg.sem.selectedIndex == 0) {
+                document.reg.sem.focus();
+                alert("Semester is required");
+                return false;
+            }
+    
+		if (oemail != "") {
+                if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(reg.email.value) != true) {
+                    alert("Personal email is wrong");
+                    return false;
+                }
+            }
+            if (email == oemail) {
+                alert("fill email other than kiet email");
+                return false;
+            }
+            if(phone != ""){
+            	if(/^\d{10}$/.test(reg.phone.value)!= true){
+            		alert("Invalid Phone number");
+            		return false;
+            	}
+            }
+            if (pass.length == 0) {
+                alert("password is required");
+                return false;
+            }
+            if(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(reg.pass.value)!=true){
+            	alert("Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+            	return false;
+            }
+
+            if (confirm.length == 0) {
+                alert("confirm the password");
+                return false;
+            }
+            if (pass != confirm) {
+                alert("Password did not match");
+                return false;
+            }
+            return true;
+        }
+
+        function courseIdMapping() {
+            var course = document.reg.course.value;
+            var branch = document.reg.branch.value;
+            var year = document.reg.year.value;
+            var sem = document.reg.sem.value;
+			if ((course == "B.tech") && (branch == "CSE")  && (sem == "5") && (year == "3"))
+                return 1;
+            else if ((course == "B.tech") && (branch == "ME")  && (sem == "5") && (year == "3"))
+                return 2;
+            else if ((course == "B.tech") && (branch == "EN")  && (sem == "5") && (year == "3"))
+                return 3;
+            else if ((course == "B.tech") && (branch == "ECE")  && (sem == "5") && (year == "3"))
+                return 4;
+            else if ((course == "B.tech") && (branch == "CE")  && (sem == "5") && (year == "3"))
+                return 5;
+            else if ((course == "B.tech") && (branch == "CSI")  && (sem == "5") && (year == "3"))
+                return 6;
+            else if ((course == "B.tech") && (branch == "CO")  && (sem == "5") && (year == "3"))
+                return 7;
+            else if ((course == "B.tech") && (branch == "IT")  && (sem == "5") && (year == "3"))
+                return 8;
+            else if ((course == "B.tech") && (branch == "EIE")  && (sem == "5") && (year == "3"))
+                return 9;
+        }
+
+        function submitForm() {
+            var course = document.reg.course.value;
+            var branch = document.reg.branch.value;
+            var year = document.reg.year.value;
+            var sem = document.reg.sem.value;
+            var oemail = document.reg.oemail.value;
+            var pass = document.reg.pass.value;
+            var email =document.reg.email.value;
+            var name= document.reg.name.value;
+            var phone= document.reg.phone.value;
+            var libid = document.reg.libid.value; 
+            var courseId = courseIdMapping();
+            console.log(course+ " " + branch + " " + year + " " + sem + " "+ courseId + " "+ pass +" "+ name +" "+ libid +" "+ email +" "+ phone);
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:8082/user/signup";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    //var json = JSON.parse(xhr.responseText);
+                    //document.getElementById('out').value = json.output;
+					var responseMsg = xhr.responseText;
+                    console.log(responseMsg);
+					var msg = document.getElementById("msg");
+					msg.innerHTML = "</br>" + (xhr.responseText);
+					if(responseMsg.includes("Error"))
+						msg.style.color = "red";
+					else	
+						msg.style.color = "green";	
+                }
+            };
+            var data = JSON.stringify({
+                "courseId": courseId,
+                "alternateEmail": oemail,
+                "email": email,
+                "name": name,
+                "password": pass,
+                "phoneNo": phone,
+                "userName": libid
+            });
+            xhr.send(data);
+            
+        }
+
+        function check() {
+            if (validation() == true) {
+                submitForm();
+                return true;
+            }
+            else
+                return false;
+        }
+		
+		function validateUserName(){
+			var libid = document.reg.libid.value;
+			libid === "" ? libid = "null" : libid = libid;
+			
+			var xhr = new XMLHttpRequest();
+			var url = "http://localhost:8082/user/check-username";
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					console.log(xhr.responseText);
+					var errorMsg = document.getElementById("usernameValidation");
+					if(xhr.responseText != ""){
+						var libid = document.getElementById("libid");
+						//libid.style.border = "2px solid red";
+						libid.style.transition = "all 0.30s ease-in-out";
+						libid.style.boxShadow = "0px 0px 5px 2px red";
+						//document.getElementById("libid").style.color = "white";
+						errorMsg.style.display = "block";
+						errorMsg.innerHTML = (xhr.responseText);
+						errorMsg.style.color = "red";
+					}
+					else if(libid === "" || xhr.responseText === ""){
+						//document.getElementById("libid").style.background = "white";
+						//document.getElementById("libid").style.color = "black";
+						document.getElementById("libid").style.boxShadow = "0px 0px 5px 2px dodgerblue";
+						errorMsg.style.display = "none";
+					}
+				}
+			};
+			var data = JSON.stringify({
+				"userName": libid
+			});
+			xhr.send(data);
+		}
+		
+		
+		function validateKietemail(){
+			var email = document.reg.email.value;
+			email === "" ? email = "null" : email = email;
+			
+			var xhr = new XMLHttpRequest();
+			var url = "http://localhost:8082/user/check-email";
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					console.log(xhr.responseText);
+					var errorMsg = document.getElementById("emailValidation");
+					if(xhr.responseText != ""){
+						var email = document.getElementById("email");
+						//email.style.border = "2px solid red";
+						email.style.transition = "all 0.30s ease-in-out";
+						email.style.boxShadow = "0px 0px 5px 2px red";
+						//document.getElementById("email").style.color = "white";
+						errorMsg.style.display = "block";
+						errorMsg.innerHTML = (xhr.responseText);
+						errorMsg.style.color = "red";
+					}
+					else if(email === "" || xhr.responseText === ""){
+						//document.getElementById("email").style.background = "white";
+						//document.getElementById("email").style.color = "black";
+						document.getElementById("email").style.boxShadow = "0px 0px 5px 2px dodgerblue";
+						errorMsg.style.display = "none";
+					}
+				}
+			};
+			var data = JSON.stringify({
+				"email": email
+			});
+			xhr.send(data);
+		}
+		function validateAlternateEmail(){
+			var oemail = document.reg.oemail.value;
+			oemail === "" ? oemail = "null" : oemail = oemail;
+			
+			var xhr = new XMLHttpRequest();
+			var url = "http://localhost:8082/user/check-email";
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					console.log(xhr.responseText);
+					var errorMsg = document.getElementById("alternateEmailvalidation");
+					if(xhr.responseText != ""){
+						var oemail = document.getElementById("oemail");
+						//oemail.style.border = "2px solid red";
+						oemail.style.transition = "all 0.30s ease-in-out";
+						oemail.style.boxShadow = "0px 0px 5px 2px red";
+						//document.getElementById("oemail").style.color = "white";
+						errorMsg.style.display = "block";
+						errorMsg.innerHTML = (xhr.responseText);
+						errorMsg.style.color = "red";
+					}
+					else if(oemail === "" || xhr.responseText === ""){
+						//document.getElementById("oemail").style.background = "white";
+						//document.getElementById("oemail").style.color = "black";
+                        document.getElementById("oemail").style.boxShadow = 
+                            "0px 0px 5px 2px dodgerblue";
+						errorMsg.style.display = "none";
+					}
+				}
+			};
+			var data = JSON.stringify({
+				"email": oemail
+			});
+			xhr.send(data);
+		}
+		function validatePhoneNumber(){
+			var phone = document.reg.phone.value;
+			phone === "" ? phone = "null" : phone = phone;
+			
+			var xhr = new XMLHttpRequest();
+			var url = "http://localhost:8082/user/check-phone-no";
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					console.log(xhr.responseText);
+					var errorMsg = document.getElementById("phoneNovalidation");
+					if(xhr.responseText != ""){
+						var phone = document.getElementById("phone");
+						//phone.style.border = "2px solid red";
+						phone.style.transition = "all 0.30s ease-in-out";
+						phone.style.boxShadow = "0px 0px 5px 2px red";
+						//document.getElementById("phone").style.color = "white";
+						errorMsg.style.display = "block";
+						errorMsg.innerHTML = (xhr.responseText);
+						errorMsg.style.color = "red";
+					}
+					else if(phone === "" || xhr.responseText === ""){
+						//document.getElementById("phone").style.background = "white";
+						//document.getElementById("phone").style.color = "black";
+                        document.getElementById("phone").style.boxShadow =
+                             "0px 0px 5px 2px dodgerblue";
+						errorMsg.style.display = "none";
+					}
+				}
+			};
+			var data = JSON.stringify({
+				"phoneNo": phone
+			});
+			xhr.send(data);
+		}
+		
+    </script>
+
+
+<script>
+    function O1ToO2(){
+        $('.overlay1').addClass('hide');
+        $('.overlay2').removeClass('hide');    
+    }
+    function O2ToO3(){
+        $('.overlay2').addClass('hide');
+        $('.overlay3').removeClass('hide');
+    }
+    function O2ToO1(){
+        $('.overlay2').addClass('hide');
+        $('.overlay1').removeClass('hide');
+    }
+    function O3ToO2(){
+        $('.overlay3').addClass('hide');
+        $('.overlay2').removeClass('hide');
+    }
+    // function showhidepass(){
+    //     var password = document.querySelector('#pass');
+    //     type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    //     $('#pass').setAttribute('type', type);
+    //     $('#togglePassword').classList.toggle('fa-eye-slash');
+    //     $('#togglePassword').classList.toggle('fa-eye');
+    // }
+  
+    
+</script>
+<!-- ------------------------------------------------------------------------------------------ -->
+
+<nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
+        
+    <div class="d-flex flex-row container" id="navv">
+        <div class="collreach">
+            <a href="" class="navbar-brand"><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
+        </div>
+        <div class="login-buttons">
+            <div class="d-flex flex-row ml-auto navbar-nav text-center ml-auto">
+                <div class="navbar-btn">
+                    <button class="nav-item btn btn-primary" type="button">
+                        <span>Signup</span>
+                    </button>      
+                </div>
+                <div class="navbar-btn">
+                <button type="button" class="nav-item btn btn-outline-primary" id = "" onclick="window.location.replace(location.host+'/login')">
+                    <span>Login</span>
+                </button>
+                </div>
+            </div>
+        </div> 
+
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+
+<div class="d-flex flex-row main-area container">
+
+    <div class="col-lg-8 col-md-7 pic">
+        <img class="interface-pic" src = "static/undraw_Sign_in_re_o58h.svg" alt="Login pic"/>
+
+    </div>
+    <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12  signup-form-area">
+        <form name=reg action="#" method="post">
+
+        <!-- overlay 1 signup--------------------------------------------------------------------------------------- -->
+        
+        <div class="d-flex flex-column p-2 justify-content-center overlay1 ">
+                
+            
+                <!-- header -->
+                <div class="p-2 ">
+                    
+                    <div class="profile-icon">Signup</div>
+                </div>
+
+            
+                <!-- lib id -->
+                <div class="p-2 form-group">
+                    <label class="required" for="libid">Lib.Id:</label>
+                    <input class="form-control" type="text" id="libid" name="libid" placeholder="Lib Id(1822cs0001)"
+                            onkeyup="validateUserName()" required>
+                   
+                    <p id="usernameValidation" style="display: none;"></p>
+                            
+                </div>
+
+                <!-- name -->
+                <div class="p-2 form-group">
+                    <label class="required" for="name">Name:</label>               
+                    <input class="form-control" type="text" id="name" name="name" placeholder="Name" required>
+                 </div>
+               
+                 <!--  password -->
+                <div class="p-2 form-group">
+                    <label class="required" for="pass">Create Password</label>
+                    <input class="form-control" type="password" id="pass" name="pass"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                        placeholder="Create Password" required>
+                        
+                        
+                </div>
+
+                <!-- Confirm password -->
+                <div class="p-2 form-group">
+                    <label class="required" for="confirm">Confirm Password</label>
+                    <input class="form-control" type="password" id="confirm" name="confirm"
+                        placeholder="Confirm Password" required>
+                </div>
+
+
+                <div class='p-2 d-flex justify-content-end'>
+                    <button type="button" class='btn btn-primary' onclick="O1ToO2()">Next</button>
+                </div>
+
+
+
+
+                
+                <!-- <div class="p-2  form-check">
+                    <input type="checkbox" class="form-check-input" id="remember-me-check" checked>
+                    <label class="form-check-label" for="remember-me-check" 
+                        id = "remember-me-label">Remember Me</label>
+                </div> -->
+                
+                <!-- <div class="p-2">
+                    <div>
+                    <input type="button" id="submit-button" class="btn btn-primary w-100" value="Login" onclick="check()">
+                    </div>
+                 
+
+                </div>-->
+                <div class="p-2 text-center font-small">
+                    Already have Collreach account? <a href="">Signin</a>
+                </div>
+                
+                
+                
+                
+            
+        </div>
+
+        <!-- overlay 2 personal detail------------------------------------------------------------------------------ -->
+        <div class="d-flex flex-column p-2 justify-content-center overlay2 hide">
+            <div class='d-flex flex-row back-arrow'>
+                <div class="p-2">
+                    <button type="button" class="btn" 
+                    data-toggle="tooltip" data-placement="bottom" title="To the Previous Section">
+                    <i class="fas fa-chevron-left" onclick="O2ToO1()"></i>
+                    </button>
+                </div>
+                <!-- header -->
+                <div class="p-2 ">
+                
+                    <div class="profile-icon">Personal Details</div>
+                </div>
+    
+            </div>
+
+        
+            <!-- Email -->
+            <div class="p-2 form-group">
+                <label class="required" for="email">Email:</label>
+                <input class="form-control" type="text" id="email" name="email" size="35"
+                        placeholder="email(abc.1822cs0001@kiet.edu)" onkeyup="validateKietemail()" required>
+             
+
+                
+                <small class="form-text text-muted">
+                    <p>We'll never share your email with anyone else.</p>
+                </small>
+                
+                <p id="emailValidation" style="display: none;"></p>
+                        
+            </div>
+
+            <!-- personal email -->
+            <div class="p-2 form-group">
+                <label for="oemail">Personal Mail</label>
+                
+                    <input class="form-control" type="text" id="oemail" name="oemail" placeholder="Personal email"
+                        onkeyup="validateAlternateEmail()">
+               
+                <p id="alternateEmailvalidation" style="display: none;"></p>
+                <small id="emailHelp" class="form-text text-muted">
+                    We'll never share your email with anyone else.</small>
+             </div>
+           
+             <!-- phone no. -->
+            <div class="p-2 form-group">
+                <label for="phone">PhoneNo.</label>
+                <input class="form-control" type="text" id="phone" name="phone" placeholder="PhoneNo"
+                        onkeyup="validatePhoneNumber()">          
+                <p id="phoneNovalidation" style="display: none;"></p>
+            </div>
+
+         
+
+            <div class='p-2 d-flex justify-content-end'>
+                <button type="button" class='btn btn-primary' onclick="O2ToO3()">Next</button>
+            </div>
+            <div class="p-2 text-center font-small">
+                Already have Collreach account? <a href="">Signin</a>
+            </div>
+        </div>
+
+
+
+        <!-- overlay3 course detail---------------------------------------------------------------------------------- -->
+        <div class="d-flex flex-column p-2 justify-content-center overlay3 hide">
+            <div class='d-flex flex-row back-arrow'>
+                <div class="p-2">
+                    <button type="button" class="btn" 
+                    data-toggle="tooltip" data-placement="bottom" title="To the Previous Section">
+                    <i class="fas fa-chevron-left" onclick="O3ToO2()"></i>
+                    </button>
+                </div>
+                <!-- header -->
+                <div class="p-2 ">
+                
+                    <div class="profile-icon">Course Details</div>
+                </div>
+    
+            </div>
+            
+            
+        
+            <!--Course -->
+            <div class="p-2 form-group">
+                <label class="required" for="course">Course</label>             
+                <select class="form-control" name="course" id="course" required>
+                    <option value="blank">Select course</option>
+                    <option value="B.tech">B.tech</option>
+                    <option value="B.Pharma">B.pharma</option>
+                    <option value="MCA">MCA</option>
+                    <option value="M.tech">M.tech</option>
+                    <option value="MBA">MBA</option>
+                </select>
+              
+            </div>
+
+            <!-- branch -->
+            <div class="p-2 form-group">
+                <label class="required" for="branch">Branch:</label>
+                <select class="form-control" name="branch" id="branch" required>
+                    <option value="blank">Select branch</option>
+                    <option value="CSE">CSE</option>
+                    <option value="CO">CO</option>
+                    <option value="CSI">CSI</option>
+                    <option value="IT">IT</option>
+                    <option value="ECE">ECE</option>
+                    <option value="ME">ME</option>
+                    <option value="EN">EN</option>
+                    <option value="CE">CE</option>
+                    <option value="EIE">EIE</option>
+                    <option value="Other">Other</option>
+                </select>
+                <small class="form-text text-muted">
+                    <p>Leave as it is,if course is other than Btech/Mtech.</p>
+                </small>
+            </div>
+           
+             <!-- Year of study -->
+            <div class="p-2 form-group">
+                <label class="required" for="year">Year</label>
+                
+                <select class="form-control" name="year" id="year" required>
+                    <option value="none">Select year</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            
+            </div>
+            <div class="p-2 form-group">
+                <label class="required" for="sem">Semester</label>
+                <select class="form-control" name="sem" id="sem" required>
+                    <option value="none">Select semester</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+               
+            </div>
+
+            <div class='p-2 d-flex justify-content-end' id="submit">
+                <input type="button" class="btn btn-primary" value="submit" id="submit-button" onclick="check()">
+            </div>
+
+           
+            <div class="p-2 text-center font-small">
+                Already have Collreach account? <a href="">Signin</a>
+            </div>
+        </div>
+    </form>
+    <div class="d-flex h-100 flex-column p-2 justify-content-center overlay4 hide">
+            
+        <!-- header -->
+        <div class="p-2 text-center">
+            <div class="confirmation-msg d-flex flex-row justify-content-center">
+                <div><i class="fas fa-check-circle"></i></div>
+                &nbsp;
+                <div>Signed Up Successfull</div>
+            </div>
+        </div>
+        <div class="p-2 text-center">
+            <button class="btn btn-primary" type="button">Log In</button>
+        </div>
+
+    
+    </div>
+
+    </div>
+        
+    
+
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Main contianer class-->
+<!-- <div class="container-fluid"> -->
+    <!-- form begin here -->
+    <!-- <form name="reg" method="post" action="#"> -->
+        <!-- parent of all div-->
+        <!-- <div class="row"> -->
+
+            <!-- signup heading -->
+            <!-- <div class="col-lg-12" id="signup">Sign Up</div> -->
+            <!--Email--------------------------------------------------------------------------- -->
+            <!-- Bootstrap grinding-->
+            <!-- <div class="col-lg-4 col-md-6">
+
+                
+                <label class="required" for="email">Email:</label>
+
+                
+                <div class="input-group">
+                   
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+
+                  
+                    <input class="form-control" type="text" id="email" name="email" size="35"
+                        placeholder="email(abc.1822cs0001@kiet.edu)" onkeyup="validateKietemail()" required>
+                </div>
+
+                
+                <small class="form-text text-muted">
+                    <p>We'll never share your email with anyone else.</p>
+                </small>
+                
+                <p id="emailValidation" style="display: none;"></p>
+            </div> -->
+
+            <!--Name--------------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-4 col-md-6">
+                <label class="required" for="name">Name:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                    <input class="form-control" type="text" id="name" name="name" placeholder="NAME" required>
+                </div>
+            </div> -->
+
+            <!--LIB iD--------------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-4 col-md-6">
+                <label class="required" for="libid">Lib.Id:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input class="form-control" type="text" id="libid" name="libid" placeholder="LIB ID(1822cs0001)"
+                        onkeyup="validateUserName()" required>
+                </div>
+                <p id="usernameValidation" style="display: none;"></p>
+            </div> -->
+
+
+            <!--Course--------------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-4 col-md-6">
+                <label class="required" for="course">Course:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
+                    <select class="form-control" name="course" id="course" required>
+                        <option value="blank">Select course</option>
+                        <option value="B.tech">B.tech</option>
+                        <option value="B.Pharma">B.pharma</option>
+                        <option value="MCA">MCA</option>
+                        <option value="M.tech">M.tech</option>
+                        <option value="MBA">MBA</option>
+                    </select>
+                </div>
+            </div> -->
+
+            <!--Branch--------------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-4 col-md-6">
+                <label class="required" for="branch">Branch:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
+                    <select class="form-control" name="branch" id="branch" required>
+                        <option value="blank">Select branch</option>
+                        <option value="CSE">CSE</option>
+                        <option value="CO">CO</option>
+                        <option value="CSI">CSI</option>
+                        <option value="IT">IT</option>
+                        <option value="ECE">ECE</option>
+                        <option value="ME">ME</option>
+                        <option value="EN">EN</option>
+                        <option value="CE">CE</option>
+                        <option value="EIE">EIE</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <small class="form-text text-muted">
+                    <p>Leave as it is,if course is other than Btech/Mtech.</p>
+                </small>
+            </div> -->
+
+            <!--Year--------------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-4 col-md-6">
+                <label class="required" for="year">Year of study:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
+                    <select class="form-control" name="year" id="year" required>
+                        <option value="none">Select year</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+            </div> -->
+
+            <!--Semester--------------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-4 col-md-6">
+                <label class="required" for="sem">Semester:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
+                    <select class="form-control" name="sem" id="sem" required>
+                        <option value="none">Select semester</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+            </div> -->
+
+            <!--Phone no.--------------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-4 col-md-6">
+                <label for="phone">PhoneNo.</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                    <input class="form-control" type="text" id="phone" name="phone" placeholder="PhoneNo"
+                        onkeyup="validatePhoneNumber()">
+                </div>
+                <p id="phoneNovalidation" style="display: none;"></p>
+            </div> -->
+
+            <!--Personal mail----------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-4 col-md-6">
+                <label for="oemail">Personal Mail</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input class="form-control" type="text" id="oemail" name="oemail" placeholder="Personal email"
+                        onkeyup="validateAlternateEmail()">
+                </div>
+                <p id="alternateEmailvalidation" style="display: none;"></p>
+                <small id="emailHelp" class="form-text text-muted">
+                    We'll never share your email with anyone else.</small>
+            </div> -->
+
+
+            <!--Create Password---------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-4 col-md-6">
+                <label class="required" for="pass">Create Password:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input class="form-control" type="password" id="pass" name="pass"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                        placeholder="Create Password" required>
+
+                </div>
+            </div> -->
+
+            <!--Confirm Password-------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-4 col-md-6">
+                <label class="required" for="confirm">Confirm Password:</label>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-ok"></i></span>
+                    <input class="form-control" type="password" id="confirm" name="confirm"
+                        placeholder="Confirm Password" required>
+                </div>
+            </div> -->
+
+            <!--submit button----------------------------------------------------------------------- -->
+            <!-- <div class="col-lg-12" id="submit">
+                <input type="button" class="btn btn-primary" value="submit" id="submit-button" onclick="check()">
+            </div> -->
+            <!----------------------------------------------------------------------------- -->
+            <!-- <p id="msg"></p> -->
+            <!-- .row end here -->
+        <!-- </div> -->
+        <!--form ends here -->
+    <!-- </form> -->
+
+    <!-- Main .container ends here-->
+<!-- </div> -->
+
+</body>
+</html>

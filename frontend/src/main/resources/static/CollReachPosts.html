@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CollReachPosts</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
+
+    <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="script/css/bootstrap.min.css" />
+    
+    
+  
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script defer type="application/javascript" src="./scripts/compress.js"></script>
+    <script defer type="application/javascript" src="./scripts/compressUtil.js"></script>
+    <script src ="scripts/CollreachPosts.js"></script>
+    <script defer src = "scripts/CollreachChat.js"></script>
+    <script src = "scripts/Search.js"></script>
+    <link rel="stylesheet" href="style/collReachPost.css" />
+    <link rel="stylesheet" href="style/UserProfileCss.css" />
+
+    <script>
+        function closeBtn(elem){
+            elem.parentElement.setAttribute('hidden',"");
+        }
+
+        document.addEventListener("DOMContentLoaded", () =>{
+            renderNotification("Welcome to CollReach Posts.");
+        })
+
+    </script>
+
+</head>
+<body onload="load()">  
+<!-- <body> -->
+        <!-----Notifier------>
+    <div class = "notifier" hidden>
+        <span class="closebtn" onclick = "closeBtn(this);">&times;</span> 
+        <p id = "notifier-msg"></p>
+    </div>
+
+        <!--CollReach Header-->
+    <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
+        
+        <div class="container" id="navv">
+
+            <a href="" class="navbar-brand"><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#list">
+                <span class="navbar-toggler-icon"></span></button>
+
+            <div class="collapse navbar-collapse" id="list">
+
+            <ul class="navbar-nav text-center ml-auto">
+                <li class="nav-item">
+                    <a href="/posts" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <p id="info">Home</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/posts" class="nav-link">
+                        <i class="fab fa-instagram"></i>
+                        <p id="info">Instagram</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-code"></i>
+                        <p id="info">CodeGanak</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/profile" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        <p id="info">Profile</p>
+                    </a>
+                </li>
+                <li class="navbar-btn">
+                    <button class="nav-item btn btn-outline-primary" type="button" id="search-btn" onclick="searchstudent()">
+                        Search
+                    </button>
+  
+                    <datalist id = "skills-list"></datalist>
+                    
+                </li>
+            </ul>
+            </div> 
+
+        </div>
+    </nav>
+
+        <!--CollReach Profile-->
+        
+    <div class="container" id="feeds-section">
+        <div class="row">
+                <div class="col-md-3 side-profile-area" id = "user-profile-details-container">    
+                </div>
+
+                        <!--POSTS-->
+                <div class="col-md-7 post-area"> 
+                    <div class="profile-feed" id = "posts-container"> 
+                        <div id="outer-post-box-announcement">
+                            <div class=" profile-feed-item">
+                                <div>
+                                    <span>
+                                        <img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle"  id="announcement-pic">
+                                    </span>
+                                    <span>
+                                        <button type="button" id="a-btn" class="btn btn-outline-primary" onclick="postOverlay()">New Announcement</button>
+                                    </span>
+                                </div>
+                                
+                            </div>
+                        </div>   
+                        <div id = "posts-loading-anim" style = "display:none;"></div>
+
+                        <form class="form-group ">
+                            <div class="" id="post-type-option">
+                                
+                                <div class="d-flex flex-row" id="sort-options ">
+                                    <div class="col-xl-8 col-lg-7 col-md-5 col-sm-5 col-xs-1"><hr class="flex-grow-1 mr2 mvA "></div>
+                                    
+                                    <div class="col-xl-4 col-lg-5 col-md-7 col-sm-7 col-xs-11 float-right">
+                                        <div class="float-right">
+                                            <span class="t-12 t-black--light t-normal small-text">
+                                                Sort by:
+                                            </span>
+
+                                            <span class=" t-12 t-black--light t-normal small-text" id="sortby-label">
+                                                Regular Feeds
+                                                
+                                            </span>
+                                            <span class="">
+                                                    <select class = "col-md-8 custom-select select-sort-options" id="sort-label" onchange="render(this)">
+                                                        <option value = "regular" selected>Regular Feed</option>
+                                                        <option value = "today">Today's Feed</option>
+                                                    </select>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <div class = "posts-feed-container">
+                            <!------------- profile feed --------------->
+                        </div>
+                             
+                   
+                    </div> 
+                </div>
+                
+                <!-- Side panel-->
+                <div class="col-md-2 my-post">
+                    <div class="border rounded">
+                        <div class="p-1">
+                            <button class = "btn btn-outline-primary my-posts-btn w-100 smm">My Posts</button>
+                        </div>
+                        <div class="my-posts-items smm" style="height: 9rem;">
+
+                        </div>
+                        <div class="p-1 mx-auto text-center smm">
+                            <span style="color:#6C67FD">Coll</span><span id="heading">Reach</span>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+
+
+    <!-- footer message btn -->
+    <div class="chat-btn navbar-light bg-light">
+        <div class="d-flex flex-row-reverse pr-5">
+            <div class="shadow-sm p-1 mb-3 bg-white rounded">
+                <buttton class="btn  border-0 message-btn" type=button onclick="message()"><i class="fas fa-comments "></i></buttton>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <!-- Message Contact Overlay -->
+
+        <div class=" message p-0 width float-right shadow col-lg-6 bg-white float-right  hide " id="chat">
+            <div class="d-flex flex-column flex-shrink-2 border  bg-white contact-box">
+
+                
+                <!-- contact header -->
+                <div class="p-2">
+                    <div class="p-2 contact-header">
+                        <div class=" d-flex flex-row">
+                            <div class="p-1 flex-shrink-1 m ">
+                                <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle message-contact-profile-photo"></a>
+                            </div>
+                            <div class="p-1 flex-grow-1 m" style="margin:9px;">
+                                <div class="float-left " style="font-size: 1.1em;">
+                                    Contacts    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- contact list -->
+                <div class="p-2 flex-grow-1 shadow overflow-auto  ">
+                    <div class="d-flex flex-column contacts-list ">
+
+                        <!-- 
+                        // contact 1
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        // SOME MORE SAMPLE CONTACTS
+                        // contact 2
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        // contact 3
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        // contact 4
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        // contact 5
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        // contact 6
+                        <div class="p-2 rounded individual-chat">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 flex-shrink-1 m">
+                                    <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
+                                    
+                                </div >
+                                <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
+                                    <div class="p-1 flex-grow-1 m chat-person " >
+                                        <div class="d-flex flex-column ">
+                                            <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                                kriti Kharbanda
+                                             </div>
+                                             <div class=" p-0 text-left small-text">
+                                                 hey are you comming tonight for fun?
+                                             </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div> -->
+
+                    </div>
+                </div>      
+              </div>
+        </div>
+    
+
+
+
+
+
+
+
+    <!-- chat window overlay -->
+    <!-- <div class=" chat p-0 w-xl-25 w-lg-25  w-md-50 w-sm-75 w-xs-75 float-right shadow col-lg-6 bg-white float-right  " id="chat"> -->
+    <div class=" m-0 chat p-0 width float-right shadow col-lg-6 bg-white float-right hide chat-window-container" id="chat" data-contacting-username = "">
+        <div class="d-flex flex-column flex-shrink-2 border  bg-white contact-box">
+
+            
+            <!-- contact header -->
+            <div class="p-0">
+                <div class="p-2 contact-header">
+                    <div class=" d-flex flex-row">
+                        <div class="p-1 flex-shrink-1 m ">
+                            <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle current-contact-profile-photo" ></a>
+                        </div>
+                        <div class="p-1 flex-grow-1 m">
+                            <div class="float-left chat-header ">
+                                Contact Name    
+                            </div>
+                            
+                            <div class="p-1 m mr-auto float-right">
+                                <button class="cross-button " onclick="chatwindowclose()"><i class="fas fa-times" ></i></button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!--chatting window -->
+            <div class=" p-2 flex-grow-1 shadow overflow-auto">
+                <div class="conversation d-flex flex-column w-100 h-100 overflow-auto chat-window" data-contact-username="">
+
+                   
+                 
+                    <!-- <div class='p-2 sended '>
+                        <div class="message-width ml-auto">
+                            <div class="d-flex flex-row">
+                                 // have extra class named order rest same as received
+                                <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class='p-2 received '>
+                        <div class="message-width mr-auto">
+                            <div class="d-flex flex-row">
+                                // no order class
+                                <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+                     <div class='p-2 received '>
+                        <div class="message-width mr-auto">
+                            <div class="d-flex flex-row">
+                                // no order class
+                                <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class='p-2 sended '>
+                        <div class="message-width ml-auto">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class='p-2 received '>
+                        <div class="message-width mr-auto">
+                            <div class="d-flex flex-row">
+                                // no order class
+                                <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+
+                    <div class='p-2 sended '>
+                        <div class="message-width ml-auto">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class='p-2 sended '>
+                        <div class="message-width ml-auto">
+                            <div class="d-flex flex-row">
+                                <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
+                                <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
+                            </div>   
+                        </div>
+                    </div> -->
+                    
+                </div>
+            </div>
+
+            <div class="p-2 flex-shrink-2" style="height: 4rem;">
+                <div class="p-0 contact-header">
+                    <div class=" d-flex flex-row">
+                        <div class="p-1 flex-grow-1 m">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control chat-input-box" placeholder="Type here" >
+                                    <div class="input-group-append chat-send-btn">
+                                      <button class="btn send-btn "> <i class="fas fa-paper-plane small"></i></button>
+                                    </div>
+                                  </div>
+                        </div>
+                        <!-- <div class="p-1  m " style="margin: 5px;">
+                            <button class="send rounded">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                            
+                        </div> -->
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+    <!--POST OVERLAY-->
+    <div class="container-overlays" id="post-overlay" style="display: none;">
+        <div class="overlay-row">
+            <div class="control-section">
+                    <div class="c-s-heading">
+                            Create post
+                    </div>
+                    <div  id="button">
+                        <button class="btn btn-outline-primary cross-button" id="" onclick="exit()" >
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+            </div>
+            <div id="post-inner-box" >
+
+                <div class="form-group overlay-detail">
+                    <div class="overlay-header">
+                                <img src="static/profileimage1-ConvertImage.ico" data-profile-img="" class="img-sm rounded-circle">
+                                <span id="name" data-profile-name=""></span>
+                    </div>
+                    <div class="restriction">
+                        <div class="restriction-item" >
+                            <select class="form-control" name="viewrestriction"  id="post-view-restriction" >
+                                <option value="" disabled selected hidden>VIEW RESTRICTION</option>
+                                <option value="department">Department</option>
+                                <option value="college">College</option>
+                            </select>
+                            </div>
+
+                        <div class="restriction-item">
+                            <select class="form-control" name="validity"  id="post-validity">
+                                <option value="" disabled selected hidden>VALIDITY PERIOD</option>
+                                <option value="1">1 week</option>
+                                <option value="2">2 weeks</option>
+                                <option value="3">3 weeks</option>
+                                <option value="4">4 weeks</option>
+                            </select>
+                        </div>
+                        <div class="restriction-item">
+                            <select class="form-control" name="frequency"  value="frequency" id = "post-frequency">
+                                <option value="" disabled selected hidden>FREQUENCY</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>     
+                    </div>
+
+                    <div>
+                        <textarea class="form-control" placeholder="Type your message here.."  id="post-textarea"></textarea>
+                        <div>
+                            <small class="float-right">Max 150 words</small>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="upload-img" id="add-img-label">
+                                <i class="far fa-images"></i>
+                        </label>&nbsp;Add image
+                        <input  type="file"  id="upload-img" name="filename" accept="image/png, image/jpeg"  hidden />    <!--onchange="readURL(this);"-->
+                        <div id="preview-box"  style="display: none;">
+                            <img id="upload-img-preview" src="#" alt="your image" />    <!--CAN BE INPUT IMAGE-->
+                        </div>
+
+                    </div>
+                    <div>
+                        <button class="post-button btn btn-primary float-right " type="button" id="post-posting-btn" onclick="createPost(this)">POST</button>
+                    </div>
+                    <div>
+
+                        <div style="clear: right;">
+                            <small>OR CREATE POLL</small>
+                        </div>
+                        <div>
+                            <button class="btn btn-info" type="button" onclick="pollOverlay()">Create Poll&nbsp;<i class="fas fa-poll"></i></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+
+          <!--POLL OVERLAY-->
+    <div class="container-overlays" id="poll-overlay" style="display: none;">
+        <div class="overlay-row">
+            <div id="pollOverlay" >
+
+                <div  class="control-section">
+                    <div >
+                        <button class="btn btn-outline-primary" id="back-button" onclick="back()">
+                            <i class="fas fa-chevron-left" ></i></button>
+                    </div>
+                    <div class="c-s-heading">
+                        Create poll
+                    </div>
+                    <div  id="button">
+                        <button class="btn btn-outline-primary cross-button" id="" onclick="exit()">
+                            <i class="fas fa-times" ></i>
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div id="poll-inner-box">
+                    <div class="form-group overlay-detail">
+                        <div class="overlay-header">
+                            <img src="static/profileimage1-ConvertImage.ico" data-profile-img=""  class="img-sm rounded-circle">
+                        <span id="name" data-profile-name=""></span>
+                        </div>
+
+                    <div class="restriction">
+                        <div class="restriction-item" >
+                            <select class="form-control" name="viewrestriction" id="poll-view-restriction" >
+                            <option value="" disabled selected hidden>VIEW RESTRICTION</option>
+                            <option value="department">Department</option>
+                            <option value="college">College</option>
+                        </select>
+                        </div>
+
+                        <div class="restriction-item">
+                            <select class="form-control" name="validity" id="poll-validity">
+                            <option value="" disabled selected hidden>VALIDITY PERIOD</option>
+                            <option value="1">1 week</option>
+                            <option value="2">2 weeks</option>
+                            <option value="3">3 weeks</option>
+                            <option value="4">4 weeks</option>
+                        </select>
+
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="form-label" for="poll-question">Question</label>
+                        <input class="form-control" type="text" name="question" placeholder="Eg: What is your fav colour?" size="40" maxlength="150" id="poll-question" style="margin-bottom: .3rem;" required/>
+                        <div>
+                            <small class="float-right">Max 150 words</small>
+                        </div>
+
+                    </div>
+
+                    <div style="clear: right;">
+                        <label class="form-label" for="overlay-poll-options">Options (Max 5)</label>
+                    </div>
+
+                    <div class="poll-options" id="overlay-poll-options" style="clear: right;">
+                        <div class="poll-option">
+                            <input class="form-control" type="text" name="option1" placeholder="Option 1" size="40" maxlength="50" id="op1" required />
+                        </div>
+
+                        <div class="poll-option">
+                            <input class="form-control" type="text" name="option2" placeholder="Option 2" size="40" maxlength="50" id="op2" required/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button 
+                            type="button" 
+                            class="btn float-left" 
+                            id="remove-option-btn" 
+                            onclick="removeOption()" 
+                            style="display:none; "
+                        ><i class="far fa-minus-square"></i>&nbsp;Remove options
+                        </button>
+                    </div>
+
+                    <div>
+                        <button type="button" 
+                                class="btn float-right" 
+                                id="add-option-btn" 
+                                onclick="addOption(this)">
+                                    Add more options&nbsp;<i class="far fa-plus-square"></i>
+                        </button>
+                    </div>
+
+                    <div style="clear: both;">
+                        <button 
+                            class="post-button btn btn-primary float-right " 
+                            type="button" onclick = "createPoll(this);"
+                            id="poll-posting-btn">
+                                POST
+                        </button>
+                    </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <!--SEARCH OVERLAY-->
+        <div class="p-2  search-o w-75 w-lg-50 w-xl-50 .animated .zoomIn shadow  fast overflow-auto hide">
+            <div id="search-overlay ">
+      
+              <div >
+                <!-- <span id = "overlay-close">&#10006;</span> -->
+                <div id = "overlay-close"><i class="fa fa-times"></i></div>
+              </div>
+      
+              
+              <div class="search-details d-flex p-2 flex-row justify-content-center w-75" > 
+                <div class="p-1 flex-grow-1 form-group" id="overlay-content">
+                  
+                  <input type="text" 
+                          id="overlay-search-box" 
+                          list = "skills-list" 
+                          class="form-control text-sm" 
+                          placeholder = "Type skills separated with comma" 
+                  />
+                </div>
+      
+                <div class="p-1 form-group">
+                  <input class="form-control btn btn-primary text-sm btn btn-primary" type="submit" id = "search-request-btn" value = "Search">
+                </div>
+                
+                <div class="p-1 form-group">
+                  <select class="form-control text-sm" id="search-options">
+                    <option value="search-by-name" selected>Search by Name</option>
+                    <option value="search-by-skills">Search By Skills</option>
+                  </select>
+                </div>    
+              </div>
+            
+      
+                <!-- <div id = "search-items">
+                  <div class="skill-item">
+                    Python
+                    <div class = "skill-item-cross" style = ""> &#10005;</div>
+                  </div>
+                </div> -->
+                <script>
+                    function removeskill(elem){
+                      $(elem).parent('div.skill-item').remove();
+                    }
+                </script>
+      
+                <div class="d-flex flex-wrap overflow-auto search-overlay-boxes" id="search-items">
+                </div>
+      
+                <div class="overflow-auto search-overlay-boxes" id = "items-output">
+                  <div style="text-align: center;margin-top: 5px;"><h5><b> Search Result</b></h5></div>
+                  <div id = "search-results-display-area"></div>
+                </div>
+      
+              </div>
+            
+          </div>
+
+
+
+
+
+        <!-- TEMPLATES : not to be directly rendered on page -->
+        <div id = "templates">
+            <div id = "user-profile-template"  class = "hidden">
+                <article>
+                    <div class="profile-row">
+                                <!--"static/profileimage.png"-->
+                                <img src= ${getImageURL} class="img-md rounded-circle" alt="Image not found" id="profile-pic">
+                                <div id="profile-name">${data.userPersonalInfoResponse.name}</div>
+
+                            <div>
+                                <div id="profile-content">
+                                    <div>
+                                        <span id = "user-profile-email">
+                                            <i  class="fas fa-envelope"></i>&nbsp;${data.userPersonalInfoResponse.email}
+                                        </span>
+                                    </div>
+
+                                    <div>
+                                        <span>
+                                            <i class="fas fa-user"></i>&nbsp;${data.userPersonalInfoResponse.profileAccessKey}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-outline-primary" id="edit-profile-btn">Edit Profile</button>
+                            <div id="course-info-title">
+                                        Course Info
+                            </div>
+
+                            <div class="py-4"> 
+                                <div>${data.userPersonalInfoResponse.courseInfoResponse.courseName}</div>
+                                <div>${data.userPersonalInfoResponse.courseInfoResponse.branch}</div>
+                                <div>${data.userPersonalInfoResponse.courseInfoResponse.semester}</div>
+                            </div>
+                    </div>
+                </article>
+            </div>
+                
+
+
+            <div id = "post-with-image-template" class = "hidden">
+                <article>
+                    <div class="outer-post-box-with-image" data-m-id = ${data.messageId} data-seen= "false">
+                        <div class="post-header">
+                                    <!--"static/profileimage1-ConvertImage.ico"-->
+                                    <img src=${data.profilePhoto} class="img-sm rounded-circle" loading="lazy">
+                                    <span class = "name">${data.name}</span>
+                        </div>
+                        <div class="d-flex align-items-start profile-feed-item">
+                            
+                        
+                            <div class="p-2">
+                                <div class="content">
+                                    <div class="caption">
+                                        <!--Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.-->
+                                        ${data.message}
+                                    </div>
+                                    <div class="post-image">
+                                        <!--"static/postDemo.png"-->
+                                        <img src=${data.image} class="post-img">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between reach">
+                                    <div class="date-time-info">
+                                        <small class="post-date">${data.beautifiedDate}</small>
+                                        <small style= "color:gray;">●</small>
+                                        <small class="post-time">${data.beautifiedTime}</small>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between reach">
+                                    <div class="star">
+                                        <span class="icon">
+                                            <i data-m-id=${data.messageId} data-liked="false" class="rotate-on-hover fa fa-star-o" onclick="like(this)"></i>
+                                            <!--svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-m-id=${data.messageId} data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
+                                                <path d="M19.46 11l-3.91-3.91a7 7 0 01-1.69-2.74l-.49-1.47A2.76 2.76 0 0010.76 1 2.75 2.75 0 008 3.74v1.12a9.19 9.19 0 00.46 2.85L8.89 9H4.12A2.12 2.12 0 002 11.12a2.16 2.16 0 00.92 1.76A2.11 2.11 0 002 14.62a2.14 2.14 0 001.28 2 2 2 0 00-.28 1 2.12 2.12 0 002 2.12v.14A2.12 2.12 0 007.12 22h7.49a8.08 8.08 0 003.58-.84l.31-.16H21V11zM19 19h-1l-.73.37a6.14 6.14 0 01-2.69.63H7.72a1 1 0 01-1-.72l-.25-.87-.85-.41A1 1 0 015 17l.17-1-.76-.74A1 1 0 014.27 14l.66-1.09-.73-1.1a.49.49 0 01.08-.7.48.48 0 01.34-.11h7.05l-1.31-3.92A7 7 0 0110 4.86V3.75a.77.77 0 01.75-.75.75.75 0 01.71.51L12 5a9 9 0 002.13 3.5l4.5 4.5H19z"></path>
+                                            </svg-->
+                                        </span>
+                                        <span class="likes count" data-m-id=${data.messageId}>
+                                            <!--668-->${data.likes}
+                                        </span>
+                                    </div>
+
+
+                                    <div class="eye">
+                                        <span class="count" data-m-id=${data.messageId}>${data.views}</span>
+                                        &nbsp;
+                                        <span class="icon"> <i class="fas fa-eye"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+
+
+            <div id = "post-without-image-template" class = "hidden">
+                <article>
+                    <div class="outer-post-box-without-image" data-m-id = ${data.messageId} data-seen= "false">
+                        <div class="post-header">
+                                    <img src=${data.profilePhoto}  class="img-sm rounded-circle" loading="lazy">
+                                    <span class="name">${data.name}</span>
+                        </div>
+
+                        <div class="d-flex align-items-start profile-feed-item" >
+                        
+                            <div class="p-2">
+                                
+                                <div class="content">
+                                    <div class="caption"> 
+                                    ${data.message}
+                                    <!--Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.-->
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between reach">
+                                    <div class="date-time-info">
+                                        <small class="post-date">${data.beautifiedDate}</small>
+                                        <small style= "color:gray;">●</small>
+                                        <small class="post-time">${data.beautifiedTime}</small>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between reach">
+                                    <div class="star">
+                                        <span class="icon">
+                                            <i data-m-id = ${data.messageId} data-liked="false" class="rotate-on-hover fa fa-star-o" onclick="like(this)"></i>
+                                        </span>
+                                        <span class="likes count" data-m-id=${data.messageId}>
+                                            ${data.likes}
+                                        </span>
+                                    </div>
+
+                                    <div class="eye">
+                                        <span class="count" data-m-id=${data.messageId}>${data.views}</span>
+                                        &nbsp;
+                                        <span class="icon"> <i class="fas fa-eye"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+
+
+            <div id = "poll-question-template" class = "hidden">
+                <article>
+                    <div class="outer-poll-box-question" data-p-id = ${data.pollId}>
+                        <div class="post-header">
+                                    <img src=${data.profilePhoto} class="img-sm rounded-circle" loading="lazy">
+                                    <span class="name">${data.name}</span>
+                        </div>
+
+                        <div class="d-flex align-items-start profile-feed-item">
+                            <div class="p-2">
+                                <div class="content">
+                                    <div class="caption">
+                                        <!--Whom do you support?-->
+                                        ${data.question}
+                                    </div>
+                                    <div class="poll-choices">
+                                        <!--div><input type="button" value=${data.answers[0].answer} class="btn btn-outline-primary"></div>
+                                        <div><input type="button" value=${data.answers[1].answer} class="btn btn-outline-primary" ></div>
+                                        <div><input type="button" value=${data.answers[1].answer} class="btn btn-outline-primary"></div>
+                                        <div><input type="button" value=${data.answers[0].answer} class="btn btn-outline-primary"></div-->
+                                        ${data.options}
+                                    </div>
+                                    <div class="poll-info">
+                                        <small>${data.daysLeft}</small>
+                                        <small data-p-id = ${data.pollId}>${data.totalPollVotes} votes</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between reach">
+                                    <div class="date-time-info">
+                                        <small class="post-date">${data.beautifiedDate}</small>
+                                        <small style= "color:gray;">●</small>
+                                        <small class="post-time">${data.beautifiedTime}</small>
+                                    </div>
+                                </div>
+                                <!--div class="d-flex justify-content-between" class="reach">
+                                    <div class="star">
+                                        <span class="icon">
+                                        <i  class="fa fa-star-o" onclick="like(this)"></i>
+                                        </span>
+                                        <span class="likes count">
+                                            668
+                                        </span>
+                                    </div>
+
+
+                                    <div class="eye">
+                                        <span class="count">2.3K</span>
+                                        &nbsp;
+                                        <span class="icon"> <i class="fas fa-eye"></i></span>
+                                    </div>
+                                </div-->
+                                
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+
+            <!--SEARCH OUTPUT DISPLAY TEMPLATES-->
+            <template id = "skill-search-bullet-template">
+                <div class="skill-item">
+                  <span class = "skill-item-name">{skillName}</span>
+                  <div class = "skill-item-cross" onclick='removeskill(this)'> &#10005;</div>
+                </div>
+            </template>
+          
+          
+            <template id = "search-output-display">
+                <div class="name-list">
+                <div class="search-name">
+                    ${name}
+                </div>
+                <div class="search-profile">
+                    
+                    <!-- SKILLS LIST -->
+                    <div class="d-flex flex-row flex-wrap skill-box">
+                    ${skillsList}
+                    </div>
+        
+                    <div class="search-profile-message">
+                    <button type="button" class="btn btn-primary search-profile-message-button" 
+                            onclick = "addEventToMessages(this)" 
+                            data-contact-username=${username}
+                            data-contact-name = ${name}>Message</button>
+                    </div>
+                    
+                    <a href = ${profileUrl}>Visit Profile</a>
+                </div>
+                </div>
+            </template>
+        
+        
+            <template id = "skills-list-output-display">
+            <div class="search-profile-skill d-flex">
+                <div class="skill-name">${skill}</div>
+                <div class="upskill-votes">${skillUpvotes}</div>
+            </div>
+            </template>
+
+
+
+
+            <!--CHAT TEMPLATES-->
+
+            <template id = "chat-contacts-template">
+                <div class="p-2 rounded individual-chat">
+                    <div class="d-flex flex-row">
+                        <div class="p-1 flex-shrink-1 m">
+                            <!-- "static/profileimage1-ConvertImage.ico" -->
+                            <a href=""><img src=${profilePic}  class="img-sm rounded-circle" ></a>
+                            
+                        </div >
+                        <button class="w-100 bg-white border-0 ss " style = "outline: none;" data-contact-username = ${username} onclick="chatwindow(this)">
+                            <div class="p-1 flex-grow-1 m chat-person ">
+                                <div class="d-flex flex-column ">
+                                    <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                                        ${contactName}
+                                    </div>
+                                    <div class=" p-0 text-left small-text">
+                                        ${lastMessage}
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <template id = "sent-message">
+                <div class="p-2 sended ">
+                    <div class="message-width ml-auto">
+                        <div class="d-flex flex-row">
+                            <!-- have extra class named order rest same as received-->
+                            <div class="p-1 order-2"><a href=""><img src=${profilePic} class="conversation-side-profile rounded-circle" ></a></div>
+                            <div class="p-1 flex-grow-1 order-1">
+                                <div>${message}</div>
+
+                                <div class = "date-time-display">
+                                    <small style = "font-size: 0.6em;" class = "message-date">${date}</small>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+            </template>
+
+            <template id = "received-message">
+                <div class='p-2 received '>
+                    <div class="message-width mr-auto">
+                        <div class="d-flex flex-row">
+                            <!-- no order class -->
+                            <div class="p-1 "><a href=""><img src=${profilePic}  class="conversation-side-profile rounded-circle" ></a></div>
+                            <div class="p-1 flex-grow-1 ">
+                                <div>${message}</div>
+
+                                <div class = "date-time-display">
+                                    <small style = "font-size: 0.6em;" class = "message-date">${date}</small>
+                                </div>
+                            </div>
+                            
+                        </div>   
+                    </div>
+                </div>
+            </template>
+
+
+            <!--div id = "poll-answers-template" class = "hidden">
+                <article>
+                    <div class="outer-poll-box-answers">
+                        <div class="post-header">
+                                    <img src=${data.profilePhoto}  class="img-sm rounded-circle" loading="lazy">
+                                    <span class="name">${data.name}</span>
+                        </div>
+                        
+                        <div class="d-flex align-items-start profile-feed-item">
+                            <div class="p-2">
+                                <div class="content">
+                                    <div class="caption">
+                                        Whom do you support?<br>
+                                    </div>
+
+                                    <div class="poll-progress">
+                                        <h3 class="progress-title">Option 1 - 60%</h3>
+                                            <div class="progress red">
+                                                <div class="progress-bar" style="width:60%; background:#ef5b5b;"></div>
+                                            </div>
+                                        <h3 class="progress-title">Option 2 - 35%</h3>
+                                            <div class="progress yellow">
+                                                <div class="progress-bar" style="width:35%; background:#ffc116;"></div>
+                                            </div>
+                                        <h3 class="progress-title">Option 3 - 50%</h3>
+                                            <div class="progress blue">
+                                                <div class="progress-bar" style="width:50%; background:#20a39e;"></div>
+                                            </div>
+                                        <h3 class="progress-title">Option 4 - 40%</h3>
+                                            <div class="progress green">
+                                                <div class="progress-bar" style="width:40%; background:#7cb518;"></div>
+                                            </div>
+                                    </div>
+
+                                    <div class="poll-info">
+                                        <small>5 days left</small>
+                                        <small>1.5k votes</small>
+                                    </div>
+                                </div>
+                                <#--div class="d-flex justify-content-between" class="reach">
+                                    <div class="star">
+                                        <span class="icon">
+                                        <i  class="fa fa-star-o" onclick="like(this)"></i>
+                                        </span>
+                                        <span class="likes count">
+                                            668
+                                        </span>
+                                    </div>
+
+
+                                    <div class="eye">
+                                        <span class="count">2.3K</span>
+                                        &nbsp;
+                                        <span class="icon"> <i class="fas fa-eye"></i></span>
+                                    </div>
+                                </div -#->
+
+                        
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div-->
+        </div>
+
+
+
+        <div id = "loading-anim-template" class = "hidden">
+            <div class="loader">
+                <div class="duo duo1">
+                <div class="dot dot-a"></div>
+                <div class="dot dot-b"></div>
+                </div>
+                <div class="duo duo2">
+                <div class="dot dot-a"></div>
+                <div class="dot dot-b"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script src="scripts/webSocket.js"></script>
+
+        </body>
+</html>
