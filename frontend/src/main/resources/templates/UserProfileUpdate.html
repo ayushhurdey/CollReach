@@ -474,25 +474,56 @@
             //node.appendChild(textnode);
             var skills = document.getElementById("skillset");
             if (!arr.includes(text)) {
-                var skill = document.createElement("span");
+                var skill = document.createElement("div");
+                skill.setAttribute("class", "skill-item");
                 var textnode = document.createTextNode(text);
+                var cross = document.createElement('div');
                 skill.appendChild(textnode);
-                skill.style.margin = "10px";
-                skill.style.padding = "5px";
-                skill.style.paddingLeft = "15px";
-                skill.style.paddingRight = "15px";
-                skill.style.backgroundColor = "purple";
-                skill.style.color = "white";
-                skill.style.borderRadius = "60px";
+                cross.setAttribute("class", "skill-item-cross");
+                cross.setAttribute('onclick','removeskill(this)');
+                cross.setAttribute('data-skill-name', text);
+                cross.innerHTML = "   &#10005;";
+                skill.appendChild(cross);
+                // skill.style.margin = "10px";
+                // skill.style.padding = "5px";
+                // skill.style.paddingLeft = "15px";
+                // skill.style.paddingRight = "15px";
+                // skill.style.backgroundColor = "purple";
+                // skill.style.color = "white";
+                // skill.style.borderRadius = "60px";
                 skill.style.display = "block";
                 skills.appendChild(skill);
 
                 //document.getElementById("myList").appendChild(node);
                 arr.push(text);
                 console.log(arr);
+
+                // var newDiv = document.createElement('div'); 
+                // var cross = document.createElement('div');
+                // newDiv.setAttribute("class", "skill-item");
+                // cross.setAttribute("class", "skill-item-cross");
+                // cross.setAttribute('onclick','removeskill(this)');
+                // cross.innerHTML = "   &#10005;";
+                // newDiv.innerHTML = value;
+                // newDiv.appendChild(cross);
+                // skills.appendChild(newDiv);
+                // // //document.getElementById("myList").appendChild(node);
+                // arr.push(text);
+                // console.log(arr);
             }
         }
+        function removeskill(elem){
+                console.log(elem);
+                removeItemOnce(elem.dataset.skillName);
+                $(elem).parent('div.skill-item').remove();
+        }
 
+        function removeItemOnce(value) {
+            var index = arr.indexOf(value);
+            if (index > -1) {
+                arr.splice(index, 1);
+            }
+        }
     </script>
 </head>
 <body>
@@ -502,7 +533,13 @@
             <div class="collreach">
                 <a href="" class="navbar-brand"><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
             </div>
-            <div class="login-buttons">
+
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#list">
+                <span class="navbar-toggler-icon"></span></button>
+  
+          
+
+            <div class="collapse navbar-collapse login-buttons" id="list">
 
 
 
@@ -743,21 +780,69 @@
                 <div class="flex-grow-1 input-field">
                     
                     <form name="skillupdate" method="post" action="#">
+                        <div class="form-group">
                         <label for="skill">Skills</label>
 
-                   
+                        
 
                             <!-- Main input area -->
-                            <select class="form-control normal-box" id="skill" name="skill" onchange="addSkill()">
-                                <option value="AI">AI</option>
+                            <select class="form-control normal-box" id="skill" name="skill"  onchange="addSkill()">
+                                <!-- <option value="AI">AI</option>
                                 <option value="Web Development">Web Developement</option>
                                 <option value="ML">ML</option>
                                 <option value="Deep Learning">Deep Learning</option>
-                                <option value="Android">Android</option>
+                                <option value="Android">Android</option> -->
+                                <option value = "" selected>Select Skills</option>
+                                <option value = "java">Java</option>
+                                <option value = "python">Python</option>
+                                <option value = "b">B</option>
+                              
+                                <option value = "c#">C#</option>
+                                <option value = "perl">Perl</option>
+                                <option value = "html">Html</option>
+                                <option value = "css">CSS</option>
+                                <option value = "javascript">JavaScript</option>
+                                <option value = "machine learning">Machine learning</option>
+                                <option value = "deep learning">Deep Learning</option>
+                                <option value = "ai">A.I</option>
+                                <option value = "big data">Big Data</option>
+                                <option value = "hadoop">Hadoop</option>
+                                <option value = "c/c++">C/C++</option>
+                                <option value = "dbms">DBMS</option>
+                                <option value = "database">Database</option>
+                                <option value = "operating system">Operating System</option>
+                                <option value = "spring">Spring</option>
+                                <option value = "spring boot">Spring boot</option>
+                           
+                                <option value = "mysql">MySQL</option>
+                                <option value = "oracle">oracle</option>
+                                <option value = "postgresql">Postgresql</option>
+                                <option value = "sqlite">SQLite</option>
+                                <option value = "data analytics">Data Analytics</option>
+                                <option value = "data mining">Data Mining</option>
+                                <option value = "php">PHP</option>
+                                <option value = "rust">Rust</option>
+                                <option value = "networking">Networking</option>
+                                <option value = "unit testing">Unit Testing</option>
+                                <option value = "seo">SEO</option>
+                                <option value = "photography">Photography</option>
+                                <option value = "web analytics">Web Analytics</option>
+                                <option value = "web automation">Web Automation</option>
+                                <option value = "cms">Cms</option>
+                                <option value = "hr">HR</option>
+                                <option value = "git">GIT</option>
+                                <option value = "ms office">MS Office</option>
+                                <option value = "ms excel"> MS Excel</option>
+                                <option value = "ms powerpoint">MS Power Point</option>
+                                <option value = "intellij">IntelliJ</option>
+                                <option value = "vs code">VS Code</option>
+                                <option value = "docker">Docker</option>
+                                <option value = "microservices">Microservices</option> 
+                               
                             </select>
-
+                        </div>
                         <p id="skill-box">Selected skill will show here..</p>
-                        <div id="skillset"></div>
+                        <div id="skillset" class="d-flex flex-row flex-wrap" ></div>
               
                         <p id="msg5"></p>
                     </form>

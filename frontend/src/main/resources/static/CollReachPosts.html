@@ -59,13 +59,13 @@
 
             <ul class="navbar-nav text-center ml-auto">
                 <li class="nav-item">
-                    <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
+                    <a href="/posts" class="nav-link">
                         <i class="fas fa-home"></i>
                         <p id="info">Home</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
+                    <a href="/posts" class="nav-link">
                         <i class="fab fa-instagram"></i>
                         <p id="info">Instagram</p>
                     </a>
@@ -77,7 +77,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="http://localhost:8082/profile" class="nav-link">
+                    <a href="/profile" class="nav-link">
                         <i class="fas fa-user"></i>
                         <p id="info">Profile</p>
                     </a>
@@ -180,14 +180,14 @@
 
 
     <!-- footer message btn -->
-    <footer class="fixed-bottom navbar-light bg-light">
+    <div class="chat-btn navbar-light bg-light">
         <div class="d-flex flex-row-reverse pr-5">
             <div class="shadow-sm p-1 mb-3 bg-white rounded">
                 <buttton class="btn  border-0 message-btn" type=button onclick="message()"><i class="fas fa-comments "></i></buttton>
             </div>
             
         </div>
-    </footer>
+    </div>
 
 
     <!-- Message Contact Overlay -->
@@ -816,7 +816,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-between" class="reach">
+                                <div class="d-flex justify-content-between reach">
                                     <div class="date-time-info">
                                         <small class="post-date">${data.beautifiedDate}</small>
                                         <small style= "color:gray;">●</small>
@@ -824,7 +824,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-between" class="reach">
+                                <div class="d-flex justify-content-between reach">
                                     <div class="star">
                                         <span class="icon">
                                             <i data-m-id=${data.messageId} data-liked="false" class="rotate-on-hover fa fa-star-o" onclick="like(this)"></i>
@@ -871,7 +871,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-between" class="reach">
+                                <div class="d-flex justify-content-between reach">
                                     <div class="date-time-info">
                                         <small class="post-date">${data.beautifiedDate}</small>
                                         <small style= "color:gray;">●</small>
@@ -879,7 +879,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-between" class="reach">
+                                <div class="d-flex justify-content-between reach">
                                     <div class="star">
                                         <span class="icon">
                                             <i data-m-id = ${data.messageId} data-liked="false" class="rotate-on-hover fa fa-star-o" onclick="like(this)"></i>
@@ -931,7 +931,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="d-flex justify-content-between" class="reach">
+                                <div class="d-flex justify-content-between reach">
                                     <div class="date-time-info">
                                         <small class="post-date">${data.beautifiedDate}</small>
                                         <small style= "color:gray;">●</small>
