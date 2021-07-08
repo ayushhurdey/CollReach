@@ -56,10 +56,10 @@ i {
   padding-top: 8rem;
 }
 .collreach{
-  order: 1;
+  
 }
 .login-buttons{
-  order: 2;
+ 
 }
 #msg{
   
@@ -83,9 +83,12 @@ i {
   padding-top: 4rem;
 }
 .signup-form-area{
-  margin-top: 3rem;
- 
-  box-shadow: 0px 0px 10px #6c67fd;
+  margin-top: 1rem;
+  border: 1px solid gray ;
+  /* box-shadow: 0px 0px 10px #6c67fd; */
+}
+.form-group{
+  margin-bottom: 0px;
 }
 .form-control{
   border-radius: 0rem;
@@ -155,15 +158,17 @@ i {
 
 
 @media (max-width: 767.98px){
-  #navv{
+  /* #navv{
     flex-direction: column !important;
-  }
+  } */
   .collreach{
-    order: 2;
+
   }
   .login-buttons{
-    order: 1;
-    width: 100%;
+ 
+  }
+  .nav-item{
+    font-size: .8em;
   }
   .navbar-nav{
     
@@ -182,9 +187,12 @@ i {
     padding-top: 3rem;
   }
   .signup-form-area{
-    margin-top: 5rem;
+    /* margin-top: 5rem; */
     
 
+  }
+  .navbar-brand{
+    font-size: 1.1em;
   }
 }
 

@@ -350,7 +350,7 @@ ul.cloud a:hover::before {
 
 /*------Skills cloud ends*/
 
-@media (max-width: 767.5px) {
+@media (max-width: 767.98px) {
   .search-details div.form-group{
     flex-shrink: 0;
   }
@@ -383,11 +383,11 @@ ul.cloud a:hover::before {
 }
 
 @media (min-width: 991px){
-  .search-o{
+  /* .search-o{
     left:25% ;
-  }
+  } */
 }
-@media (max-width: 767.5px)  { 
+@media (max-width: 767.98px)  { 
   .footer .row{
     width: 100%;
   }
