@@ -115,28 +115,19 @@ i {
   margin-left: 1.2rem;
 }
 @media (max-width: 767.98px){
-  /* #navv{
+  #navv{
     flex-direction: column !important;
-  } */
+  }
   .collreach{
-    /* order: 2; */
+    order: 2;
   }
   .login-buttons{
-    /* order: 1; */
-    
+    order: 1;
+    width: 100%;
   }
   .navbar-nav{
     
     justify-content: end;
-  }
-  .nav-item{
-    font-size: .8em;
-  }
-  .login-area{
-    padding-top: 0rem;
-  }
-  .error-msg{
-    padding-top: 3rem;
   }
   .pic{
     display: none;
@@ -149,9 +140,6 @@ i {
   }
   .main-area{
     padding-top: 3rem;
-  }
-  .navbar-brand{
-    font-size: 1.1em;
   }
 }
 /* body {

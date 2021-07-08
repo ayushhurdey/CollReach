@@ -615,6 +615,7 @@
       <div class='d-flex justify-content-center'>
         <img src="undraw_Login_re_4vu2.svg" alt="img not available" id='intial-pic' class="intial-pic" >
       </div>
+     
     </div>
 
     <div class='p-2 d-flex flex row justify-content-center' style="background-color: rgb(179, 179, 179);">
@@ -623,6 +624,9 @@
           <label for="img" style="margin: 0px;">Change</label>
           <input hidden type="file" class="custom-file-input pic-o-btn" id="img" name="img" accept="image/*" onchange="readURL(this)">
         </button>
+          
+          
+       
       </div>
       <div>
         <button type="button" class="btn btn-primary pic-o-btn" id = "image-set-btn">Set image</button>
@@ -722,14 +726,14 @@
 
 
     <!-- footer message btn -->
-    <div class="chat-btn navbar-light bg-light">
+    <footer class="fixed-bottom navbar-light bg-light">
       <div class="d-flex flex-row-reverse pr-5">
           <div class="shadow-sm p-1 mb-3 bg-white rounded">
               <buttton class="btn  border-0 message-btn" type=button onclick="message()"><i class="fas fa-comments "></i></buttton>
           </div>
           
       </div>
-    </div>
+  </footer>
 
 
     <!-- Message Contact Overlay -->
