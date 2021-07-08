@@ -1,9 +1,7 @@
 * {
   box-sizing: border-box;
 }
-.message,.chat{
-  z-index: 6000;
-}
+
 .btn {
   color: #6c67fd;
   border: 1px solid #6c67fd;
@@ -136,23 +134,23 @@ i {
   line-height: 2;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
-/* #profile-content::-webkit-scrollbar,
+#profile-content::-webkit-scrollbar,
 #post-overlay,
 #poll-overlay,
 .conversation,
  {
   display: none;
-} */
+}
 
 /* Hide scrollbar for IE, Edge and Firefox */
-/* #profile-content,
+#profile-content,
 #post-overlay,
 #poll-overlay,
 .conversation,
  {
-  -ms-overflow-style: none; IE and Edge 
-  scrollbar-width: none; Firefox 
-} */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 #profile-name {
   text-align: center;
   font-size: 1.3em;
@@ -296,12 +294,7 @@ i {
 .my-post{
   padding-top:4.5rem;
 }
-.chat-btn{
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  width: 1rem;
-}
+
 .message-btn{
   color: #09d4f8 ;
 }
@@ -694,7 +687,7 @@ ss:active{
   }
 }
 
-@media (max-width: 1199.98px) and (min-width: 992px) {
+@media (max-width: 1199.5px) and (min-width: 992px) {
   .profile-row {
     width: 13rem;
   }
@@ -707,12 +700,12 @@ ss:active{
   }
 }
 
-@media (max-width: 991.98px) and (min-width: 768px){
+@media (max-width: 991.5px) and (min-width: 768px){
   .smm{
     font-size: .7rem;
   }
 }
-@media (max-width: 991.98px) and (min-width: 768px) {
+@media (max-width: 991.5px) and (min-width: 768px) {
   .profile-row {
     width: 10rem;
   }
@@ -732,8 +725,8 @@ ss:active{
   padding: 0.2em;
 }
 
-/* @media (min-width: 768px) {
-} */
+@media (min-width: 768px) {
+}
 
 @media (min-width: 575px) {
   #info {
@@ -742,7 +735,7 @@ ss:active{
   }
 }
 /*For mobile*/
-@media (max-width: 767.98px) {
+@media (max-width: 767.5px) {
   .side-profile-area {
     display: none;
   }
