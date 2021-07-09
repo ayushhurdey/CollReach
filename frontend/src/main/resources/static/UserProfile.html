@@ -12,6 +12,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> -->
+    <script type="application/javascript" src="./scripts/url.js"></script>
     <link rel="stylesheet" href="style/collReachPost.css" />
     <link rel="stylesheet" href="style/UserProfileCssBeta.css" />
     <link rel="stylesheet" href="style/UserProfileCss.css" />
@@ -22,11 +23,12 @@
    
   <script>
       function login() {
+        //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
         var username = localStorage.getItem("username");
         // if(username == null)
         //   window.location.href = "http://localhost:8082/login";
         var xhr = new XMLHttpRequest();
-        var url = "http://localhost:8082/user/get-user-details/" + username;
+        var url = URL_ORIGIN + ":8082/user/get-user-details/" + username;
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader("Authorization", localStorage.getItem("auth"));
@@ -55,11 +57,11 @@
             document.getElementById("linkedIn").innerHTML =
               userInfo.userPersonalInfoResponse.linkedinLink;
             document.getElementById('general-profile').textContent = 
-              "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey;
+              URL_ORIGIN + ":8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey;
             document.getElementById('general-profile-link')
-                    .setAttribute('href', "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
+                    .setAttribute('href', URL_ORIGIN + ":8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
             document.getElementById('profile-link')
-                    .setAttribute('href', "http://localhost:8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
+                    .setAttribute('href', URL_ORIGIN + ":8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
 
             var skill = userInfo.userPersonalInfoResponse.skills;
             for (let [k, v] of Object.entries(skill)) {
@@ -77,7 +79,7 @@
             }
 
             document.getElementById("profile-photo").src = 
-                "http://localhost:8082/user/get-image?filename=" +
+                URL_ORIGIN + ":8082/user/get-image?filename=" +
                  userInfo.userPersonalInfoResponse.userProfilePhoto;
             localStorage.setItem(
               "profilePhoto",
@@ -167,13 +169,13 @@
 
           <ul class="navbar-nav text-center ml-auto">
               <li class="nav-item">
-                  <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
+                  <a href="/posts" class="nav-link">
                       <i class="fas fa-home"></i>
                       <p id="info">Home</p>
                   </a>
               </li>
               <li class="nav-item">
-                  <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
+                  <a href="/posts" class="nav-link">
                       <i class="fab fa-instagram"></i>
                       <p id="info">Posts</p>
                   </a>
@@ -185,7 +187,7 @@
                   </a>
               </li>
               <li class="nav-item">
-                  <a href="http://localhost:8082/profile" class="nav-link">
+                  <a href="/profile" class="nav-link">
                       <i class="fas fa-user"></i>
                       <p id="info">Profile</p>
                   </a>
@@ -317,7 +319,7 @@
               <div class="sticky-top">
              <!--Static -->
               <div class="pad-top" >
-                <img src="CollReach.PNG" class="img-md rounded-circle" alt="Image not found" id="profile-photo">
+                <img src="static/CollReach.PNG" class="img-md rounded-circle" alt="Image not found" id="profile-photo">
                 
                 
                     <div  class="btn btn-primary small-bullet" id='edit-btn'>
@@ -347,7 +349,7 @@
                
 
                 
-                <button type="button" id="updatebutton" class="btn btn-outline-primary" onclick='window.location.href="http://localhost:8082/profile-update";'>
+                <button type="button" id="updatebutton" class="btn btn-outline-primary" onclick ="window.location.href='/profile-update'">
                   Edit Profile
                 </button>
   
@@ -453,11 +455,11 @@
                       <div class="card">
                         <div class="card-body">
                         <div class="card-title">SKILLS</div>
-
+                        <div class="d-flex justify-content-center">
                           <div class="content">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class=""> <!--col-lg-6 col-md-6 col-sm-6-->
                               <div id="skills">
-                                <ul class="cloud" role="navigation" data-show-value = "true" aria-label="Webdev word cloud">
+                                <ul style="width: 100%;" class="cloud" role="navigation" data-show-value = "true" aria-label="Webdev word cloud">
                                     
                                 </ul>
                               </div>
@@ -467,6 +469,7 @@
                               <div id="skillLevel"></div>
                             </div>
                           </div>
+                        </div>
                         </div>
                       </div>
 <!--                     
@@ -560,28 +563,28 @@
 
  <div class="footer ">
   <div class="row navbar-light bg-light">
-    <div class="col-md-3 col-sm-12">
+    <div class="col-md-3 col-sm-3">
      
        <a href="#">
          <i class="fab fa-facebook"></i>
        </a>
      
     </div>
-    <div class="col-md-3 col-sm-12">
+    <div class="col-md-3 col-sm-3">
      
        <a href="#">
          <i class="fab fa-linkedin"></i>
        </a>
      
     </div>
-    <div class="col-md-3 col-sm-12">
+    <div class="col-md-3 col-sm-3">
      
        <a href="#">
          <i class="fab fa-instagram"></i>
        </a>
     
     </div>
-    <div class="col-md-3 col-sm-12">
+    <div class="col-md-3 col-sm-3">
      
        <a href="#">
          <i class="fab fa-youtube"></i>
@@ -613,7 +616,7 @@
     </div>
     <div class='p-2' style="height: 30em;overflow: auto;">
       <div class='d-flex justify-content-center'>
-        <img src="undraw_Login_re_4vu2.svg" alt="img not available" id='intial-pic' class="intial-pic" >
+        <img src="static/undraw_Login_re_4vu2.svg" alt="img not available" id='intial-pic' class="intial-pic" >
       </div>
     </div>
 
@@ -947,7 +950,7 @@
             localStorage.removeItem('auth');
             localStorage.removeItem('username');
             localStorage.removeItem('profilePhoto');
-            window.location.href = "http://localhost:8082/login";
+            window.location.href = "/login";
         }
       }
     </script>
@@ -961,7 +964,8 @@
 
       let ALL_SKILLS = [];
       let finalSkills = [];
-      fetch("http://localhost:8082/user/get-all-skills", {
+      //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+      fetch(URL_ORIGIN + ":8082/user/get-all-skills", {
                   method: "GET",
                   headers: {
                     Authorization: localStorage.getItem("auth"),
@@ -1070,6 +1074,7 @@
         document.querySelector(".pic-o").classList.remove("hide");
       }
       function search(){
+          //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
           console.log("Searching...");
           let searchOption = document.getElementById('search-options').value;
           let itemsOutput = document.getElementById('search-results-display-area');
@@ -1081,7 +1086,7 @@
             if(searchQuery == "" || searchQuery == null)
               return;
 
-            fetch("http://localhost:8082/user/search-users-by-name", {
+            fetch(URL_ORIGIN + ":8082/user/search-users-by-name", {
                 method: "POST",
                 headers: {
                   'Content-Type': 'application/json',
@@ -1124,7 +1129,7 @@
                       let username = value.username;
                       let profileUrl = "#";
                       if(value.profileAccessKey !== "" && value.profileAccessKey !== null)
-                        profileUrl = "http://localhost:8082/profile/" + value.profileAccessKey;
+                        profileUrl = URL_ORIGIN + ":8082/profile/" + value.profileAccessKey;
 
                       let skillsList = "";
                       itemsOutput.innerHTML += eval('`' + searchOutputTemplate + '`');
@@ -1137,7 +1142,7 @@
             let searchInterval = setInterval(function(){
                 if(finalSkills.length !== 0){
                     console.log("Searching skills....");
-                    fetch("http://localhost:8082/user/get-users-from-skills", {
+                    fetch(URL_ORIGIN + ":8082/user/get-users-from-skills", {
                         method: "POST",
                         headers: {
                           'Content-Type': 'application/json',
@@ -1275,7 +1280,8 @@
                   formData.append("file", file, "imageFile" + imgExt);
                   formData.append("miniFile", miniFile, "imageFile2" + imgExt);
                   formData.append("userName", username);
-                  fetch("http://localhost:8082/user/profile-photo", {
+                  //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+                  fetch(URL_ORIGIN + ":8082/user/profile-photo", {
                     method: "PUT",
                     headers: {
                       Authorization: localStorage.getItem("auth"),
@@ -1293,9 +1299,10 @@
                           );
                           var profilePhoto = localStorage.getItem("profilePhoto");
                           profilePhoto = profilePhoto.substring(0, profilePhoto.lastIndexOf("/") + 1);
+                          //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
                           localStorage.setItem(
                               "profilePhoto",
-                              "http://localhost:8082/user/get-image?filename=" + username + "$" + timestamp
+                              URL_ORIGIN + ":8082/user/get-image?filename=" + username + "$" + timestamp
                           );
                           console.log(
                               "New Image Url: " +

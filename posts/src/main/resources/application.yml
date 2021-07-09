@@ -36,5 +36,11 @@ eureka:
   instance:
     hostname: localhost
 
+posts:
+  url: http://localhost:8084
+
+userprofile:
+  url: http://localhost:8082
+
 frontend:
   url: http://localhost:8081

@@ -154,21 +154,21 @@ ul.cloud a[data-weight="8"] { --size: 7; }
 ul.cloud a[data-weight="9"] { --size: 7; }
 ul.cloud a[data-weight="10"] { --size: 8; }
 ul.cloud a[data-weight="11"] { --size: 8; }
-ul.cloud a[data-weight="12"] { --size: 9; }
-ul.cloud a[data-weight="13"] { --size: 9; }
-ul.cloud a[data-weight="14"] { --size: 10; }
-ul.cloud a[data-weight="15"] { --size: 10; }
-ul.cloud a[data-weight="16"] { --size: 11; }
-ul.cloud a[data-weight="17"] { --size: 11; }
-ul.cloud a[data-weight="18"] { --size: 12; }
-ul.cloud a[data-weight="19"] { --size: 12; }
-ul.cloud a[data-weight="20"] { --size: 13; }
-ul.cloud a[data-weight="21"] { --size: 13; }
-ul.cloud a[data-weight="22"] { --size: 14; }
-ul.cloud a[data-weight="23"] { --size: 14; }
-ul.cloud a[data-weight="24"] { --size: 15; }
-ul.cloud a[data-weight="25"] { --size: 15; }
-ul.cloud a[data-weight="26"] { --size: 16; }
+ul.cloud a[data-weight="12"] { --size: 8; }
+ul.cloud a[data-weight="13"] { --size: 8; }
+ul.cloud a[data-weight="14"] { --size: 8; }
+ul.cloud a[data-weight="15"] { --size: 8; }
+ul.cloud a[data-weight="16"] { --size: 8; }
+ul.cloud a[data-weight="17"] { --size: 8; }
+ul.cloud a[data-weight="18"] { --size: 8; }
+ul.cloud a[data-weight="19"] { --size: 8; }
+ul.cloud a[data-weight="20"] { --size: 8; }
+ul.cloud a[data-weight="21"] { --size: 8; }
+ul.cloud a[data-weight="22"] { --size: 8; }
+ul.cloud a[data-weight="23"] { --size: 9; }
+ul.cloud a[data-weight="24"] { --size: 9; }
+ul.cloud a[data-weight="25"] { --size: 9; }
+ul.cloud a[data-weight="26"] { --size: 9; }
 
 ul[data-show-value] a::after {
   content: " (" attr(data-weight) ")";

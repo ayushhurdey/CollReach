@@ -1,3 +1,10 @@
+/**
+ * {URL_ORIGIN, POSTS_URL, USER_PROFILE_URL, CHAT_URL} from './url.js'
+ * POSTS_URL = URL_ORIGIN + ":8084";
+ * USER_PROFILE_URL = URL_ORIGIN + ":8082";
+ * CHAT_URL = URL_ORIGIN + ":8083";
+*/
+
 'use strict';
 
 var stompClient = null;
@@ -15,8 +22,9 @@ function renderNotification(message) {
 
 
 function connect() {
-    var socket = new SockJS('http://localhost:8084/ws');
-    var chatSocket = new SockJS('http://localhost:8083/ws');
+    const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+    var socket = new SockJS(URL_ORIGIN + ':8084/ws');
+    var chatSocket = new SockJS(URL_ORIGIN + ':8083/ws');
 
     stompClient = Stomp.over(socket);
     chatStompClient = Stomp.over(chatSocket);

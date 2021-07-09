@@ -1,5 +1,11 @@
-const POSTS_URL = "http://localhost:8084";
-const USER_PROFILE_URL = "http://localhost:8082";
+/**
+ * {URL_ORIGIN, POSTS_URL, USER_PROFILE_URL, CHAT_URL} from './url.js'
+ * POSTS_URL = URL_ORIGIN + ":8084";
+ * USER_PROFILE_URL = URL_ORIGIN + ":8082";
+ * CHAT_URL = URL_ORIGIN + ":8083";
+*/
+
+
 let firstLoad = true;
 let globalPageNumber = 0;
 let loadTodaysFeed = false;
@@ -807,11 +813,15 @@ function render(element) {
 }
 
 
-$(document).ready(function(){
-    $('.my-posts-btn').click(function(){
-        window.location.href = POSTS_URL + "/my-post-poll.html";
-    })
-}); 
+// $(document).ready(function(){
+//     $('.my-posts-btn').click(function(){
+//         window.location.href =  '/my-posts';
+//     })
+// }); 
+
+function redirect(){
+    window.location.href = '/my-posts';
+}
 
 /*
 var observer = new MutationObserver(function (mutations) {

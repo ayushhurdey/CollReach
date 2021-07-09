@@ -29,6 +29,8 @@
 
 <body>
     <script type="text/javascript">
+    const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+
     function validation() {
             var name = document.reg.name.value;
             var libid = document.reg.libid.value;
@@ -164,7 +166,7 @@
             var courseId = courseIdMapping();
             console.log(course+ " " + branch + " " + year + " " + sem + " "+ courseId + " "+ pass +" "+ name +" "+ libid +" "+ email +" "+ phone);
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/signup";
+            var url = URL_ORIGIN + ":8082/user/signup";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
@@ -208,7 +210,7 @@
 			libid === "" ? libid = "null" : libid = libid;
 			
 			var xhr = new XMLHttpRequest();
-			var url = "http://localhost:8082/user/check-username";
+			var url = URL_ORIGIN + ":8082/user/check-username";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.onreadystatechange = function() {
@@ -245,7 +247,7 @@
 			email === "" ? email = "null" : email = email;
 			
 			var xhr = new XMLHttpRequest();
-			var url = "http://localhost:8082/user/check-email";
+			var url = URL_ORIGIN + ":8082/user/check-email";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.onreadystatechange = function() {
@@ -280,7 +282,7 @@
 			oemail === "" ? oemail = "null" : oemail = oemail;
 			
 			var xhr = new XMLHttpRequest();
-			var url = "http://localhost:8082/user/check-email";
+			var url = URL_ORIGIN + ":8082/user/check-email";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.onreadystatechange = function() {
@@ -316,7 +318,7 @@
 			phone === "" ? phone = "null" : phone = phone;
 			
 			var xhr = new XMLHttpRequest();
-			var url = "http://localhost:8082/user/check-phone-no";
+			var url = URL_ORIGIN + ":8082/user/check-phone-no";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.onreadystatechange = function() {
@@ -384,7 +386,7 @@
         
     <div class="d-flex flex-row container" id="navv">
         <div class="collreach">
-            <a href="" class="navbar-brand"><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
+            <a href="#" class="navbar-brand"><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
         </div>
         <div class="login-buttons">
             <div class="d-flex flex-row ml-auto navbar-nav text-center ml-auto">
@@ -394,7 +396,7 @@
                     </button>      
                 </div>
                 <div class="navbar-btn">
-                <button type="button" class="nav-item btn btn-outline-primary" id = "" onclick="window.location.replace(location.host+'/login')">
+                <button type="button" class="nav-item btn btn-outline-primary" id = "" onclick="window.location.replace('/login')">
                     <span>Login</span>
                 </button>
                 </div>
@@ -490,7 +492,7 @@
 
                 </div>-->
                 <div class="p-2 text-center font-small">
-                    Already have Collreach account? <a href="">Signin</a>
+                    Already have Collreach account? <a href="/login">Signin</a>
                 </div>
                 
                 
@@ -559,7 +561,7 @@
                 <button type="button" class='btn btn-primary' onclick="O2ToO3()">Next</button>
             </div>
             <div class="p-2 text-center font-small">
-                Already have Collreach account? <a href="">Signin</a>
+                Already have Collreach account? <a href="/login">Signin</a>
             </div>
         </div>
 
@@ -654,7 +656,7 @@
 
            
             <div class="p-2 text-center font-small">
-                Already have Collreach account? <a href="">Signin</a>
+                Already have Collreach account? <a href="/login">Signin</a>
             </div>
         </div>
     </form>

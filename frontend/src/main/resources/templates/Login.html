@@ -22,6 +22,8 @@
     <link rel="icon" href="static/profileimage.webp" type="image/x-icon">
 </head>
 <script type="text/javascript">
+    const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+
     function loginValidation() {
         libidv = /^[0-9]{4}[a-z]{2}[0-9]{4}$/;
         var pass = document.reg.pass.value;
@@ -51,7 +53,7 @@
         var libid = document.reg.libid.value;
         var pass  = document.reg.pass.value;
         var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/token";
+            var url = URL_ORIGIN + ":8082/token";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
@@ -96,7 +98,7 @@
         console.log("id: " + libid);
 
         var xhr = new XMLHttpRequest();
-        var url = "http://localhost:8082/user/get-user-details/" + 
+        var url = URL_ORIGIN + ":8082/user/get-user-details/" + 
             (localStorage.getItem('username') || sessionStorage.getItem('username'));
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -113,7 +115,7 @@
                 var msg = document.getElementById("msg");
                 msg.innerHTML = "Login Successfull.";
                 msg.style.color = "green";
-                window.location.href = "http://localhost:8082/profile";
+                window.location.href = URL_ORIGIN + ":8081/profile";
                 //msg.style.display = "none";
             }
             else{
@@ -143,7 +145,7 @@
 
 
     function redirectToSignup(){
-        window.location.href = "http://localhost:8082/signup";
+        window.location.href = URL_ORIGIN + ":8081/signup";
     }
 </script>
 
@@ -262,7 +264,7 @@
                             </p> -->
                         </div>
                         <div class="p-2 text-center font-small">
-                            New to Collreach ? <a href="">Signup</a>
+                            New to Collreach ? <a href="/signup">Signup</a>
                         </div>
                         
                         

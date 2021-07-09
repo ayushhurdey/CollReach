@@ -1,5 +1,11 @@
-const CHAT_URL = "http://localhost:8083";
-const USER_PROFILE_URL = "http://localhost:8082";
+/**
+ * {URL_ORIGIN, POSTS_URL, USER_PROFILE_URL, CHAT_URL} from './url.js'
+ * POSTS_URL = URL_ORIGIN + ":8084" : String
+ * USER_PROFILE_URL = URL_ORIGIN + ":8082" : String
+ * CHAT_URL = URL_ORIGIN + ":8083" : String
+*/
+
+
 
 function addContact(contactName, lastMessage, username){
     let chatContactsTemplate = document.querySelector('#chat-contacts-template').innerHTML;
