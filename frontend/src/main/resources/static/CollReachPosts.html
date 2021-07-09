@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="script/css/bootstrap.min.css" />
     
     
-  
+    <script type="application/javascript" src="./scripts/url.js"></script>  <!--Contains URL for services, Priority: top-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -86,9 +86,11 @@
                     <button class="nav-item btn btn-outline-primary" type="button" id="search-btn" onclick="searchstudent()">
                         Search
                     </button>
-  
                     <datalist id = "skills-list"></datalist>
                     
+                </li>
+                <li class="navbar-btn my-post-nav-btn">
+                    <button class = "nav-item btn btn-outline-primary my-posts-btn w-100 smm" onclick="redirect()">My Posts</button>
                 </li>
             </ul>
             </div> 
@@ -164,7 +166,7 @@
                 <div class="col-md-2 my-post">
                     <div class="border rounded">
                         <div class="p-1">
-                            <button class = "btn btn-outline-primary my-posts-btn w-100 smm">My Posts</button>
+                            <button class = "btn btn-outline-primary my-posts-btn w-100 smm" onclick="redirect()">My Posts</button>
                         </div>
                         <div class="my-posts-items smm" style="height: 9rem;">
 

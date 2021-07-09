@@ -16,6 +16,7 @@
 
      
     <script type="application/javascript" src="./scripts/compress.js"></script>
+    <script type="application/javascript" src="./scripts/UserProfileUpdate.js"></script>
     <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
     <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
     
@@ -29,6 +30,8 @@
     
 
     <script type="text/javascript">
+        const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+
         var arr = new Array();
         var userInfo = "";
         // checks password validity
@@ -75,7 +78,7 @@
             personalEmail === "" ? personalEmail = "null" : personalEmail = personalEmail;
 
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/check-email";
+            var url = URL_ORIGIN + ":8082/user/check-email";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
@@ -108,7 +111,7 @@
             phoneNo === "" ? phoneNo = "null" : phoneNo = phoneNo;
 
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/check-phone-no";
+            var url = URL_ORIGIN + ":8082/user/check-phone-no";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
@@ -140,7 +143,7 @@
             linkedIn === "" ? linkedIn = "null" : linkedIn = linkedIn;
 
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/check-linkedin-link";
+            var url = URL_ORIGIN + ":8082/user/check-linkedin-link";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
@@ -171,7 +174,7 @@
         function EmailUpdate() {
             var personalEmail = document.personalEmailUpdate.personalEmail.value;
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/alternate-email";
+            var url = URL_ORIGIN + ":8082/user/alternate-email";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -198,7 +201,7 @@
         function phonenoUpdate() {
             var phoneNo = document.phoneNoUpdate.phoneNo.value;
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/phone-no";
+            var url = URL_ORIGIN + ":8082/user/phone-no";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -225,7 +228,7 @@
         function DescriptionUpdate() {
             var description = document.descriptionUpdate.description.value;
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/description";
+            var url = URL_ORIGIN + ":8082/user/description";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -253,7 +256,7 @@
         function linkedinUpdate() {
             var linkedIn = document.linkedInUpdate.linkedIn.value;
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/linkedin-link";
+            var url = URL_ORIGIN + ":8082/user/linkedin-link";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -312,7 +315,7 @@
         function YearsemUpdate() {
             var courseId;
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/login";
+            var url = URL_ORIGIN + ":8082/user/login";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -333,7 +336,7 @@
                         
                     console.log("courseInfo : " + courseId);
                     var xhr2 = new XMLHttpRequest();
-                    var url = "http://localhost:8082/user/course-id";
+                    var url = URL_ORIGIN + ":8082/user/course-id";
                     xhr2.open("PUT", url, true);
                     xhr2.setRequestHeader("Content-Type", "application/json");
                     xhr2.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -369,7 +372,7 @@
             var newPassword = document.passwordUpdate.newPassword.value;
             var password = document.passwordUpdate.password.value;
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/password";
+            var url = URL_ORIGIN + ":8082/user/password";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -438,7 +441,7 @@
         function skillUpdate() {
             //var skill = skillIdmapping(arr);
             var xhr = new XMLHttpRequest();
-            var url = "http://localhost:8082/user/skills";
+            var url = URL_ORIGIN + ":8082/user/skills";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -545,7 +548,7 @@
 
                 <ul class="navbar-nav text-center ml-auto">
                     <li class="nav-item">
-                        <a href="http://localhost:8084/CollReachPosts.html" class="nav-link">
+                        <a href= "/posts" class="nav-link">
                             <i class="fas fa-home"></i>
                             
                         </a>
@@ -578,12 +581,12 @@
         <div class="d-flex flex-row">
             <div class="p-2">
                 <a href="" >
-                    <img src="static/profileimage.webp" class="img-md rounded-circle " alt="img not found">
+                    <img src="static/profileimage.webp" class="img-md rounded-circle profile-image" alt="img not found">
                 </a>
             </div>
             <div class="p-2 flex-grow-1">
-                <div class='font-big'>
-                    Ayush Kumar
+                <div class = "font-big profile-name">
+                    ----
                 </div>
                 <div class="small-text text-muted">
                     Your Personal Account

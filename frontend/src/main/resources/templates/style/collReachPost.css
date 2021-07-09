@@ -694,7 +694,7 @@ ss:active{
   }
 }
 
-@media (max-width: 1199.98px) and (min-width: 992px) {
+@media (max-width: 1400px) and (min-width: 992px) {
   .profile-row {
     width: 13rem;
   }
@@ -707,7 +707,18 @@ ss:active{
   }
 }
 
-@media (max-width: 991.98px) and (min-width: 768px){
+@media (max-width:767.98px){
+  .my-post{
+    display:none;
+  }
+}
+@media (min-width:768px){
+  .my-post-nav-btn{
+    display:none;
+  }
+}
+
+@media (max-width: 991.98px) and (min-width: 768px) {
   .smm{
     font-size: .7rem;
   }
