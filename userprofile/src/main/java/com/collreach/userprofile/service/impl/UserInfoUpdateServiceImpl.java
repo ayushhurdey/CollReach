@@ -78,7 +78,7 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     public String updateSkills(UserSkillUpdateRequest userSkillUpdateRequest){
         Optional<UserLogin> userLogin = userLoginRepository.findById(userSkillUpdateRequest.getUserName());
         UserLogin user;
-        if(!userLogin.isPresent()){
+        if(!userLogin.isPresent() || userSkillUpdateRequest.getSkills().size() == 0){
             return "Invalid details provided.";
         }
         user = userLogin.get();
@@ -159,26 +159,54 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     public String updatePhoneNo(UserInfoUpdateRequest userInfoUpdateRequest){
         //UserLoginResponse user = userLoginService.login(
         //        userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
-        UserLoginResponse user = userLoginService.getUserDetails(userInfoUpdateRequest.getUserName());
-        if(user != null) {
-            String email = user.getUserPersonalInfoResponse().getEmail();
-            userPersonalInfoRepository.updatePhoneNo(email, userInfoUpdateRequest.getPhoneNo());
-            return "Updated Phone No.";
+        try {
+            UserLoginResponse user = userLoginService.getUserDetails(userInfoUpdateRequest.getUserName());
+            if (user != null && userInfoUpdateRequest.getPhoneNo() == null) {
+                String email = user.getUserPersonalInfoResponse().getEmail();
+                userPersonalInfoRepository.updatePhoneNo(email, userInfoUpdateRequest.getPhoneNo());
+                return "Updated Phone No.";
+            }
+            return "Invalid credentials..";
+        }catch (Exception e) {
+            return "Phone No invalid";
         }
-        return "Invalid credentials..";
     }
 
+//    @Override
+//    public String updateCourseInfo(UserInfoUpdateRequest userInfoUpdateRequest){
+//        //UserLoginResponse user = userLoginService.login(
+//        //        userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
+//        UserLoginResponse user = userLoginService.getUserDetails(userInfoUpdateRequest.getUserName());
+//        if(user != null) {
+//            String email = user.getUserPersonalInfoResponse().getEmail();
+//            CourseInfo courseInfo = courseInfoRepository.findById(userInfoUpdateRequest.getCourseId()).orElse(null);
+//            if(courseInfo != null) {
+//                userPersonalInfoRepository.updateCourseId(email, courseInfo);
+//                return "Updated Course.";
+//            }
+//            return "Course Info invalid.";
+//        }
+//        return "Invalid credentials..";
+//    }
+
     @Override
-    public String updateCourseInfo(UserInfoUpdateRequest userInfoUpdateRequest){
+    public String updateCourseInfo(int currentSemester, String username){
         //UserLoginResponse user = userLoginService.login(
         //        userProfileMapper.userInfoUpdateRequestToUserLoginRequest(userInfoUpdateRequest));
-        UserLoginResponse user = userLoginService.getUserDetails(userInfoUpdateRequest.getUserName());
-        if(user != null) {
-            String email = user.getUserPersonalInfoResponse().getEmail();
-            CourseInfo courseInfo = courseInfoRepository.findById(userInfoUpdateRequest.getCourseId()).orElse(null);
+        Optional<UserLogin> user = userLoginRepository.findByUserName(username);
+
+        if(user.isPresent()) {
+            String email = user.get().getUserPersonalInfo().getEmail();
+            CourseInfo courseInfo = user.get().getUserPersonalInfo().getCourseInfo();
             if(courseInfo != null) {
-                userPersonalInfoRepository.updateCourseId(email, courseInfo);
-                return "Updated Course.";
+                int previousSemester = courseInfo.getSemester();
+                String branch = courseInfo.getBranch();
+                String courseName = courseInfo.getCourseName();
+                if(currentSemester > previousSemester){
+                    Optional<CourseInfo> newCourse = courseInfoRepository.findByBranchAndCourseNameAndSemester(branch, courseName, currentSemester);
+                    newCourse.ifPresent(info -> userPersonalInfoRepository.updateCourseId(email, info));
+                    return "Updated Course.";
+                }
             }
             return "Course Info invalid.";
         }

@@ -59,9 +59,10 @@ public class UserInfoUpdateController {
         return ResponseEntity.ok().body(msg);
     }
 
-    @PutMapping(path = "/course-id")
-    public ResponseEntity<String> updateCourseInfo(@RequestBody UserInfoUpdateRequest userInfoUpdateRequest){
-        String msg = userInfoUpdateService.updateCourseInfo(userInfoUpdateRequest);
+    @PutMapping(path = "/semester")
+    public ResponseEntity<String> updateCourseInfo(@RequestParam Integer semester,
+                                                   @RequestParam String username){
+        String msg = userInfoUpdateService.updateCourseInfo(semester, username);
         return ResponseEntity.ok().body(msg);
     }
 
