@@ -771,11 +771,17 @@
                                         </span>
                                     </div>
 
-                                    <div>
+                                    <!-- <div>
                                         <span>
                                             <i class="fas fa-user"></i>&nbsp;${data.userPersonalInfoResponse.profileAccessKey}
                                         </span>
-                                    </div>
+                                    </div> -->
+                                    <div>
+                                        <span>
+                                          <i class="fas fa-user"></i>&nbsp;
+                                          <a id="profile-link" target="_blank" href=${data.userPersonalInfoResponse.profileAccessKey}>General Profile<span class="redirect"></span></a>
+                                        </span>
+                                      </div>
                                 </div>
                             </div>
 

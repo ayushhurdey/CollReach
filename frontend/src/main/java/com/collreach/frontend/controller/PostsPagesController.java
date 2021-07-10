@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @CrossOrigin(origins = "http://localhost:8081")
 public class PostsPagesController {
 
-    @GetMapping("/posts")
+    @GetMapping({"/posts","/"})
     public String getPosts(){
         return "CollReachPosts";
     }
