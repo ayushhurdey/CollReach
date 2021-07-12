@@ -11,7 +11,7 @@ public interface UserInfoUpdateService {
     public String updateEmail(UserInfoUpdateRequest userInfoUpdateRequest);
     public String updateAlternateEmail(UserInfoUpdateRequest userInfoUpdateRequest);
     public String updatePhoneNo(UserInfoUpdateRequest userInfoUpdateRequest);
-    public String updateCourseInfo(UserInfoUpdateRequest userInfoUpdateRequest);
+    public String updateCourseInfo(int currentSemester, String username);
     public String updatePassword(UserLoginUpdateRequest userLoginUpdateRequest);
     public String updateUserName(UserLoginUpdateRequest userLoginUpdateRequest);
     public String updateSkills(UserSkillUpdateRequest userSkillUpdateRequest);

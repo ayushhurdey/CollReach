@@ -3,7 +3,7 @@ package com.collreach.userprofile.model.response;
 
 public class UserLoginResponse {
     private String userName;
-    private String password;
+//    private String password;
     private UserPersonalInfoResponse userPersonalInfoResponse;
 
     public String getUserName() {
@@ -13,14 +13,14 @@ public class UserLoginResponse {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     public UserPersonalInfoResponse getUserPersonalInfoResponse() {
         return userPersonalInfoResponse;
