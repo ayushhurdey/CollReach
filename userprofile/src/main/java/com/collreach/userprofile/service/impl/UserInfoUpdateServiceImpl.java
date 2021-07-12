@@ -217,11 +217,12 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     public String updatePassword(UserLoginUpdateRequest userLoginUpdateRequest){
         //UserLoginResponse user = userLoginService.login(
         //        userProfileMapper.userLoginUpdateRequestToUserLoginRequest(userLoginUpdateRequest));
-        UserLoginResponse user = userLoginService.getUserDetails(userLoginUpdateRequest.getUserName());
-        if(user != null) {
-            String username = user.getUserName();
+//        UserLoginResponse user = userLoginService.getUserDetails(userLoginUpdateRequest.getUserName());
+        Optional<UserLogin> user = userLoginRepository.findByUserName(userLoginUpdateRequest.getUserName());
+        if(user.isPresent()) {
+            String username = user.get().getUserName();
             String newPassword = userLoginUpdateRequest.getNewPassword();
-            String currentPassword = user.getPassword();
+            String currentPassword = user.get().getPassword();
 
             if(!currentPassword.equals(userLoginUpdateRequest.getPassword()))
                 return "Current password does not match.";

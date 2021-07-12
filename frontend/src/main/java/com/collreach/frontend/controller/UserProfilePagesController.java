@@ -28,6 +28,10 @@ public class UserProfilePagesController {
         return "UserProfileUpdate";
     }
 
-
-    //TODO: Getting general profile from profile access key is left.
+    @GetMapping("/profile/{profileAccessKey}")
+    public String getGeneralProfile(){
+        return "GeneralProfile";
+    }
+    //TODO: Getting general profile from 'profile access key' is left.
+    // As of now it has been done with username instead of 'profile access key'
 }

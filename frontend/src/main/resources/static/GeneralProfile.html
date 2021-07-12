@@ -1,195 +1,868 @@
 <!DOCTYPE html>
+
+
 <html>
   <head>
     <title>Profile</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="http://localhost:8082/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="http://localhost:8082/UserProfileCss.css" />
-    <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
-    <script>
+    <link rel="stylesheet" href="../script/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script type="application/javascript" src="../scripts/url.js"></script>
+    <link rel="stylesheet" href="../style/collReachPost.css" />
+    <link rel="stylesheet" href="../style/UserProfileCssBeta.css" />
+    <link rel="stylesheet" href="../style/UserProfileCss.css" />
+    <script type="application/javascript" src="../scripts/compress.js"></script>
+    <script defer type="application/javascript" src="../scripts/CollreachChat.js"></script>
+    <link rel="icon" href="../static/CollReach.PNG" type="image/x-icon" />
+    <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
+   
+  <script>
       function login() {
-        //var username = localStorage.getItem("username");
+        //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+        // var username = localStorage.getItem("username");
         // if(username == null)
         //   window.location.href = "http://localhost:8082/login";
-        currentUrl = window.location.href;
-        profile_access_key = currentUrl.substr(currentUrl.lastIndexOf('/')+1);
-
+        let pathname = window.location.pathname;
+        let lastSlashIndex = pathname.lastIndexOf('/');
+        const USERNAME = pathname.substr(lastSlashIndex+1, pathname.length);
         var xhr = new XMLHttpRequest();
-        var url = "http://localhost:8082/user/profile/" + profile_access_key;
-        xhr.open("GET", url, true);
+        var url = URL_ORIGIN + ":8082/user/get-user-details/" + USERNAME;
+        xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
-        //xhr.setRequestHeader("Authorization", localStorage.getItem("auth"));
+        xhr.setRequestHeader("Authorization", localStorage.getItem("auth"));
         xhr.onreadystatechange = function () {
           if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(JSON.parse(xhr.responseText));
+            console.log(xhr.responseText);
             var userInfo = JSON.parse(xhr.responseText);
             document.getElementById("name").innerHTML =
-              userInfo.name;
+              userInfo.userPersonalInfoResponse.name;
             document.getElementById("description").innerHTML =
-              userInfo.description;
-            document.getElementById("year").innerHTML =
-              userInfo.courseInfoResponse.yearOfStudy;
+              userInfo.userPersonalInfoResponse.description;
+            //document.getElementById("year").innerHTML =
+            //  userInfo.userPersonalInfoResponse.courseInfoResponse.yearOfStudy;
             document.getElementById("sem").innerHTML =
-              userInfo.courseInfoResponse.semester;
+              userInfo.userPersonalInfoResponse.courseInfoResponse.semester + "th sem";
             document.getElementById("branch").innerHTML =
-              userInfo.courseInfoResponse.branch;
+              userInfo.userPersonalInfoResponse.courseInfoResponse.branch;
             document.getElementById("course").innerHTML =
-              userInfo.courseInfoResponse.courseName;
+              userInfo.userPersonalInfoResponse.courseInfoResponse.courseName;
             document.getElementById("kietEmail").innerHTML =
-              userInfo.email;
+              userInfo.userPersonalInfoResponse.email;
             document.getElementById("personalEmail").innerHTML =
-              userInfo.alternateEmail;
+              userInfo.userPersonalInfoResponse.alternateEmail;
             document.getElementById("phoneNo").innerHTML =
-              userInfo.phoneNo;
+              userInfo.userPersonalInfoResponse.phoneNo;
             document.getElementById("linkedIn").innerHTML =
-              userInfo.linkedinLink;
+              userInfo.userPersonalInfoResponse.linkedinLink;
+            document.querySelector('.connect-btn').dataset.contactUsername = userInfo.userName;
+            document.querySelector('.connect-btn').dataset.contactName = userInfo.userPersonalInfoResponse.name;
 
-            var skill = userInfo.skills;
+            var skill = userInfo.userPersonalInfoResponse.skills;
             for (let [k, v] of Object.entries(skill)) {
               console.log(k, v);
-              document.getElementById("skills").innerHTML +=
-                k.toString() + " :- " + v.toString() + "<br>";
+              let cloud = document.getElementsByClassName('cloud')[0];
+              let li = document.createElement('li');
+              let a = document.createElement('a');
+              a.setAttribute('href','#');
+              a.setAttribute('data-weight', v.toString());
+              a.innerText = k.toString();
+              li.appendChild(a);
+              cloud.appendChild(li);
             }
 
-            localStorage.setItem(
-              "profilePhoto_general",
-              userInfo.userProfilePhoto
-            );
-
             document.getElementById("profile-photo").src = 
-                "http://localhost:8082/user/get-image?filename=" +
-                 userInfo.userProfilePhoto;
-            
-           // localStorage.setItem("username", userInfo.userName);
+                URL_ORIGIN + ":8082/user/get-image?filename=" +
+                 userInfo.userPersonalInfoResponse.userProfilePhoto;
+            localStorage.setItem(
+              "profilePhoto",
+              userInfo.userPersonalInfoResponse.userProfilePhoto
+            );
+            localStorage.setItem("username", userInfo.userName);
+          }
+
+          else if(xhr.readyState === 4 && xhr.status === 404){
+              const notFoundWindow = document.querySelector('.container-window-middle');
+              notFoundWindow.style.justifyContent = "center";
+              notFoundWindow.style.paddingTop = '5em';
+              notFoundWindow.style.color = 'red';
+              notFoundWindow.innerHTML = '<h2> !! Requested User Not found </h2>';
           }
         };
         var data = JSON.stringify({});
         xhr.send(data);
       }
+
+
+      function searchstudent(){
+        document.querySelector(".search-o").classList.toggle('hide');
+      }
+
+      function closeBtn(elem){
+            elem.parentElement.setAttribute('hidden',"");
+      }
+      
+      document.addEventListener("DOMContentLoaded", () =>{
+          renderNotification("Welcome to CollReach.");
+      })
+
+      
     </script>
+
   </head>
 
   <body onload="login()">
-    <section class="shadow p-3 mb-5 bg-white" id="heading">
-      <h2>COLLREACH</h2>
-      <div>--Connect the opportunity</div>
-    </section>
+  <!-- <body> -->
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card" id="main-title">
-            <div id="kietEmail">email</div>
-          </div>
-        </div>
+    <div class = "notifier" hidden>
+      <span class="closebtn" onclick = "closeBtn(this);">&times;</span> 
+      <p id = "notifier-msg"></p>
+  </div>
 
-        <div class="col-lg-8 col-md-7">
-          <div class="card" id="no-border">
-            <div id="name">Update your name</div>
+    <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
+        
+      <div class="container" id="navv">
 
-            <div>
-              <br />
-              <p>About me-</p>
-              <div class="content" id="description"></div>
-            </div>
-          </div>
-        </div>
+          <a href="" class="navbar-brand"><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
+          <button class="navbar-toggler" data-toggle="collapse" data-target="#list">
+              <span class="navbar-toggler-icon"></span></button>
 
-        <div class="col-lg-4 col-md-5">
-          <div class="card" id="no-border">
-            <label for="image"></label>
-            <img
-              src=""
-              id="profile-photo"
-              width="150px"
-              height="150px"
-              style="border-radius: 100px; overflow: hidden"
-              alt="Profile Image"
-            />
+          <div class="collapse navbar-collapse" id="list">
 
-          </div>
-        </div>
+          <ul class="navbar-nav text-center ml-auto">
+              <li class="nav-item">
+                  <a href="/posts" class="nav-link">
+                      <i class="fas fa-home"></i>
+                      <p id="info">Home</p>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="/posts" class="nav-link">
+                      <i class="fab fa-instagram"></i>
+                      <p id="info">Posts</p>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="" class="nav-link">
+                      <i class="fas fa-code"></i>
+                      <p id="info">CodeGanak</p>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="/profile" class="nav-link">
+                      <i class="fas fa-user"></i>
+                      <p id="info">Profile</p>
+                  </a>
+              </li>
+              
+              
+              <li class="navbar-btn">
+                  <button class="nav-item btn btn-outline-primary" type="button" id="search-btn" onclick="searchstudent()">
+                      Search
+                  </button>
 
-        <div class="col-md-12">
-          <div class="card">
-            <h5 class="card-title">SKILLS:VOTES</h5>
+                  <datalist id = "skills-list"></datalist>
+                  
+              </li>
+              <li class="navbar-btn">
+                <button type="button" class="btn btn-outline-danger" id = "logout-btn">
+                  
+                  <i class="fa fa-sign-out"></i>
+                  <span class="logout-header">Logout</span>
+                </button>
+              </li>
+          </ul>
+          </div> 
 
-            <div class="content">
-              <div class="col-lg-6 col-md-6 col-sm-6">
-                <div id="skills"></div>
+      </div>
+  </nav>
+
+
+          
+        </datalist> 
+      </div>
+  </div> -->
+
+  <div class="container main" id="feeds-section">
+    <div class="row container-window-middle">
+
+            <div class="col-md-3"id = "user-profile-details-container"  >   
+              <!-- <div class="col-sm-3 col-4 fixed-top one">  -->
+              <div class="sticky-top">
+             <!--Static -->
+              <div class="pad-top" >
+                <img src="../static/CollReach.PNG" class="img-md rounded-circle" alt="Image not found" id="profile-photo">
+                
+                <div id="name">
+                  <!-- Name of the user here -->
+                </div>
+
+                <div>
+                    <div id="profile-content">
+                        <div>
+                            <span ><i  class="fas fa-envelope"></i>&nbsp; <span id="kietEmail"><!-- Email of the user here--></span></span>
+                        </div>
+                    </div>  
+                </div>
+  
+
+                <div class="card" id="cour">
+                  <div class="card-body">
+                    <div id="card-title font-weight-bold">
+                      Course Info
+                    </div>
+                    <div class="py-4">
+              
+                      <div id = "course"><!--B.Tech--></div>
+                      <div id = "branch"><!--CSE--></div>
+                      <div id = "sem"><!--6--></div>
+                    </div>
+                  </div>
+
+                </div>
+
+                
+              
+                <div>
+                    <button type="button" class="btn btn-primary  connect-btn" 
+                            onclick = "addEventToMessages(this)" 
+                            data-contact-username= ""
+                            data-contact-name = ""
+                            style = "width:100%;">
+                          Message
+                    </button>
+                </div>                       
+                   
+
               </div>
-
-              <div class="col-lg-6 col-md-6 col-sm-6">
-                <div id="skillLevel"></div>
-              </div>
             </div>
-          </div>
-        </div>
-
-        <div class="col-md-12">
-          <div class="card">
-            <div class="title">
-              <h5 class="card-title">COURSE INFO</h5>
             </div>
 
-            <div class="content">
-              <table>
-                <tr>
-                  <td>COURSE</td>
-                  <td><div id="course"></div></td>
-                </tr>
+            <div class="col-md-9 main-content">
+            
+              
+              <div class="profile-feed">
 
-                <tr>
-                  <td>BRANCH</td>
-                  <td><div id="branch"></div></td>
-                </tr>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-title">About me</div>
+                      <div class="content" id="description"></div>
+                    </div>
+                    
+                  </div>
 
-                <tr>
-                  <td>YEAR</td>
-                  <td><div id="year"></div></td>
-                </tr>
+                   
+                      <div class="card">
+                        <div class="card-body">
+                        <div class="card-title">SKILLS</div>
+                        <div class="d-flex justify-content-center">
+                          <div class="content">
+                            <div class=""> <!--col-lg-6 col-md-6 col-sm-6-->
+                              <div id="skills">
+                                <ul style="width: 100%;" class="cloud" role="navigation" data-show-value = "true" aria-label="Webdev word cloud">
+                                    
+                                </ul>
+                              </div>
+                            </div>
 
-                <tr>
-                  <td>SEMESTER</td>
-                  <td><div id="sem"></div></td>
-                </tr>
-              </table>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                              <div id="skillLevel"></div>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+
+
+
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="card-title">CONTACT DETAILS</div>
+
+                          <div class="content">
+                            <table>
+                              <tr>
+                                <td>EMAIL</td>
+                                <td><div id="personalEmail"></div></td>
+                              </tr>
+
+                              <tr>
+                                <td>PHONE </td>
+                                <td><div id="phoneNo"></div></td>
+                              </tr>
+
+                              <tr>
+                                <td>LINKEDIN</td>
+                                <td><div id="linkedIn"></div></td>
+                              </tr>
+
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                   
             </div>
-          </div>
-        </div>
-
-        <div class="col-md-12">
-          <div class="card">
-            <h5 class="card-title">CONTACT DETAILS</h5>
-
-            <div class="content">
-              <table>
-                <tr>
-                  <td>EMAIL</td>
-                  <td><div id="personalEmail"></div></td>
-                </tr>
-
-                <tr>
-                  <td>PHONE NUMBER</td>
-                  <td><div id="phoneNo"></div></td>
-                </tr>
-
-                <tr>
-                  <td>LINKEDIN</td>
-                  <td><div id="linkedIn"></div></td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-12">
          
+          </div>
+  </div>
+</div>
+
+
+
+<!-- FOOTER----------------------------------------------------------------------------------------------------------------------->
+<footer class="page-footer font-small blue pt-4 navbar-light bg-light" >
+
+ <div class="footer ">
+  <div class="row navbar-light bg-light">
+    <div class="col-md-3 col-sm-3">
+     
+       <a href="#">
+         <i class="fab fa-facebook"></i>
+       </a>
+     
+    </div>
+    <div class="col-md-3 col-sm-3">
+     
+       <a href="#">
+         <i class="fab fa-linkedin"></i>
+       </a>
+     
+    </div>
+    <div class="col-md-3 col-sm-3">
+     
+       <a href="#">
+         <i class="fab fa-instagram"></i>
+       </a>
+    
+    </div>
+    <div class="col-md-3 col-sm-3">
+     
+       <a href="#">
+         <i class="fab fa-youtube"></i>
+       </a>
+     
+    </div>
+  </div>
+ </div>
+ 
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">&copy;
+    
+    <a href="#"> CollReach.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+
+
+<!-- SEARCH OVERLAY------------------------------------------------------------------------------------------------------- -->
+    <!-- <div id="search-overlay" style="display: none;"> -->
+    <div class="p-2  search-o w-75 w-lg-50 w-xl-50 .animated .zoomIn shadow  fast overflow-auto hide">
+      <div id="search-overlay ">
+
+        <div >
+          <!-- <span id = "overlay-close">&#10006;</span> -->
+          <div id = "overlay-close"><i class="fa fa-times"></i></div>
         </div>
+
+        
+        <div class="search-details d-flex p-2 flex-row justify-content-center w-75" > 
+          <div class="p-1 flex-grow-1 form-group" id="overlay-content">
+            
+            <input type="text" 
+                    id="overlay-search-box" 
+                    list = "skills-list" 
+                    class="form-control text-sm" 
+                    placeholder = "Type skills separated with comma" 
+            />
+          </div>
+
+          <div class="p-1 form-group">
+            <input class="form-control btn btn-primary text-sm btn btn-primary" type="submit" id = "search-request-btn" value = "Search">
+          </div>
+          
+          <div class="p-1 form-group">
+            <select class="form-control text-sm" id="search-options">
+              <option value="search-by-name" selected>Search by Name</option>
+              <option value="search-by-skills">Search By Skills</option>
+            </select>
+          </div>    
+        </div>
+      
+
+          <script>
+              function removeskill(elem){
+                $(elem).parent('div.skill-item').remove();
+              }
+          </script>
+
+          <div class="d-flex flex-wrap overflow-auto search-overlay-boxes" id="search-items">
+          </div>
+
+          <div class="overflow-auto search-overlay-boxes" id = "items-output">
+            <div style="text-align: center;margin-top: 5px;"><h5><b> Search Result</b></h5></div>
+            <div id = "search-results-display-area"></div>
+          </div>
+
+        </div>
+      
+    </div>
+
+
+    <!-- footer message btn -->
+    <div class="chat-btn navbar-light bg-light">
+      <div class="d-flex flex-row-reverse pr-5">
+          <div class="shadow-sm p-1 mb-3 bg-white rounded">
+              <buttton class="btn  border-0 message-btn" type=button onclick="message()"><i class="fas fa-comments "></i></buttton>
+          </div>
+          
       </div>
     </div>
 
+
+    <!-- Message Contact Overlay -->
+
+    <div class=" message p-0 width float-right shadow col-lg-6 bg-white float-right  hide " id="chat">
+      <div class="d-flex flex-column flex-shrink-2 border  bg-white contact-box">
+
+          
+          <!-- contact header -->
+          <div class="p-2">
+              <div class="p-2 contact-header">
+                  <div class=" d-flex flex-row">
+                      <div class="p-1 flex-shrink-1 m ">
+                          <a href=""><img src="../static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle message-contact-profile-photo"></a>
+                      </div>
+                      <div class="p-1 flex-grow-1 m" style="margin:9px;">
+                          <div class="float-left " style="font-size: 1.1em;">
+                              Contacts    
+                          </div>
+                          
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+
+          <!-- contact list -->
+          <div class="p-2 flex-grow-1 shadow overflow-auto  ">
+              <div class="d-flex flex-column contacts-list ">
+
+
+              </div>
+          </div>      
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+  <!-- chat window overlay -->
+  <!-- <div class=" chat p-0 w-xl-25 w-lg-25  w-md-50 w-sm-75 w-xs-75 float-right shadow col-lg-6 bg-white float-right  " id="chat"> -->
+  <div class=" m-0 chat p-0 width float-right shadow col-lg-6 bg-white float-right hide chat-window-container" id="chat" data-contacting-username = "">
+    <div class="d-flex flex-column flex-shrink-2 border  bg-white contact-box">
+
+        
+        <!-- contact header -->
+        <div class="p-0">
+            <div class="p-2 contact-header">
+                <div class=" d-flex flex-row">
+                    <div class="p-1 flex-shrink-1 m ">
+                        <a href=""><img src="../static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle current-contact-profile-photo" ></a>
+                    </div>
+                    <div class="p-1 flex-grow-1 m">
+                        <div class="float-left chat-header ">
+                            Contact Name    
+                        </div>
+                        
+                        <div class="p-1 m mr-auto float-right">
+                            <button class="cross-button " onclick="chatwindowclose()"><i class="fas fa-times" ></i></button>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!--chatting window -->
+        <div class=" p-2 flex-grow-1 shadow overflow-auto">
+            <div class="conversation d-flex flex-column w-100 h-100 overflow-auto chat-window" data-contact-username="">
+
+              
+          </div>
+      </div>
+
+      <div class="p-2 flex-shrink-2" style="height: 4rem;">
+          <div class="p-0 contact-header">
+              <div class=" d-flex flex-row">
+                  <div class="p-1 flex-grow-1 m">
+                          <div class="input-group mb-3">
+                              <input type="text" class="form-control chat-input-box" placeholder="Type here" >
+                              <div class="input-group-append chat-send-btn">
+                                <button class="btn send-btn "> <i class="fas fa-paper-plane small"></i></button>
+                              </div>
+                            </div>
+                  </div>
+               </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+    <!---------- TEMPLATES ----------->
+
+    <template id = "skill-search-bullet-template">
+      <div class="skill-item">
+        <span class = "skill-item-name">{skillName}</span>
+        <div class = "skill-item-cross" onclick='removeskill(this)'> &#10005;</div>
+      </div>
+    </template>
+
+
+    <template id = "search-output-display">
+        <div class="name-list">
+          <div class="search-name">
+            ${name}
+          </div>
+          <div class="search-profile">
+            
+            <!-- SKILLS LIST -->
+            <div class="d-flex flex-row flex-wrap skill-box">
+              ${skillsList}
+            </div>
+
+            <div class="search-profile-message">
+              <button type="button" class="btn btn-primary search-profile-message-button" 
+                      onclick = "addEventToMessages(this)" 
+                      data-contact-username=${username}
+                      data-contact-name = ${name}>Message</button>
+            </div>
+            
+            <a href = ${profileUrl}>Visit Profile</a>
+          </div>
+        </div>
+    </template>
+
+
+    <template id = "skills-list-output-display">
+      <div class="search-profile-skill d-flex">
+        <div class="skill-name">${skill}</div>
+        <div class="upskill-votes">${skillUpvotes}</div>
+      </div>
+    </template>
+
+
+
+    <!--CHAT TEMPLATES-->
+
+    <template id = "chat-contacts-template">
+      <div class="p-2 rounded individual-chat">
+          <div class="d-flex flex-row">
+              <div class="p-1 flex-shrink-1 m">
+                  <!-- "static/profileimage1-ConvertImage.ico" -->
+                  <a href=""><img src=${profilePic}  class="img-sm rounded-circle" ></a>
+                  
+              </div >
+              <button class="w-100 bg-white border-0 ss " style = "outline: none;" data-contact-username = ${username} onclick="chatwindow(this)">
+                  <div class="p-1 flex-grow-1 m chat-person ">
+                      <div class="d-flex flex-column ">
+                          <div class=" p-0 text-capitalize text-left medium-text contact-name">
+                              ${contactName}
+                          </div>
+                          <div class=" p-0 text-left small-text">
+                              ${lastMessage}
+                          </div>
+                      </div>
+                  </div>
+              </button>
+          </div>
+      </div>
+  </template>
+
+  <template id = "sent-message">
+      <div class="p-2 sended ">
+          <div class="message-width ml-auto">
+              <div class="d-flex flex-row">
+                  <!-- have extra class named order rest same as received-->
+                  <div class="p-1 order-2"><a href=""><img src=${profilePic} class="conversation-side-profile rounded-circle" ></a></div>
+                  <div class="p-1 flex-grow-1 order-1">
+                      <div>${message}</div>
+
+                      <div class = "date-time-display">
+                          <small style = "font-size: 0.6em;" class = "message-date">${date}</small>
+                      </div>
+                  </div>
+              </div>   
+          </div>
+      </div>
+  </template>
+
+  <template id = "received-message">
+      <div class='p-2 received '>
+          <div class="message-width mr-auto">
+              <div class="d-flex flex-row">
+                  <!-- no order class -->
+                  <div class="p-1 "><a href=""><img src=${profilePic}  class="conversation-side-profile rounded-circle" ></a></div>
+                  <div class="p-1 flex-grow-1 ">
+                      <div>${message}</div>
+
+                      <div class = "date-time-display">
+                          <small style = "font-size: 0.6em;" class = "message-date">${date}</small>
+                      </div>
+                  </div>
+                  
+              </div>   
+          </div>
+      </div>
+  </template>
+
+
+
+
+    <script>
+      let logoutButton = document.getElementById("logout-btn");
+      logoutButton.addEventListener("click", logout);
+
+      function logout(){
+        let wantToLogout = confirm("Do you want to logout?");
+        if(wantToLogout){
+            localStorage.removeItem('auth');
+            localStorage.removeItem('username');
+            localStorage.removeItem('profilePhoto');
+            window.location.href = "/login";
+        }
+      }
+    </script>
+
+    <script>
+      let searchBox = document.getElementById("overlay-search-box");
+      //let searchBtn = document.getElementById("search-btn");
+      let searchItems = document.getElementById('search-items');
+
+      //searchBtn.addEventListener("click", search);
+
+      let ALL_SKILLS = [];
+      let finalSkills = [];
+      //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+      fetch(URL_ORIGIN + ":8082/user/get-all-skills", {
+                  method: "GET",
+                  headers: {
+                    Authorization: localStorage.getItem("auth"),
+                  }
+                })
+                  .then((response) => response.text())
+                  .then((ts) => {
+                      let skills = JSON.parse(ts);
+                      console.log("Skills-> " + skills);
+                      skillsList = document.getElementById('skills-list');
+                      for(skillKey in skills){
+                          ALL_SKILLS.push(skillKey.toLowerCase());
+                          var option = document.createElement("OPTION");
+                          option.setAttribute("value", skillKey.toLowerCase());
+                          option.setAttribute("skillId", skills[skillKey]);
+                          var text = document.createTextNode(skillKey.toString());
+                          option.appendChild(text);
+                          skillsList.appendChild(option);
+                      };
+                      
+                      console.log(ALL_SKILLS);
+
+                      searchBox.addEventListener('input', function(){
+                        skills = searchBox.value.trim().split(',');
+                        found = [];
+                        let current;
+                        for(let i = 0; i < ALL_SKILLS.length; i++){
+                          current = skills[skills.length -1].toLowerCase();
+                          console.log(current);
+                          if(current !== "" && ALL_SKILLS[i].toLowerCase().startsWith(current)){
+                            found.push(ALL_SKILLS[i]);
+                          }
+                        }
+
+                        console.log("FOUND: ", found);
+                        console.log(finalSkills.includes(current), " " , ALL_SKILLS.includes(current));
+                        if(!finalSkills.includes(current) && ALL_SKILLS.includes(current)){
+                          finalSkills.push(current);
+                          addSpan(searchItems, current);
+                          if(searchItems.value === "")
+                            searchItems.value = searchItems.value + current;
+                          else
+                            searchItems.value = searchItems.value + ("," + current);
+                          searchBox.value = "";
+                        }
+                        console.log("final skills ", finalSkills);
+                        found = [];
+                      });
+
+                  });
+      
+      function addSpan(div,value){
+        let newDiv = document.createElement('div'); //CHANGE span changes into div
+        let cross = document.createElement('div'); //CHANGE span changes into div
+        newDiv.setAttribute("class", "skill-item");
+        cross.setAttribute("class", "skill-item-cross");
+        cross.setAttribute('onclick','removeskill(this)');
+        cross.innerHTML = "   &#10005;";
+        newDiv.innerHTML = value;
+        newDiv.appendChild(cross);
+        div.appendChild(newDiv);
+        
+        cross.addEventListener('click', function(){
+          this.parentElement.style.display = 'none';
+          let value = this.parentElement.textContent;
+          value = value.slice( -value.length, -2).trim();
+          console.log(value);
+          finalSkills =  finalSkills.filter(item => item !== value);
+          console.log("-> final", finalSkills);
+        });
+      }
+
+      
+    </script>
+
+    <script>
+      /* --------------Search Overlay Effect functions---------*/
+      document.getElementById('overlay-close').addEventListener("click", off);
+      document.getElementById('search-request-btn').addEventListener("click", search);
+  
+      function hide(){
+        document.querySelector(".pic-o").classList.add("hide");
+      }
+      function off() {
+        // document.getElementById("search-overlay").style.display = "none";
+        document.querySelector(".search-o").classList.add("hide");
+      }
+      // function showPicO(){
+      //   document.querySelector(".pic-o").classList.remove("hide");
+      // }
+
+      function search(){
+          console.log("Searching...");
+          let searchOption = document.getElementById('search-options').value;
+          let itemsOutput = document.getElementById('search-results-display-area');
+          let searchQuery = document.getElementById('overlay-search-box').value.trim();
+          let searchOutputTemplate = document.querySelector('#search-output-display').innerHTML;
+          let skillsListOutputTemplate = document.querySelector('#skills-list-output-display').innerHTML;
+
+          if(searchOption.localeCompare("search-by-name") === 0){
+            if(searchQuery == "" || searchQuery == null)
+              return;
+
+            fetch(URL_ORIGIN + ":8082/user/search-users-by-name", {
+                method: "POST",
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: localStorage.getItem("auth"),
+                },
+                body: JSON.stringify({
+                    "users": searchQuery
+                 })
+              })
+                .then((response) => {
+                  console.log(response); 
+                  return response.text()})
+                .then((res) => {
+                    let users = JSON.parse(res).usersByName;
+                    console.log("users-by-name -> " + users);
+                    itemsOutput.innerHTML = "";
+                    
+                    users.forEach(function(value, index, array){
+                      let name = value.name;
+                      let username = value.username;
+                      let profileUrl = "#";
+                      if(value.profileAccessKey !== "" && value.profileAccessKey !== null)
+                        profileUrl = URL_ORIGIN + ":8082/profile/" + value.profileAccessKey;
+
+                      let skillsList = "";
+                      itemsOutput.innerHTML += eval('`' + searchOutputTemplate + '`');
+
+                    });
+                });
+          }
+          else{
+            let start = Date.now();
+            let searchInterval = setInterval(function(){
+                if(finalSkills.length !== 0){
+                    console.log("Searching skills....");
+                    fetch(URL_ORIGIN + ":8082/user/get-users-from-skills", {
+                        method: "POST",
+                        headers: {
+                          'Content-Type': 'application/json',
+                          Authorization: localStorage.getItem("auth"),
+                        },
+                        body: JSON.stringify({
+                            "skills": finalSkills
+                        })
+                      })
+                        .then((response) => response.text())
+                        .then((res) => {
+                            let usersSkills = JSON.parse(res).usersSkills;
+                            console.log("users-by-skills -> " + usersSkills);
+                            itemsOutput.innerHTML = "";                               
+                            
+                            // for printing purpose only
+                            for(key in usersSkills){
+                                console.log(key);
+                                let name = key;
+                                let username = "";
+                                let profileUrl = "";
+                                let skillsList = "";
+                                for(key1 in usersSkills[key]){
+                                  let eachSearchOutput = "";
+                                  console.log("    "+key1 + " : "+ usersSkills[key][key1]);
+                                  if(key1.localeCompare("profileAccessKey") === 0){
+                                    profileUrl = usersSkills[key][key1];
+                                  }
+                                  else if(key1.localeCompare("username") === 0){
+                                      username = usersSkills[key][key1];
+                                  }
+                                  else if(key1.localeCompare("skillsUpvote") === 0){
+                                    for(key2 in usersSkills[key][key1]){
+                                      console.log("                "+key2 +" : " + usersSkills[key][key1][key2]);
+                                      let skill = key2;
+                                      let skillUpvotes = usersSkills[key][key1][key2];
+                                      skillsList += eval('`' + skillsListOutputTemplate + '`');
+                                    }
+                                  } 
+                                }
+                                itemsOutput.innerHTML += eval('`' + searchOutputTemplate + '`');
+                            }
+                            
+                        });
+                    clearInterval(searchInterval);
+                  }
+                  if((Date.now() - start)/1000 > 10){
+                      clearInterval(searchInterval);
+                      console.log("Search time out!!");
+                  }
+
+            }, 100);    
+          }
+
+          } // search function ends
+
+
+          function addEventToMessages(searchProfileMessageButton){
+              message();
+              let username = searchProfileMessageButton.dataset.contactUsername;
+              let name = searchProfileMessageButton.dataset.contactName;
+              addContact(name , "", username);  
+          }
+    </script>
 
   </body>
 </html>

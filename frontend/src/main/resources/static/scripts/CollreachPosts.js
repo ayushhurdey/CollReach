@@ -292,7 +292,7 @@ function getUserDetails() {
             localStorage.setItem('userDetails', res);
             let profileAccessKey = data.userPersonalInfoResponse.profileAccessKey;
 
-            data.userPersonalInfoResponse.profileAccessKey = USER_PROFILE_URL + "/profile/" + profileAccessKey;
+            data.userPersonalInfoResponse.profileAccessKey = URL_ORIGIN + ":8081/profile/" + profileAccessKey;
 
             getImageURL = USER_PROFILE_URL +
                 "/user/get-image?filename=" +
