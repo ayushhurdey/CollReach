@@ -1,0 +1,28 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: baeldung_route
+          uri: http://baeldung.com
+          predicates:
+            - Path=/baeldung/
+        - id: userprofile-route
+          uri: lb://userprofile
+          predicates:
+            - Path=/posts/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+eureka:
+  client:
+    serviceURL:
+      defaultZone: http://localhost:8761/eureka

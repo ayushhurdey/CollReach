@@ -1,0 +1,25 @@
+services:
+  frontend:
+    build: ./frontend/
+    ports:
+      - "8081:8081"
+  userprofile:
+    build: ./userprofile
+    ports:
+      - "8082:8082"
+  chat-app:
+    build: ./chat
+    ports:
+      - "8083:8083"
+  posts:
+    build: ./posts
+    ports:
+      - "8084:8084"
+  gateway:
+    build: ./gateway
+    ports:
+      - "8085:8085"
+  eserver:
+    build: ./eserver
+    ports:
+      - "8761:8761"

@@ -163,7 +163,8 @@
             var name= document.reg.name.value;
             var phone= document.reg.phone.value;
             var libid = document.reg.libid.value; 
-            var courseId = courseIdMapping();
+            var courseId = courseIdMapping();  // TODO: May be we should let the server figure out the course id itself rather than we do it for it.
+                                               // It will make the code more dynamic, generic & resilient.
             console.log(course+ " " + branch + " " + year + " " + sem + " "+ courseId + " "+ pass +" "+ name +" "+ libid +" "+ email +" "+ phone);
             var xhr = new XMLHttpRequest();
             var url = URL_ORIGIN + ":8082/user/signup";
