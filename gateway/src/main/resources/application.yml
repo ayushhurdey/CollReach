@@ -11,10 +11,26 @@ spring:
           uri: http://baeldung.com
           predicates:
             - Path=/baeldung/
+        - id: frontend-route
+          uri: lb://frontend
+          predicates:
+            - Path=/in/**
         - id: userprofile-route
           uri: lb://userprofile
           predicates:
+            - Path=/userprofile/**
+        - id: chat-app-route
+          uri: lb://chat-app
+          predicates:
+            - Path=/chat/**
+        - id: posts-route
+          uri: lb://posts
+          predicates:
             - Path=/posts/**
+        - id: eureka-route
+          uri: lb://eserver
+          predicates:
+            - Path=/eserver/**
 management:
   endpoints:
     web:
