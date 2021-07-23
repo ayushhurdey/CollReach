@@ -64,6 +64,38 @@ i {
 #msg{
   
 }
+
+/*----Notifier----*/
+
+.closebtn {
+  margin-left: 15px;
+  color: black;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.notifier {
+  background-color: rgba(253, 253, 253, 0.952);
+  padding: 4px;
+  border-radius: 10px;
+  position: fixed;
+  top: 80px;
+  width: 25%;
+  padding-bottom: 5px;
+  right: 10px;
+  font-size: 1em;
+  z-index: 1000;
+  transition: opacity 0.6s;
+  box-shadow: 5px 6px 10px gray;
+}
+
+/* Notifier ends */
+
+
 #msg span{
   font-size: .8em;
   cursor: pointer;

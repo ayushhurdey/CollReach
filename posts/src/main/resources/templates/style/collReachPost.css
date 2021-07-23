@@ -687,7 +687,7 @@ ss:active{
   }
 }
 
-@media (max-width: 1199.5px) and (min-width: 992px) {
+@media (max-width: 1400px) and (min-width: 992px) {
   .profile-row {
     width: 13rem;
   }

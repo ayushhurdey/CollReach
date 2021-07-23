@@ -694,16 +694,39 @@ ss:active{
   }
 }
 
-@media (max-width: 1400px) and (min-width: 992px) {
+@media (max-width: 1199.98px) and (min-width: 992px) {
   .profile-row {
     width: 13rem;
   }
+  /*
   #navv {
     width: 57rem;
   }
+  */
   #post-overlay,
   #poll-overlay {
     width: 35rem;
+  }
+  .search-o{
+      left:12.5% ;
+  }
+}
+
+@media (max-width: 1800px) and (min-width: 1200px) {
+  .profile-row {
+    width: 13rem;
+  }
+  /*
+  #navv {
+    width: 57rem;
+  }
+  */
+  #post-overlay,
+  #poll-overlay {
+    width: 35rem;
+  }
+  .search-o{
+        left:12.5% ;
   }
 }
 
