@@ -45,6 +45,7 @@ public class UserProfileController {
             String userSignupResponse = userProfileService.signup(userSignupRequest);
             return ResponseEntity.ok().body(userSignupResponse);
         }catch(Exception e){
+            e.printStackTrace();
             return ResponseEntity.ok().body("Some Error Occurred. Please review your information.");
         }
     }

@@ -5,7 +5,10 @@ public class UserSignupRequest {
     protected String password;
     protected String email;
     protected String name;
-    protected int courseId;
+//    protected int courseId;
+    protected String branch;
+    protected String courseName;
+    protected int semester;
     protected String alternateEmail;
     protected String phoneNo;
     private String linkedinLink;
@@ -43,12 +46,36 @@ public class UserSignupRequest {
         this.name = name;
     }
 
-    public int getCourseId() {
-        return courseId;
+//    public int getCourseId() {
+//        return courseId;
+//    }
+//
+//    public void setCourseId(int courseId) {
+//        this.courseId = courseId;
+//    }
+
+    public String getBranch() {
+        return branch;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public int getSemester() {
+        return semester;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
     }
 
     public String getAlternateEmail() {

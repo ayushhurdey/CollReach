@@ -14,7 +14,7 @@ spring:
         - id: frontend-route
           uri: lb://frontend
           predicates:
-            - Path=/in/**
+            - Path=/**
         - id: userprofile-route
           uri: lb://userprofile
           predicates:

@@ -2,10 +2,7 @@ package com.collreach.userprofile.service.impl;
 
 import com.collreach.userprofile.mappers.UserProfileMapper;
 import com.collreach.userprofile.model.bo.*;
-import com.collreach.userprofile.model.repositories.SkillsInfoRepository;
-import com.collreach.userprofile.model.repositories.UserLoginRepository;
-import com.collreach.userprofile.model.repositories.UserPersonalInfoRepository;
-import com.collreach.userprofile.model.repositories.UserSkillsRepository;
+import com.collreach.userprofile.model.repositories.*;
 import com.collreach.userprofile.model.request.UserSignupRequest;
 import com.collreach.userprofile.model.request.UsersFromNameRequest;
 import com.collreach.userprofile.model.request.UsersFromSkillsRequest;
@@ -39,6 +36,9 @@ public class UserProfileServiceImpl implements UserProfileService {
     SkillsInfoRepository skillsInfoRepository;
 
     @Autowired
+    CourseInfoRepository courseInfoRepository;
+
+    @Autowired
     private FtpUtil ftpUtil;
 
     @Autowired
@@ -61,15 +61,17 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
+    // TODO: Same user multiple signup validation required
     @Override
     public String signup(UserSignupRequest userSignupRequest) {
-        CourseInfo courseInfo = new CourseInfo();
+//        CourseInfo courseInfo = new CourseInfo();
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo();
         UserLogin userLogin = new UserLogin();
-        //String defaultProfilePhotoAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\default.jpeg";
 
         if(userSignupRequest.getEmail() != null) {
-            courseInfo.setCourseId(userSignupRequest.getCourseId());
+            CourseInfo courseInfo = extractCourseInfo(userSignupRequest);
+            if(courseInfo == null) return "Error Signing up";
+//            courseInfo.setCourseId(courseId);
             userPersonalInfo.setCourseInfo(courseInfo);
             userPersonalInfo.setEmail(userSignupRequest.getEmail().toLowerCase());
             userPersonalInfo.setName(userSignupRequest.getName().toLowerCase());
@@ -97,14 +99,22 @@ public class UserProfileServiceImpl implements UserProfileService {
         return "User Signed up successfully.";
     }
 
+    private CourseInfo extractCourseInfo(UserSignupRequest userSignupRequest){
+        String branch = userSignupRequest.getBranch();
+        String course = userSignupRequest.getCourseName();
+        int semester = userSignupRequest.getSemester();
+        Optional<CourseInfo> courseObj = courseInfoRepository.findByBranchAndCourseNameAndSemester(branch, course, semester);
+        return courseObj.orElse(null);
+    }
 
     @Override
     public String updateUserPersonalInfo(UserSignupRequest userSignupRequest){
-        CourseInfo courseInfo = new CourseInfo();
+//        CourseInfo courseInfo = new CourseInfo();
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo();
-        //String defaultProfilePhotoAddress = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\images\\default.jpeg";
+        CourseInfo courseInfo = extractCourseInfo(userSignupRequest);
+        if(courseInfo == null) return "Error Signing up";
 
-        courseInfo.setCourseId(userSignupRequest.getCourseId());
+//        courseInfo.setCourseId(userSignupRequest.getCourseId());
         userPersonalInfo.setCourseInfo(courseInfo);
         userPersonalInfo.setEmail(userSignupRequest.getEmail());
         userPersonalInfo.setName(userSignupRequest.getName());

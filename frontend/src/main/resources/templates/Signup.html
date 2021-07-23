@@ -25,9 +25,30 @@
     <link rel="stylesheet" href="style/Signup.css">
     <link rel="icon" href="static/CollReach.PNG" type="image/x-icon">
     
+    <script>
+        function renderNotification(message) {
+            let notifier = document.querySelector('.notifier');
+            notifier.children[1].innerText = message;
+            notifier.removeAttribute('hidden');
+            setTimeout(() => {
+                notifier.setAttribute('hidden', "");
+            }, 5000);
+        }
+
+        function closeBtn(elem){
+            elem.parentElement.setAttribute('hidden',"");
+        }
+
+    </script>
 </head>
 
 <body>
+    <!-----Notifier------>
+    <div class = "notifier" hidden>
+        <span class="closebtn" onclick = "closeBtn(this);">&times;</span> 
+        <p id = "notifier-msg"></p>
+    </div>
+
     <script type="text/javascript">
     const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
 
@@ -156,16 +177,16 @@
             var course = document.reg.course.value;
             var branch = document.reg.branch.value;
             var year = document.reg.year.value;
-            var sem = document.reg.sem.value;
+            var sem = Number(document.reg.sem.value);
             var oemail = document.reg.oemail.value;
             var pass = document.reg.pass.value;
             var email =document.reg.email.value;
             var name= document.reg.name.value;
             var phone= document.reg.phone.value;
             var libid = document.reg.libid.value; 
-            var courseId = courseIdMapping();  // TODO: May be we should let the server figure out the course id itself rather than we do it for it.
+            // var courseId = courseIdMapping();  // TODO: May be we should let the server figure out the course id itself rather than we do it for it.
                                                // It will make the code more dynamic, generic & resilient.
-            console.log(course+ " " + branch + " " + year + " " + sem + " "+ courseId + " "+ pass +" "+ name +" "+ libid +" "+ email +" "+ phone);
+            console.log(course+ " " + branch + " " + year + " " + sem + " "+ pass +" "+ name +" "+ libid +" "+ email +" "+ phone);
             var xhr = new XMLHttpRequest();
             var url = URL_ORIGIN + ":8082/user/signup";
             xhr.open("POST", url, true);
@@ -176,16 +197,19 @@
                     //document.getElementById('out').value = json.output;
 					var responseMsg = xhr.responseText;
                     console.log(responseMsg);
-					var msg = document.getElementById("msg");
-					msg.innerHTML = "</br>" + (xhr.responseText);
-					if(responseMsg.includes("Error"))
-						msg.style.color = "red";
-					else	
-						msg.style.color = "green";	
+                    renderNotification(responseMsg);
+					// var msg = document.getElementById("msg");
+					// msg.innerHTML = "</br>" + (xhr.responseText);
+					// if(responseMsg.includes("Error"))
+					// 	msg.style.color = "red";
+					// else	
+					// 	msg.style.color = "green";	
                 }
             };
             var data = JSON.stringify({
-                "courseId": courseId,
+                "branch": branch,
+                "courseName": course,
+                "semester" : sem,
                 "alternateEmail": oemail,
                 "email": email,
                 "name": name,
@@ -592,7 +616,7 @@
                 <label class="required" for="course">Course</label>             
                 <select class="form-control" name="course" id="course" required>
                     <option value="blank">Select course</option>
-                    <option value="B.tech">B.tech</option>
+                    <option value="B.Tech.">B.tech</option>
                     <!--option value="B.Pharma">B.pharma</option>
                     <option value="MCA">MCA</option>
                     <option value="M.tech">M.tech</option>

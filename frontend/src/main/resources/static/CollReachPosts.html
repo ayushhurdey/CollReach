@@ -9,8 +9,8 @@
     <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="script/css/bootstrap.min.css" />
-
-
+    
+    
     <script type="application/javascript" src="./scripts/url.js"></script>  <!--Contains URL for services, Priority: top-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -23,8 +23,8 @@
     <script src ="scripts/CollreachPosts.js"></script>
     <script defer src = "scripts/CollreachChat.js"></script>
     <script src = "scripts/Search.js"></script>
-    <link rel="stylesheet" href="style/collReachPost.css" />
     <link rel="stylesheet" href="style/UserProfileCss.css" />
+    <link rel="stylesheet" href="style/collReachPost.css" />
 
     <script>
         function closeBtn(elem){
@@ -38,17 +38,17 @@
     </script>
 
 </head>
-<body onload="load()">
+<body onload="load()">  
 <!-- <body> -->
         <!-----Notifier------>
     <div class = "notifier" hidden>
-        <span class="closebtn" onclick = "closeBtn(this);">&times;</span>
+        <span class="closebtn" onclick = "closeBtn(this);">&times;</span> 
         <p id = "notifier-msg"></p>
     </div>
 
         <!--CollReach Header-->
     <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light ">
-
+        
         <div class="container" id="navv">
 
             <a href="" class="navbar-brand"><span style="color:#6C67FD">Coll</span><span id="heading">Reach</span></a>
@@ -87,27 +87,27 @@
                         Search
                     </button>
                     <datalist id = "skills-list"></datalist>
-
+                    
                 </li>
                 <li class="navbar-btn my-post-nav-btn">
                     <button class = "nav-item btn btn-outline-primary my-posts-btn w-100 smm" onclick="redirect()">My Posts</button>
                 </li>
             </ul>
-            </div>
+            </div> 
 
         </div>
     </nav>
 
         <!--CollReach Profile-->
-
+        
     <div class="container" id="feeds-section">
         <div class="row">
-                <div class="col-md-3 side-profile-area" id = "user-profile-details-container">
+                <div class="col-md-3 side-profile-area" id = "user-profile-details-container">    
                 </div>
 
                         <!--POSTS-->
-                <div class="col-md-7 post-area">
-                    <div class="profile-feed" id = "posts-container">
+                <div class="col-md-7 post-area"> 
+                    <div class="profile-feed" id = "posts-container"> 
                         <div id="outer-post-box-announcement">
                             <div class=" profile-feed-item">
                                 <div>
@@ -118,17 +118,17 @@
                                         <button type="button" id="a-btn" class="btn btn-outline-primary" onclick="postOverlay()">New Announcement</button>
                                     </span>
                                 </div>
-
+                                
                             </div>
-                        </div>
+                        </div>   
                         <div id = "posts-loading-anim" style = "display:none;"></div>
 
                         <form class="form-group ">
                             <div class="" id="post-type-option">
-
+                                
                                 <div class="d-flex flex-row" id="sort-options ">
                                     <div class="col-xl-8 col-lg-7 col-md-5 col-sm-5 col-xs-1"><hr class="flex-grow-1 mr2 mvA "></div>
-
+                                    
                                     <div class="col-xl-4 col-lg-5 col-md-7 col-sm-7 col-xs-11 float-right">
                                         <div class="float-right">
                                             <span class="t-12 t-black--light t-normal small-text">
@@ -137,7 +137,7 @@
 
                                             <span class=" t-12 t-black--light t-normal small-text" id="sortby-label">
                                                 Regular Feeds
-
+                                                
                                             </span>
                                             <span class="">
                                                     <select class = "col-md-8 custom-select select-sort-options" id="sort-label" onchange="render(this)">
@@ -147,21 +147,21 @@
                                             </span>
                                         </div>
                                     </div>
-
-
-
+                                    
+                                    
+                                
                                 </div>
                             </div>
                         </form>
-
+                        
                         <div class = "posts-feed-container">
                             <!------------- profile feed --------------->
                         </div>
-
-
-                    </div>
+                             
+                   
+                    </div> 
                 </div>
-
+                
                 <!-- Side panel-->
                 <div class="col-md-2 my-post">
                     <div class="border rounded">
@@ -176,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-
+            
         </div>
     </div>
 
@@ -187,7 +187,7 @@
             <div class="shadow-sm p-1 mb-3 bg-white rounded">
                 <buttton class="btn  border-0 message-btn" type=button onclick="message()"><i class="fas fa-comments "></i></buttton>
             </div>
-
+            
         </div>
     </div>
 
@@ -197,7 +197,7 @@
         <div class=" message p-0 width float-right shadow col-lg-6 bg-white float-right  hide " id="chat">
             <div class="d-flex flex-column flex-shrink-2 border  bg-white contact-box">
 
-
+                
                 <!-- contact header -->
                 <div class="p-2">
                     <div class="p-2 contact-header">
@@ -207,12 +207,12 @@
                             </div>
                             <div class="p-1 flex-grow-1 m" style="margin:9px;">
                                 <div class="float-left " style="font-size: 1.1em;">
-                                    Contacts
+                                    Contacts    
                                 </div>
-
+                                
                             </div>
                         </div>
-
+                        
                     </div>
                 </div>
 
@@ -220,13 +220,13 @@
                 <div class="p-2 flex-grow-1 shadow overflow-auto  ">
                     <div class="d-flex flex-column contacts-list ">
 
-                        <!--
+                        <!-- 
                         // contact 1
                         <div class="p-2 rounded individual-chat">
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
                                     <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
-
+                                    
                                 </div >
                                 <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
                                     <div class="p-1 flex-grow-1 m chat-person " >
@@ -249,7 +249,7 @@
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
                                     <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
-
+                                    
                                 </div >
                                 <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
                                     <div class="p-1 flex-grow-1 m chat-person " >
@@ -271,7 +271,7 @@
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
                                     <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
-
+                                    
                                 </div >
                                 <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
                                     <div class="p-1 flex-grow-1 m chat-person " >
@@ -293,7 +293,7 @@
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
                                     <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
-
+                                    
                                 </div >
                                 <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
                                     <div class="p-1 flex-grow-1 m chat-person " >
@@ -315,7 +315,7 @@
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
                                     <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
-
+                                    
                                 </div >
                                 <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
                                     <div class="p-1 flex-grow-1 m chat-person " >
@@ -337,7 +337,7 @@
                             <div class="d-flex flex-row">
                                 <div class="p-1 flex-shrink-1 m">
                                     <a href=""><img src="static/profileimage1-ConvertImage.ico"  class="img-sm rounded-circle" ></a>
-
+                                    
                                 </div >
                                 <button class="w-100 bg-white border-0 ss" onclick="chatwindow(this)">
                                     <div class="p-1 flex-grow-1 m chat-person " >
@@ -355,10 +355,10 @@
                         </div> -->
 
                     </div>
-                </div>
+                </div>      
               </div>
         </div>
-
+    
 
 
 
@@ -371,7 +371,7 @@
     <div class=" m-0 chat p-0 width float-right shadow col-lg-6 bg-white float-right hide chat-window-container" id="chat" data-contacting-username = "">
         <div class="d-flex flex-column flex-shrink-2 border  bg-white contact-box">
 
-
+            
             <!-- contact header -->
             <div class="p-0">
                 <div class="p-2 contact-header">
@@ -381,32 +381,32 @@
                         </div>
                         <div class="p-1 flex-grow-1 m">
                             <div class="float-left chat-header ">
-                                Contact Name
+                                Contact Name    
                             </div>
-
+                            
                             <div class="p-1 m mr-auto float-right">
                                 <button class="cross-button " onclick="chatwindowclose()"><i class="fas fa-times" ></i></button>
                             </div>
-
+                            
                         </div>
                     </div>
-
+                    
                 </div>
             </div>
-
+            
             <!--chatting window -->
             <div class=" p-2 flex-grow-1 shadow overflow-auto">
                 <div class="conversation d-flex flex-column w-100 h-100 overflow-auto chat-window" data-contact-username="">
 
-
-
+                   
+                 
                     <!-- <div class='p-2 sended '>
                         <div class="message-width ml-auto">
                             <div class="d-flex flex-row">
                                  // have extra class named order rest same as received
                                 <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
-                            </div>
+                            </div>   
                         </div>
                     </div>
                     <div class='p-2 received '>
@@ -415,7 +415,7 @@
                                 // no order class
                                 <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
-                            </div>
+                            </div>   
                         </div>
                     </div>
                      <div class='p-2 received '>
@@ -424,7 +424,7 @@
                                 // no order class
                                 <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
-                            </div>
+                            </div>   
                         </div>
                     </div>
                     <div class='p-2 sended '>
@@ -432,7 +432,7 @@
                             <div class="d-flex flex-row">
                                 <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
-                            </div>
+                            </div>   
                         </div>
                     </div>
                     <div class='p-2 received '>
@@ -441,7 +441,7 @@
                                 // no order class
                                 <div class="p-1 "><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 ">mele babu ne thana thay</div>
-                            </div>
+                            </div>   
                         </div>
                     </div>
 
@@ -450,7 +450,7 @@
                             <div class="d-flex flex-row">
                                 <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
-                            </div>
+                            </div>   
                         </div>
                     </div>
                     <div class='p-2 sended '>
@@ -458,10 +458,10 @@
                             <div class="d-flex flex-row">
                                 <div class="p-1 order-2"><a href=""><img src="static/profileimage1-ConvertImage.ico"  class="conversation-side-profile rounded-circle" ></a></div>
                                 <div class="p-1 flex-grow-1 order-1">mele babu ne thana thay</div>
-                            </div>
+                            </div>   
                         </div>
                     </div> -->
-
+                    
                 </div>
             </div>
 
@@ -480,17 +480,17 @@
                             <button class="send rounded">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
-
+                            
                         </div> -->
-
-
+                        
+                        
                     </div>
-
+                    
                 </div>
             </div>
         </div>
     </div>
-
+    
 
 
 
@@ -541,7 +541,7 @@
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
-                        </div>
+                        </div>     
                     </div>
 
                     <div>
@@ -578,7 +578,7 @@
         </div>
     </div>
 
-
+        
 
           <!--POLL OVERLAY-->
     <div class="container-overlays" id="poll-overlay" style="display: none;">
@@ -655,28 +655,28 @@
                     </div>
 
                     <div>
-                        <button
-                            type="button"
-                            class="btn float-left"
-                            id="remove-option-btn"
-                            onclick="removeOption()"
+                        <button 
+                            type="button" 
+                            class="btn float-left" 
+                            id="remove-option-btn" 
+                            onclick="removeOption()" 
                             style="display:none; "
                         ><i class="far fa-minus-square"></i>&nbsp;Remove options
                         </button>
                     </div>
 
                     <div>
-                        <button type="button"
-                                class="btn float-right"
-                                id="add-option-btn"
+                        <button type="button" 
+                                class="btn float-right" 
+                                id="add-option-btn" 
                                 onclick="addOption(this)">
                                     Add more options&nbsp;<i class="far fa-plus-square"></i>
                         </button>
                     </div>
 
                     <div style="clear: both;">
-                        <button
-                            class="post-button btn btn-primary float-right "
+                        <button 
+                            class="post-button btn btn-primary float-right " 
                             type="button" onclick = "createPoll(this);"
                             id="poll-posting-btn">
                                 POST
@@ -695,37 +695,37 @@
         <!--SEARCH OVERLAY-->
         <div class="p-2  search-o w-75 w-lg-50 w-xl-50 .animated .zoomIn shadow  fast overflow-auto hide">
             <div id="search-overlay ">
-
+      
               <div >
                 <!-- <span id = "overlay-close">&#10006;</span> -->
                 <div id = "overlay-close"><i class="fa fa-times"></i></div>
               </div>
-
-
-              <div class="search-details d-flex p-2 flex-row justify-content-center w-75" >
+      
+              
+              <div class="search-details d-flex p-2 flex-row justify-content-center w-75" > 
                 <div class="p-1 flex-grow-1 form-group" id="overlay-content">
-
-                  <input type="text"
-                          id="overlay-search-box"
-                          list = "skills-list"
-                          class="form-control text-sm"
-                          placeholder = "Type skills separated with comma"
+                  
+                  <input type="text" 
+                          id="overlay-search-box" 
+                          list = "skills-list" 
+                          class="form-control text-sm" 
+                          placeholder = "Type skills separated with comma" 
                   />
                 </div>
-
+      
                 <div class="p-1 form-group">
                   <input class="form-control btn btn-primary text-sm btn btn-primary" type="submit" id = "search-request-btn" value = "Search">
                 </div>
-
+                
                 <div class="p-1 form-group">
                   <select class="form-control text-sm" id="search-options">
                     <option value="search-by-name" selected>Search by Name</option>
                     <option value="search-by-skills">Search By Skills</option>
                   </select>
-                </div>
+                </div>    
               </div>
-
-
+            
+      
                 <!-- <div id = "search-items">
                   <div class="skill-item">
                     Python
@@ -737,17 +737,17 @@
                       $(elem).parent('div.skill-item').remove();
                     }
                 </script>
-
+      
                 <div class="d-flex flex-wrap overflow-auto search-overlay-boxes" id="search-items">
                 </div>
-
+      
                 <div class="overflow-auto search-overlay-boxes" id = "items-output">
                   <div style="text-align: center;margin-top: 5px;"><h5><b> Search Result</b></h5></div>
                   <div id = "search-results-display-area"></div>
                 </div>
-
+      
               </div>
-
+            
           </div>
 
 
@@ -790,7 +790,7 @@
                                         Course Info
                             </div>
 
-                            <div class="py-4">
+                            <div class="py-4"> 
                                 <div>${data.userPersonalInfoResponse.courseInfoResponse.courseName}</div>
                                 <div>${data.userPersonalInfoResponse.courseInfoResponse.branch}</div>
                                 <div>${data.userPersonalInfoResponse.courseInfoResponse.semester}</div>
@@ -798,7 +798,7 @@
                     </div>
                 </article>
             </div>
-
+                
 
 
             <div id = "post-with-image-template" class = "hidden">
@@ -810,8 +810,8 @@
                                     <span class = "name">${data.name}</span>
                         </div>
                         <div class="d-flex align-items-start profile-feed-item">
-
-
+                            
+                        
                             <div class="p-2">
                                 <div class="content">
                                     <div class="caption">
@@ -869,11 +869,11 @@
                         </div>
 
                         <div class="d-flex align-items-start profile-feed-item" >
-
+                        
                             <div class="p-2">
-
+                                
                                 <div class="content">
-                                    <div class="caption">
+                                    <div class="caption"> 
                                     ${data.message}
                                     <!--Today we went to firoz shah kotla to see dc vs rcb in which rcb won by 10 wickets.-->
                                     </div>
@@ -938,7 +938,7 @@
                                         <small data-p-id = ${data.pollId}>${data.totalPollVotes} votes</small>
                                     </div>
                                 </div>
-
+                                
                                 <div class="d-flex justify-content-between reach">
                                     <div class="date-time-info">
                                         <small class="post-date">${data.beautifiedDate}</small>
@@ -963,13 +963,13 @@
                                         <span class="icon"> <i class="fas fa-eye"></i></span>
                                     </div>
                                 </div-->
-
+                                
                             </div>
                         </div>
                     </div>
                 </article>
             </div>
-
+            
 
             <!--SEARCH OUTPUT DISPLAY TEMPLATES-->
             <template id = "skill-search-bullet-template">
@@ -978,34 +978,34 @@
                   <div class = "skill-item-cross" onclick='removeskill(this)'> &#10005;</div>
                 </div>
             </template>
-
-
+          
+          
             <template id = "search-output-display">
                 <div class="name-list">
                 <div class="search-name">
                     ${name}
                 </div>
                 <div class="search-profile">
-
+                    
                     <!-- SKILLS LIST -->
                     <div class="d-flex flex-row flex-wrap skill-box">
                     ${skillsList}
                     </div>
-
+        
                     <div class="search-profile-message">
-                    <button type="button" class="btn btn-primary search-profile-message-button"
+                    <button type="button" class="btn btn-primary search-profile-message-button" 
                             onclick = "addEventToMessages(this)"
                             style = "color: white;"
                             data-contact-username=${username}
                             data-contact-name = ${name}>Message</button>
                     </div>
-
+                    
                     <a href = ${profileUrl}>Visit Profile</a>
                 </div>
                 </div>
             </template>
-
-
+        
+        
             <template id = "skills-list-output-display">
             <div class="search-profile-skill d-flex">
                 <div class="skill-name">${skill}</div>
@@ -1024,7 +1024,7 @@
                         <div class="p-1 flex-shrink-1 m">
                             <!-- "static/profileimage1-ConvertImage.ico" -->
                             <a href=""><img src=${profilePic}  class="img-sm rounded-circle" ></a>
-
+                            
                         </div >
                         <button class="w-100 bg-white border-0 ss " style = "outline: none;" data-contact-username = ${username} onclick="chatwindow(this)">
                             <div class="p-1 flex-grow-1 m chat-person ">
@@ -1055,7 +1055,7 @@
                                     <small style = "font-size: 0.6em;" class = "message-date">${date}</small>
                                 </div>
                             </div>
-                        </div>
+                        </div>   
                     </div>
                 </div>
             </template>
@@ -1073,8 +1073,8 @@
                                     <small style = "font-size: 0.6em;" class = "message-date">${date}</small>
                                 </div>
                             </div>
-
-                        </div>
+                            
+                        </div>   
                     </div>
                 </div>
             </template>
@@ -1087,7 +1087,7 @@
                                     <img src=${data.profilePhoto}  class="img-sm rounded-circle" loading="lazy">
                                     <span class="name">${data.name}</span>
                         </div>
-
+                        
                         <div class="d-flex align-items-start profile-feed-item">
                             <div class="p-2">
                                 <div class="content">
@@ -1137,7 +1137,7 @@
                                     </div>
                                 </div -#->
 
-
+                        
                             </div>
                         </div>
                     </div>
