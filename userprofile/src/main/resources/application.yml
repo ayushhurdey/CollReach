@@ -40,7 +40,7 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:mysql://localhost:3306/collreach_userlogin
+    url: jdbc:mysql://mysqldb:3306/collreach_userlogin?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
     username: root
     password: Sensitive@1
   security:
@@ -55,8 +55,14 @@ spring:
       enabled: true
 
 eureka:
-  instance:
-    hostname: localhost
+  client: 
+    serviceUrl: 
+      defaultZone: http://eserver:8761/eureka/
+
+# eureka:
+#   client:
+#     serviceUrl:
+#       defaultZone=${EUREKA_SERVER:http://eserver:8761/eureka}
 
 posts:
   url: http://posts/user/add-user

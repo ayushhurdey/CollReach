@@ -13,20 +13,23 @@ spring:
       ddl-auto: update
     show-sql: true
   data:
-    mogodb:
-      database: collreach_chat
-      port: 27017
-      host: localhost
+    mongodb:
+      uri: mongodb://collreach:collReach@mongo_db:27017/collreach_chat
+      # uri: mongodb://root:root@localhost:27017/test
+      # database: collreach_chat
+      # port: 27017
+      # host: localhost
 
 eureka:
-  instance:
-    hostname: localhost
+  client: 
+    serviceUrl: 
+      defaultZone: http://eserver:8761/eureka/
 
 posts:
-  url: http://localhost:8084
+  url: http://posts:8084
 
 userprofile:
-  url: http://localhost:8082
+  url: http://userprofile:8082
 
 frontend:
-  url: http://localhost:8081
+  url: http://frontend:8081

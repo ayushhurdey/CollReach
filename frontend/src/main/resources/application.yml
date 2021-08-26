@@ -6,8 +6,9 @@ spring:
     name: frontend
 
 eureka:
-  instance:
-    hostname: localhost
+  client: 
+    serviceUrl: 
+      defaultZone: http://eserver:8761/eureka/
 
 posts:
   url: http://posts/user/add-user

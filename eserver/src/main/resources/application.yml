@@ -13,4 +13,4 @@ eureka:
     waitTimeInMsWhenSyncEmpty: 0
     peerNodeReadTimeoutMs: 10000
   instance:
-    hostname: localhost
+    hostname: eserver

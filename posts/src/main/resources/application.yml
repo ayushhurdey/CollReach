@@ -1,6 +1,5 @@
 server:
   port: 8084
-ops: window
 
 # token valid for 10 years. Created on 09/05/2021 (dd/mm/yyyy)
 auth:
@@ -18,7 +17,7 @@ spring:
         format_sql: true
 
   datasource:
-    url: jdbc:mysql://localhost:3306/collreach_posts_and_polls
+    url: jdbc:mysql://mysqldb:3306/collreach_posts_and_polls?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
     username: root
     password: Sensitive@1
   security:
@@ -33,14 +32,15 @@ spring:
       enabled: true
 
 eureka:
-  instance:
-    hostname: localhost
+  client: 
+    serviceUrl: 
+      defaultZone: http://eserver:8761/eureka/
 
 posts:
-  url: http://localhost:8084
+  url: http://posts:8084
 
 userprofile:
-  url: http://localhost:8082
+  url: http://userprofile:8082
 
 frontend:
-  url: http://localhost:8081
+  url: http://frontend:8081
