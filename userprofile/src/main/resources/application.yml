@@ -20,11 +20,11 @@ images:
 #  mini-default-img: mini_default.jpeg
 
 ftp:
-  host: localhost
+  host: ftp_server
   user: collreach
   pwd: Sensitive@1
   host-dir: /htdocs/frontend/images/
-  img-address-server: http://localhost/htdocs/frontend/images
+  img-address-server: http://ftp_server/htdocs/frontend/images
   default-img: default.jpeg
   mini-default-img: mini_default.jpeg
 
@@ -40,8 +40,9 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:mysql://mysqldb:3306/collreach_userlogin?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
-    username: root
+    #url: jdbc:mysql://mysqldb:3306/collreach_userlogin?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    url: jdbc:postgresql://psql:5432/collreach_userlogin?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    username: collreach
     password: Sensitive@1
   security:
     user:
@@ -71,4 +72,7 @@ chat:
   url: http://chat-app/user/add-user
 
 frontend:
-  url: http://localhost:8081
+  url: http://frontend:8081
+
+gateway:
+  url: http://gateway

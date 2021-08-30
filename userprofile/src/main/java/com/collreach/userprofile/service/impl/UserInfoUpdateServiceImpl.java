@@ -288,6 +288,7 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     @Override
     public String updateProfilePhoto(MultipartFile file, MultipartFile miniFile, String userName) throws IOException{
         String fileName = file.getOriginalFilename();
+        assert fileName != null;
         int index = fileName.lastIndexOf('.');
         boolean userNameExists = userLoginRepository.existsById(userName);
 

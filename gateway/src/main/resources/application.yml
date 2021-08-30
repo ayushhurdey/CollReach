@@ -41,7 +41,7 @@ management:
 eureka:
   client:
     serviceURL:
-      defaultZone: http://eserver/eureka/
+      defaultZone: http://eserver:8761/eureka/
 
 # gateway_1      | 2021-07-25 17:14:16.712  INFO 1 --- [tbeatExecutor-0]
 #  c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. 

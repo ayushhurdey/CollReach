@@ -33,3 +33,6 @@ userprofile:
 
 frontend:
   url: http://frontend:8081
+
+gateway:
+  url: http://gateway

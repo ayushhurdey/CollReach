@@ -21,9 +21,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Value("${frontend.url}")
     private String frontendUrl;
 
+    @Value("${gateway.url}")
+    private String gatewayUrl;
+
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").setAllowedOrigins(postsUrl, userprofileUrl, frontendUrl).withSockJS();
+        registry.addEndpoint("/ws").setAllowedOrigins(postsUrl, userprofileUrl, frontendUrl, gatewayUrl).withSockJS();
     }
 
     @Override

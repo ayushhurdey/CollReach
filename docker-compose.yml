@@ -1,20 +1,29 @@
 version: "3.3"
 
 services:
-  mysqldb:
-    image: mysql
-    environment:
-      - MYSQL_USER=collreach
-      - MYSQL_PASSWORD=Sensitive@1
-      - MYSQL_ROOT_PASSWORD=Sensitive@1
-    restart: always
-    ports:
-      - "6033:3306"
-    volumes:
-      - db_vol:/var/lib/mysql
+  # mysqldb:
+  #   image: mysql
+  #   environment:
+  #     - MYSQL_USER=collreach
+  #     - MYSQL_PASSWORD=Sensitive@1
+  #     - MYSQL_ROOT_PASSWORD=Sensitive@1
+  #   restart: always
+  #   ports:
+  #     - "6033:3306"
+  #   volumes:
+  #     - db_vol:/var/lib/mysql
+  
+  # psql:
+  #   image: custom_psql/psql
+  #   environment: 
+  #     - POSTGRES_USER=collreach
+  #     - POSTGRES_PASSWORD=Sensitive@1
+  #   ports:
+  #     - "1234:5432"
 
   mongo_db:
     image: mongo
+    # image: custom/mongo
     environment: 
       - MONGO_INITDB_ROOT_USERNAME=collreach
       - MONGO_INITDB_ROOT_PASSWORD=collReach
@@ -47,10 +56,10 @@ services:
     ports:
       - "8082:8082"
     restart: always
-    links:
-      - mysqldb
+    # links:
+    #   - mysqldb
     depends_on:
-      - mysqldb
+      # - mysqldb
       - ftp_server
       - eserver
 
@@ -59,10 +68,10 @@ services:
     ports:
       - "8084:8084"
     restart: always
-    links:
-      - mysqldb
+    # links:
+    #   - mysqldb
     depends_on:
-      - mysqldb
+      # - mysqldb
       - eserver
 
   chat-app:
@@ -78,7 +87,7 @@ services:
   gateway:
     build: ./gateway
     ports:
-      - "80:80"
+      - "8085:80"
     depends_on: 
       - userprofile
       - chat-app
@@ -99,3 +108,8 @@ services:
 volumes: 
   db_vol:
   ftp_vol:
+
+networks:
+  default:
+    external: true
+    name: collreach1

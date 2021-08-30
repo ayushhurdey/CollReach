@@ -50,7 +50,8 @@ public class Messages {
     @Column(name = "message", nullable = false)
     private String message;
 
-    @Column(name = "image", columnDefinition="mediumblob")
+    //@Column(name = "image", columnDefinition="mediumblob")
+    @Column(name = "image", columnDefinition="bytea")
     private byte[] image;
 
     @Column(name = "filename")

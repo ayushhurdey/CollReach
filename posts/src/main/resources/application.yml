@@ -17,8 +17,9 @@ spring:
         format_sql: true
 
   datasource:
-    url: jdbc:mysql://mysqldb:3306/collreach_posts_and_polls?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
-    username: root
+    # url: jdbc:mysql://mysqldb:3306/collreach_posts_and_polls?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    url: jdbc:postgresql://psql:5432/collreach_posts_and_polls?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    username: collreach
     password: Sensitive@1
   security:
     user:
@@ -44,3 +45,6 @@ userprofile:
 
 frontend:
   url: http://frontend:8081
+
+gateway:
+  url: http://gateway:8085
