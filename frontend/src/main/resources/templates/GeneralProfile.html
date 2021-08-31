@@ -30,10 +30,10 @@
         //   window.location.href = "http://localhost:8082/login";
         let pathname = window.location.pathname;
         let lastSlashIndex = pathname.lastIndexOf('/');
-        const USERNAME = pathname.substr(lastSlashIndex+1, pathname.length);
+        const ACCESSKEY = pathname.substr(lastSlashIndex+1, pathname.length);
         var xhr = new XMLHttpRequest();
-        var url = URL_ORIGIN + ":8082/user/get-user-details/" + USERNAME;
-        xhr.open("POST", url, true);
+        var url = USER_PROFILE_URL + "/user/profile/" + ACCESSKEY;
+        xhr.open("GET", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader("Authorization", localStorage.getItem("auth"));
         xhr.onreadystatechange = function () {
@@ -41,29 +41,29 @@
             console.log(xhr.responseText);
             var userInfo = JSON.parse(xhr.responseText);
             document.getElementById("name").innerHTML =
-              userInfo.userPersonalInfoResponse.name;
+              userInfo.name;
             document.getElementById("description").innerHTML =
-              userInfo.userPersonalInfoResponse.description;
+              userInfo.description;
             //document.getElementById("year").innerHTML =
-            //  userInfo.userPersonalInfoResponse.courseInfoResponse.yearOfStudy;
+            //  userInfo.courseInfoResponse.yearOfStudy;
             document.getElementById("sem").innerHTML =
-              userInfo.userPersonalInfoResponse.courseInfoResponse.semester + "th sem";
+              userInfo.courseInfoResponse.semester + "th sem";
             document.getElementById("branch").innerHTML =
-              userInfo.userPersonalInfoResponse.courseInfoResponse.branch;
+              userInfo.courseInfoResponse.branch;
             document.getElementById("course").innerHTML =
-              userInfo.userPersonalInfoResponse.courseInfoResponse.courseName;
+              userInfo.courseInfoResponse.courseName;
             document.getElementById("kietEmail").innerHTML =
-              userInfo.userPersonalInfoResponse.email;
+              userInfo.email;
             document.getElementById("personalEmail").innerHTML =
-              userInfo.userPersonalInfoResponse.alternateEmail;
+              userInfo.alternateEmail;
             document.getElementById("phoneNo").innerHTML =
-              userInfo.userPersonalInfoResponse.phoneNo;
+              userInfo.phoneNo;
             document.getElementById("linkedIn").innerHTML =
-              userInfo.userPersonalInfoResponse.linkedinLink;
+              userInfo.linkedinLink;
             document.querySelector('.connect-btn').dataset.contactUsername = userInfo.userName;
-            document.querySelector('.connect-btn').dataset.contactName = userInfo.userPersonalInfoResponse.name;
+            document.querySelector('.connect-btn').dataset.contactName = userInfo.name;
 
-            var skill = userInfo.userPersonalInfoResponse.skills;
+            var skill = userInfo.skills;
             for (let [k, v] of Object.entries(skill)) {
               console.log(k, v);
               let cloud = document.getElementsByClassName('cloud')[0];
@@ -77,11 +77,11 @@
             }
 
             document.getElementById("profile-photo").src = 
-                URL_ORIGIN + ":8082/user/get-image?filename=" +
-                 userInfo.userPersonalInfoResponse.userProfilePhoto;
+                  USER_PROFILE_URL + "/user/get-image?filename=" +
+                 userInfo.userProfilePhoto;
             localStorage.setItem(
               "profilePhoto",
-              userInfo.userPersonalInfoResponse.userProfilePhoto
+              userInfo.userProfilePhoto
             );
             localStorage.setItem("username", userInfo.userName);
           }
@@ -658,7 +658,8 @@
       let ALL_SKILLS = [];
       let finalSkills = [];
       //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
-      fetch(URL_ORIGIN + ":8082/user/get-all-skills", {
+      // fetch(URL_ORIGIN + ":8082/user/get-all-skills", {
+      fetch(USER_PROFILE_URL + "/user/get-all-skills", {
                   method: "GET",
                   headers: {
                     Authorization: localStorage.getItem("auth"),
@@ -762,7 +763,8 @@
             if(searchQuery == "" || searchQuery == null)
               return;
 
-            fetch(URL_ORIGIN + ":8082/user/search-users-by-name", {
+            //fetch(URL_ORIGIN + ":8082/user/search-users-by-name", {
+            fetch(USER_PROFILE_URL + "/user/search-users-by-name", {
                 method: "POST",
                 headers: {
                   'Content-Type': 'application/json',
@@ -785,7 +787,8 @@
                       let username = value.username;
                       let profileUrl = "#";
                       if(value.profileAccessKey !== "" && value.profileAccessKey !== null)
-                        profileUrl = URL_ORIGIN + ":8082/profile/" + value.profileAccessKey;
+                          profileUrl = FRONTEND_URL + "/profile/" + value.profileAccessKey;  
+                      //profileUrl = URL_ORIGIN + ":8082/profile/" + value.profileAccessKey;
 
                       let skillsList = "";
                       itemsOutput.innerHTML += eval('`' + searchOutputTemplate + '`');
@@ -798,7 +801,8 @@
             let searchInterval = setInterval(function(){
                 if(finalSkills.length !== 0){
                     console.log("Searching skills....");
-                    fetch(URL_ORIGIN + ":8082/user/get-users-from-skills", {
+                    //fetch(URL_ORIGIN + ":8082/user/get-users-from-skills", {
+                    fetch(USER_PROFILE_URL + "/user/get-users-from-skills", {
                         method: "POST",
                         headers: {
                           'Content-Type': 'application/json',
