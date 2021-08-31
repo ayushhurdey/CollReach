@@ -1,5 +1,7 @@
 server:
   port: 8082
+  servlet:
+    context-path: /userprofile
 
 ops: window
 
@@ -10,23 +12,23 @@ images:
   server-address: http://localhost:8081/images/
   default-image: http://localhost:8081/images/default.jpeg
 
-#ftp:
-#  host: ftp.unaux.com
-#  user: unaux_27598440
-#  pwd: 689j616h7yuiwu
-#  host-dir: /htdocs/frontend/images/
-#  img-address-server: http://maybelater.unaux.com/frontend/images
-#  default-img: default.jpeg
-#  mini-default-img: mini_default.jpeg
-
 ftp:
-  host: ftp_server
-  user: collreach
-  pwd: Sensitive@1
+  host: ftpupload.net
+  user: unaux_29588628
+  pwd: fkghhdn6g3gj4w
   host-dir: /htdocs/frontend/images/
-  img-address-server: http://ftp_server/htdocs/frontend/images
+  img-address-server: http://creach.unaux.com/frontend/images
   default-img: default.jpeg
   mini-default-img: mini_default.jpeg
+
+#ftp:
+#  host: ftp_server
+#  user: collreach
+#  pwd: Sensitive@1
+#  host-dir: /htdocs/frontend/images/
+#  img-address-server: http://ftp_server/htdocs/frontend/images
+#  default-img: default.jpeg
+#  mini-default-img: mini_default.jpeg
 
 
 spring:
@@ -41,7 +43,7 @@ spring:
         format_sql: true
   datasource:
     #url: jdbc:mysql://mysqldb:3306/collreach_userlogin?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
-    url: jdbc:postgresql://psql:5432/collreach_userlogin?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    url: jdbc:postgresql://p_sql:5432/collreach_userlogin?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
     username: collreach
     password: Sensitive@1
   security:

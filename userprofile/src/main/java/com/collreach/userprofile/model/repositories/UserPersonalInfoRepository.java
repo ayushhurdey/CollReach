@@ -19,7 +19,7 @@ public interface UserPersonalInfoRepository extends CrudRepository<UserPersonalI
     Boolean existsByLinkedinLink(String linkedinLink);
     Optional<UserPersonalInfo> findByProfileAccessKey(String profileAccessKey);
     Boolean existsByProfileAccessKey(String profileAccessKey);
-    List<UserPersonalInfo> findAllByNameStartsWith(String name);
+    List<UserPersonalInfo> findAllByNameStartsWithIgnoreCase(String name);
 
     @Modifying
     @Transactional

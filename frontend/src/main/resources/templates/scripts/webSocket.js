@@ -22,9 +22,11 @@ function renderNotification(message) {
 
 
 function connect() {
-    const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
-    var socket = new SockJS(URL_ORIGIN + ':8084/ws');
-    var chatSocket = new SockJS(URL_ORIGIN + ':8083/ws');
+    //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+    // var socket = new SockJS(URL_ORIGIN + ':8084/ws');
+    // var chatSocket = new SockJS(URL_ORIGIN + ':8083/ws');
+    var socket = new SockJS(POSTS_URL + '/ws');
+    var chatSocket = new SockJS(CHAT_URL + '/ws');
 
     stompClient = Stomp.over(socket);
     chatStompClient = Stomp.over(chatSocket);

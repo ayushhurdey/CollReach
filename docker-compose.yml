@@ -13,13 +13,15 @@ services:
   #   volumes:
   #     - db_vol:/var/lib/mysql
   
-  # psql:
-  #   image: custom_psql/psql
-  #   environment: 
-  #     - POSTGRES_USER=collreach
-  #     - POSTGRES_PASSWORD=Sensitive@1
-  #   ports:
-  #     - "1234:5432"
+  p_sql:
+    image: custom/psql:version2
+    environment: 
+      - POSTGRES_USER=collreach
+      - POSTGRES_PASSWORD=Sensitive@1
+    ports:
+      - "1234:5432"
+    volumes: 
+      - db_vol:/var/lib/postgresql/data
 
   mongo_db:
     image: mongo
@@ -27,24 +29,39 @@ services:
     environment: 
       - MONGO_INITDB_ROOT_USERNAME=collreach
       - MONGO_INITDB_ROOT_PASSWORD=collReach
+      - MONGO_INITDB_DATABASE=collreach_chat
     ports:
       - "27018:27017"
     volumes:
       - db_vol:/data/db
 
-  ftp_server:
-    image: stilliard/pure-ftpd
-    ports:
-      - "21:21"
-      - "30000-30009:30000-30009"
-    volumes:
-      -  ftp_vol:/ftp/users/data
-    environment:
-      PUBLICHOST: "localhost"
-      FTP_USER_NAME: collreach
-      FTP_USER_PASS: Sensitive@1
-      FTP_USER_HOME: /htdocs/frontend/images/
-    restart: always
+  # ftp_server:
+  #   image: stilliard/pure-ftpd
+  #   deploy:
+  #     replicas: 1
+  #     restart_policy:
+  #       condition: on-failure
+  #   ports:
+  #     - "21:21"
+  #     - "20:20"
+  #     - "30000-30009:30000-30009"
+  #   volumes:
+  #     - ftp_vol:/htdocs/frontend/images/
+  #   environment:
+  #     PUBLICHOST: "0.0.0.0"
+  #     FTP_USER_NAME: collreach
+  #     FTP_USER_PASS: Sensitive@1
+  #     FTP_MAX_CLIENTS: 50
+  #     FTP_MAX_CONNECTIONS: 100
+  #     FTP_USER_HOME: /htdocs/frontend/images/
+  #   restart: always
+
+  # ftps_client:
+  #   image: jlesage/filezilla
+  #   ports:
+  #     - "5800:5800"
+  #   links:
+  #     - ftp_server
 
   eserver:
     build: ./eserver
@@ -60,8 +77,9 @@ services:
     #   - mysqldb
     depends_on:
       # - mysqldb
-      - ftp_server
+      - p_sql
       - eserver
+      #- ftp_server
 
   posts:
     build: ./posts
@@ -72,6 +90,7 @@ services:
     #   - mysqldb
     depends_on:
       # - mysqldb
+      - p_sql
       - eserver
 
   chat-app:

@@ -1,5 +1,7 @@
 server:
   port: 8083
+  servlet:
+    context-path: /chat
 
 # token valid for 10 years. Created on 09/05/2021 (dd/mm/yyyy)
 auth:
@@ -14,7 +16,7 @@ spring:
     show-sql: true
   data:
     mongodb:
-      uri: mongodb://collreach:collReach@mongo_db:27017/collreach_chat
+      uri: mongodb://collreach:collReach@mongo_db:27017/collreach_chat?authSource=admin
       # uri: mongodb://root:root@localhost:27017/test
       # database: collreach_chat
       # port: 27017

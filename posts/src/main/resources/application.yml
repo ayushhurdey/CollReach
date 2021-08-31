@@ -1,5 +1,7 @@
 server:
   port: 8084
+  servlet:
+    context-path: /posts
 
 # token valid for 10 years. Created on 09/05/2021 (dd/mm/yyyy)
 auth:
@@ -18,7 +20,7 @@ spring:
 
   datasource:
     # url: jdbc:mysql://mysqldb:3306/collreach_posts_and_polls?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
-    url: jdbc:postgresql://psql:5432/collreach_posts_and_polls?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    url: jdbc:postgresql://p_sql:5432/collreach_posts_and_polls?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
     username: collreach
     password: Sensitive@1
   security:
@@ -47,4 +49,4 @@ frontend:
   url: http://frontend:8081
 
 gateway:
-  url: http://gateway:8085
+  url: http://gateway:80

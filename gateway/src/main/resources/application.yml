@@ -11,10 +11,6 @@ spring:
           uri: http://baeldung.com
           predicates:
             - Path=/baeldung/
-        - id: frontend-route
-          uri: lb://frontend
-          predicates:
-            - Path=/**
         - id: userprofile-route
           uri: lb://userprofile
           predicates:
@@ -31,6 +27,10 @@ spring:
           uri: lb://eserver
           predicates:
             - Path=/eserver/**
+        - id: frontend-route
+          uri: lb://frontend
+          predicates:
+              - Path=/**
 management:
   endpoints:
     web:

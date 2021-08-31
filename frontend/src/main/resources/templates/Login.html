@@ -15,6 +15,7 @@
     <!-- <link rel="stylesheet" href="UserProfileCssBeta.css" /> -->
      
     <script type="application/javascript" src="./scripts/compress.js"></script>
+    <script type="application/javascript" src="./scripts/url.js"></script>
     <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
     <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
     <link rel="stylesheet" href="style/login.css">
@@ -22,7 +23,7 @@
     <link rel="icon" href="static/profileimage.webp" type="image/x-icon">
 </head>
 <script type="text/javascript">
-    const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+    //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
 
     function loginValidation() {
         libidv = /^[0-9]{4}[a-z]{2}[0-9]{4}$/;
@@ -53,7 +54,8 @@
         var libid = document.reg.libid.value;
         var pass  = document.reg.pass.value;
         var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/token";
+            // var url = URL_ORIGIN + ":8082/token";
+            var url = USER_PROFILE_URL + "/token";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
@@ -98,7 +100,8 @@
         console.log("id: " + libid);
 
         var xhr = new XMLHttpRequest();
-        var url = URL_ORIGIN + ":8082/user/get-user-details/" + 
+        // var url = URL_ORIGIN + ":8082/user/get-user-details/" + 
+        var url = USER_PROFILE_URL + "/user/get-user-details/" + 
             (localStorage.getItem('username') || sessionStorage.getItem('username'));
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -115,7 +118,8 @@
                 var msg = document.getElementById("msg");
                 msg.innerHTML = "Login Successfull.";
                 msg.style.color = "green";
-                window.location.href = URL_ORIGIN + ":8081/profile";
+                //window.location.href = URL_ORIGIN + ":8081/profile";
+                window.location.href = FRONTEND_URL + "/profile";
                 //msg.style.display = "none";
             }
             else{
@@ -145,7 +149,7 @@
 
 
     function redirectToSignup(){
-        window.location.href = URL_ORIGIN + ":8081/signup";
+        window.location.href = FRONTEND_URL + "/signup";
     }
 </script>
 

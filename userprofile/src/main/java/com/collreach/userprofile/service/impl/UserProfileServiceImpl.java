@@ -287,7 +287,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UsersFromNameResponse getUsersFromName(UsersFromNameRequest usersFromNameRequest) {
         String name = usersFromNameRequest.getUsers();
-        List<UserPersonalInfo> allUsersByName = userPersonalInfoRepository.findAllByNameStartsWith(name);
+        List<UserPersonalInfo> allUsersByName = userPersonalInfoRepository.findAllByNameStartsWithIgnoreCase(name);
         List<UsersInfo> usersByName = new ArrayList<UsersInfo>();
 
         for(UserPersonalInfo userPersonalInfo:  allUsersByName){

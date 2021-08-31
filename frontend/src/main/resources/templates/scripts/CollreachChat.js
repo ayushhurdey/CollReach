@@ -133,7 +133,11 @@ async function sendMessage(){
 
 }
 
-
+/**
+ * 
+ * @param {String} message 
+ * @returns {Notification} a notification on the top right of the main screen. 
+ */
 function renderNotification(message) {
     let notifier = document.querySelector('.notifier');
     notifier.children[1].innerText = message;
