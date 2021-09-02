@@ -1,7 +1,6 @@
 package com.collreach.userprofile.util;
 
 import com.collreach.userprofile.model.request.AddNewUserRequest;
-import com.collreach.userprofile.model.request.UserLoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -19,15 +18,18 @@ public class HttpRequestUtil {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         AddNewUserRequest addNewUserRequest = new AddNewUserRequest();
-        addNewUserRequest.setUsername(userName);
+        addNewUserRequest.setUserName(userName);
         addNewUserRequest.setName(name);
         HttpEntity<AddNewUserRequest> entity = new HttpEntity<>(addNewUserRequest,headers);
 
         try {
             // "http://localhost:8084/user/add-user"
+            System.out.println("==================================================");
+            System.out.println("Sending request to: " + url);
+            System.out.println("===================================================");
             return restTemplate.exchange(url, HttpMethod.POST, entity, Boolean.class).getBody();
         }catch(Exception e){
-            System.out.println("Some Error occurred." + e);
+            System.out.println("Some Error occurred: " + e);
             return false;
         }
     }

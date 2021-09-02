@@ -68,10 +68,10 @@ eureka:
 #       defaultZone=${EUREKA_SERVER:http://eserver:8761/eureka}
 
 posts:
-  url: http://posts/user/add-user
+  url: http://posts/posts/user/add-user
 
 chat:
-  url: http://chat-app/user/add-user
+  url: http://chat-app/chat/user/add-user
 
 frontend:
   url: http://frontend:8081
