@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 80
 
 spring:
   application:
@@ -11,10 +11,6 @@ spring:
           uri: http://baeldung.com
           predicates:
             - Path=/baeldung/
-        - id: frontend-route
-          uri: lb://frontend
-          predicates:
-            - Path=/**
         - id: userprofile-route
           uri: lb://userprofile
           predicates:
@@ -31,6 +27,10 @@ spring:
           uri: lb://eserver
           predicates:
             - Path=/eserver/**
+        - id: frontend-route
+          uri: lb://frontend
+          predicates:
+              - Path=/**
 management:
   endpoints:
     web:
@@ -41,4 +41,15 @@ management:
 eureka:
   client:
     serviceURL:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eserver:8761/eureka/
+
+# gateway_1      | 2021-07-25 17:14:16.712  INFO 1 --- [tbeatExecutor-0]
+#  c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. 
+# endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/},
+#  exception=I/O error on PUT request for 
+# "http://localhost:8761/eureka/apps/GATEWAY/638e8c1ba8fc:gateway:80":
+#  Connection refused (Connection refused); nested exception is java.net.ConnectException:
+#  Connection refused (Connection refused) stacktrace=org.springframework.web.client.ResourceAccessException: 
+# I/O error on PUT request for "http://localhost:8761/eureka/apps/GATEWAY/638e8c1ba8fc:gateway:80":
+#  Connection refused (Connection refused); nested exception is java.net.ConnectException: 
+# Connection refused (Connection refused)

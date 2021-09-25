@@ -1,13 +1,16 @@
 async function fetchUserDetails() {
-    const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+    //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
     const PROFILE_NAME = document.querySelector('.profile-name');
     const PROFILE_IMAGE = document.querySelector('.profile-image');
     const NAV_PROFILE_IMAGE = document.querySelector('.user-profile-photo-icon');
     const USERNAME = localStorage.getItem('username');
-    PROFILE_IMAGE.src = `${URL_ORIGIN}:8082/user/get-profile-img-by-username?username=${USERNAME}&ifMini=false`;
-    NAV_PROFILE_IMAGE.src = `${URL_ORIGIN}:8082/user/get-profile-img-by-username?username=${USERNAME}&ifMini=false`;
+    // PROFILE_IMAGE.src = `${URL_ORIGIN}:8082/user/get-profile-img-by-username?username=${USERNAME}&ifMini=false`;
+    // NAV_PROFILE_IMAGE.src = `${URL_ORIGIN}:8082/user/get-profile-img-by-username?username=${USERNAME}&ifMini=false`;
+    PROFILE_IMAGE.src = `${USER_PROFILE_URL}/user/get-profile-img-by-username?username=${USERNAME}&ifMini=false`;
+    NAV_PROFILE_IMAGE.src = `${USER_PROFILE_URL}/user/get-profile-img-by-username?username=${USERNAME}&ifMini=false`;
 
-    const URL = `${URL_ORIGIN}:8082/user/get-user-details/${USERNAME} `;
+    //const URL = `${URL_ORIGIN}:8082/user/get-user-details/${USERNAME} `;
+    const URL = `${USER_PROFILE_URL}/user/get-user-details/${USERNAME} `;
     let response = await fetch(URL, {
         method: "POST",
         headers: {
@@ -22,11 +25,12 @@ async function fetchUserDetails() {
 
 
 async function fetchSkills() {
-    const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+    //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
     const SKILLS_LIST = document.querySelector('.skills-list');
     let ALL_SKILLS = [];
 
-    const URL = `${URL_ORIGIN}:8082/user/get-all-skills`;
+    // const URL = `${URL_ORIGIN}:8082/user/get-all-skills`;
+    const URL = `${USER_PROFILE_URL}/user/get-all-skills`;
     let response = await fetch(URL, {
         method: "GET",
         headers: {

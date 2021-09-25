@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-     
+    <script type="application/javascript" src="./scripts/url.js"></script>  <!--Contains URL for services, Priority: top-->
     <script type="application/javascript" src="./scripts/compress.js"></script>
     <script type="application/javascript" src="./scripts/UserProfileUpdate.js"></script>
     <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
@@ -30,7 +30,7 @@
     
 
     <script type="text/javascript">
-        const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+        //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
 
         // var arr = new Array();
         let skillMap = {};
@@ -83,7 +83,8 @@
             personalEmail = (personalEmail === "" ? "null" : personalEmail);
 
             var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/user/check-email";
+            //var url = URL_ORIGIN + ":8082/user/check-email";
+            var url = USER_PROFILE_URL + "/user/check-email";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
@@ -116,7 +117,8 @@
             phoneNo = (phoneNo === "" ? "null" : phoneNo);
 
             var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/user/check-phone-no";
+            //var url = URL_ORIGIN + ":8082/user/check-phone-no";
+            var url = USER_PROFILE_URL + "/user/check-phone-no";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
@@ -148,7 +150,8 @@
             linkedIn = (linkedIn === "" ? "null" : linkedIn);
 
             var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/user/check-linkedin-link";
+            // var url = URL_ORIGIN + ":8082/user/check-linkedin-link";
+            var url = USER_PROFILE_URL + "/user/check-linkedin-link";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
@@ -179,7 +182,8 @@
         function EmailUpdate() {
             var personalEmail = document.personalEmailUpdate.personalEmail.value;
             var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/user/alternate-email";
+            //var url = URL_ORIGIN + ":8082/user/alternate-email";
+            var url = USER_PROFILE_URL + "/user/alternate-email";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -206,7 +210,8 @@
         function phonenoUpdate() {
             var phoneNo = document.phoneNoUpdate.phoneNo.value;
             var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/user/phone-no";
+            //var url = URL_ORIGIN + ":8082/user/phone-no";
+            var url = USER_PROFILE_URL + "/user/phone-no";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -238,7 +243,8 @@
             }
 
             var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/user/description";
+            //var url = URL_ORIGIN + ":8082/user/description";
+            var url = USER_PROFILE_URL + "/user/description";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -268,7 +274,8 @@
 
             var linkedIn = document.linkedInUpdate.linkedIn.value;
             var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/user/linkedin-link";
+            //var url = URL_ORIGIN + ":8082/user/linkedin-link";
+            var url = USER_PROFILE_URL + "/user/linkedin-link";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -382,7 +389,8 @@
         async function YearsemUpdate() {
             const SEM  = Number(document.yearsemUpdate.sem.value);
             const USERNAME = localStorage.getItem('username');
-            const URL = `${URL_ORIGIN}:8082/user/semester?semester=${SEM}&username=${USERNAME}`
+            //const URL = `${URL_ORIGIN}:8082/user/semester?semester=${SEM}&username=${USERNAME}`
+            const URL = `${USER_PROFILE_URL}/user/semester?semester=${SEM}&username=${USERNAME}`
             let response = await fetch(URL, {
                 method: 'PUT',
                 headers: {
@@ -405,7 +413,8 @@
             var newPassword = document.passwordUpdate.newPassword.value;
             var password = document.passwordUpdate.password.value;
             var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/user/password";
+            //var url = URL_ORIGIN + ":8082/user/password";
+            var url = USER_PROFILE_URL + "/user/password";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -484,7 +493,8 @@
                 return;
 
             var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/user/skills";
+            //var url = URL_ORIGIN + ":8082/user/skills";
+            var url = USER_PROFILE_URL + "/user/skills";
             xhr.open("PUT", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Authorization", localStorage.getItem('auth'));
@@ -600,7 +610,7 @@
 
                 <ul class="navbar-nav text-center ml-auto">
                     <li class="nav-item">
-                        <a href= "/posts" class="nav-link">
+                        <a href= "/" class="nav-link">
                             <i class="fas fa-home"></i>
                             
                         </a>

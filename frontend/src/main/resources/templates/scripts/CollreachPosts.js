@@ -14,7 +14,7 @@ async function login() {
     const USERNAME = localStorage.getItem('username');
     const AUTH = localStorage.getItem('auth');
     if (USERNAME === null || AUTH === null)
-        window.location.replace(USER_PROFILE_URL + "/login");
+        window.location.replace(FRONTEND_URL + "/login");
 }
 
 function getDeptFromCookie() {
@@ -292,7 +292,8 @@ function getUserDetails() {
             localStorage.setItem('userDetails', res);
             let profileAccessKey = data.userPersonalInfoResponse.profileAccessKey;
 
-            data.userPersonalInfoResponse.profileAccessKey = URL_ORIGIN + ":8081/profile/" + profileAccessKey;
+            // data.userPersonalInfoResponse.profileAccessKey = URL_ORIGIN + ":8081/profile/" + profileAccessKey;
+            data.userPersonalInfoResponse.profileAccessKey = FRONTEND_URL + "/profile/" + profileAccessKey;
 
             getImageURL = USER_PROFILE_URL +
                 "/user/get-image?filename=" +

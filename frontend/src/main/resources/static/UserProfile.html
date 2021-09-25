@@ -28,7 +28,8 @@
         // if(username == null)
         //   window.location.href = "http://localhost:8082/login";
         var xhr = new XMLHttpRequest();
-        var url = URL_ORIGIN + ":8082/user/get-user-details/" + username;
+        //var url = URL_ORIGIN + ":8082/user/get-user-details/" + username;
+        var url = USER_PROFILE_URL + "/user/get-user-details/" + username;
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader("Authorization", localStorage.getItem("auth"));
@@ -57,11 +58,14 @@
             document.getElementById("linkedIn").innerHTML =
               userInfo.userPersonalInfoResponse.linkedinLink;
             document.getElementById('general-profile').textContent = 
-              URL_ORIGIN + ":8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey;
+              //URL_ORIGIN + ":8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey;
+              FRONTEND_URL + "/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey;
             document.getElementById('general-profile-link')
-                    .setAttribute('href', URL_ORIGIN + ":8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
+                    //.setAttribute('href', URL_ORIGIN + ":8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
+                    .setAttribute('href', FRONTEND_URL + "/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
             document.getElementById('profile-link')
-                    .setAttribute('href', URL_ORIGIN + ":8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
+                    //.setAttribute('href', URL_ORIGIN + ":8082/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
+                    .setAttribute('href', FRONTEND_URL + "/profile/" + userInfo.userPersonalInfoResponse.profileAccessKey); 
 
             var skill = userInfo.userPersonalInfoResponse.skills;
             for (let [k, v] of Object.entries(skill)) {
@@ -79,7 +83,8 @@
             }
 
             document.getElementById("profile-photo").src = 
-                URL_ORIGIN + ":8082/user/get-image?filename=" +
+                //URL_ORIGIN + ":8082/user/get-image?filename=" +
+                USER_PROFILE_URL + "/user/get-image?filename=" +
                  userInfo.userPersonalInfoResponse.userProfilePhoto;
             localStorage.setItem(
               "profilePhoto",
@@ -169,19 +174,19 @@
 
           <ul class="navbar-nav text-center ml-auto">
               <li class="nav-item">
-                  <a href="/posts" class="nav-link">
+                  <a href="/" class="nav-link">
                       <i class="fas fa-home"></i>
                       <p id="info">Home</p>
                   </a>
               </li>
               <li class="nav-item">
-                  <a href="/posts" class="nav-link">
+                  <a href="/" class="nav-link">
                       <i class="fab fa-instagram"></i>
                       <p id="info">Posts</p>
                   </a>
               </li>
               <li class="nav-item">
-                  <a href="" class="nav-link">
+                  <a href="#" class="nav-link">
                       <i class="fas fa-code"></i>
                       <p id="info">CodeGanak</p>
                   </a>
@@ -527,7 +532,7 @@
                               </tr>
 
                               <tr>
-                                <td>GENERAL PROFILE LINK</td>
+                                <td style="width:200px;">GENERAL PROFILE LINK</td>
                                 <td><a href = ""  target="_blank" rel="noopener noreferrer" id = "general-profile-link">
                                       <div id = "general-profile"></div>
                                     </a>
@@ -965,7 +970,8 @@
       let ALL_SKILLS = [];
       let finalSkills = [];
       //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
-      fetch(URL_ORIGIN + ":8082/user/get-all-skills", {
+      //fetch(URL_ORIGIN + ":8082/user/get-all-skills", {
+      fetch(USER_PROFILE_URL + "/user/get-all-skills", {
                   method: "GET",
                   headers: {
                     Authorization: localStorage.getItem("auth"),
@@ -1086,7 +1092,8 @@
             if(searchQuery == "" || searchQuery == null)
               return;
 
-            fetch(URL_ORIGIN + ":8082/user/search-users-by-name", {
+          //fetch(URL_ORIGIN + ":8082/user/search-users-by-name", {
+          fetch(USER_PROFILE_URL + "/user/search-users-by-name", {
                 method: "POST",
                 headers: {
                   'Content-Type': 'application/json',
@@ -1129,7 +1136,8 @@
                       let username = value.username;
                       let profileUrl = "#";
                       if(value.profileAccessKey !== "" && value.profileAccessKey !== null)
-                        profileUrl = URL_ORIGIN + ":8082/profile/" + value.profileAccessKey;
+                          profileUrl = FRONTEND_URL + "/profile/" + value.profileAccessKey;
+                          //profileUrl = URL_ORIGIN + ":8082/profile/" + value.profileAccessKey;
 
                       let skillsList = "";
                       itemsOutput.innerHTML += eval('`' + searchOutputTemplate + '`');
@@ -1142,7 +1150,8 @@
             let searchInterval = setInterval(function(){
                 if(finalSkills.length !== 0){
                     console.log("Searching skills....");
-                    fetch(URL_ORIGIN + ":8082/user/get-users-from-skills", {
+                    //fetch(URL_ORIGIN + ":8082/user/get-users-from-skills", {
+                    fetch(USER_PROFILE_URL + "/user/get-users-from-skills", {
                         method: "POST",
                         headers: {
                           'Content-Type': 'application/json',
@@ -1281,7 +1290,8 @@
                   formData.append("miniFile", miniFile, "imageFile2" + imgExt);
                   formData.append("userName", username);
                   //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
-                  fetch(URL_ORIGIN + ":8082/user/profile-photo", {
+                  //fetch(URL_ORIGIN + ":8082/user/profile-photo", {
+                  fetch(USER_PROFILE_URL + "/user/profile-photo", {
                     method: "PUT",
                     headers: {
                       Authorization: localStorage.getItem("auth"),
@@ -1302,7 +1312,8 @@
                           //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
                           localStorage.setItem(
                               "profilePhoto",
-                              URL_ORIGIN + ":8082/user/get-image?filename=" + username + "$" + timestamp
+                              //URL_ORIGIN + ":8082/user/get-image?filename=" + username + "$" + timestamp
+                              USER_PROFILE_URL + "/user/get-image?filename=" + username + "$" + timestamp
                           );
                           console.log(
                               "New Image Url: " +

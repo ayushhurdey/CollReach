@@ -226,7 +226,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         LinkedHashMap<String, UserProfileSkillsResponse> userSkillsSortedMap = new LinkedHashMap<>();
 
         for(String skill: list){
-            Optional<SkillsInfo> skillsInfo = skillsInfoRepository.findBySkill(skill);
+            Optional<SkillsInfo> skillsInfo = skillsInfoRepository.findBySkillIgnoreCase(skill);
 
             if(skillsInfo.isPresent()) {
                 List<UserSkills> userSkills = userSkillsRepository.findAllBySkillId(skillsInfo.get());
@@ -287,7 +287,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UsersFromNameResponse getUsersFromName(UsersFromNameRequest usersFromNameRequest) {
         String name = usersFromNameRequest.getUsers();
-        List<UserPersonalInfo> allUsersByName = userPersonalInfoRepository.findAllByNameStartsWith(name);
+        List<UserPersonalInfo> allUsersByName = userPersonalInfoRepository.findAllByNameStartsWithIgnoreCase(name);
         List<UsersInfo> usersByName = new ArrayList<UsersInfo>();
 
         for(UserPersonalInfo userPersonalInfo:  allUsersByName){

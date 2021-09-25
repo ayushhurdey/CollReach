@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface SkillsInfoRepository extends CrudRepository<SkillsInfo, Integer> {
     List<SkillsInfo> findAllBySkill(String skill);
-    Optional<SkillsInfo> findBySkill(String skill);
+    Optional<SkillsInfo> findBySkillIgnoreCase(String skill);
 }

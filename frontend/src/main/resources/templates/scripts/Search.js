@@ -5,7 +5,7 @@ let ALL_SKILLS = [];
 let finalSkills = [];
 
 $(document).ready(function(){
-    const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+    //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
     let searchBox = document.getElementById("overlay-search-box");
     //let searchBtn = document.getElementById("search-btn");
     let searchItems = document.getElementById('search-items');
@@ -13,7 +13,8 @@ $(document).ready(function(){
     //searchBtn.addEventListener("click", search);
 
     
-    fetch(URL_ORIGIN + ":8082/user/get-all-skills", {
+    //fetch(URL_ORIGIN + ":8082/user/get-all-skills", {
+    fetch(USER_PROFILE_URL + "/user/get-all-skills", {
                 method: "GET",
                 headers: {
                 Authorization: localStorage.getItem("auth"),
@@ -119,7 +120,8 @@ function search(){
     if(searchQuery == "" || searchQuery == null)
         return;
 
-    fetch(URL_ORIGIN + ":8082/user/search-users-by-name", {
+    //fetch(URL_ORIGIN + ":8082/user/search-users-by-name", {
+    fetch(USER_PROFILE_URL + "/user/search-users-by-name", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -142,7 +144,8 @@ function search(){
                 let username = value.username;
                 let profileUrl = "#";
                 if(value.profileAccessKey !== "" && value.profileAccessKey !== null)
-                profileUrl = URL_ORIGIN + ":8081/profile/" + value.profileAccessKey;
+                // profileUrl = URL_ORIGIN + ":8081/profile/" + value.profileAccessKey;
+                profileUrl = FRONTEND_URL + "/profile/" + value.profileAccessKey;
 
                 let skillsList = "";
                 itemsOutput.innerHTML += eval('`' + searchOutputTemplate + '`');
@@ -155,7 +158,8 @@ function search(){
         let searchInterval = setInterval(function(){
             if(finalSkills.length !== 0){
                 console.log("Searching skills....");
-                fetch(URL_ORIGIN + ":8082/user/get-users-from-skills", {
+                // fetch(URL_ORIGIN + ":8082/user/get-users-from-skills", {
+                fetch(USER_PROFILE_URL + "/user/get-users-from-skills", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',

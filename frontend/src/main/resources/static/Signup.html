@@ -17,6 +17,7 @@
 
      
     <script type="application/javascript" src="./scripts/compress.js"></script>
+    <script type="application/javascript" src="./scripts/url.js"></script>
     <link rel="icon" href="static/CollReach.PNG" type="image/x-icon" />
     <link rel="stylesheet" href="https://drive.google.com/uc?id=1jLrfISsLUcRiwgNl0koSfsS6lylj0E7h">
     
@@ -50,7 +51,7 @@
     </div>
 
     <script type="text/javascript">
-    const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
+    //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
 
     function validation() {
             var name = document.reg.name.value;
@@ -188,7 +189,8 @@
                                                // It will make the code more dynamic, generic & resilient.
             console.log(course+ " " + branch + " " + year + " " + sem + " "+ pass +" "+ name +" "+ libid +" "+ email +" "+ phone);
             var xhr = new XMLHttpRequest();
-            var url = URL_ORIGIN + ":8082/user/signup";
+            //var url = URL_ORIGIN + ":8082/user/signup";
+            var url = USER_PROFILE_URL + "/user/signup";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function() {
@@ -235,7 +237,8 @@
 			libid === "" ? libid = "null" : libid = libid;
 			
 			var xhr = new XMLHttpRequest();
-			var url = URL_ORIGIN + ":8082/user/check-username";
+			//var url = URL_ORIGIN + ":8082/user/check-username";
+            var url = USER_PROFILE_URL + "/user/check-username";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.onreadystatechange = function() {
@@ -272,7 +275,8 @@
 			email === "" ? email = "null" : email = email;
 			
 			var xhr = new XMLHttpRequest();
-			var url = URL_ORIGIN + ":8082/user/check-email";
+			//var url = URL_ORIGIN + ":8082/user/check-email";
+            var url = USER_PROFILE_URL + "/user/check-email";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.onreadystatechange = function() {
@@ -307,7 +311,8 @@
 			oemail === "" ? oemail = "null" : oemail = oemail;
 			
 			var xhr = new XMLHttpRequest();
-			var url = URL_ORIGIN + ":8082/user/check-email";
+			//var url = URL_ORIGIN + ":8082/user/check-email";
+            var url = USER_PROFILE_URL + "/user/check-email";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.onreadystatechange = function() {
@@ -343,7 +348,8 @@
 			phone === "" ? phone = "null" : phone = phone;
 			
 			var xhr = new XMLHttpRequest();
-			var url = URL_ORIGIN + ":8082/user/check-phone-no";
+			// var url = URL_ORIGIN + ":8082/user/check-phone-no";
+            var url = USER_PROFILE_URL + "/user/check-phone-no";
 			xhr.open("POST", url, true);
 			xhr.setRequestHeader("Content-Type", "application/json");
 			xhr.onreadystatechange = function() {
