@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Optional;
@@ -52,7 +51,7 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
     @Value("${ftp.default-img}")
     private String defaultImg;
 
-    private UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
+    private final UserProfileMapper userProfileMapper = Mappers.getMapper( UserProfileMapper.class );
 
     public UserInfoUpdateServiceImpl() {
     }
@@ -99,19 +98,39 @@ public class UserInfoUpdateServiceImpl implements UserInfoUpdateService {
         return "Updated Skills successfully.";
     }
 
+    // TODO : Bug-correction - To be improved so that upvote can be done by a user only once.
+    // new Table(skill_id, user_id, ifUpvoted) has to be made to handle this error.
     @Override
     public String updateSkillUpvoteCount(UserSkillUpdateRequest userSkillUpdateRequest){
         int skillId = userSkillUpdateRequest.getSkillId();
         Optional<UserLogin> userLogin = userLoginRepository.findById(userSkillUpdateRequest.getUserName());
         if(userLogin.isPresent()){
             UserPersonalInfo userPersonalInfo = userLogin.get().getUserPersonalInfo();
-            UserSkills userSkills = userSkillsRepository
-                    .findById(new UserSkillsKey( userPersonalInfo.getUserId(), skillId )).get();
-            int skillUpvoteCounts = userSkills.getSkillUpvoteCount() + 1;
-            SkillsInfo skillsInfo = new SkillsInfo();
-            skillsInfo.setSkillId(skillId);
-            userSkillsRepository.updateByUserIdAndSkillId(userPersonalInfo, skillsInfo, skillUpvoteCounts);
-            return "skill upvote count increased by 1.";
+
+//            UserSkills userSkills = userSkillsRepository
+//                    .findById(new UserSkillsKey( userPersonalInfo.getUserId(), skillId )).get();
+//            int skillUpvoteCounts = userSkills.getSkillUpvoteCount() + 1;
+//            SkillsInfo skillsInfo = new SkillsInfo();
+//            skillsInfo.setSkillId(skillId);
+//            userSkillsRepository.updateByUserIdAndSkillId(userPersonalInfo, skillsInfo, skillUpvoteCounts);
+//            return "skill upvote count increased by 1.";
+
+            AtomicReference<String> result = new AtomicReference<>("");
+            userSkillsRepository.findById(new UserSkillsKey( userPersonalInfo.getUserId(), skillId ))
+                    .ifPresentOrElse(userSkills -> {
+                        SkillsInfo skillsInfo = new SkillsInfo();
+                        skillsInfo.setSkillId(skillId);
+                        userSkillsRepository.updateByUserIdAndSkillId(userPersonalInfo, skillsInfo, userSkills.getSkillUpvoteCount()+1);
+                        result.set("Upvote Successful");
+                    }, () -> {
+                        try {
+                            throw new Exception("User's skill not found");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            result.set("User's skill not found");
+                        }
+                    });
+            return result.toString();
         }
         return "Something went wrong.";
     }

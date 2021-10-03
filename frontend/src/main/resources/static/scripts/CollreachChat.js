@@ -220,7 +220,7 @@ function chatwindow(element){
     console.log(element);
     document.querySelector('.chat-window').innerHTML = "";
     let contactedUser = element.dataset.contactUsername;
-    addMessages(contactedUser, 0, 50);           // TODO: pageSize & pageNo to change dynamically.
+    addMessages(contactedUser, 0, 70);           // TODO: pageSize & pageNo to change dynamically.
 
     document.querySelector('.current-contact-profile-photo')
             .setAttribute('src', buildProfilePhotoURL(contactedUser));

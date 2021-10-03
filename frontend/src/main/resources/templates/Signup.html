@@ -179,11 +179,11 @@
             var branch = document.reg.branch.value;
             var year = document.reg.year.value;
             var sem = Number(document.reg.sem.value);
-            var oemail = document.reg.oemail.value;
+            var oemail = document.reg.oemail.value === "" ? null: document.reg.oemail.value;
             var pass = document.reg.pass.value;
             var email =document.reg.email.value;
             var name= document.reg.name.value;
-            var phone= document.reg.phone.value;
+            var phone= document.reg.phone.value === "" ? null: document.reg.phone.value;
             var libid = document.reg.libid.value; 
             // var courseId = courseIdMapping();  // TODO: May be we should let the server figure out the course id itself rather than we do it for it.
                                                // It will make the code more dynamic, generic & resilient.
