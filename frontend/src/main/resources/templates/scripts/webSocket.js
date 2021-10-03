@@ -66,7 +66,7 @@ function onNewMessage(payload) {
 }
 
 function onNewPostAdded(payload) {
-    renderNotification(payload);
+    renderNotification(payload.body);
 }
 
 function onMessageReceived(payload) {

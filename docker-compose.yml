@@ -71,7 +71,7 @@ services:
   userprofile:
     build: ./userprofile
     ports:
-      - "8082:8082"
+      - "8082"
     restart: always
     # links:
     #   - mysqldb
@@ -84,7 +84,7 @@ services:
   posts:
     build: ./posts
     ports:
-      - "8084:8084"
+      - "8084"
     restart: always
     # links:
     #   - mysqldb
@@ -96,7 +96,7 @@ services:
   chat-app:
     build: ./chat
     ports:
-      - "8083:8083"
+      - "8083"
     links:
       - mongo_db
     depends_on:
@@ -116,7 +116,7 @@ services:
   frontend:
     build: ./frontend/
     ports:
-      - "8081:8081"
+      - "8081"
     depends_on: 
       - userprofile
       - chat-app

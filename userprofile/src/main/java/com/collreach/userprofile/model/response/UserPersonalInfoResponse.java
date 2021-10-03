@@ -5,6 +5,7 @@ package com.collreach.userprofile.model.response;
 import java.util.Map;
 
 public class UserPersonalInfoResponse {
+    private String userName;
     private String email;
     private String name;
     private String alternateEmail;
@@ -15,6 +16,14 @@ public class UserPersonalInfoResponse {
     private String profileAccessKey;
     private CourseInfoResponse courseInfoResponse;
     private Map<String,Integer> skills;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getEmail() {
         return email;

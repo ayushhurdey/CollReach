@@ -25,9 +25,12 @@
   <script>
       function login() {
         //const URL_ORIGIN = location.origin.replace(/.{0,5}$/, '');
-        // var username = localStorage.getItem("username");
-        // if(username == null)
-        //   window.location.href = "http://localhost:8082/login";
+
+        // This page will not work if the user is not logged in his/her account.
+        var username = localStorage.getItem("username");
+        if(username == null)
+          window.location.href = FRONTEND_URL + "/login";
+
         let pathname = window.location.pathname;
         let lastSlashIndex = pathname.lastIndexOf('/');
         const ACCESSKEY = pathname.substr(lastSlashIndex+1, pathname.length);
@@ -71,6 +74,8 @@
               let a = document.createElement('a');
               a.setAttribute('href','#');
               a.setAttribute('data-weight', v.toString());
+              a.setAttribute('data-skill-name', k.toString().toLowerCase());
+              a.setAttribute('onclick',"upvoteSkill(this)");
               a.innerText = k.toString();
               li.appendChild(a);
               cloud.appendChild(li);
@@ -80,10 +85,10 @@
                   USER_PROFILE_URL + "/user/get-image?filename=" +
                  userInfo.userProfilePhoto;
             localStorage.setItem(
-              "profilePhoto",
+              "gen_profilePhoto",
               userInfo.userProfilePhoto
             );
-            localStorage.setItem("username", userInfo.userName);
+            localStorage.setItem("gen_username", userInfo.userName);          // TODO: username to be changed to something else...  
           }
 
           else if(xhr.readyState === 4 && xhr.status === 404){
@@ -98,6 +103,39 @@
         xhr.send(data);
       }
 
+       
+      async function upvoteSkill(elem){
+          console.log(elem);
+          console.log(elem.target);
+          let data = JSON.stringify({
+            userName: "",
+            skillId: 1,
+            skills: []
+          });
+
+          // TODO:
+          // call to upvote API.
+          // upvote if not alreay upvoted
+          // Display log message, if successful or not.
+
+          // const URL = USER_PROFILE_URL + "/user/skills-upvote-count";
+          // let response  = await fetch(URL,  {
+          //       method: "PUT",
+          //       headers: {
+          //          'Content-Type': 'application/json',
+          //           Authorization: localStorage.getItem("auth"),
+          //       },
+          //       body: data,
+          // });
+          // response = await response.text();
+          if(response.localeCompare('Upvote Successful') == 0){
+            renderNotification("You upvoted " + data.userName + "'s " + skillId + " skill.");
+          }
+
+          name = "Test user";
+          skill = "test";
+          renderNotification("You upvoted " + name + "'s " + skill + " skill.");
+      }
 
       function searchstudent(){
         document.querySelector(".search-o").classList.toggle('hide');
@@ -297,7 +335,7 @@
                               </tr>
 
                               <tr>
-                                <td>LINKEDIN</td>
+                                <td style="width:200px;">LINKEDIN</td>
                                 <td><div id="linkedIn"></div></td>
                               </tr>
 
@@ -640,9 +678,9 @@
       function logout(){
         let wantToLogout = confirm("Do you want to logout?");
         if(wantToLogout){
-            localStorage.removeItem('auth');
-            localStorage.removeItem('username');
-            localStorage.removeItem('profilePhoto');
+            localStorage.removeItem('gen_auth');
+            localStorage.removeItem('gen_username');
+            localStorage.removeItem('gen_profilePhoto');
             window.location.href = "/login";
         }
       }

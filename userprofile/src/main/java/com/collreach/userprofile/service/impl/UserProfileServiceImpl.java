@@ -175,6 +175,9 @@ public class UserProfileServiceImpl implements UserProfileService {
                 skillMap.put(userSkill.getSkillId().getSkill(),userSkill.getSkillUpvoteCount());
             }
             userPersonalInfoResponse.setSkills(skillMap);
+            UserPersonalInfoResponse finalUserPersonalInfoResponse = userPersonalInfoResponse;
+            userLoginRepository.findByUserPersonalInfo(user.get())
+                    .ifPresent(u -> finalUserPersonalInfoResponse.setUserName(u.getUserName()));
         }
         return userPersonalInfoResponse;
     }
